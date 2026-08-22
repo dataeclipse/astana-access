@@ -1,0 +1,170 @@
+\chapter{Context and State of the Art}
+\label{ch:context}
+
+\section{Social Infrastructure and the Accessibility Problem}
+\label{sec:problem-context}
+
+Social infrastructure, understood here as the network of preschools, schools and primary healthcare facilities that residents use on a daily or weekly basis, differs from most other urban assets in one decisive respect: its value to a household is almost entirely determined by proximity. A kindergarten three kilometres away is, for a family without a car, functionally close to no kindergarten at all. Provision therefore cannot be evaluated by counting facilities or places at the city level. Two cities with identical numbers of places per thousand residents can offer radically different lived experience depending on how those places are distributed relative to where people actually live.
+
+This distinction between aggregate provision and spatial accessibility is the starting point of the present work. A city that grows rapidly at its periphery, as capitals under sustained public investment typically do, accumulates a characteristic pattern: an inherited core with dense and often underused facility stock, and newly built residential districts where population arrives years before the corresponding social infrastructure. The mismatch is not primarily a shortage of investment. It is a coordination problem between the timing and location of housing construction and the timing and location of facility construction.
+
+Quantifying that mismatch requires three things that this chapter reviews in turn: a defensible measure of accessibility that accounts for both supply capacity and demand competition, a way of summarising how unequally that measure is distributed across the population, and a method for identifying where new capacity would do the most good. A fourth question, less often asked, concerns the planner rather than the plan: given that siting decisions are already being made, what considerations do they actually reflect, and how far do they diverge from what an accessibility-driven allocation would suggest.
+
+\section{Measuring Spatial Accessibility}
+\label{sec:accessibility-measures}
+
+\subsection{Container and Buffer Measures}
+
+The simplest accessibility measures partition space administratively and compute a supply-to-demand ratio within each partition, for example places per thousand children in a district. These container measures are attractive because they use only data that administrations already collect, but they carry a defect that is fatal for fine-grained analysis: they assume that residents use facilities inside their own administrative unit and no others. A household living fifty metres from a district boundary is treated as having no access to the school on the other side of the street. The measure is also sensitive to the arbitrary geometry of the partition, an instance of the modifiable areal unit problem.
+
+Buffer or isochrone measures improve on this by defining accessibility relative to the household rather than the district: a location is served if a facility lies within a fixed distance or travel time. This is the logic embedded in most national planning standards, which express provision requirements as service radii. Buffer measures are transparent and map directly onto regulatory compliance, which makes them indispensable for the normative part of any assessment. Their limitation is that they are binary and capacity-blind. A location within 300 metres of a single overcrowded kindergarten and a location within 300 metres of three half-empty ones receive the same score.
+
+\subsection{The Floating Catchment Area Family}
+
+The floating catchment area approach was developed to combine the household-centred logic of buffers with the supply-and-demand logic of container measures. Radke and Mu \cite{radke2000} introduced the two-stage formulation, and Luo and Wang \cite{luo2003} popularised it as the two-step floating catchment area (2SFCA) method. The method proceeds in two passes. In the first, a catchment is drawn around each supply location, the demand falling inside it is summed, and a supply-to-demand ratio is computed for that facility. In the second, a catchment is drawn around each demand location and the ratios of all facilities falling inside it are summed. The result is an accessibility score per demand location that reflects both how much capacity is reachable and how many other people compete for it.
+
+The original formulation applies a uniform weight inside the catchment and zero outside, which reintroduces a discontinuity at the boundary and treats a facility at the edge of the catchment as equivalent to one next door. Luo and Qi \cite{luo2009} addressed this with the enhanced two-step floating catchment area (E2SFCA) method, which divides the catchment into travel-time zones and applies a decreasing weight to each. Subsequent variants have refined the treatment further. Wang \cite{wang2012} reviewed the family and formalised the connection between the floating catchment approach and gravity-based accessibility models, showing that 2SFCA is a special case of a gravity model with a step impedance function. Delamater \cite{delamater2013} observed that the standard formulation implicitly assumes an optimally configured supply system and proposed a modified metric (M2SFCA) that penalises configurations in which capacity is poorly placed relative to demand.
+
+Recent applications have extended the family in two directions relevant to the present work. The first is multi-modal formulation, in which the impedance is computed separately for walking, public transport and driving and combined according to observed or assumed mode shares. The second is the coupling of the accessibility measure with inequality statistics and spatial autocorrelation diagnostics within a single analytical workflow, an approach exemplified by recent studies of elderly care provision \cite{eldercare2025}. This combination, accessibility measurement followed by equity diagnosis followed by cluster detection, has become close to a standard template.
+
+\subsection{Impedance Functions and Catchment Thresholds}
+
+Two parameter choices dominate the behaviour of any floating catchment model: the shape of the distance-decay function and the size of the catchment. Neither is determined by the data. Common choices for the decay function include step, linear, Gaussian, exponential and power forms, and the literature offers no consensus, in part because the appropriate shape depends on the service. Attendance at a preschool falls off far more sharply with distance than attendance at a specialised clinic.
+
+The catchment threshold has an analogous problem, with one important difference in the context of this work. For services governed by a national planning standard, the threshold is not a free parameter to be tuned but a regulatory quantity to be respected. Anchoring the catchment on the statutory service radius rather than on a value borrowed from a foreign study makes the resulting accessibility surface directly interpretable as a compliance measure, and removes one degree of analyst discretion. Where the standard is silent, the sensitivity of the results to the remaining choices must be reported rather than assumed away; this obligation is taken up in the validation design of Chapter~\ref{ch:results}.
+
+\section{Equity Metrics for Accessibility Distributions}
+\label{sec:equity}
+
+An accessibility surface is a map. To make claims about fairness it must be reduced to statistics that describe how unequally accessibility is distributed across people rather than across space. The distinction matters: an accessibility deficit in an empty industrial zone is not an equity problem, whereas the same deficit in a dense residential district is.
+
+The standard instruments are borrowed from income inequality analysis. The Lorenz curve plots the cumulative share of accessibility against the cumulative share of population, ordered from least to most advantaged, and the Gini coefficient summarises the area between that curve and the line of perfect equality. Applications to public service provision are now common, covering public transport, healthcare, sports facilities and green space, and the interpretation carries over directly: a population-weighted Gini of zero would mean every resident enjoys identical accessibility.
+
+The Gini coefficient is a scalar and therefore says nothing about where inequality is located. The Theil index \cite{theil1967} is preferred where that question matters, because it decomposes additively into a within-group and a between-group component. Applied with administrative districts as the grouping variable, the decomposition separates inequality that exists between districts, which is a matter for city-level investment allocation, from inequality inside districts, which is a matter for local siting. Studies of healthcare accessibility in China have used the Theil decomposition across nested administrative scales for exactly this purpose.
+
+A recognised limitation of the whole family is that these indices are aggregate and group-blind. A distribution can appear acceptably equal overall while a specific and identifiable subpopulation is systematically disadvantaged. Recent work has criticised the classical indices on precisely these grounds, noting that they capture horizontal but not vertical equity. In the present work this limitation is addressed not by replacing the indices but by supplementing them with two additional views: the share of each demographic cohort falling outside the statutory service radius, which is a direct and legible measure of vertical equity against a legal benchmark, and spatial cluster detection, which locates disadvantage rather than merely quantifying it.
+
+Spatial cluster detection relies on measures of spatial autocorrelation. The global Moran's~$I$ statistic \cite{moran1950} tests whether the accessibility surface is more spatially clustered than would be expected under spatial randomness. Because a single global statistic can conceal opposing local patterns, it is complemented by local indicators of spatial association \cite{anselin1995}, which classify each unit according to whether it and its neighbours are jointly high, jointly low, or discordant. The jointly-low clusters are the deficit areas that a siting intervention should target, and identifying them statistically rather than by visual inspection of a choropleth map is what distinguishes a defensible diagnosis from an impressionistic one.
+
+\section{Facility Location Optimization}
+\label{sec:location-models}
+
+Where accessibility measurement is descriptive, facility location modelling is prescriptive. The field originates with Hakimi \cite{hakimi1964}, who established that for the $p$-median problem on a network, an optimal solution exists at the nodes of the graph, reducing a continuous problem to a finite combinatorial one. The $p$-median model selects $p$ facility locations so as to minimise the total demand-weighted travel distance, and is the natural formulation when the planning objective is average convenience.
+
+Church and ReVelle \cite{church1974} introduced the maximal covering location problem (MCLP), which changes the objective: rather than minimising average distance, it maximises the amount of demand falling within a fixed coverage radius, subject to a budget of $p$ facilities. The distinction is consequential. The $p$-median model will happily improve the situation of already well-served residents if doing so lowers the weighted average, whereas MCLP is indifferent to improvements inside the covered set and rewards only the conversion of uncovered demand into covered demand. Where a planning standard defines a service radius, MCLP is the formulation that matches the regulatory objective. Church and ReVelle \cite{church1976} later established the theoretical and computational relationships between the two models and the location set covering problem, and Murray \cite{murray2016} reviewed the four decades of extensions that followed, including capacitated, multi-period, hierarchical and probabilistic variants. Both models are now available in mainstream geographic information system software, which has made them a routine planning instrument rather than a research curiosity.
+
+Two extensions matter for social infrastructure specifically. The first is capacity. An uncapacitated model may assign more demand to a facility than it can serve; since school and preschool places are the binding constraint in practice, a capacitated formulation is required whenever capacity data are available. The second is the treatment of competing objectives. Coverage and equity do not move together: a solution that maximises total covered demand will tend to place facilities in dense areas, which may leave a sparse but severely underserved periphery untouched. Collapsing the two objectives into a single weighted sum requires choosing weights, and the choice is difficult to justify. Reporting a Pareto frontier instead, obtained either by the epsilon-constraint method or by an evolutionary multi-objective algorithm, presents the trade-off to the decision maker rather than resolving it on their behalf, and removes the most common line of criticism directed at multi-criteria siting studies.
+
+\section{Machine Learning and Explainability in Urban Analytics}
+\label{sec:ml-urban}
+
+Gradient-boosted decision tree ensembles have become the default model class for tabular urban data, with LightGBM \cite{ke2017} and CatBoost \cite{prokhorenkova2018} the most widely used implementations. Their appeal in this domain is practical: they handle heterogeneous features and non-linear interactions without manual specification, tolerate missing values, and train quickly enough to permit thorough cross-validation.
+
+Because the resulting models are not directly interpretable, their adoption in planning contexts has been accompanied by post-hoc explanation methods, most prominently SHAP \cite{lundberg2017}, which attributes a prediction to its input features on the basis of Shapley values from cooperative game theory. The combination of a boosted ensemble with SHAP attribution now appears across urban analytics: studies of urban heat, land surface temperature, urban vitality, urban expansion and land use classification all follow the same template, using SHAP both to rank drivers globally and to interrogate individual locations.
+
+Applications of machine learning to facility siting specifically are also established. Recent work has used ensemble models to predict site suitability for primary schools from multi-source urban data, reporting accuracies above eighty-five per cent and outperforming logistic regression and support vector baselines \cite{tianjin2025}; related studies combine machine learning with multi-criteria decision analysis and feature ranking to produce hybrid siting frameworks \cite{schoolsiting2025}, and deep neural approaches have been applied to the optimal site selection problem directly. It is therefore not accurate to present machine learning for school siting as novel in itself, and this work does not do so.
+
+What remains open is the interpretation of what such a model represents. A suitability model trained on the locations of existing facilities does not learn where facilities \emph{should} be. It learns where they \emph{were placed}, and therefore encodes the historical preferences, constraints and possibly the errors of the planners who placed them. Read as a normative instrument, this is a defect and a mechanism for perpetuating existing inequity. Read as a descriptive instrument, it is informative in a different way: it becomes a revealed-preference model of the planning process, and its SHAP attribution becomes evidence about what siting decisions actually optimise. Setting that descriptive model against a normative optimisation over the same demand surface converts the ambiguity into the central research question rather than leaving it as an unexamined assumption. This framing, rather than the use of machine learning as such, is where the present work departs from the studies cited above.
+
+\section{Validation Under Spatial Dependence}
+\label{sec:spatial-validation}
+
+Any predictive model fitted to spatial data faces a validation problem that is easy to overlook and severe in its consequences. Nearby locations resemble one another, so a randomly selected test set contains observations that are near-duplicates of observations in the training set. The model is then evaluated on data it has effectively already seen, and the reported performance is optimistically biased. Roberts et al. \cite{roberts2017} set out the general case for structured cross-validation in the presence of temporal, spatial, hierarchical and phylogenetic dependence, and the finding has since been replicated across geospatial modelling: spatially autocorrelated training and validation samples inflate performance estimates and misrepresent how a model will generalise across its intended application domain.
+
+The remedy is to construct folds that are spatially separated, either by partitioning the study area into contiguous blocks or by buffering each test observation against training observations within the range of autocorrelation. Neither is free of difficulty. Blocking reduces the effective training set and can itself bias estimates in the opposite direction, and there is an active methodological debate about which strategy is appropriate for which prediction task. What is not in dispute is that random $k$-fold cross-validation on spatially dependent data reports a number that does not mean what it appears to mean.
+
+This has a direct bearing on the siting literature reviewed in Section~\ref{sec:ml-urban}. Reported accuracies above eighty-five per cent for facility suitability models are difficult to interpret without knowing how the folds were constructed, since the target variable in such models, the presence of a facility, is strongly spatially clustered by construction. The present work therefore treats the validation protocol as a substantive component of the methodology rather than as a routine step, adopts spatially blocked folds, and reports Moran's~$I$ on model residuals as evidence that the blocking achieved what it was intended to achieve.
+
+\section{Existing Decision Support Platforms}
+\label{sec:existing-systems}
+
+Several mature platforms address urban planning decision support, and a comparative assessment is necessary both to justify building a new tool and to define what it should not attempt.
+
+UrbanSim models the interaction of land use, transport, economic activity and environmental outcomes, and is designed for long-horizon regional forecasting of development patterns under alternative policy and infrastructure scenarios. Its strength is behavioural realism at the metropolitan scale; its cost is a substantial data and calibration burden, and its outputs are development forecasts rather than siting recommendations for a specific facility class.
+
+CommunityViz operates as an extension to the ArcGIS desktop environment and supports the construction and comparison of alternative land use and growth scenarios with dynamic visualisation for stakeholder engagement. It is a general-purpose scenario tool: it will compute indicators that the analyst specifies, but it does not itself supply an accessibility model, an equity diagnosis or an optimisation engine.
+
+ArcGIS Urban provides a web-based three-dimensional environment for plan management, scenario comparison and impact evaluation, with strong visualisation and collaboration features. It is proprietary, it presupposes an existing ArcGIS deployment, and reviewers commonly note a steep learning curve. Its location-allocation solvers, inherited from the wider ArcGIS platform, do implement $p$-median and maximal covering formulations, but as generic solvers rather than as a workflow tied to a national planning standard.
+
+Three gaps follow from this comparison and define the scope of the present system. First, none of these platforms is anchored to the Kazakh planning standard, so compliance against statutory service radii is not a native output. Second, none couples a descriptive model of observed siting behaviour with a normative optimisation, which is the central analytical contribution proposed here. Third, all are either commercial or require infrastructure that a municipal department in the study context is unlikely to operate, whereas the reproducibility requirements of academic work favour an open, containerised implementation over a licensed platform. The system developed in this work is accordingly narrower in scope than any of the platforms reviewed, and deeper in the specific analytical chain from population grid to accessibility to equity diagnosis to optimised siting recommendation.
+
+\section{Regulatory and Institutional Framework}
+\label{sec:regulatory}
+
+This section establishes the statutory service radii, provision rates per thousand residents and facility capacity units that the accessibility and optimisation models take as parameters, together with the planning instrument through which siting decisions are formally made. It is drafted once the current text of the governing standard and of the applicable order on the development of urban planning projects have been obtained, and is deliberately left for that point rather than written from secondary sources, since citing a repealed instrument or an approximate radius would undermine the compliance analysis that depends on it.
+
+\section{Research Gap and Problem Statement}
+\label{sec:gap}
+
+The methodological components reviewed above are individually mature. Floating catchment accessibility measurement, inequality decomposition, spatial cluster detection, covering and median location models, and explainable gradient boosting are each supported by an established literature and by working software. Their combination into a single workflow is also no longer novel; the accessibility-then-equity-then-clusters template appears repeatedly in recent applications.
+
+Three gaps nevertheless remain, and together they define this work.
+
+The first is geographic. Urban research on the post-Soviet Central Asian city remains thin, and questions of urban renewal and peripheral growth in the former Soviet Union are explicitly identified as under-researched. Kazakhstan's capital is an informative case precisely because it is atypical: sustained public investment, rapid peripheral residential growth and an active national school construction programme produce a fast-moving supply and demand configuration that most accessibility studies, conducted in slower-changing cities, do not capture.
+
+The second is methodological, and concerns the interpretation of learned siting models. The literature contains models that predict facility suitability from the observed distribution of facilities, but the resulting attributions are generally presented as guidance for future siting rather than as evidence about past decision making. The two readings have opposite implications, and distinguishing between them requires an independent normative benchmark over the same demand surface. Constructing that benchmark, and measuring the divergence between what was built and what a coverage- or equity-optimal allocation would have selected, is the analytical core of this work.
+
+The third is evaluative. Siting studies are difficult to validate because the counterfactual is unobservable: there is normally no way to know whether a recommended location would have been better than the one chosen. The Astana case admits an unusually direct test. A national school construction programme has delivered a known set of facilities at known locations with known capacities over a known period, which makes it possible to reconstruct the pre-programme state, run the optimisation with the realised number of facilities as the budget, and compare the recommended set against the realised set. Combined with explicit baselines and a spatially blocked validation protocol, this converts an exercise that is usually assessed on plausibility into one assessed on measured agreement.
+
+\subsection{Aim and Objectives}
+
+The aim of this work is to develop and validate a reproducible framework that assesses spatial accessibility to social infrastructure in Astana, diagnoses the resulting inequities, explains the factors underlying observed siting decisions, and generates optimised siting recommendations.
+
+The objectives are:
+
+\begin{enumerate}[nosep]
+  \item to integrate heterogeneous open data sources into a canonical, provenance-tracked inventory of population demand and facility supply on a hexagonal grid, and to quantify the accuracy of the record linkage on which that inventory depends;
+  \item to implement an enhanced two-step floating catchment area model parameterised by the national planning standard, including a seasonal variant reflecting winter walking conditions;
+  \item to diagnose the distribution of accessibility using population-weighted inequality indices, decomposition by administrative district, statutory compliance rates by demographic cohort, and statistically identified deficit clusters;
+  \item to fit and interpret a revealed-preference model of observed siting decisions under a spatially blocked validation protocol;
+  \item to formulate and solve capacitated covering and median location models over candidate sites, reporting the coverage-equity trade-off as a Pareto frontier rather than a single solution;
+  \item to validate the framework by backtesting against the realised siting decisions of the national school construction programme, against explicit baselines, and through sensitivity analysis of the principal modelling choices;
+  \item to deliver the framework as a containerised, reproducible pipeline with an interactive decision support interface.
+\end{enumerate}
+
+\subsection{Object and Subject of Research}
+
+The object of research is the spatial configuration of social infrastructure supply and residential demand in Astana. The subject of research is the set of methods by which accessibility to that infrastructure is measured, its inequity diagnosed, its observed siting explained, and its future siting optimised.
+
+\section{Technical Specification}
+\label{sec:spec}
+
+The specification below defines what the system must do and the criteria against which Chapter~\ref{ch:results} verifies it. Each functional requirement is testable, and each quality criterion has a stated acceptance threshold, so that verification is a measurement rather than a judgement.
+
+\subsection{Functional Requirements}
+
+\begin{enumerate}[label=FR\arabic*.,nosep,leftmargin=*]
+  \item Acquire and version population, facility, boundary and network data from their published sources, recording for every field the source, licence and snapshot date.
+  \item Resolve records describing the same facility across registry, mapping and geocoded address sources into a single canonical entity with a confidence score.
+  \item Construct a hexagonal analysis grid over the study area and disaggregate population onto it by demographic cohort.
+  \item Compute pedestrian travel times between grid cells and facilities over the routable network.
+  \item Compute an accessibility index per cell, per facility type and per season, parameterised by the statutory service radius.
+  \item Report population-weighted inequality indices, a decomposition by administrative district, statutory compliance rates by cohort, and statistically significant deficit clusters.
+  \item Fit, validate and interpret a model of observed siting decisions under a spatially blocked protocol.
+  \item Solve capacitated covering and median location models over generated candidate sites for a user-specified facility budget, and return the coverage-equity frontier.
+  \item Present current accessibility, deficit clusters, recommended sites and per-cell attribution through an interactive interface with a facility-budget scenario control.
+  \item Reproduce all reported results from raw inputs through a single documented command.
+\end{enumerate}
+
+\subsection{Non-Functional Requirements}
+
+\begin{enumerate}[label=NFR\arabic*.,nosep,leftmargin=*]
+  \item The pipeline executes on a single workstation without specialised hardware.
+  \item All third-party data are used under terms permitting academic use, and no source is acquired in a manner contrary to its terms of service.
+  \item Every stochastic component is seeded, and repeated execution on identical inputs yields identical outputs.
+  \item Interface response to a change of the facility-budget control does not require recomputation of the travel-time matrix.
+  \item The system runs from a container definition without manual environment configuration.
+\end{enumerate}
+
+\subsection{Quality Criteria and Acceptance Thresholds}
+
+\begin{enumerate}[label=QC\arabic*.,nosep,leftmargin=*]
+  \item Gridded population totals reconcile with the official city population within a stated tolerance, and the tolerance is reported.
+  \item Record linkage precision and recall are measured against a manually labelled sample and reported with the sample size.
+  \item Geocoding positional accuracy is measured against a manually verified sample and reported.
+  \item The siting model outperforms both a logistic regression baseline and a population-density ranking on precision-recall area under the curve under spatially blocked folds.
+  \item Moran's~$I$ computed on model residuals is not significantly different from the expectation under spatial randomness.
+  \item The optimiser outperforms random siting, density-greedy siting and the unchanged current configuration on covered underserved demand.
+  \item Backtest agreement with the realised programme is reported at both 500\,m and 1\,km tolerance, alongside the same measure for every baseline.
+  \item Conclusions are stable under variation of the decay function, catchment radius, capacity proxy and grid resolution, or the instability is reported.
+\end{enumerate}

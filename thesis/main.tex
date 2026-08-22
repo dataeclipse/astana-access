@@ -1,0 +1,52 @@
+\documentclass[12pt,a4paper]{report}
+
+\usepackage{geometry}
+\geometry{left=30mm,right=15mm,top=20mm,bottom=20mm}
+
+\usepackage{fontspec}
+\setmainfont{Times New Roman}[Ligatures=TeX]
+
+\usepackage{polyglossia}
+\setdefaultlanguage{english}
+\setotherlanguages{russian,kazakh}
+
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{graphicx}
+\graphicspath{{figures/}}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{tabularx}
+\usepackage{caption}
+\captionsetup{font=small,labelsep=period}
+\usepackage{enumitem}
+\usepackage{setspace}
+\onehalfspacing
+\usepackage[hidelinks]{hyperref}
+
+\usepackage[backend=biber,style=numeric-comp,sorting=none,maxbibnames=99]{biblatex}
+\addbibresource{bib/references.bib}
+
+\newcommand{\thesistitle}{A Data-Driven Framework for Spatial Accessibility Assessment and Optimal Siting of Social Infrastructure in Astana}
+\newcommand{\thesisauthor}{Dias Bolatov}
+\newcommand{\thesisprogram}{6B06103 Big Data Analysis}
+\newcommand{\thesissupervisor}{Aidana Zhalgas}
+
+\begin{document}
+
+\input{sections/00_title}
+\input{sections/01_abstract}
+
+\tableofcontents
+
+\input{sections/02_introduction}
+\input{sections/10_chapter1}
+\input{sections/20_chapter2}
+\input{sections/30_chapter3}
+\input{sections/40_conclusion}
+
+\printbibliography[title={List of references}]
+
+\appendix
+\input{sections/90_appendix}
+
+\end{document}

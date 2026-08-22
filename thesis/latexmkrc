@@ -1,0 +1,6 @@
+$pdf_mode = 5;
+$postscript_mode = 0;
+$dvi_mode = 0;
+$bibtex_use = 2;
+$out_dir = 'build';
+$clean_ext = 'bbl run.xml synctex.gz';
