@@ -31,6 +31,8 @@ class Settings(BaseSettings):
     nominatim_url: str = "https://nominatim.openstreetmap.org/search"
     user_agent: str = "astana-access/0.1 (academic research)"
     osrm_url: str = "http://localhost:5000"
+    egov_api_url: str = "https://data.egov.kz/api/v4"
+    egov_api_key: str = ""
     twogis_api_key: str = ""
     request_timeout: int = 60
     request_delay: float = 1.0
