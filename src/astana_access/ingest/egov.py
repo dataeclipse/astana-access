@@ -11,7 +11,7 @@ INDEXES = {
     "rosogrz_mp": "v1",
 }
 
-PAGE_SIZE = 2000
+PAGE_SIZE = 100
 
 
 def _request(index: str, version: str, source: dict[str, Any] | None = None) -> list[dict]:
@@ -26,7 +26,8 @@ def _request(index: str, version: str, source: dict[str, Any] | None = None) -> 
         timeout=settings.request_timeout * 4,
         headers={"User-Agent": settings.user_agent},
     )
-    response.raise_for_status()
+    if response.status_code >= 400:
+        raise RuntimeError(f"{index}/{version}: HTTP {response.status_code}")
     payload = response.json()
     if isinstance(payload, dict):
         if "error" in payload:
