@@ -34,3 +34,4 @@ thesis/**/*.synctex.gz
 reports/*.html
 .env
 .DS_Store
+.gstack/
