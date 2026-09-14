@@ -81,13 +81,13 @@ def fetch_buildings(force: bool = False) -> gpd.GeoDataFrame:
     target = RAW / "osm" / "buildings.gpkg"
     if target.exists() and not force:
         return gpd.read_file(target)
-    query = """
+    query = f"""
     [out:json][timeout:600];
-    rel({city});
+    rel({CITY_RELATION});
     map_to_area -> .city;
     way["building"](area.city);
     out geom;
-    """.format(city=CITY_RELATION)
+    """
     payload = post_json(settings.overpass_url, {"data": query})
     rows = []
     for element in payload.get("elements", []):
