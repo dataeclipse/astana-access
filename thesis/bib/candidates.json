@@ -1,0 +1,747 @@
+[
+ {
+  "key": "hansen1959",
+  "title": "How Accessibility Shapes Land Use",
+  "author": "Hansen",
+  "year": 1959,
+  "kind": "journal",
+  "sections": "1.2",
+  "doi": "10.1080/01944365908978307",
+  "purpose": "Origin of gravity-based accessibility"
+ },
+ {
+  "key": "geurs2004",
+  "title": "Accessibility evaluation of land-use and transport strategies: review and research directions",
+  "author": "Geurs",
+  "year": 2004,
+  "kind": "journal",
+  "sections": "1.2",
+  "doi": "10.1016/j.jtrangeo.2003.10.005",
+  "purpose": "Taxonomy of accessibility measures"
+ },
+ {
+  "key": "talen1998",
+  "title": "Assessing Spatial Equity: An Evaluation of Measures of Accessibility to Public Playgrounds",
+  "author": "Talen",
+  "year": 1998,
+  "kind": "journal",
+  "sections": "1.2, 1.3",
+  "doi": "10.1068/a300595",
+  "purpose": "Accessibility measures as equity instruments for public facilities"
+ },
+ {
+  "key": "radke2000",
+  "title": "Spatial Decompositions, Modeling and Mapping Service Regions to Predict Access to Social Programs",
+  "author": "Radke",
+  "year": 2000,
+  "kind": "journal",
+  "sections": "1.2",
+  "doi": "10.1080/10824000009480538",
+  "purpose": "First two-step catchment formulation"
+ },
+ {
+  "key": "luo2003",
+  "title": "Measures of Spatial Accessibility to Health Care in a GIS Environment: Synthesis and a Case Study in the Chicago Region",
+  "author": "Luo",
+  "year": 2003,
+  "kind": "journal",
+  "sections": "1.2, 2.6",
+  "doi": "10.1068/b29120",
+  "purpose": "Two-step floating catchment area method"
+ },
+ {
+  "key": "luo2009",
+  "title": "An enhanced two-step floating catchment area (E2SFCA) method for measuring spatial accessibility to primary care physicians",
+  "author": "Luo",
+  "year": 2009,
+  "kind": "journal",
+  "sections": "1.2, 2.6",
+  "doi": "10.1016/j.healthplace.2009.06.002",
+  "purpose": "E2SFCA with distance-decay zones, the model implemented"
+ },
+ {
+  "key": "wang2012",
+  "title": "Measurement, Optimization, and Impact of Health Care Accessibility: A Methodological Review",
+  "author": "Wang",
+  "year": 2012,
+  "kind": "journal",
+  "sections": "1.2",
+  "doi": "10.1080/00045608.2012.657146",
+  "purpose": "Review linking 2SFCA to gravity models"
+ },
+ {
+  "key": "mcgrail2012",
+  "title": "Spatial accessibility of primary health care utilising the two step floating catchment area method: an assessment of recent improvements",
+  "author": "McGrail",
+  "year": 2012,
+  "kind": "journal",
+  "sections": "1.2, 2.6",
+  "doi": "10.1186/1476-072X-11-50",
+  "purpose": "Assessment of 2SFCA variants and decay choices"
+ },
+ {
+  "key": "wan2012",
+  "title": "A three-step floating catchment area method for analyzing spatial access to health services",
+  "author": "Wan",
+  "year": 2012,
+  "kind": "journal",
+  "sections": "1.2",
+  "doi": "10.1080/13658816.2011.624987",
+  "purpose": "Demand competition correction, 3SFCA"
+ },
+ {
+  "key": "delamater2013",
+  "title": "Spatial accessibility in suboptimally configured health care systems: A modified two-step floating catchment area (M2SFCA) metric",
+  "author": "Delamater",
+  "year": 2013,
+  "kind": "journal",
+  "sections": "1.2",
+  "doi": "10.1016/j.healthplace.2013.07.012",
+  "purpose": "M2SFCA, suboptimal configuration"
+ },
+ {
+  "key": "neutens2015",
+  "title": "Accessibility, equity and health care: review and research directions for transport geographers",
+  "author": "Neutens",
+  "year": 2015,
+  "kind": "journal",
+  "sections": "1.2, 1.3",
+  "doi": "10.1016/j.jtrangeo.2014.12.006",
+  "purpose": "Accessibility and equity review"
+ },
+ {
+  "key": "eldercare2025",
+  "title": "Optimizing spatial accessibility and equity of hierarchical older adult care facilities using a multi-modal two-step floating catchment area method: a case study of Lin'an District, Hangzhou",
+  "author": "Gu",
+  "year": 2025,
+  "kind": "journal",
+  "sections": "1.2",
+  "doi": "10.3389/fpubh.2025.1559463",
+  "purpose": "Recent 2SFCA plus equity plus clusters template"
+ },
+ {
+  "key": "chengdu2024",
+  "title": "Spatial Distribution and Accessibility Analysis of Primary School Facilities in Mega Cities: A Case Study of Chengdu",
+  "author": "Jiang",
+  "year": 2024,
+  "kind": "journal",
+  "sections": "1.2, 3.1",
+  "doi": "10.3390/su16020723",
+  "purpose": "School accessibility with multi-mode 2SFCA"
+ },
+ {
+  "key": "italy2022",
+  "title": "Geographical accessibility to upper secondary education: an Italian regional case study",
+  "author": "Bruno",
+  "year": 2022,
+  "kind": "journal",
+  "sections": "1.2, 3.10",
+  "doi": "10.1007/s00168-022-01146-6",
+  "purpose": "School accessibility and territorial inequality"
+ },
+ {
+  "key": "delbosc2011",
+  "title": "Using Lorenz curves to assess public transport equity",
+  "author": "Delbosc",
+  "year": 2011,
+  "kind": "journal",
+  "sections": "1.3, 2.7",
+  "doi": "10.1016/j.jtrangeo.2011.02.008",
+  "purpose": "Lorenz curve and Gini for service equity"
+ },
+ {
+  "key": "lucas2016",
+  "title": "A method to evaluate equitable accessibility: combining ethical theories and accessibility-based approaches",
+  "author": "Lucas",
+  "year": 2016,
+  "kind": "journal",
+  "sections": "1.3",
+  "doi": "10.1007/s11116-015-9585-2",
+  "purpose": "Horizontal and vertical equity in accessibility"
+ },
+ {
+  "key": "theil1967",
+  "title": "Economics and Information Theory",
+  "author": "Theil",
+  "year": 1967,
+  "kind": "manual_book",
+  "sections": "1.3, 2.7",
+  "purpose": "Theil index and its decomposition"
+ },
+ {
+  "key": "moran1950",
+  "title": "Notes on Continuous Stochastic Phenomena",
+  "author": "Moran",
+  "year": 1950,
+  "kind": "journal",
+  "sections": "1.3, 2.7, 2.8",
+  "doi": "10.1093/biomet/37.1-2.17",
+  "purpose": "Global spatial autocorrelation"
+ },
+ {
+  "key": "anselin1995",
+  "title": "Local Indicators of Spatial Association-LISA",
+  "author": "Anselin",
+  "year": 1995,
+  "kind": "journal",
+  "sections": "1.3, 2.7, 3.2",
+  "doi": "10.1111/j.1538-4632.1995.tb00338.x",
+  "purpose": "Local cluster detection"
+ },
+ {
+  "key": "rey2007",
+  "title": "PySAL: A Python Library of Spatial Analytical Methods",
+  "author": "Rey",
+  "year": 2007,
+  "kind": "journal",
+  "sections": "2.10",
+  "doi": "10.52324/001c.8285",
+  "purpose": "Software used for spatial statistics"
+ },
+ {
+  "key": "hakimi1964",
+  "title": "Optimum Locations of Switching Centers and the Absolute Centers and Medians of a Graph",
+  "author": "Hakimi",
+  "year": 1964,
+  "kind": "journal",
+  "sections": "1.4, 2.9",
+  "doi": "10.1287/opre.12.3.450",
+  "purpose": "p-median problem"
+ },
+ {
+  "key": "revelle1970",
+  "title": "Central Facilities Location",
+  "author": "ReVelle",
+  "year": 1970,
+  "kind": "journal",
+  "sections": "1.4, 2.9",
+  "doi": "10.1111/j.1538-4632.1970.tb00142.x",
+  "purpose": "Integer programming formulation of p-median"
+ },
+ {
+  "key": "church1974",
+  "title": "The maximal covering location problem",
+  "author": "Church",
+  "year": 1974,
+  "kind": "journal",
+  "sections": "1.4, 2.9",
+  "doi": "10.1007/BF01942293",
+  "purpose": "MCLP"
+ },
+ {
+  "key": "church1976",
+  "title": "Theoretical and Computational Links between the p-Median, Location Set-covering, and the Maximal Covering Location Problem",
+  "author": "Church",
+  "year": 1976,
+  "kind": "journal",
+  "sections": "1.4",
+  "doi": "10.1111/j.1538-4632.1976.tb00547.x",
+  "purpose": "Relations between location models"
+ },
+ {
+  "key": "current1988",
+  "title": "Capacitated Covering Models",
+  "author": "Current",
+  "year": 1988,
+  "kind": "journal",
+  "sections": "1.4, 2.9",
+  "doi": "10.1068/b150153",
+  "purpose": "Capacity constraints in covering models"
+ },
+ {
+  "key": "owen1998",
+  "title": "Strategic facility location: A review",
+  "author": "Owen",
+  "year": 1998,
+  "kind": "journal",
+  "sections": "1.4",
+  "doi": "10.1016/S0377-2217(98)00186-6",
+  "purpose": "Facility location review"
+ },
+ {
+  "key": "farahani2012",
+  "title": "Covering problems in facility location: A review",
+  "author": "Farahani",
+  "year": 2012,
+  "kind": "journal",
+  "sections": "1.4",
+  "doi": "10.1016/j.cie.2011.08.020",
+  "purpose": "Covering model review"
+ },
+ {
+  "key": "murray2016",
+  "title": "Maximal Coverage Location Problem",
+  "author": "Murray",
+  "year": 2016,
+  "kind": "journal",
+  "sections": "1.4",
+  "doi": "10.1177/0160017615600222",
+  "purpose": "Four decades of MCLP extensions"
+ },
+ {
+  "key": "pizzolato2004",
+  "title": "School location methodology in urban areas of developing countries",
+  "author": "Pizzolato",
+  "year": 2004,
+  "kind": "journal",
+  "sections": "1.4",
+  "doi": "10.1111/j.1475-3995.2004.00483.x",
+  "purpose": "Location models applied to urban school siting"
+ },
+ {
+  "key": "deb2002",
+  "title": "A fast and elitist multiobjective genetic algorithm: NSGA-II",
+  "author": "Deb",
+  "year": 2002,
+  "kind": "journal",
+  "sections": "1.4, 2.9",
+  "doi": "10.1109/4235.996017",
+  "purpose": "Pareto frontier via NSGA-II"
+ },
+ {
+  "key": "mavrotas2009",
+  "title": "Effective implementation of the epsilon-constraint method in Multi-Objective Mathematical Programming problems",
+  "author": "Mavrotas",
+  "year": 2009,
+  "kind": "journal",
+  "sections": "2.9",
+  "doi": "10.1016/j.amc.2009.03.037",
+  "purpose": "Augmented epsilon-constraint method"
+ },
+ {
+  "key": "kuhn1955",
+  "title": "The Hungarian method for the assignment problem",
+  "author": "Kuhn",
+  "year": 1955,
+  "kind": "journal",
+  "sections": "2.3",
+  "doi": "10.1002/nav.3800020109",
+  "purpose": "One-to-one assignment in record linkage"
+ },
+ {
+  "key": "fellegi1969",
+  "title": "A Theory for Record Linkage",
+  "author": "Fellegi",
+  "year": 1969,
+  "kind": "journal",
+  "sections": "2.3",
+  "doi": "10.1080/01621459.1969.10501049",
+  "purpose": "Probabilistic record linkage theory"
+ },
+ {
+  "key": "christen2012",
+  "title": "Data Matching: Concepts and Techniques for Record Linkage, Entity Resolution, and Duplicate Detection",
+  "author": "Christen",
+  "year": 2012,
+  "kind": "book",
+  "sections": "2.3",
+  "doi": "10.1007/978-3-642-31164-2",
+  "purpose": "Record linkage methods and evaluation"
+ },
+ {
+  "key": "tobler1979",
+  "title": "Smooth Pycnophylactic Interpolation for Geographical Regions",
+  "author": "Tobler",
+  "year": 1979,
+  "kind": "journal",
+  "sections": "2.4",
+  "doi": "10.1080/01621459.1979.10481647",
+  "purpose": "Mass-preserving areal interpolation"
+ },
+ {
+  "key": "eicher2001",
+  "title": "Dasymetric Mapping and Areal Interpolation: Implementation and Evaluation",
+  "author": "Eicher",
+  "year": 2001,
+  "kind": "journal",
+  "sections": "2.4",
+  "doi": "10.1559/152304001782173727",
+  "purpose": "Dasymetric mapping evaluation"
+ },
+ {
+  "key": "mennis2003",
+  "title": "Generating Surface Models of Population Using Dasymetric Mapping",
+  "author": "Mennis",
+  "year": 2003,
+  "kind": "journal",
+  "sections": "2.4",
+  "doi": "10.1111/0033-0124.10042",
+  "purpose": "Dasymetric population surfaces"
+ },
+ {
+  "key": "stevens2015",
+  "title": "Disaggregating Census Data for Population Mapping Using Random Forests with Remotely-Sensed and Ancillary Data",
+  "author": "Stevens",
+  "year": 2015,
+  "kind": "journal",
+  "sections": "2.2, 2.4",
+  "doi": "10.1371/journal.pone.0107042",
+  "purpose": "WorldPop disaggregation method"
+ },
+ {
+  "key": "tatem2017",
+  "title": "WorldPop, open data for spatial demography",
+  "author": "Tatem",
+  "year": 2017,
+  "kind": "journal",
+  "sections": "2.2",
+  "doi": "10.1038/sdata.2017.4",
+  "purpose": "WorldPop data description"
+ },
+ {
+  "key": "sahr2003",
+  "title": "Geodesic Discrete Global Grid Systems",
+  "author": "Sahr",
+  "year": 2003,
+  "kind": "journal",
+  "sections": "2.4",
+  "doi": "10.1559/152304003100011090",
+  "purpose": "Hexagonal discrete global grids"
+ },
+ {
+  "key": "haklay2010",
+  "title": "How Good is Volunteered Geographical Information? A Comparative Study of OpenStreetMap and Ordnance Survey Datasets",
+  "author": "Haklay",
+  "year": 2010,
+  "kind": "journal",
+  "sections": "2.2, 3.11",
+  "doi": "10.1068/b35097",
+  "purpose": "OSM data quality"
+ },
+ {
+  "key": "barrington2017",
+  "title": "The world's user-generated road map is more than 80% complete",
+  "author": "Barrington-Leigh",
+  "year": 2017,
+  "kind": "journal",
+  "sections": "2.2",
+  "doi": "10.1371/journal.pone.0180698",
+  "purpose": "OSM road network completeness"
+ },
+ {
+  "key": "boeing2017",
+  "title": "OSMnx: New methods for acquiring, constructing, analyzing, and visualizing complex street networks",
+  "author": "Boeing",
+  "year": 2017,
+  "kind": "journal",
+  "sections": "2.6",
+  "doi": "10.1016/j.compenvurbsys.2017.05.004",
+  "purpose": "Street network extraction"
+ },
+ {
+  "key": "luxen2011",
+  "title": "Real-time routing with OpenStreetMap data",
+  "author": "Luxen",
+  "year": 2011,
+  "kind": "conference",
+  "sections": "2.6",
+  "doi": "10.1145/2093973.2094062",
+  "purpose": "OSRM routing engine"
+ },
+ {
+  "key": "winterwalk2021",
+  "title": "The walking speed of pedestrians on various pavement surface conditions during winter",
+  "author": "Fossum",
+  "year": 2021,
+  "kind": "journal",
+  "sections": "2.6",
+  "doi": "10.1016/j.trd.2021.102934",
+  "purpose": "Winter walking speed parameters"
+ },
+ {
+  "key": "coldwalk2020",
+  "title": "How does weather and climate affect pedestrian walking speed during cool and cold seasons in severely cold areas?",
+  "author": "Liang",
+  "year": 2020,
+  "kind": "journal",
+  "sections": "2.6",
+  "doi": "10.1016/j.buildenv.2020.106811",
+  "purpose": "Cold-climate walking speed"
+ },
+ {
+  "key": "chen2016",
+  "title": "XGBoost: A Scalable Tree Boosting System",
+  "author": "Chen",
+  "year": 2016,
+  "kind": "conference",
+  "sections": "1.5",
+  "doi": "10.1145/2939672.2939785",
+  "purpose": "Gradient boosting background"
+ },
+ {
+  "key": "ke2017",
+  "title": "LightGBM: A Highly Efficient Gradient Boosting Decision Tree",
+  "author": "Ke",
+  "year": 2017,
+  "kind": "manual_proceedings",
+  "sections": "1.5, 2.8",
+  "purpose": "Model used"
+ },
+ {
+  "key": "prokhorenkova2018",
+  "title": "CatBoost: unbiased boosting with categorical features",
+  "author": "Prokhorenkova",
+  "year": 2018,
+  "kind": "manual_proceedings",
+  "sections": "1.5, 2.8",
+  "purpose": "Model used"
+ },
+ {
+  "key": "lundberg2017",
+  "title": "A Unified Approach to Interpreting Model Predictions",
+  "author": "Lundberg",
+  "year": 2017,
+  "kind": "manual_proceedings",
+  "sections": "1.5, 2.8",
+  "purpose": "SHAP"
+ },
+ {
+  "key": "lundberg2020",
+  "title": "From local explanations to global understanding with explainable AI for trees",
+  "author": "Lundberg",
+  "year": 2020,
+  "kind": "journal",
+  "sections": "1.5, 2.8",
+  "doi": "10.1038/s42256-019-0138-9",
+  "purpose": "TreeSHAP"
+ },
+ {
+  "key": "li2022",
+  "title": "Extracting spatial effects from machine learning model using local interpretation method: An example of SHAP and XGBoost",
+  "author": "Li",
+  "year": 2022,
+  "kind": "journal",
+  "sections": "1.5, 3.4",
+  "doi": "10.1016/j.compenvurbsys.2022.101845",
+  "purpose": "SHAP for spatial effects"
+ },
+ {
+  "key": "li2024",
+  "title": "GeoShapley: A Game Theory Approach to Measuring Spatial Effects in Machine Learning Models",
+  "author": "Li",
+  "year": 2024,
+  "kind": "journal",
+  "sections": "1.5",
+  "doi": "10.1080/24694452.2024.2350982",
+  "purpose": "Spatial extension of Shapley values"
+ },
+ {
+  "key": "saito2015",
+  "title": "The Precision-Recall Plot Is More Informative than the ROC Plot When Evaluating Binary Classifiers on Imbalanced Datasets",
+  "author": "Saito",
+  "year": 2015,
+  "kind": "journal",
+  "sections": "2.8",
+  "doi": "10.1371/journal.pone.0118432",
+  "purpose": "PR-AUC for imbalanced target"
+ },
+ {
+  "key": "roberts2017",
+  "title": "Cross-validation strategies for data with temporal, spatial, hierarchical, or phylogenetic structure",
+  "author": "Roberts",
+  "year": 2017,
+  "kind": "journal",
+  "sections": "1.6, 2.8",
+  "doi": "10.1111/ecog.02881",
+  "purpose": "Structured cross-validation"
+ },
+ {
+  "key": "ploton2020",
+  "title": "Spatial validation reveals poor predictive performance of large-scale ecological mapping models",
+  "author": "Ploton",
+  "year": 2020,
+  "kind": "journal",
+  "sections": "1.6",
+  "doi": "10.1038/s41467-020-18321-y",
+  "purpose": "Evidence of inflated random CV scores"
+ },
+ {
+  "key": "wadoux2021",
+  "title": "Spatial cross-validation is not the right way to evaluate map accuracy",
+  "author": "Wadoux",
+  "year": 2021,
+  "kind": "journal",
+  "sections": "1.6",
+  "doi": "10.1016/j.ecolmodel.2021.109692",
+  "purpose": "Counterpoint on spatial CV"
+ },
+ {
+  "key": "tianjin2025",
+  "title": "Educational Facility Site Selection Based on Multi-Source Data and Ensemble Learning: A Case Study of Primary Schools in Tianjin",
+  "author": "Sun",
+  "year": 2025,
+  "kind": "journal",
+  "sections": "1.5",
+  "doi": "10.3390/ijgi14090337",
+  "purpose": "ML school siting prior work"
+ },
+ {
+  "key": "schoolsiting2025",
+  "title": "GIS and Machine Learning Integration for Optimized School Site Selection: A Hybrid Framework with TOPSIS and Feature Ranking",
+  "author": "Başeğmez",
+  "year": 2025,
+  "kind": "journal",
+  "sections": "1.5",
+  "doi": "10.1007/s12061-025-09731-w",
+  "purpose": "Hybrid ML siting prior work"
+ },
+ {
+  "key": "koch2014",
+  "title": "Bordering on the modern: power, practice and exclusion in Astana",
+  "author": "Koch",
+  "year": 2014,
+  "kind": "journal",
+  "sections": "1.1, 1.9",
+  "doi": "10.1111/tran.12031",
+  "purpose": "Astana urban modernisation"
+ },
+ {
+  "key": "laszczkowski2016",
+  "title": "City of the Future: Built Space, Modernity and Urban Change in Astana",
+  "author": "Laszczkowski",
+  "year": 2016,
+  "kind": "book",
+  "sections": "1.1, 1.9",
+  "doi": "10.2307/j.ctvr43mp9",
+  "purpose": "Astana urban change monograph"
+ },
+ {
+  "key": "astana2025",
+  "title": "Kazakhstan's Infrastructure Programs and Urban Sustainability Analysis of Astana",
+  "author": "Atakhanova",
+  "year": 2025,
+  "kind": "journal",
+  "sections": "1.1, 1.9",
+  "doi": "10.3390/urbansci9040100",
+  "purpose": "Recent Astana infrastructure study"
+ },
+ {
+  "key": "oecd2015kz",
+  "title": "OECD Reviews of School Resources: Kazakhstan 2015",
+  "author": "OECD",
+  "year": 2015,
+  "kind": "report",
+  "sections": "1.1",
+  "doi": "10.1787/9789264245891-en",
+  "purpose": "Kazakhstan school system context"
+ },
+ {
+  "key": "worldpop2025",
+  "title": "Global Project Population Data R2025A, constrained estimates of total population and age-sex structure per 100 m grid square",
+  "author": "WorldPop",
+  "year": 2025,
+  "kind": "internet",
+  "sections": "2.2",
+  "purpose": "Population data"
+ },
+ {
+  "key": "osm2026",
+  "title": "OpenStreetMap planet data, Astana extract",
+  "author": "OpenStreetMap contributors",
+  "year": 2026,
+  "kind": "internet",
+  "sections": "2.2",
+  "purpose": "Facilities, buildings, network"
+ },
+ {
+  "key": "egovschools",
+  "title": "Register of general education schools by regions, cities of republican significance and the capital",
+  "author": "Ministry of Enlightenment of the Republic of Kazakhstan",
+  "year": 2026,
+  "kind": "internet",
+  "sections": "2.2, 2.3",
+  "purpose": "School registry"
+ },
+ {
+  "key": "egovstudents",
+  "title": "Share of children covered by additional education, number of students by region",
+  "author": "Ministry of Enlightenment of the Republic of Kazakhstan",
+  "year": 2026,
+  "kind": "internet",
+  "sections": "2.4",
+  "purpose": "Official student contingent"
+ },
+ {
+  "key": "statgov2025",
+  "title": "Population of Astana city by districts",
+  "author": "Bureau of National Statistics",
+  "year": 2025,
+  "kind": "internet",
+  "sections": "2.4",
+  "purpose": "Official district population"
+ },
+ {
+  "key": "sprk2013",
+  "title": "SP RK 3.01-101-2013 Urban planning. Planning and development of urban and rural settlements",
+  "author": "Republic of Kazakhstan",
+  "year": 2013,
+  "kind": "internet",
+  "sections": "1.8, 2.6",
+  "purpose": "Statutory service radii"
+ },
+ {
+  "key": "comfortschool2022",
+  "title": "On approval of the pilot national project in the field of education Comfortable School, Government Decree P2200000963",
+  "author": "Government of the Republic of Kazakhstan",
+  "year": 2022,
+  "kind": "internet",
+  "sections": "1.1, 3.6",
+  "purpose": "Programme, official deficit, backtest ground truth"
+ },
+ {
+  "key": "planningorder2026",
+  "title": "Rules for the development, approval and adoption of urban planning projects, Order No. 213",
+  "author": "Ministry of Industry and Construction of the Republic of Kazakhstan",
+  "year": 2026,
+  "kind": "internet",
+  "sections": "1.8",
+  "purpose": "Institutional framework"
+ },
+ {
+  "key": "h3",
+  "title": "H3: Uber's hexagonal hierarchical spatial index",
+  "author": "Uber Technologies",
+  "year": 2018,
+  "kind": "internet",
+  "sections": "2.4",
+  "purpose": "Grid implementation"
+ },
+ {
+  "key": "waddell2002",
+  "title": "UrbanSim: Modeling Urban Development for Land Use, Transportation, and Environmental Planning",
+  "author": "Waddell",
+  "year": 2002,
+  "kind": "journal",
+  "sections": "1.7",
+  "doi": "10.1080/01944360208976274",
+  "purpose": "UrbanSim as a comparable system"
+ },
+ {
+  "key": "geertman2004",
+  "title": "Planning support systems: an inventory of current practice",
+  "author": "Geertman",
+  "year": 2004,
+  "kind": "journal",
+  "sections": "1.7",
+  "doi": "10.1016/S0198-9715(03)00024-3",
+  "purpose": "Planning support systems category"
+ },
+ {
+  "key": "communityviz",
+  "title": "CommunityViz: Urban Analytics for Planners",
+  "author": "Texas A&M AgriLife Extension Service",
+  "year": 2026,
+  "kind": "internet",
+  "sections": "1.7",
+  "purpose": "Comparable system"
+ },
+ {
+  "key": "esrilocalloc",
+  "title": "Location-allocation analysis layer, ArcGIS Pro documentation",
+  "author": "Esri",
+  "year": 2026,
+  "kind": "internet",
+  "sections": "1.4, 1.7",
+  "purpose": "Location models in GIS software"
+ }
+]
