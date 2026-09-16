@@ -4,7 +4,9 @@
 \geometry{left=30mm,right=15mm,top=20mm,bottom=20mm}
 
 \usepackage{fontspec}
-\setmainfont{Times New Roman}[Ligatures=TeX]
+\IfFontExistsTF{Times New Roman}
+  {\setmainfont{Times New Roman}[Ligatures=TeX]}
+  {\setmainfont{TeX Gyre Termes}[Ligatures=TeX]}
 
 \usepackage{polyglossia}
 \setdefaultlanguage{english}
