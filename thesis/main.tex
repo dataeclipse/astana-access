@@ -3,14 +3,23 @@
 \usepackage{geometry}
 \geometry{left=30mm,right=15mm,top=20mm,bottom=20mm}
 
-\usepackage{fontspec}
-\IfFontExistsTF{Times New Roman}
-  {\setmainfont{Times New Roman}[Ligatures=TeX]}
-  {\setmainfont{TeX Gyre Termes}[Ligatures=TeX]}
-
-\usepackage{polyglossia}
-\setdefaultlanguage{english}
-\setotherlanguages{russian,kazakh}
+\usepackage{iftex}
+\ifXeTeX
+  \usepackage{fontspec}
+  \IfFontExistsTF{Times New Roman}
+    {\setmainfont{Times New Roman}[Ligatures=TeX]
+     \newfontfamily\cyrillicfont{Times New Roman}[Ligatures=TeX]}
+    {\setmainfont{TeX Gyre Termes}[Ligatures=TeX]
+     \newfontfamily\cyrillicfont{DejaVu Serif}[Ligatures=TeX]}
+  \usepackage{polyglossia}
+  \setdefaultlanguage{english}
+  \setotherlanguages{russian,kazakh}
+\else
+  \usepackage[T2A,T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{tempora}
+  \usepackage[russian,english]{babel}
+\fi
 
 \usepackage{amsmath,amssymb,mathtools}
 \usepackage{graphicx}
