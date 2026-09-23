@@ -1,0 +1,207 @@
+\documentclass[journal]{IEEEtran}
+\usepackage{cite}
+\usepackage{amsmath,amssymb}
+\usepackage{url}
+\usepackage[T1]{fontenc}
+
+\title{Spatial Accessibility Assessment and Optimal Siting of Social Infrastructure:\\ A Literature Review}
+
+\author{Dias~Bolatov,~\IEEEmembership{BSc Big Data Analysis (6B06103)}\\
+        Astana IT University\\
+        \textit{Supervisor: Aidana Zhalgas}}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+This literature review supports a diploma project titled \emph{``A Data-Driven Framework for Spatial Accessibility Assessment and Optimal Siting of Social Infrastructure: Evidence from Astana, Kazakhstan.''} Twenty peer-reviewed journal articles are analysed: ten review articles covering spatial accessibility measurement, equity, facility location, geospatial machine learning and spatial model validation, and ten technical articles reporting original studies, case studies or experiments, including 2024--2025 case studies of school and elder-care facilities in Chinese and European regions. Each source is analysed against the questions set in the course assignment. The review concludes that the individual methods needed for the project are mature, but that three gaps remain: no fine-grained quantitative accessibility study of Astana was found, siting models trained on existing facilities are read as guidance rather than tested against an independent normative benchmark, and siting recommendations are not validated against subsequently realised construction.
+\end{abstract}
+
+\begin{IEEEkeywords}
+spatial accessibility, two-step floating catchment area, facility location, school siting, explainable machine learning, spatial cross-validation, Astana
+\end{IEEEkeywords}
+
+\section{Introduction}
+\label{sec:intro}
+
+Social infrastructure such as preschools, secondary schools and primary healthcare facilities differs from most urban assets in that its value to a household depends mainly on proximity. A city that grows quickly at its periphery tends to accumulate a well-served inherited core and new residential districts where population arrives before the matching facilities. Astana fits this pattern: its state-led infrastructure programmes have expanded housing and transport, but the resulting construction boom has placed intensive demands on financial and natural resources \cite{astana2025}, and the capital's social infrastructure has to keep pace with a rapidly growing population. The research problem addressed by the diploma project, and by this review, is therefore how to measure spatial accessibility to social infrastructure in Astana, diagnose who is disadvantaged, and identify where new capacity would help most.
+
+The review is organised around four sub-questions: (1) how is spatial accessibility to a service measured; (2) how is its distribution evaluated for equity; (3) how are facility locations chosen prescriptively, not only described; and (4) how should a predictive model built on spatial data be validated so that its reported performance can be trusted.
+
+\subsection{Search Strategy and Selection Criteria}
+Candidate sources were identified through the OpenAlex and Semantic Scholar bibliographic indexes and general web search, using combinations of the terms \emph{spatial accessibility}, \emph{floating catchment}, \emph{equity}, \emph{school}, \emph{facility location}, \emph{GeoAI}, \emph{SHAP} and \emph{spatial cross-validation}, together with the ``review'' filter for the review articles. Technical sources on school and elder-care siting were additionally drawn from the reference list of the diploma project, whose entries had earlier been verified against Crossref. For every selected source the DOI, journal, year, article type and abstract were checked against the indexing record or the publisher page. Citation counts quoted below are OpenAlex counts retrieved in September 2026.
+
+The inclusion criteria followed the assignment: peer-reviewed journal articles only, with no conference proceedings, books or unpublished material, and publication in the last five years (2021--2026). All twenty analysed sources satisfy the date window (2021--2026); no older-paper exception was needed. A search for Astana- or Kazakhstan-specific studies of accessibility to schools or health facilities returned no relevant quantitative study, which is consistent with the gap identified in Section~\ref{sec:conclusion}.
+
+Section~\ref{sec:reviews} analyses ten review articles and Section~\ref{sec:technical} analyses ten technical articles, each against the assignment's question list. Section~\ref{sec:conclusion} synthesises both parts.
+
+\section{Review Articles}
+\label{sec:reviews}
+
+\subsection{Stacherl and Sauzet (2023) \cite{stacherl2023}}
+\textbf{Scope:} A PRISMA-based systematic methodological review of gravity-model-type measures of potential spatial access to healthcare, searching EMBASE, CINAHL, Web of Science and Scopus. It found 43 methodological studies and 346 empirical application cases in 309 studies.
+\textbf{Trends and classifications:} Two conceptual developments dominate, the two-step floating catchment area (2SFCA) method and the kernel density method, and virtually all other developments descend from 2SFCA. Extensions cover distance decay within the catchment, variable catchment size, provider competition, subgroup-specific access, multiple transport modes and time-dependent access.
+\textbf{Gaps and future directions:} Methodological development has moved toward greater complexity, but empirical practice still largely applies the initial, simple 2SFCA. Most applications use the measure descriptively, although it is increasingly used as an explanatory factor for outcomes.
+\textbf{Methodologies most used:} The 2SFCA family.
+\textbf{Shaping my understanding:} It justifies the 2SFCA family as the accessibility measure for the project and shows which extensions (decay, multiple modes, competition) are established options rather than novelties.
+
+\subsection{Park and Goldberg (2021) \cite{park2021}}
+\textbf{Scope:} A critical review of methodological advances in place-based spatial accessibility measures, focusing on how studies benefit from richer geospatial data.
+\textbf{Trends and classifications:} Two recent trends are examined: multimodal accessibility, using travel times by different transport modes, and temporal change in accessibility, using finer temporal granularity. Earlier reviews had concentrated on empirical findings, distance-decay functions and threshold travel times.
+\textbf{Gaps and future directions:} Two research agendas are proposed: improving measurement accuracy through dynamic variables, and linking the improved accuracy more strongly to policy.
+\textbf{Methodologies most used:} Place-based accessibility measures, with travel times that vary by mode and time.
+\textbf{Shaping my understanding:} It supports the project's plan to compute pedestrian accessibility with a seasonal (winter) travel-time variant, since it identifies time-varying impedance as a current frontier.
+
+\subsection{Ravensbergen et al. (2022) \cite{ravensbergen2022}}
+\textbf{Scope:} A systematic review of studies since 2000 on older adults' accessibility to destinations by public transport (n = 16).
+\textbf{Trends and classifications:} Accessibility metrics, destination types, transport modes and the conceptualisation of older people all vary widely across the studies, which makes cross-study conclusions difficult. A quality assessment found little risk of selection bias but room to improve study design.
+\textbf{Gaps and future directions:} The authors call for research that engages with critical gerontology and age-friendly city frameworks and that involves older people in choosing destinations and thresholds, for example through experience-based co-design.
+\textbf{Methodologies most used:} Varied accessibility metrics; no single method dominates.
+\textbf{Shaping my understanding:} It shows that results depend on which destinations and thresholds are chosen, so the project must justify its thresholds explicitly (here, statutory service radii) and treat subgroup-specific accessibility, such as by age cohort, as a first-class concern.
+
+\subsection{Rwandashi and Kamuzinzi (2026) \cite{rwandashi2026}}
+\textbf{Scope:} A systematic review of empirical studies from 2000 to early 2025 that use geospatial techniques to study educational inequity in rural communities. Scopus, Web of Science and ERIC searches returned 1247 records, of which 16 met the inclusion criteria.
+\textbf{Trends and classifications:} The techniques include distance modelling, network travel-time analysis, cost-distance modelling, spatial autocorrelation, kernel density estimation, spatial regression and multi-criteria opportunity mapping. Studies documented limited school accessibility, teacher and infrastructure shortages, environmental hazards and clustering of low opportunity.
+\textbf{Gaps and future directions:} The review states priorities for advancing spatially informed analyses of rural inequity and notes that geospatial methods revealed patterns that non-spatial approaches missed.
+\textbf{Methodologies most used:} Network travel-time analysis and spatial-autocorrelation methods appear alongside the other listed techniques.
+\textbf{Shaping my understanding:} It confirms that combining travel-time accessibility with spatial-autocorrelation diagnostics is standard practice in education-access research. Its rural focus means the urban, peripheral-growth setting of Astana is not covered.
+
+\subsection{Saldanha-da-Gama (2022) \cite{saldanha2022}}
+\textbf{Scope:} An overview, written for the 25th anniversary of \emph{Transportation Research Part E}, of the role of facility location in logistics and transportation. It is an overview article and not a systematic review, and its setting is logistics rather than social infrastructure.
+\textbf{Trends and classifications:} Conventional location problems are revisited, and newer areas such as reverse and green logistics, humanitarian supply chains and multimodal transportation are discussed, with hedging against uncertainty as a recurring theme.
+\textbf{Gaps and future directions:} Open challenges include the move from Industry 4.0 to Industry 5.0 and data-driven decision making in the era of big data.
+\textbf{Methodologies most used:} Mathematical optimisation models, increasingly with uncertainty.
+\textbf{Shaping my understanding:} It frames location optimisation as a data-driven, uncertainty-aware task, which supports the project's plan to report sensitivity analysis on demand and parameter assumptions.
+
+\subsection{Dissanayake and Gunathilake (2024) \cite{dissanayake2024}}
+\textbf{Scope:} A survey of facility location problems (FLPs), assessing model advances and improvements from roughly the past decade, framed by logistics, transportation and supply-chain applications.
+\textbf{Trends and classifications:} Works are categorised by problem variant, mathematical formulation, solution method and exact approach. Key findings are progress in mathematical programming, scalable exact methods and hybrid metaheuristics.
+\textbf{Gaps and future directions:} Uncertainty modelling, multi-objective optimisation and sustainability are named as emerging trends.
+\textbf{Methodologies most used:} Mathematical programming, exact methods and hybrid metaheuristics.
+\textbf{Shaping my understanding:} It supports two design choices of the project: reporting a multi-objective trade-off (coverage against equity) and testing sensitivity to uncertain inputs. Its setting is logistics, not social infrastructure, and it is a recent, lightly cited survey, so I use it for trends only.
+
+\subsection{Liu and Biljecki (2022) \cite{liu2022}}
+\textbf{Scope:} A systematic review of 581 papers on spatially-explicit geospatial artificial intelligence (GeoAI) in urban geography, organised into urban dynamics, social differentiation of urban areas, and social sensing.
+\textbf{Trends and classifications:} Applications of deep neural networks are proliferating, but the development of spatially-explicit GeoAI models is still at an early phase.
+\textbf{Gaps and future directions:} Three challenges of existing models are identified and the authors advise developing multi-scale, explainable, spatially-explicit GeoAI.
+\textbf{Methodologies most used:} Deep neural network-based methods.
+\textbf{Shaping my understanding:} It supports treating explainability as a requirement for urban machine-learning models, which matches the project's use of SHAP. The review concentrates on deep learning, whereas the project uses gradient-boosted trees on tabular features, so its findings apply here only in general terms.
+
+\subsection{Boutayeb, Lahsen-Cherif and El Khadimi (2025) \cite{boutayeb2025}}
+\textbf{Scope:} A broad review of machine learning applied to geospatial data, covering precision agriculture, environmental monitoring, disaster management and urban planning, with a statistical and semantic analysis of the literature.
+\textbf{Trends and classifications:} It presents GeoAI as the combination of AI/ML models with geospatial data and highlights its links to GIS and big geodata.
+\textbf{Gaps and future directions:} The paper presents the challenges facing GeoAI and gives future prospects.
+\textbf{Methodologies most used:} Machine learning models applied to geospatial data, without focus on one method.
+\textbf{Shaping my understanding:} It confirms that ML on geospatial data is a mainstream, fast-growing area including urban planning, but its breadth means it gives little specific guidance on accessibility or siting.
+
+\subsection{Jeme\c{l}janova, Kmoch and Uuemaa (2024) \cite{jemeljanova2024}}
+\textbf{Scope:} A review of studies that use supervised machine-learning regression to predict environmental variables while accounting for spatial autocorrelation somewhere in the modelling pipeline, from data exploration to model validation.
+\textbf{Trends and classifications:} Four kinds of method are identified: explicit spatial covariates, data splitting for training and testing, model calculations, and independent exploratory analysis. Authors most often handled spatial autocorrelation in the independent exploratory analysis, which had no effect on the predicted values.
+\textbf{Gaps and future directions:} There is no overall systematic approach to accounting for spatial autocorrelation in machine-learning models, and the most appropriate method depends on the study. Explicit spatial covariates and data splitting for training and testing gave more insight into a method's applicability, and the paper offers considerations for choosing a method.
+\textbf{Methodologies most used:} Exploratory analysis of autocorrelation, spatial covariates and spatially aware data splitting.
+\textbf{Shaping my understanding:} It supports using spatially aware data splitting for the siting model and diagnosing residual autocorrelation, and it warns that the choice must be justified for the case. Its studies are environmental, not urban-planning applications.
+
+\subsection{Otto, Fass\`{o} and Maranzano (2024) \cite{otto2024}}
+\textbf{Scope:} A review of regularised estimation methods for geostatistical and spatial econometric models and of cross-validation techniques suited to spatiotemporal data, motivated by big geospatial data.
+\textbf{Trends and classifications:} The first part covers regularised or penalised estimation within a mixed-effects framework, used for regressor selection, dimension reduction, detection of conditionally independent locations and estimation of spatial interaction matrices. The second part covers cross-validation, stating three key assumptions that a partitioning must fulfil and how to achieve them for time-series, spatial and spatiotemporal data.
+\textbf{Gaps and future directions:} The abstract does not list open gaps; it gives guidance and discusses software implementations.
+\textbf{Methodologies most used:} Regularised estimation and partitioned cross-validation designed for dependent data.
+\textbf{Shaping my understanding:} It gives explicit criteria for designing the spatial folds of the siting model and a statistical grounding for regularised alternatives, although it is written for geostatistical and econometric models more than for gradient-boosted trees.
+
+\section{Technical/Research Articles}
+\label{sec:technical}
+
+\subsection{Gu, Li and Zheng (2025), Hangzhou \cite{eldercare2025}}
+\textbf{Problem:} Supply--demand mismatch in the allocation of hierarchical older-adult care facilities in Lin'an District, Hangzhou, an urban--rural integrated area.
+\textbf{Methodology:} A framework built on the multi-modal 2SFCA method, combined with the Gini coefficient, the Lorenz curve and local spatial autocorrelation analysis, to evaluate accessibility and equity.
+\textbf{Findings:} Accessibility is strongly heterogeneous: higher in the eastern urban core and markedly lower in the western rural region. Local spatial autocorrelation identified severely deficient western rural areas and transitional urban--rural zones. Contributing factors include transport infrastructure, uneven older-adult population distribution and the hierarchical classification of facilities.
+\textbf{Contribution:} It gives a complete accessibility, equity and cluster-detection workflow for a tiered facility system, with policy recommendations.
+\textbf{Strengths and limitations:} The combination of three analytical layers is a strength. In my assessment, the abstract describes evaluation and recommendations and does not describe a formal location-optimisation model, and it is a single-district case.
+\textbf{Relevance:} It is the closest template for the project's accessibility and equity stage (Gini, Lorenz curve, local clusters on a 2SFCA surface).
+
+\subsection{Sun et al. (2025), Tianjin \cite{tianjin2025}}
+\textbf{Problem:} Selecting sites for new primary schools in Tianjin to support a ``15 min living circle'' for educational services.
+\textbf{Methodology:} A 500\,m grid suitability model trained on the existing distribution of primary schools, using random forest and XGBoost, with feature importance and SHAP interpretation, followed by spatial overlay with population structure and the education supply--demand ratio.
+\textbf{Findings:} RF and XGBoost exceeded 85\% on the evaluation metrics and outperformed logistic regression, SVM, KNN and CART; validation against the actual school distribution gave accuracies of 84.70\% and 92.41\% respectively. SHAP identified population density, proximity to other educational institutions and transport accessibility as the most important factors.
+\textbf{Contribution:} It shows an interpretable ensemble-learning workflow for school siting at fine spatial resolution.
+\textbf{Strengths and limitations:} Strengths are strong reported performance and transparent attribution. In my assessment, a model trained on existing schools learns where schools were placed rather than where they should be, the validation compares against that same existing distribution, and the abstract does not say how spatial autocorrelation was handled in validation.
+\textbf{Relevance:} It is the closest methodological precedent for the project's siting model and the study against which the project's revealed-preference interpretation is positioned.
+
+\subsection{Ba\c{s}e\u{g}mez, Do\u{g}an and Ayd\i{}n (2025), \.{I}zmir \cite{schoolsiting2025}}
+\textbf{Problem:} Optimising school site selection in the Konak and Karaba\u{g}lar districts of \.{I}zmir.
+\textbf{Methodology:} A hybrid framework integrating GIS with machine learning: 12 criteria and 39 alternative sites were evaluated using the Analytic Hierarchy Process, equal weighting and XGBoost-derived weights within TOPSIS, and a machine-learning ranking method (ML\_Rank).
+\textbf{Findings:} Alternatives were analysed by the average pixel values of the criteria and site AS4 was identified as the most suitable. ML\_Rank agreed closely with the equal-weighting and XGBoost rankings (Spearman $\rho$ = 0.9745 and 0.8813).
+\textbf{Contribution:} It shows how multi-criteria decision analysis and machine-learning weighting can be combined for ranking candidate school sites.
+\textbf{Strengths and limitations:} It is transparent about criteria and compares several weighting schemes. In my assessment, the candidate set is small (39 sites in two districts) and the abstract reports agreement between ranking methods, not validation against real outcomes.
+\textbf{Relevance:} It is a recent example of ranking a discrete set of candidate sites, comparable to the candidate-site step of the project's optimisation stage, and it shows how sensitive rankings can be to the weighting scheme.
+
+\subsection{Atakhanova and Baigaliyeva (2025), Astana \cite{astana2025}}
+\textbf{Problem:} The sustainability consequences of Kazakhstan's state infrastructure programmes in Astana.
+\textbf{Methodology:} The abstract refers to ``our analysis'' of Astana's development under the state infrastructure programmes without specifying a formal method.
+\textbf{Findings:} Astana, the capital since 1997, benefited from substantial public investment and has relatively low poverty, high income and broad access to social services. The programmes, aligned with China's 2013 Belt and Road Initiative, made it a transport hub and improved housing, but the construction boom used financial and natural resources intensively and accelerated the loss of green and blue lands.
+\textbf{Contribution:} It provides a recent peer-reviewed assessment of Astana's infrastructure-led growth and recommends broader stakeholder engagement and integration of green and blue infrastructure.
+\textbf{Strengths and limitations:} It directly concerns the study city. Its focus is environmental and resource sustainability, and it does not measure spatial accessibility to schools or health facilities.
+\textbf{Relevance:} It supplies the city-level context of rapid, investment-driven growth, and it does not address the accessibility question for Astana.
+
+\subsection{Jiang et al. (2024), Chengdu \cite{chengdu2024}}
+\textbf{Problem:} Spatial distribution and accessibility of primary schools in Chengdu, a rapidly growing mega-city.
+\textbf{Methodology:} Multi-source data; a random forest model to simulate the 2020 distribution of primary-school-age children; kernel density estimation and a multi-traffic-mode two-step floating catchment area method; an imbalance index; and spatial autocorrelation analysis.
+\textbf{Findings:} The child population shows a ``one point with multiple cores'' pattern and drives the distribution of schools. Facilities are imbalanced (S = 0.257), with more in the central-eastern part of the city and fewer in the west, and accessibility is high in the central circle but lower in the second and third circles.
+\textbf{Contribution:} It gives an age-cohort demand model coupled with multi-mode 2SFCA, with recommendations for allocating educational facilities.
+\textbf{Strengths and limitations:} Modelling the child cohort directly is a strength. In my assessment it is a cross-sectional diagnosis and does not propose optimised new locations.
+\textbf{Relevance:} It is a direct precedent for disaggregating population by age cohort before computing accessibility, in a comparably fast-growing city.
+
+\subsection{Li (2024), GeoShapley \cite{li2024}}
+\textbf{Problem:} Measuring spatial effects in machine learning models, including how important location is and how it interacts with other features.
+\textbf{Methodology:} GeoShapley extends Shapley values by treating location as a player in the prediction game. It is model-agnostic, is linked to spatially varying coefficient models and additive models, is validated on simulated data with known data-generating processes across seven statistical and machine learning models, and is illustrated with an empirical house-price example. It is released as the open-source Python package \texttt{geoshapley}.
+\textbf{Findings:} Values agree with the known simulated processes and enable comparison across models.
+\textbf{Contribution:} A principled way to separate the effect of location itself from the effects of other features and their synergy with location.
+\textbf{Strengths and limitations:} It is model-agnostic and open source. Validation in the abstract is limited to simulations and one house-price case, so its behaviour in a facility-siting setting is untested.
+\textbf{Relevance:} A candidate refinement for interpreting the project's siting model when SHAP attributions to coordinates or location-correlated features need to be separated from non-spatial drivers.
+
+\subsection{Bruno et al. (2022), Italy \cite{italy2022}}
+\textbf{Problem:} Measuring students' geographical access to upper secondary education in an Italian region.
+\textbf{Methodology:} A GIS-based spatial analysis with quantitative indicators computed from census-tract-level data.
+\textbf{Findings:} The study reveals geographical patterns of inequality and the least-served areas. Accessibility reflects the degree of urbanisation, and distance is a real barrier for rural students that is not compensated by economic status or digital infrastructure.
+\textbf{Contribution:} It gives empirical grounds for equity-oriented interventions, listing network expansion, service expansion and network reorganisation as longer-term actions and mobility support and connectivity as mid-term ones.
+\textbf{Strengths and limitations:} It uses fine census-tract data and separates distance from economic and digital factors. In my assessment it covers one region and upper-secondary schooling, whose catchments differ from preschools and general schools.
+\textbf{Relevance:} It supports treating physical accessibility as an equity dimension in its own right and lists the same intervention types (new sites, redistribution) that the project's optimisation stage addresses.
+
+\subsection{Li (2022), SHAP and spatial effects \cite{li2022}}
+\textbf{Problem:} Whether locally interpreted machine learning can extract spatial effects, as spatial statistical models do.
+\textbf{Methodology:} SHAP applied to XGBoost, compared at the parameter level with the Spatial Lag Model (SLM) and Multi-scale Geographically Weighted Regression (MGWR) in simulation experiments, plus an empirical example on Chicago ride-hailing.
+\textbf{Findings:} XGBoost estimates spatial effects similar to those of SLM and MGWR, and locally interpreted ML models perform better when complex spatial and non-spatial effects, such as non-linearities and interactions, coexist and are unknown. The paper has about 1180 citations.
+\textbf{Contribution:} It shows that SHAP-explained ML is a viable alternative to spatial statistical models for extracting spatial effects.
+\textbf{Strengths and limitations:} Controlled simulation with known ground truth is a strength. Real-data evidence in the abstract is a single ride-hailing example.
+\textbf{Relevance:} It provides the direct methodological justification for interpreting the project's gradient-boosted siting model with SHAP.
+
+\subsection{Fossum and Ryeng (2021), winter walking speed \cite{winterwalk2021}}
+\textbf{Problem:} How winter surface conditions change pedestrians' walking speed, so that the effect of winter maintenance on travel time can be assessed.
+\textbf{Methodology:} An empirical study relating measured walking speeds to surface conditions typical of winter.
+\textbf{Findings:} Walking speed depends significantly on surface condition. On flat ground, the practically best obtainable winter pavement makes an average pedestrian's travel about 1 min/km longer than bare pavement, and clean ice about 2 min/km longer.
+\textbf{Contribution:} It gives quantified travel-time penalties for use in cost--benefit analysis of winter maintenance regimes.
+\textbf{Strengths and limitations:} The quantified penalties are directly usable. They apply to average pedestrians on flat ground, so hills, age groups and local maintenance practice would change them, and I would state them as an assumption.
+\textbf{Relevance:} It supplies an empirical basis for the winter variant of the pedestrian travel-time matrix for Astana.
+
+\subsection{Wadoux et al. (2021), map accuracy validation \cite{wadoux2021}}
+\textbf{Problem:} Whether spatial cross-validation is the right way to evaluate the accuracy of maps produced by spatial prediction models.
+\textbf{Methodology:} A methodological argument on statistical validation of maps, contrasting standard and spatial cross-validation with probability sampling and design-based inference. The paper has about 300 citations.
+\textbf{Findings:} Claims that ordinary cross-validation is optimistically biased because it ignores spatial autocorrelation propagate a misconception. Both standard and spatial cross-validation can give biased estimates of map accuracy, while probability sampling with design-based inference gives unbiased estimates.
+\textbf{Contribution:} A critical counterpoint that clarifies what cross-validation can and cannot establish about map accuracy.
+\textbf{Strengths and limitations:} It is a careful statistical argument. It is framed around maps of environmental variables, and design-based validation needs a probability sample of test locations, which is not available for the project's facility data.
+\textbf{Relevance:} It tempers the enthusiasm of the blocked-cross-validation literature: the project should use spatially blocked folds for the question ``how well does the model generalise to new areas?'', state that limitation explicitly, and not claim unbiased map accuracy.
+
+\section{Conclusion}
+\label{sec:conclusion}
+
+The ten review articles show that the methods the project needs are individually mature. Accessibility measurement is dominated by the 2SFCA family, which is now extended to multiple modes, competition, time variation and subgroups \cite{stacherl2023,park2021}. Results depend on the destinations and thresholds chosen, so these must be justified \cite{ravensbergen2022}, and geospatial methods reveal inequity patterns that non-spatial approaches miss \cite{rwandashi2026}. Facility location is a broad optimisation field whose current trends are uncertainty modelling and multi-objective formulations \cite{saldanha2022,dissanayake2024}. GeoAI is growing and increasingly calls for explainability \cite{liu2022,boutayeb2025}, and reviews of spatial machine learning and cross-validation find no single standard for handling spatial autocorrelation, so the chosen validation design must be justified \cite{jemeljanova2024,otto2024}.
+
+The ten technical articles show that combining these components is no longer novel. Recent case studies pair multi-modal 2SFCA with Gini, Lorenz-curve and local-cluster diagnostics for elder care \cite{eldercare2025} and with cohort-specific demand models for primary schools \cite{chengdu2024}, measure geographical inequity in secondary education \cite{italy2022}, and apply ensemble learning with SHAP or ML-weighted multi-criteria ranking to school siting \cite{tianjin2025,schoolsiting2025}. Supporting studies validate SHAP for extracting spatial effects \cite{li2022,li2024}, quantify winter walking penalties \cite{winterwalk2021}, and caution that spatial cross-validation does not by itself give unbiased map accuracy \cite{wadoux2021}.
+
+Three gaps remain across these twenty sources. First, geographic: the Astana-specific study \cite{astana2025} addresses environmental and resource sustainability, and no fine-grained quantitative accessibility study of Astana was found in the searches run for this review. Second, methodological: the school-siting studies reviewed present suitability or ranking models as guidance for future siting; the Tianjin model is trained on existing school locations and validated against them \cite{tianjin2025}, and none of the reviewed studies tests such a model against an independent normative optimisation over the same demand surface. Third, evaluative: none of the siting studies validates its recommendations against later realised construction, whereas Astana's Comfortable School programme offers a known set of facilities, locations and dates for such a backtest. The diploma project is designed to address these three gaps, using the methods reviewed here as its established foundation.
+
+\bibliographystyle{IEEEtran}
+\bibliography{refs}
+
+\end{document}
