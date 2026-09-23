@@ -1,8 +1,8 @@
-# Sprint 2 report: school facility inventory
+# Sprint 2 report: facility inventory
 
-Data snapshot 2026-09-14. Everything reproduces from `src/astana_access/inventory`.
+Data snapshot 2026-09-24. Everything reproduces from `src/astana_access/inventory`.
 
-Scope of this report: general education schools. The kindergarten inventory is not built yet and is the next task in this sprint.
+Scope of this report: general education schools and preschool organisations.
 
 ## Outcome
 
@@ -13,6 +13,8 @@ Scope of this report: general education schools. The kindergarten inventory is n
 | State schools with catchment-based admission | **111** |
 | Registry records linked to a location | 99 of 112 |
 | Catchment schools with observed floor area | 101 of 111 |
+| Preschool objects in scope | 129 |
+| State preschools | 85, about 86 per cent of the numbering range |
 | Automatic linkage, frozen rules (v1) | precision 0.977, recall 0.944, F1 0.960 |
 | Automatic linkage, revised rules (v2) | precision 1.000, recall 0.967, F1 0.983 |
 
@@ -186,8 +188,72 @@ This is a district-level preview with a uniform rescale factor, not the full das
 7. School 45 has two candidate locations; the linked one is provisional.
 8. Addresses for five schools come from school websites and directories rather than an official register.
 
-## 8. Next
+## 8. Preschool inventory
 
-1. Kindergarten inventory: OSM objects, deduplication, scope, ownership, floor area. There is no Astana kindergarten registry with addresses, so this layer rests on OSM and geocoding.
+Output: `data/processed/facilities.gpkg`, layer `preschools`.
+
+| Item | Value |
+|---|---|
+| Objects after deduplication | 134 |
+| In scope | 129 |
+| State, numbered | 85 |
+| Private, inferred from a brand name | 37 |
+| Unknown, object carries no name | 7 |
+| State objects with observed floor area | 85 of 85 |
+| Median floor area of a state preschool | 3,556 sq m |
+
+### Sources and their limits
+
+There is no Astana preschool registry. The egov `kindergartens` dataset returns nothing for Astana, so unlike schools this layer has no official list to link against. It rests on OSM objects tagged `amenity=kindergarten`, enriched with names from buildings within 30 m, plus named preschool buildings more than 120 m from any object. Territory polygons, 84 of them with a median area of 1.0 ha, assign buildings to preschools.
+
+The registry that resolved school identity, ownership and completeness does not exist here. Three consequences follow.
+
+**Scope rests on the tag, not on a name.** An object tagged `amenity=kindergarten` is treated as a preschool unless its name says otherwise, because private preschools carry brand names such as Teremok, Aruana or Erke kids rather than the word kindergarten. An earlier filter that required the word in the name discarded 47 genuine preschools and left only state ones, which would have removed every private facility from the analysis.
+
+**Ownership is inferred, and the inference is recorded.** The field `ownership_source` states how each value was obtained: `number` for the 85 numbered facilities, which in Astana are state institutions, `brand_heuristic` for the 37 named ones with no legal form in the name, and `no_name` for the 7 that cannot be judged at all. Only `number` is firm. The accessibility analysis uses state facilities alone, so a private facility mistaken for state would inflate supply; the reverse mistake only shrinks the private layer, which no reported result depends on.
+
+**Completeness is measurable and incomplete.** The 85 numbered state preschools carry numbers between 1 and 99, and 15 numbers in that range are absent: 10, 11, 12, 13, 18, 29, 30, 43, 48, 51, 55, 81, 83, 96 and 97. Taking the numbering as continuous, OSM holds about 86 per cent of the state network. The missing facilities are not distributed at random: they have to be somewhere, and every one of them adds supply that the model currently does not see. This is a larger gap than for schools, where the official registry and OSM independently agreed on 112 objects.
+
+### Distribution
+
+| District | State | Private | Unknown | In scope |
+|---|---|---|---|---|
+| Almaty | 17 | 8 | 2 | 27 |
+| Baikonur | 10 | 1 | 1 | 12 |
+| Esil | 15 | 13 | 2 | 30 |
+| Nura | 12 | 3 | 1 | 16 |
+| Saraishyk | 8 | 0 | 1 | 9 |
+| Saryarka | 23 | 12 | 0 | 35 |
+| **Total** | **85** | **37** | **7** | **129** |
+
+Private preschools concentrate in Esil and Saryarka and are almost absent from Saraishyk and Baikonur, echoing the pattern already seen in schools.
+
+### Provisional supply per child
+
+State preschool floor area per child aged 1 to 6, using the raw WorldPop cohort, that is, before the dasymetric correction:
+
+| District | Floor area, sq m | Children 1-6, raw | sq m per child |
+|---|---|---|---|
+| Baikonur | 26,228 | 42,745 | 0.61 |
+| Nura | 48,753 | 25,609 | 1.90 |
+| Saraishyk | 38,764 | 19,554 | 1.98 |
+| Almaty | 64,510 | 31,586 | 2.04 |
+| Saryarka | 79,263 | 35,087 | 2.26 |
+| Esil | 64,584 | 27,304 | 2.37 |
+
+Baikonur stands out at roughly a third of every other district. The raw cohort overstates Baikonur by about 47 per cent, so the corrected figure will be nearer 0.9 sq m per child, which still leaves it far below the rest. This is a preview, not a result: it uses uncorrected population, floor area instead of places, and a supply layer known to be about 14 per cent incomplete.
+
+### Preschool limitations, in addition to those in section 7
+
+1. No official registry exists for Astana preschools, so identity, ownership and completeness cannot be verified against a primary source.
+2. About 14 per cent of the state network is missing from the supply layer, judged by gaps in the numbering.
+3. Ownership for 37 facilities rests on a brand-name heuristic and for 7 cannot be determined.
+4. The kindergarten-school complex number 47 is counted in the school layer and excluded here, so its preschool places are not represented as preschool supply.
+5. Private preschools are recorded but excluded from accessibility supply, since they charge fees and do not serve a catchment.
+
+The information request to the Astana Education Department covers precisely these gaps: the list of preschools, their capacity, and the waiting list by district.
+
+## 9. Next
+
 2. Dasymetric population redistribution constrained to official district totals.
 3. Pedestrian network and travel-time matrix, sprint 3.

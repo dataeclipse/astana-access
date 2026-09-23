@@ -36,10 +36,8 @@ def load_buildings() -> gpd.GeoDataFrame:
     return frame
 
 
-def load_territories() -> gpd.GeoDataFrame:
-    return gpd.read_file(RAW / "osm" / "school_territories.gpkg", layer="territories").to_crs(
-        CRS_METRIC
-    )
+def load_territories(name: str = "school_territories.gpkg") -> gpd.GeoDataFrame:
+    return gpd.read_file(RAW / "osm" / name, layer="territories").to_crs(CRS_METRIC)
 
 
 def _floor(buildings: gpd.GeoDataFrame, median_levels: float) -> tuple[float, int]:
@@ -49,11 +47,15 @@ def _floor(buildings: gpd.GeoDataFrame, median_levels: float) -> tuple[float, in
     )
 
 
-def attach(schools: gpd.GeoDataFrame) -> gpd.GeoDataFrame:
+def attach(
+    schools: gpd.GeoDataFrame,
+    territories_file: str = "school_territories.gpkg",
+    tagged_type: str = "school",
+) -> gpd.GeoDataFrame:
     buildings = load_buildings()
-    territories = load_territories()
+    territories = load_territories(territories_file)
     usable = buildings[~buildings["building"].isin(EXCLUDED_TYPES)]
-    school_tagged = usable[usable["building"] == "school"]
+    school_tagged = usable[usable["building"] == tagged_type]
     tagged_levels = school_tagged["levels_tag"].dropna()
     median_levels = float(tagged_levels.median()) if len(tagged_levels) else 3.0
 
