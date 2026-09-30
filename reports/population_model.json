@@ -1,0 +1,119 @@
+{
+ "floors": {
+  "donors": 4170,
+  "checked": 4074,
+  "mae_floors": 2.005031909671085,
+  "bias_floors": -0.29418262150220914,
+  "within_2_floors": 0.7083946980854198,
+  "small_median": 1.0
+ },
+ "housing": {
+  "gross_block_mm2": 73.58797443426742,
+  "gross_house_mm2": 4.3986873972423925,
+  "official_block_mm2": 36.875917,
+  "official_house_mm2": 4.729047999999998,
+  "net_to_gross_block": 0.501113358310188,
+  "net_to_gross_house": 1.0751043602154393,
+  "house_factor": 2.1454314525575913
+ },
+ "district_fit": {
+  "worldpop": {
+   "mean_abs_error": 0.27625350546138394,
+   "ratio_Almaty+Saraishyk": 1.0397040823790755,
+   "ratio_Baikonur": 1.7642082140516935,
+   "ratio_Esil": 0.7673771455461795,
+   "ratio_Nura": 0.7589602356358652,
+   "ratio_Saryarka": 0.8963073879418045
+  },
+  "floor_area": {
+   "mean_abs_error": 0.2779719917367151,
+   "ratio_Almaty+Saraishyk": 1.1268187181641502,
+   "ratio_Baikonur": 0.5854945389647633,
+   "ratio_Esil": 1.1642983418510675,
+   "ratio_Nura": 1.339486010233696,
+   "ratio_Saryarka": 0.6552485726005748
+  },
+  "stations_alpha_0.0": {
+   "mean_abs_error": 0.1147796955449039,
+   "ratio_Almaty+Saraishyk": 1.1745902524149485,
+   "ratio_Baikonur": 0.9493946404581848,
+   "ratio_Esil": 0.7818258142768828,
+   "ratio_Nura": 0.9354014912887507,
+   "ratio_Saryarka": 1.0659301713333893
+  },
+  "stations_alpha_0.1": {
+   "mean_abs_error": 0.09615995596070501,
+   "ratio_Almaty+Saraishyk": 1.1731554294581628,
+   "ratio_Baikonur": 0.9249988353203988,
+   "ratio_Esil": 0.8184626058626447,
+   "ratio_Nura": 0.9692504752121325,
+   "ratio_Saryarka": 1.0203562667405384
+  },
+  "stations_alpha_0.2": {
+   "mean_abs_error": 0.08973698134917721,
+   "ratio_Almaty+Saraishyk": 1.1710407194723567,
+   "ratio_Baikonur": 0.8962832835363163,
+   "ratio_Esil": 0.8553782884832534,
+   "ratio_Nura": 1.0053890742188671,
+   "ratio_Saryarka": 0.9760833149257682
+  },
+  "stations_alpha_0.3": {
+   "mean_abs_error": 0.10433653205198641,
+   "ratio_Almaty+Saraishyk": 1.1680032882387543,
+   "ratio_Baikonur": 0.8640520299320869,
+   "ratio_Esil": 0.8927541388097516,
+   "ratio_Nura": 1.043507005571846,
+   "ratio_Saryarka": 0.9330214648088299
+  },
+  "stations_alpha_0.5": {
+   "mean_abs_error": 0.13462547222377239,
+   "ratio_Almaty+Saraishyk": 1.1591749784583651,
+   "ratio_Baikonur": 0.7914951042235415,
+   "ratio_Esil": 0.9690476101801414,
+   "ratio_Nura": 1.124425274878715,
+   "ratio_Saryarka": 0.8499301778145352
+  },
+  "stations_alpha_1.0": {
+   "mean_abs_error": 0.2779719917367152,
+   "ratio_Almaty+Saraishyk": 1.1268187181641502,
+   "ratio_Baikonur": 0.5854945389647634,
+   "ratio_Esil": 1.1642983418510677,
+   "ratio_Nura": 1.3394860102336963,
+   "ratio_Saryarka": 0.6552485726005749
+  }
+ },
+ "stations_with_buildings": 340,
+ "assignment_share_of_floor_area": {
+  "listed": 0.14132971728918925,
+  "nearest": 0.4067690732115357,
+  "polygon": 0.39513501610796226,
+  "polygon_partial": 0.05676619339131269
+ },
+ "population_outside_grid": 0.0,
+ "cell_rank_correlation": {
+  "pop_worldpop": {
+   "pop_worldpop": 1.0,
+   "pop_floor": 0.679,
+   "pop_station": 0.681,
+   "pop_station_equal": 0.682
+  },
+  "pop_floor": {
+   "pop_worldpop": 0.679,
+   "pop_floor": 1.0,
+   "pop_station": 0.999,
+   "pop_station_equal": 0.998
+  },
+  "pop_station": {
+   "pop_worldpop": 0.681,
+   "pop_floor": 0.999,
+   "pop_station": 1.0,
+   "pop_station_equal": 1.0
+  },
+  "pop_station_equal": {
+   "pop_worldpop": 0.682,
+   "pop_floor": 0.998,
+   "pop_station": 1.0,
+   "pop_station_equal": 1.0
+  }
+ }
+}

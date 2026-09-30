@@ -1,0 +1,40 @@
+{
+ "spatial_cv": {
+  "n": 13830,
+  "positive_share": 0.4292118582791034,
+  "roc_auc": 0.9816584655717913,
+  "pr_auc": 0.9753614174137916,
+  "f1": 0.9218065385911696,
+  "brier": 0.05003724573192339,
+  "tp": 5470,
+  "fp": 462,
+  "fn": 466,
+  "tn": 7432
+ },
+ "transfer_to_lists": {
+  "n": 2663,
+  "recall": 0.8051070221554638,
+  "mean_probability": 0.7723292519118167
+ },
+ "importance": {
+  "built_share_300": 1210,
+  "n_300": 1163,
+  "compactness": 1130,
+  "area_median_300": 1123,
+  "footprint_m2": 1122,
+  "built_share_100": 979,
+  "area_median_100": 941,
+  "perimeter_m": 766,
+  "floors": 739,
+  "n_100": 707,
+  "floors_median_100": 698,
+  "floors_median_300": 597,
+  "in_residential": 232,
+  "poi_nodes": 231,
+  "addresses": 198,
+  "osm": 88,
+  "in_construction": 49,
+  "flats": 19,
+  "in_allotments": 8
+ }
+}

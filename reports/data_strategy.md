@@ -14,10 +14,10 @@ Written 2026-09-30. This note fixes how the project obtains every input if no st
 | Need | Source in hand | How it is obtained | Independent check | Status |
 |---|---|---|---|---|
 | City and district boundaries | OSM relations | Overpass | District areas against the official figures | Done |
-| Population by age, 100 m | WorldPop, constrained | Download | Official district totals: city -7.2%, districts 23.6% mean absolute error | Done, needs correction |
-| District population totals | Bureau of National Statistics | Published table | - | Done |
-| Sub-district population signal | 366 polling-station territories, akim decision 01-7 | Text of the decision on adilet.zan.kz | Station counts against district shares: 11.9% error, r = 0.92 | Parsed in part |
-| Buildings, levels, addresses | OSM: buildings, 37,925 address objects, 4,822 named streets | Overpass | Stated floor area of 3 schools: within 9% | Done |
+| Age structure, 100 m | WorldPop, constrained | Download | District totals for 1 January 2026: 27.6% mean absolute error, so it is used for cohort shares only | Done |
+| District population totals | Bureau of National Statistics, bulletin 18-05 of 2 February 2026: five reporting units on 1 January 2026 | Published spreadsheet | - | Done |
+| Sub-district population signal | 386 territorial polling stations, akim decision 01-7 in the edition of 18 February 2026 | Text of the decision on adilet.zan.kz | Station counts against district totals: 8.7% error, r = 0.97; 246 of 247 reconstructed territories fall in the district the decision states | 340 territories reconstructed |
+| Buildings, levels, addresses | Overture Maps release 2026-09-23: 93,507 footprints, OSM plus Microsoft; OSM: 37,925 address objects, 4,822 named streets, land use | Public cloud bucket and Overpass | Stated floor area of 3 schools: within 9%; houses against official housing stock: within 8% | Done |
 | School list | egov registry, 112 records, and OSM, 169 objects | API and Overpass | Registry against OSM: 99 of 112 linked, F1 0.96 | Done |
 | School positions | OSM | Overpass | Official coordinates of 11 schools: median 29 m | Done |
 | School design capacity | School websites | Crawl of 125 hosts | City totals of pupils and shortage | 11 schools only |
@@ -41,10 +41,13 @@ Used to calibrate and to sanity-check, never as per-facility data.
 | 1 Sep 2025 | 206 schools: 122 state, 77 private, 7 republican; over 310,000 pupils; 31,000 first-graders | informburo.kz |
 | 2023-2025 | Comfortable School: 24 schools, 88,800 places in two shifts: 21 schools of 2,000, one of 1,200, two of 600 | inbusiness.kz, tengrinews.kz |
 | 30 Sep 2026 | 790 preschool organisations, 66,402 children | Preschool enrolment portal |
+| 1 Jan 2026 | Population 1,638,233: Almaty with Saraishyk 443,031, Baikonur 218,232, Esil 320,472, Nura 303,914, Saryarka 352,584 | Bureau of National Statistics, bulletin 18-05 |
+| 1 Jan 2025 | Housing stock 36.7 million sq m, 87.3% in apartment buildings | Kazinform citing the Bureau; to be re-checked at the primary source |
+| 2025 | 4,904,965 sq m of housing commissioned, 68,148 by individual builders | Bureau of National Statistics, construction bulletin of 3 July 2026 |
 
 ## What stays an estimate, and how it is treated
 
-**Population inside a district.** Official totals exist for six districts only. The grid is rebuilt in a hierarchy: city total, district totals as hard constraints, then polling-station territories and residential floor area as weights. The constraint guarantees district totals; the distribution inside a district is an estimate. It is tested by withholding one level: station-level weights are fitted without district totals and compared with them.
+**Population inside a district.** Official totals exist for five reporting units only. The grid is rebuilt in a hierarchy: district totals as hard constraints, polling-station territories as the next level with near-equal shares, and residential floor area inside each territory. The constraint guarantees district totals; the distribution inside a district is an estimate. Residential floor area alone misses district totals by 27.8 per cent and WorldPop by 27.6, against 8.7 for the station count, which is why stations and not floor area carry population between parts of a district. Four variants of the grid are kept and every result is recomputed on each. Details in `s2b_population.md`.
 
 **School capacity.** Known for 11 schools. Floor area is measured for 96 of 111 and does not predict design capacity school by school. Accessibility is therefore reported twice: on floor area, and on design places obtained from floor area with one city-level ratio. The ratio is bracketed by two unrelated estimates, 13.5 and 17.3 sq m per place, and results are recomputed at both ends.
 
