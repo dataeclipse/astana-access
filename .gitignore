@@ -35,3 +35,4 @@ reports/*.html
 .env
 .DS_Store
 .gstack/
+graphify-out/

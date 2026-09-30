@@ -1,6 +1,6 @@
 # Sprint 2 report: facility inventory
 
-Data snapshot 2026-09-24. Everything reproduces from `src/astana_access/inventory`.
+Data snapshot 2026-09-24; sections 8 and 9 revised 2026-09-30. Everything reproduces from `src/astana_access/inventory`.
 
 Scope of this report: general education schools and preschool organisations.
 
@@ -12,9 +12,10 @@ Scope of this report: general education schools and preschool organisations.
 | In scope for general education | 149 |
 | State schools with catchment-based admission | **111** |
 | Registry records linked to a location | 99 of 112 |
-| Catchment schools with observed floor area | 101 of 111 |
-| Preschool objects in scope | 129 |
-| State preschools | 85, about 86 per cent of the numbering range |
+| Catchment schools with a building found | 101 of 111, floor area used as observed for 96 |
+| Preschool organisations, official registry | 790: 148 state, 642 private |
+| Preschools located at the exact building | 653 of 790 |
+| Schools with a stated design capacity | 11 of 111 |
 | Automatic linkage, frozen rules (v1) | precision 0.977, recall 0.944, F1 0.960 |
 | Automatic linkage, revised rules (v2) | precision 1.000, recall 0.967, F1 0.983 |
 
@@ -190,70 +191,145 @@ This is a district-level preview with a uniform rescale factor, not the full das
 
 ## 8. Preschool inventory
 
-Output: `data/processed/facilities.gpkg`, layer `preschools`.
+Revised on 2026-09-30. The first version of this section rested on OpenStreetMap alone, reported 85 state preschools and called that 86 per cent of the network. Both the figure and two of the rules were wrong. The official enrolment registry lists 148 state organisations, so OSM held about 57 per cent of them, and it lists 642 private ones where OSM had 37.
+
+Output: `data/processed/facilities.gpkg`, layer `preschools`. The earlier OSM-only layer is kept in `data/processed/facilities_osm.gpkg` and is now used only as a source of building geometry.
 
 | Item | Value |
 |---|---|
-| Objects after deduplication | 134 |
-| In scope | 129 |
-| State, numbered | 85 |
-| Private, inferred from a brand name | 37 |
-| Unknown, object carries no name | 7 |
-| State objects with observed floor area | 85 of 85 |
-| Median floor area of a state preschool | 3,556 sq m |
+| Organisations in the registry | 790 |
+| State | 148, of which 99 main sites and 49 branches or mini-centres |
+| Private | 642 |
+| Children attending, registry total | 66,402 |
+| State, children | 29,429, a mean of 199 per organisation |
+| Private, children | 36,973, a mean of 58 per organisation |
+| Organisations reporting free places | 470, with 4,881 places |
+| Located at the exact building | 653, or 82.7 per cent |
+| Located approximately | 75, or 9.5 per cent |
+| Not located | 62, or 7.8 per cent |
 
-### Sources and their limits
+### Source
 
-There is no Astana preschool registry. The egov `kindergartens` dataset returns nothing for Astana, so unlike schools this layer has no official list to link against. It rests on OSM objects tagged `amenity=kindergarten`, enriched with names from buildings within 30 m, plus named preschool buildings more than 120 m from any object. Territory polygons, 84 of them with a median area of 1.0 ha, assign buildings to preschools.
+The list is the public registry of the municipal preschool enrolment portal, `indigo-nursultan.e-orda.kz`, as displayed on 30 September 2026. The portal's `robots.txt` disallows automated access, so the two pages were saved by hand from a browser and are parsed from `data/raw/manual/`. Nothing is fetched from the portal by code. `ingest/indigo.py` extracts, for each organisation, the name, address, ownership badge, minimum enrolment age, languages and free places, and from the second page the free places by age group. The parsed ownership split, 148 and 642, equals the totals printed on the page.
 
-The registry that resolved school identity, ownership and completeness does not exist here. Three consequences follow.
+The registry gives attendance only as three totals: all organisations, state, private. It gives no figure per organisation.
 
-**Scope rests on the tag, not on a name.** An object tagged `amenity=kindergarten` is treated as a preschool unless its name says otherwise, because private preschools carry brand names such as Teremok, Aruana or Erke kids rather than the word kindergarten. An earlier filter that required the word in the name discarded 47 genuine preschools and left only state ones, which would have removed every private facility from the analysis.
+### Two rules that changed
 
-**Ownership is inferred, and the inference is recorded.** The field `ownership_source` states how each value was obtained: `number` for the 85 numbered facilities, which in Astana are state institutions, `brand_heuristic` for the 37 named ones with no legal form in the name, and `no_name` for the 7 that cannot be judged at all. Only `number` is firm. The accessibility analysis uses state facilities alone, so a private facility mistaken for state would inflate supply; the reverse mistake only shrinks the private layer, which no reported result depends on.
+**Private preschools are part of supply.** The earlier version excluded them on the ground that they charge fees. In Astana places are allocated through one municipal queue that covers state and private organisations alike, and private organisations hold 56 per cent of attending children. Leaving them out would have removed more than half of the real supply. Private schools remain excluded from school supply; that rule is unchanged.
 
-**Completeness is measurable and incomplete.** The 85 numbered state preschools carry numbers between 1 and 99, and 15 numbers in that range are absent: 10, 11, 12, 13, 18, 29, 30, 43, 48, 51, 55, 81, 83, 96 and 97. Taking the numbering as continuous, OSM holds about 86 per cent of the state network. The missing facilities are not distributed at random: they have to be somewhere, and every one of them adds supply that the model currently does not see. This is a larger gap than for schools, where the official registry and OSM independently agreed on 112 objects.
+**The registry, not OSM, defines the list.** OSM is kept for what it is good at, building footprints and positions, and no longer decides which organisations exist.
+
+### Geocoding
+
+The registry has addresses and no coordinates. Addresses are resolved against a gazetteer built from 37,925 OSM address objects and 4,822 named street segments in Astana (`inventory/addresses.py`). The street table supplies the Kazakh name, the Russian name, alternative names and former names of each street, which matters because the registry mixes all four: `улица Е 11`, `Нуршайхова` and `Әзілхан Нұршайықов көшесі` are one street.
+
+The steps are: strip city, district and premises suffixes; normalise the street name, keeping lanes apart from streets of the same name; resolve it through the alias table, then by surname with initials, then by fuzzy match; and look the house number up on that street. A coordinate is accepted only when the house number matches exactly and the matching points lie within 150 m of each other. Nearest-number and same-base matches are kept as a separate approximate class. When a street is found and the house is not, no coordinate is produced.
+
+| Coordinate source | Organisations | Share of children |
+|---|---|---|
+| Exact house in the gazetteer | 638 | 80.9% |
+| OSM object of the same numbered state preschool | 11 | 3.3% |
+| Exact house through Nominatim, verified | 4 | 0.3% |
+| Approximate, nearest house on the street | 75 | 7.8% |
+| Not located | 62 | 7.7% |
+
+Shares of children use the class means, 199 and 58, since no per-organisation figure exists.
+
+### Validation of positions
+
+Three independent checks, none of which was used to build the matcher.
+
+| Check | n | Median error | Within 150 m |
+|---|---|---|---|
+| Exact-house result against the OSM building of the same state preschool | 70 | 9 m | 98.6% |
+| Exact-house result against official coordinates of schools on the school enrolment portal | 10 | 24 m | 100% |
+| Stated district in the address against the district of the coordinate | 104 | - | 96.2% agree |
+
+The single disagreement in the first check is preschool number 20: the registry address resolves to one building and OSM places the facility 3.7 km away. The registry address is used and the case is flagged in the column `osm_conflict_m`.
+
+The approximate class is materially worse. Only 3 to 10 such cases, depending on the matcher version, could be compared with an OSM building, and their median error was 180 to 260 m, which is more than one H3 cell. It is kept in the layer with its own label so that accessibility can be computed with and without it.
+
+On residential addresses the gazetteer is weaker than on institutions: of 4,808 houses in the official catchment lists of 11 schools, 65.6 per cent resolve to an exact building, and the share falls below 50 per cent in districts of detached housing. This bounds what address-based population allocation can achieve with OSM alone.
 
 ### Distribution
 
-| District | State | Private | Unknown | In scope |
+Located organisations by district:
+
+| District | State | Private | Children, estimated | Free places |
 |---|---|---|---|---|
-| Almaty | 17 | 8 | 2 | 27 |
-| Baikonur | 10 | 1 | 1 | 12 |
-| Esil | 15 | 13 | 2 | 30 |
-| Nura | 12 | 3 | 1 | 16 |
-| Saraishyk | 8 | 0 | 1 | 9 |
-| Saryarka | 23 | 12 | 0 | 35 |
-| **Total** | **85** | **37** | **7** | **129** |
+| Almaty | 30 | 133 | 13,625 | 1,372 |
+| Baikonur | 19 | 39 | 6,024 | 511 |
+| Esil | 19 | 135 | 11,553 | 896 |
+| Nura | 15 | 133 | 10,642 | 626 |
+| Saraishyk | 16 | 71 | 7,270 | 206 |
+| Saryarka | 38 | 80 | 12,163 | 947 |
+| Not located | 11 | 51 | 5,125 | 323 |
+| **Total** | **148** | **642** | **66,402** | **4,881** |
 
-Private preschools concentrate in Esil and Saryarka and are almost absent from Saraishyk and Baikonur, echoing the pattern already seen in schools.
+Estimated children are counts of organisations multiplied by the class mean, so they show where organisations are, not how large each one is. Baikonur has the fewest organisations of any district while the raw population grid assigns it the largest preschool cohort; whether that is a real gap or the known overestimate of Baikonur in WorldPop is settled only after the population correction.
 
-### Provisional supply per child
+### Limitations
 
-State preschool floor area per child aged 1 to 6, using the raw WorldPop cohort, that is, before the dasymetric correction:
+1. Attendance per organisation is unknown. The registry publishes three totals. Every organisation of a class carries the class mean until a better weight is available; for the 105 organisations linked to an OSM building, floor area gives a second, independent weight.
+2. 62 organisations, 7.7 per cent of children by class mean, have no coordinate and are absent from the map. They are listed in the layer without geometry so that the loss is visible.
+3. 75 organisations are placed with an error of a few hundred metres.
+4. The registry is a single snapshot. Organisations that are not connected to the municipal queue are not in it.
+5. Free places change daily and describe one evening.
 
-| District | Floor area, sq m | Children 1-6, raw | sq m per child |
-|---|---|---|---|
-| Baikonur | 26,228 | 42,745 | 0.61 |
-| Nura | 48,753 | 25,609 | 1.90 |
-| Saraishyk | 38,764 | 19,554 | 1.98 |
-| Almaty | 64,510 | 31,586 | 2.04 |
-| Saryarka | 79,263 | 35,087 | 2.26 |
-| Esil | 64,584 | 27,304 | 2.37 |
+## 9. School capacity: what the school websites yield
 
-Baikonur stands out at roughly a third of every other district. The raw cohort overstates Baikonur by about 47 per cent, so the corrected figure will be nearer 0.9 sq m per child, which still leaves it far below the rest. This is a preview, not a result: it uses uncorrected population, floor area instead of places, and a supply layer known to be about 14 per cent incomplete.
+The capacity proxy in section 5 had never been compared with a stated design capacity. `ingest/school_sites.py` reads the public pages of school websites at `N.astana-bilim.kz` for N from 1 to 125, within the limits of each site's `robots.txt`, and extracts sentences that state design capacity, enrolment, shifts and total floor area. 85 of 125 hosts respond. Every extracted value was checked by reading the sentence it came from; halls, canteens and libraries that match the same patterns were rejected. The accepted values with their source sentence and URL are in `data/labels/school_site_facts.csv`.
 
-### Preschool limitations, in addition to those in section 7
+| Fact | Schools |
+|---|---|
+| Design capacity | 11 |
+| Enrolment | 10 |
+| Shifts | 5 |
+| Total floor area | 3 |
 
-1. No official registry exists for Astana preschools, so identity, ownership and completeness cannot be verified against a primary source.
-2. About 14 per cent of the state network is missing from the supply layer, judged by gaps in the numbering.
-3. Ownership for 37 facilities rests on a brand-name heuristic and for 7 cannot be determined.
-4. The kindergarten-school complex number 47 is counted in the school layer and excluded here, so its preschool places are not represented as preschool supply.
-5. Private preschools are recorded but excluded from accessibility supply, since they charge fees and do not serve a catchment.
+The yield is low. Most school sites carry news and no passport of the school.
 
-The information request to the Astana Education Department covers precisely these gaps: the list of preschools, their capacity, and the waiting list by district.
+### What the 11 schools show
 
-## 9. Next
+| School | Design capacity | Enrolment | Load | Floor area, OSM | sq m per place |
+|---|---|---|---|---|---|
+| 13 | 392 | - | - | 6,748 | 17.2 |
+| 35 | 1,500 | 1,989 | 1.33 | 14,055 | 9.4 |
+| 40 | 850 | - | - | 19,454 | 22.9 |
+| 42 | 450 | 462 | 1.03 | 9,669 | 21.5 |
+| 44 | 1,240 | - | - | 8,253 | 6.7 |
+| 65 | 1,200 | 3,028 | 2.52 | 23,748 | 19.8 |
+| 69 | 1,200 | 3,129 | 2.61 | 21,084 | 17.6 |
+| 71 | 1,200 | 5,334 | 4.44 | 14,595 | 12.2 |
+| 77 | 1,200 | 1,650 | 1.38 | 16,235 | 13.5 |
+| 79 | 1,200 | 670 | 0.56 | 14,758 | 12.3 |
+| 83 | 1,200 | 3,555 | 2.96 | 15,167 | 12.6 |
 
-2. Dasymetric population redistribution constrained to official district totals.
-3. Pedestrian network and travel-time matrix, sprint 3.
+Enrolment years differ between schools, from 2015 to 2023, and the figure for school 79 dates from its opening year.
+
+**The floor area itself is measured well.** Where a school states its total area, the OSM estimate is within 9 per cent: 14,758 against 14,664 sq m, 15,167 against 16,296, and 14,595 against 16,112.
+
+**Floor area does not predict design capacity.** Across the 11 schools the rank correlation between floor area and capacity is 0.07; on the 6 schools whose floor area comes from a territory polygon or tagged school buildings it is 0.65. Six of the 11 schools have the same design capacity, 1,200, while their floor area ranges from 14,600 to 23,700 sq m. Schools are built to a small set of standard designs, so capacity is closer to a category than to a continuous function of area, and later annexes change area without a published change in capacity.
+
+**The city-level ratio agrees with the sample.** On 15 August 2024 the city reported 233,006 pupils in 110 state schools and a shortage of 27,800 places. If the shortage is measured against two-shift operation, the network holds about 102,600 design places, and the 1.77 million sq m of floor area in the 111 catchment schools gives 17.3 sq m per design place. The sample median is 13.5, with an interquartile range of 12.2 to 18.7. The two estimates come from unrelated sources and are of the same order. The two-shift reading of the shortage figure is an assumption.
+
+**Overcrowding is large and uneven.** Five of the eight schools with both figures enrol more than twice their design capacity, and school 71 enrols 4.4 times. A supply measure that ignores actual load would call these schools well provided.
+
+### Consequence for the method
+
+Design capacity per school cannot be recovered from open sources for the whole network: 11 of 111 schools, and no relationship strong enough to impute the rest. Two supply measures are therefore carried forward, and results are reported for both.
+
+1. Floor area, as measured. It is observed for 96 of 111 schools, verified against stated area, and needs no assumption about seats.
+2. Design places, as floor area divided by a single city-level ratio, anchored on the official totals and bracketed by the sample range.
+
+Neither is the design capacity of an individual school, and the thesis will say so.
+
+### Official catchments for 11 schools
+
+The school enrolment portal `sakura-nursultan.e-orda.kz`, whose `robots.txt` allows access, lists 11 state schools with official coordinates and the houses assigned to each: 4,808 house assignments in total (`ingest/sakura.py`, output in `data/raw/sakura/`). This is the only official statement of school catchments found in the open. It serves as a test set: a catchment model can be scored on whether it sends these houses to the school the city assigns them to.
+
+## 10. Next
+
+1. Population: rebuild the grid by dasymetric redistribution constrained to official district totals, using polling-station territories and residential buildings.
+2. Pedestrian network and travel-time matrix, sprint 3.

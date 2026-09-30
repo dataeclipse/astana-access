@@ -181,5 +181,5 @@ def build() -> gpd.GeoDataFrame:
         "geometry",
     ]
     result = frame[keep].rename(columns={"label": "name"})
-    result.to_file(PROCESSED / "facilities.gpkg", layer="preschools", driver="GPKG")
+    result.to_file(PROCESSED / "facilities_osm.gpkg", layer="preschools", driver="GPKG")
     return result
