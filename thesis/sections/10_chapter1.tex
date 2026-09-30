@@ -84,7 +84,7 @@ This has a direct bearing on the siting literature reviewed in Section~\ref{sec:
 \section{Existing Decision Support Platforms}
 \label{sec:existing-systems}
 
-Software that supports planning decisions with spatial analysis is usually grouped under the heading of planning support systems, a varied family that ranges from general scenario sketching tools to dedicated simulation models \cite{geertman2004}. A comparative assessment of the most relevant representatives is necessary both to justify building a new tool and to define what it should not attempt.
+Software that supports planning decisions with spatial analysis is usually grouped under the heading of planning support systems, a varied family that ranges from general scenario sketching tools to dedicated simulation models \cite{geertman2004}. A comparative assessment of the most relevant representatives shows what an open research framework has to add and what it should not attempt.
 
 UrbanSim simulates urban development for land use, transportation and environmental planning \cite{waddell2002}. Its strength is a behavioural model of how households, businesses and real estate development respond to policy and infrastructure over time at the metropolitan scale. Its cost is a substantial data and calibration effort, and its outputs are forecasts of development patterns rather than siting recommendations for a specific facility class.
 
@@ -92,7 +92,7 @@ CommunityViz is an extension to ArcGIS for scenario, suitability, build-out and 
 
 Esri ArcGIS provides a location-allocation solver whose problem types include the $p$-median problem, maximal coverage and a capacitated coverage variant \cite{esrilocalloc}. These are generic solvers: they take demand points, candidate facilities and an impedance as given, and leave the estimation of demand, the measurement of accessibility, the diagnosis of inequity and any connection to a national planning standard to the analyst.
 
-Three gaps follow from this comparison and define the scope of the present system. First, none of these tools is anchored to the Kazakh planning standard, so compliance against statutory service radii is not a native output. Second, none couples a descriptive model of observed siting behaviour with a normative optimisation, which is the central analytical contribution proposed here. Third, CommunityViz and ArcGIS are licensed products and UrbanSim requires a modelling effort far beyond the question addressed here, whereas the reproducibility requirements of academic work favour an open, containerised implementation. The system developed in this work is accordingly narrower in scope than any of the platforms reviewed, and deeper in the specific analytical chain from population grid to accessibility to equity diagnosis to optimised siting recommendation.
+Three gaps follow from this comparison and define the scope of the present framework. First, none of these tools is anchored to the Kazakh planning standard, so compliance against statutory service radii is not a native output. Second, none couples a descriptive model of observed siting behaviour with a normative optimisation, which is the central analytical contribution proposed here. Third, CommunityViz and ArcGIS are licensed products and UrbanSim requires a modelling effort far beyond the question addressed here, whereas the reproducibility requirements of academic work favour an open, containerised implementation. The framework developed in this work is accordingly narrower in scope than any of the platforms reviewed, and deeper in the specific analytical chain from population grid to accessibility to equity diagnosis to optimised siting recommendation.
 
 \section{Regulatory and Institutional Framework}
 \label{sec:regulatory}
@@ -114,63 +114,33 @@ The third is evaluative. Siting studies are difficult to validate because the co
 
 \subsection{Aim and Objectives}
 
-The aim of this work is to develop and validate a reproducible decision support system that assesses spatial accessibility to schools and preschool organisations in Astana, diagnoses the resulting inequities, explains the factors underlying observed siting decisions, and generates optimised siting recommendations.
+The aim of this work is to develop and validate a data-driven framework that assesses spatial accessibility to social infrastructure, diagnoses its inequity and derives siting recommendations, and to apply it to schools and preschool organisations in Astana using only openly available data.
 
 The objectives are:
 
 \begin{enumerate}[nosep]
-  \item to integrate heterogeneous open data sources into a canonical, provenance-tracked inventory of population demand and facility supply on a hexagonal grid, and to quantify the accuracy of the record linkage on which that inventory depends;
-  \item to implement an enhanced two-step floating catchment area model parameterised by the national planning standard, including a seasonal variant reflecting winter walking conditions;
-  \item to diagnose the distribution of accessibility using population-weighted inequality indices, decomposition by administrative district, statutory compliance rates by demographic cohort, and statistically identified deficit clusters;
-  \item to fit and interpret a revealed-preference model of observed siting decisions under a spatially blocked validation protocol;
-  \item to formulate and solve capacitated covering and median location models over candidate sites, reporting the coverage-equity trade-off as a Pareto frontier rather than a single solution;
-  \item to validate the framework by backtesting against the realised siting decisions of the national school construction programme, against explicit baselines, and through sensitivity analysis of the principal modelling choices;
-  \item to deliver the framework as a containerised, reproducible pipeline with an interactive decision support interface.
+  \item to assemble from open sources an inventory of schools and preschool organisations and a population surface below the district level, and to measure the accuracy of both against independent references;
+  \item to compute an enhanced two-step floating catchment area index of accessibility for each facility type, parameterised by the national planning standard;
+  \item to describe how that accessibility is distributed, using population-weighted inequality indices, their decomposition by district, statutory compliance rates and statistically identified deficit clusters;
+  \item to model the observed siting decisions of the national school construction programme under a spatially blocked validation protocol and interpret the fitted model;
+  \item to solve covering and median location models for the same number of schools and compare the recommended allocation with the realised one;
+  \item to test the stability of the conclusions under alternative population surfaces, supply measures and distance decay functions.
 \end{enumerate}
 
 \subsection{Object and Subject of Research}
 
-The object of research is the spatial configuration of school and preschool provision and of residential demand for it in Astana. The subject of research is the set of methods by which accessibility to that provision is measured, its inequity diagnosed, its observed siting explained, and its future siting optimised.
+The object of research is the spatial configuration of school and preschool provision and of residential demand for it in Astana. The subject of research is the set of data-driven methods by which accessibility to that provision is measured, its inequity diagnosed, its observed siting explained and its future siting optimised.
 
-\section{Technical Specification}
-\label{sec:spec}
+\section{Research Hypotheses}
+\label{sec:hypotheses}
 
-The specification below defines what the system must do and the criteria against which Chapter~\ref{ch:results} verifies it. Each functional requirement is testable, and each quality criterion has a stated acceptance threshold, so that verification is a measurement rather than a judgement.
+The work tests four hypotheses. Each is stated so that the data can contradict it.
 
-\subsection{Functional Requirements}
-
-\begin{enumerate}[label=FR\arabic*.,nosep,leftmargin=*]
-  \item Acquire and version population, facility, boundary and network data from their published sources, recording for every field the source, licence and snapshot date.
-  \item Resolve records describing the same facility across registry, mapping and geocoded address sources into a single canonical entity with a confidence score.
-  \item Construct a hexagonal analysis grid over the study area and disaggregate population onto it by demographic cohort.
-  \item Compute pedestrian travel times between grid cells and facilities over the routable network.
-  \item Compute an accessibility index per cell, per facility type and per season, parameterised by the statutory service radius.
-  \item Report population-weighted inequality indices, a decomposition by administrative district, statutory compliance rates by cohort, and statistically significant deficit clusters.
-  \item Fit, validate and interpret a model of observed siting decisions under a spatially blocked protocol.
-  \item Solve capacitated covering and median location models over generated candidate sites for a user-specified facility budget, and return the coverage-equity frontier.
-  \item Present current accessibility, deficit clusters, recommended sites and per-cell attribution through an interactive interface with a facility-budget scenario control.
-  \item Reproduce all reported results from raw inputs through a single documented command.
+\begin{enumerate}[label=H\arabic*.,nosep,leftmargin=*]
+  \item Population below the district level can be estimated from open sources more accurately than by the standard gridded product: the number of polling-station territories reproduces the official population of districts more closely than WorldPop and than residential floor area.
+  \item Accessibility to state schools and preschool organisations is unevenly distributed across Astana, and the largest deficits per child lie in the districts of recent residential growth rather than in the established centre.
+  \item The spatial pattern of deficits found under H2 persists when the population surface, the supply measure and the distance decay function are varied within their plausible ranges.
+  \item The sites chosen by the national school construction programme are better predicted by pre-programme accessibility deficits and urban form than by population density alone, and an allocation that maximises coverage of underserved children with the same number of schools would have covered more of them than the realised programme.
 \end{enumerate}
 
-\subsection{Non-Functional Requirements}
-
-\begin{enumerate}[label=NFR\arabic*.,nosep,leftmargin=*]
-  \item The pipeline executes on a single workstation without specialised hardware.
-  \item All third-party data are used under terms permitting academic use, and no source is acquired in a manner contrary to its terms of service.
-  \item Every stochastic component is seeded, and repeated execution on identical inputs yields identical outputs.
-  \item Interface response to a change of the facility-budget control does not require recomputation of the travel-time matrix.
-  \item The system runs from a container definition without manual environment configuration.
-\end{enumerate}
-
-\subsection{Quality Criteria and Acceptance Thresholds}
-
-\begin{enumerate}[label=QC\arabic*.,nosep,leftmargin=*]
-  \item Gridded population totals reconcile with the official city population within a stated tolerance, and the tolerance is reported.
-  \item Record linkage precision and recall are measured against a manually labelled sample and reported with the sample size.
-  \item Geocoding positional accuracy is measured against a manually verified sample and reported.
-  \item The siting model outperforms both a logistic regression baseline and a population-density ranking on precision-recall area under the curve under spatially blocked folds.
-  \item Moran's~$I$ computed on model residuals is not significantly different from the expectation under spatial randomness.
-  \item The optimiser outperforms random siting, density-greedy siting and the unchanged current configuration on covered underserved demand.
-  \item Backtest agreement with the realised programme is reported at both 500\,m and 1\,km tolerance, alongside the same measure for every baseline.
-  \item Conclusions are stable under variation of the decay function, catchment radius, capacity proxy and grid resolution, or the instability is reported.
-\end{enumerate}
+H1 concerns the measurement on which every later result depends and is tested first, in Chapter~\ref{ch:methods}. H2 and H3 are tested in Chapter~\ref{ch:results} on the accessibility surface. H4 is tested by backtesting against the realised programme.
