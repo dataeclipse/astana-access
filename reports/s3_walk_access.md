@@ -169,3 +169,29 @@ In both cases nine-tenths of the inequality lies within districts rather than be
 | Preschools, worst district | Baikonur 36 times | Baikonur 12 |
 
 H3 holds at district level under every specification: the worst district never changes from Nura or Esil for schools and from Baikonur for preschools. At the level of individual cells it holds across the three building-based population surfaces, where the same deficit areas recur, but not with WorldPop, whose deficit cells barely overlap with any building-based result. Where the deficit is depends on how population is placed, which is the reason H1 matters.
+
+## 8. Backtest of the school construction programme (H4b, first pass)
+
+Code: `optimization/backtest.py`. Outputs: `reports/backtest.json`, `data/processed/backtest.gpkg`.
+
+**Programme set.** Schools are numbered in order of opening, and the announced Comfortable School buildings carry numbers from 99 upwards. The programme is therefore approximated by the 16 mapped state schools numbered 99 or above plus the 5 presumed new school grounds: 21 schools, against 24 announced. The other 95 state schools form the network before the programme.
+
+**Question.** With the same 21 sites, how many school-age children who had no state school within walking distance would the programme reach, and how many could a coverage-maximising choice have reached? Candidate sites are the 1,109 H3 cells with at least 20 school-age children, placed at the population-weighted centre of their dwellings. The maximal covering problem is solved exactly as a mixed-integer programme with HiGHS through SciPy. Demand is the station population model.
+
+| | Within 1 km | Within 1.5 km |
+|---|---|---|
+| Children covered before the programme | 64.3% | 85.5% |
+| Children not covered | 108,619 | 44,031 |
+| Reached by the 21 programme schools | 22,037 | 17,286 |
+| Reached by the optimal 21 sites | 61,663 | 36,213 |
+| Programme as a share of the optimum | 36% | 48% |
+| 21 most populous cells | 18,514 | 5,847 |
+| 21 random cells, mean | 15,856 | 11,335 |
+| 21 random cells, 95th percentile | 22,350 | 16,615 |
+| Optimal sites within 1 km of a programme school | 67% | 48% |
+
+**Reading.** H4b holds in its stated form: an allocation that maximises coverage with the same number of schools reaches two to three times as many uncovered children. The programme does better than a random choice on average, and at 1.5 km better than 95 per cent of random draws, so its sites are not arbitrary; two-thirds of the optimal sites at 1 km lie within 1 km of a programme school, so the programme went to the right areas more often than to the right places within them.
+
+**Limits of the comparison.** The programme sites were chosen in 2022 and 2023 against the demand of that time, while the backtest uses the population of 2026, which includes residents of housing finished since. The coverage objective ignores capacity; at about 2,900 children per optimal site at 1 km it stays within the 4,000 places that a 2,000-seat school offers in two shifts, but the optimum is an upper bound on what any real programme, constrained by land availability, could achieve. Land availability is not modelled at all. The programme set is an approximation by school number.
+
+The first half of H4, that programme sites are predicted by pre-programme deficits better than by density, needs the pre-programme demand surface and is not yet tested.
