@@ -59,6 +59,31 @@ By district, station model:
 
 For schools the pattern matches H2: Nura and Esil, the districts of recent growth, have the lowest coverage at both distances. For preschools the districts differ less and no clear pattern is visible yet.
 
-## 5. Caveat that must be resolved before H2 is claimed
+## 5. Completeness of the school layer
 
-The school layer holds 111 state schools; the city reported 122 in September 2025. The missing schools are most likely recent ones, including Comfortable School buildings in Nura and Esil. If they are missing from the supply, coverage in exactly those districts is understated and H2 would be confirmed by an artefact. The next step is to geocode the announced Comfortable School sites and every school opened since 2023, and to complete the supply layer.
+The school layer holds 111 state schools with catchment admission; the city reported 122 state schools in September 2025, a figure that also counts selective, special and evening schools, which are excluded here by design. The risk is that recent schools in exactly the districts of recent growth are missing, which would make H2 an artefact.
+
+Checks against announced sites of the Comfortable School programme:
+
+| Announced site | Result |
+|---|---|
+| School 99, Kabanbai Batyr avenue and Syganak street | In the layer, 234 m from the crossing |
+| Egemen Kazakhstan and A. Imanov streets, 2,000 places, 2025 | In the layer as school 119, 142 m |
+| School 106, Beibarys Sultan street 15 | Not in the layer; nearest school 739 m |
+| School 105, Koktal, Ulytau and Nauryz streets | Not in the layer; nearest school 657 m |
+| M. Tulebaev and Burabay streets, 2,000 places, 2025 | Not in the layer; nearest school 1.2 km |
+
+Five unnamed school grounds of 1.1 to 3.4 ha are mapped in OSM more than 150 m from any known school: two in Saraishyk, two in Nura and one in Saryarka. They are almost certainly new schools whose names are not yet mapped. They are added as a second supply variant, .
+
+Share of school-age children with a state school within walking distance, station model:
+
+| District | 500 m, named | 1 km, named | 500 m, with presumed | 1 km, with presumed |
+|---|---|---|---|---|
+| Almaty | 23.4% | 81.6% | 23.4% | 81.6% |
+| Baikonur | 24.7% | 79.2% | 24.7% | 79.2% |
+| Esil | 18.8% | 60.0% | 18.8% | 60.0% |
+| Nura | 9.4% | 54.6% | 9.7% | 56.5% |
+| Saraishyk | 20.3% | 72.6% | 22.1% | 75.7% |
+| Saryarka | 25.8% | 77.6% | 25.8% | 80.6% |
+
+Adding the presumed schools raises coverage by up to 3 points and does not change the order: Nura and Esil stay lowest. Three caveats remain. At least one announced school, at Tulebaev and Burabay streets, is not mapped at all; it lies in Almaty, the best-covered district, so its absence does not favour H2. Esil has the largest number of private schools, which this analysis excludes by design; coverage there describes access to free public schooling, not to any school. And the OSM layer reflects mapping as of September 2026, so a school opened recently but not yet mapped is still possible in any district.

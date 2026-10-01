@@ -4,22 +4,48 @@ import numpy as np
 import pandas as pd
 
 from astana_access.accessibility.network import WalkNetwork, load
-from astana_access.config import CRS_GEO, CRS_METRIC, H3_RESOLUTION, PROCESSED
+from astana_access.config import CRS_GEO, CRS_METRIC, H3_RESOLUTION, PROCESSED, RAW
 
 LIMIT_M = 2500.0
 RADII_M = (300, 500, 750, 1000, 1500)
 VARIANTS = ("worldpop", "floor", "station", "station_equal")
 COHORT = {"school": "school", "preschool": "preschool"}
+MIN_GROUND_M2 = 10_000.0
+GROUND_GAP_M = 150.0
+
+
+def unnamed_school_grounds(schools: gpd.GeoDataFrame) -> gpd.GeoDataFrame:
+    landuse = gpd.read_file(RAW / "osm" / "landuse.gpkg").to_crs(CRS_METRIC)
+    grounds = landuse[
+        (landuse["key"] == "amenity") & (landuse["value"] == "school") & landuse["name"].isna()
+    ].copy()
+    grounds = grounds[grounds.area >= MIN_GROUND_M2]
+    known = schools[schools["in_scope"]].to_crs(CRS_METRIC)
+    gap = grounds.geometry.apply(lambda geometry: known.distance(geometry).min())
+    grounds = grounds[gap > GROUND_GAP_M]
+    return gpd.GeoDataFrame(
+        {
+            "facility_id": "ground" + grounds["osm_id"].astype(str),
+            "number": np.nan,
+            "presumed_new": True,
+            "area_ha": grounds.area / 1e4,
+        },
+        geometry=grounds.geometry.centroid,
+        crs=CRS_METRIC,
+    )
 
 
 def facilities() -> dict[str, gpd.GeoDataFrame]:
-    schools = gpd.read_file(PROCESSED / "facilities.gpkg", layer="schools")
-    schools = schools[schools["catchment_based"] & schools.geometry.notna()].copy()
+    every = gpd.read_file(PROCESSED / "facilities.gpkg", layer="schools")
+    schools = every[every["catchment_based"] & every.geometry.notna()].copy()
     schools["facility_id"] = schools["facility_id"].astype(str)
+    schools["presumed_new"] = False
+    schools = schools.to_crs(CRS_METRIC)
+    grounds = unnamed_school_grounds(every)
     preschools = gpd.read_file(PROCESSED / "facilities.gpkg", layer="preschools")
     preschools = preschools[preschools.geometry.notna()].copy()
     return {
-        "school": schools.to_crs(CRS_METRIC),
+        "school": pd.concat([schools, grounds], ignore_index=True),
         "preschool": preschools.to_crs(CRS_METRIC),
     }
 
@@ -113,23 +139,36 @@ def nearest(points: pd.DataFrame, od: pd.DataFrame) -> pd.Series:
     return points["point_id"].map(best).fillna(np.inf)
 
 
-def coverage_table(points: pd.DataFrame, od: dict[str, pd.DataFrame]) -> pd.DataFrame:
+def coverage_table(
+    points: pd.DataFrame,
+    od: dict[str, pd.DataFrame],
+    by: str | None = None,
+    exclude: frozenset[str] = frozenset(),
+) -> pd.DataFrame:
     rows = []
     for kind, table in od.items():
+        table = table[~table["facility_id"].isin(exclude)]
         distance = nearest(points, table).to_numpy()
-        for variant in VARIANTS:
-            column = f"{COHORT[kind]}_{variant}"
-            if column not in points:
-                continue
-            weight = points[column].fillna(0).to_numpy()
-            for radius in RADII_M:
-                rows.append(
-                    {
-                        "kind": kind,
-                        "variant": variant,
-                        "radius_m": radius,
-                        "children": float(weight.sum()),
-                        "covered_share": float(weight[distance <= radius].sum() / weight.sum()),
-                    }
-                )
+        groups = points.groupby(by).indices if by else {"city": np.arange(len(points))}
+        for group, index in groups.items():
+            for variant in VARIANTS:
+                column = f"{COHORT[kind]}_{variant}"
+                if column not in points:
+                    continue
+                weight = points[column].fillna(0).to_numpy()[index]
+                if weight.sum() <= 0:
+                    continue
+                for radius in RADII_M:
+                    rows.append(
+                        {
+                            "kind": kind,
+                            "area": group,
+                            "variant": variant,
+                            "radius_m": radius,
+                            "children": float(weight.sum()),
+                            "covered_share": float(
+                                weight[distance[index] <= radius].sum() / weight.sum()
+                            ),
+                        }
+                    )
     return pd.DataFrame(rows)
