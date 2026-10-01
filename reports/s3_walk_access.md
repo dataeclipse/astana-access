@@ -104,3 +104,68 @@ For each organisation, demand pressure is measured as the number of preschool-ag
 Among private organisations, 73.0 per cent of those below the median of children per organisation within 1 km had free places, against 60.7 per cent above it. In a logistic regression on private organisations, the standardised coefficient of the logarithm of that ratio is -0.16, with a bootstrap 95 per cent interval from -0.35 to 0.02.
 
 The direction is the one H4a predicts: more children per organisation nearby, fewer free places. The effect is small and not yet distinguishable from zero, and the tree model does not gain from the pressure features among private organisations. A single evening is a noisy label. Planned improvements: several snapshots of the portal, matching free places to the age group they belong to, and replacing the straight-line competitor count with the floating catchment demand from the accessibility model.
+
+## 7. Floating catchment accessibility, inequality and deficit clusters (H2, H3)
+
+Code: `accessibility/e2sfca.py`, `equity/inequality.py`, `equity/analysis.py`. Outputs: `reports/access_equity.json`, `reports/sensitivity_access.csv`, `data/processed/access_cells_*.parquet`.
+
+### Choice of the load step
+
+The enhanced two-step floating catchment area method counts a child towards every facility within the catchment, and children with no facility within it load none. Where many children live beyond walking distance, this understates the load on the schools that actually receive them. The alternative tested here distributes each child once over the facilities within a wider allocation radius, in proportion to the distance weights, before the supply-to-demand ratio is computed; the accessibility step is then summed within the walking catchment as usual.
+
+The choice was settled against observed enrolment at the ten schools for which it is published:
+
+| Load step | Rank correlation with enrolment | Median modelled over observed | Children allocated |
+|---|---|---|---|
+| E2SFCA, 1.5 km, children counted at every school in reach | 0.41 | 1.37 | 395,406, more than exist |
+| Each child allocated once within 1.5 km | 0.61 | 0.84 | 267,831 |
+| Each child allocated once within 3 km | 0.55 | 0.95 | 292,863 |
+| Each child allocated once within 4 km | 0.39 | 0.93 | 293,605 |
+
+The city has 304,022 school-age children under the station model. Allocation within 3 km reaches 96 per cent of them and reproduces the level of enrolment; the 1.5 km allocation ranks schools slightly better but leaves 12 per cent of children unallocated. The baseline uses 3 km for the load step and 1.5 km, a 20-minute walk, for the accessibility step. For preschools the pair is 2 km and 1 km. The enrolment figures date from 2015 to 2023, and school 79 reports its opening-year enrolment, so ten points support the choice but do not prove it.
+
+### Baseline
+
+Schools: supply is floor area; preschools: supply is the attendance class mean. Values are relative to the city mean per child.
+
+| District | Schools | Preschools |
+|---|---|---|
+| Almaty | 1.06 | 1.59 |
+| Baikonur | 1.14 | 0.64 |
+| Esil | 0.73 | 1.08 |
+| Nura | 0.73 | 0.90 |
+| Saraishyk | 0.94 | 1.01 |
+| Saryarka | 1.38 | 0.79 |
+
+| Measure | Schools | Preschools |
+|---|---|---|
+| Children with no facility within the catchment | 8.7% | 7.4% |
+| Gini, weighted by children | 0.395 | 0.460 |
+| Theil index | 0.284 | 0.366 |
+| Share of Theil between districts | 11% | 11% |
+| Global Moran's I over H3 cells | 0.84 | 0.83 |
+| Children in significant low-low clusters | 11.1% | 9.6% |
+| Largest share of those, by district | Esil, 4.4% of all children | Saryarka, 2.7%; Baikonur, 2.2% |
+
+### What this says about H2
+
+For schools, H2 holds: Esil and Nura have about 73 per cent of the city's accessibility per child, the largest deficit clusters lie in Esil, and removing the five presumed new schools makes Nura worse (0.70), not better.
+
+For preschools, H2 fails. The deficit lies in the established districts, Baikonur at 64 per cent of the mean and Saryarka at 79, while Almaty is best served. A plausible reading, to be tested rather than assumed, is that private preschools, which hold most places, opened where new housing created paying demand, leaving the older districts dependent on an ageing state network.
+
+In both cases nine-tenths of the inequality lies within districts rather than between them. Comparing district averages, the way provision is usually reported, misses most of it.
+
+### Robustness, H3
+
+48 runs per facility type: four population surfaces, two supply measures, three decay functions and two catchment sizes, each compared with the baseline.
+
+| | Building-based population, 36 runs | WorldPop, 12 runs |
+|---|---|---|
+| Schools, district rank correlation, median and minimum | 0.91, 0.77 | 0.77, 0.66 |
+| Schools, overlap of the worst-served fifth of children, Jaccard, median and minimum | 0.83, 0.66 | 0.14, 0.12 |
+| Schools, worst district | Nura 30 times, Esil 6 | Nura 7, Esil 5 |
+| Preschools, district rank correlation, median and minimum | 0.94, 0.83 | 0.83, 0.83 |
+| Preschools, overlap of the worst-served fifth, median and minimum | 0.81, 0.76 | 0.14, 0.12 |
+| Preschools, worst district | Baikonur 36 times | Baikonur 12 |
+
+H3 holds at district level under every specification: the worst district never changes from Nura or Esil for schools and from Baikonur for preschools. At the level of individual cells it holds across the three building-based population surfaces, where the same deficit areas recur, but not with WorldPop, whose deficit cells barely overlap with any building-based result. Where the deficit is depends on how population is placed, which is the reason H1 matters.

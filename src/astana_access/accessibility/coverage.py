@@ -6,7 +6,7 @@ import pandas as pd
 from astana_access.accessibility.network import WalkNetwork, load
 from astana_access.config import CRS_GEO, CRS_METRIC, H3_RESOLUTION, PROCESSED, RAW
 
-LIMIT_M = 2500.0
+LIMIT_M = 4000.0
 RADII_M = (300, 500, 750, 1000, 1500)
 VARIANTS = ("worldpop", "floor", "station", "station_equal")
 COHORT = {"school": "school", "preschool": "preschool"}
