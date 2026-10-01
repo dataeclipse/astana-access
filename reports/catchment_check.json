@@ -1,0 +1,89 @@
+{
+ "houses": 2988,
+ "schools": 11,
+ "assigned_within_2500m": 0.8470548862115127,
+ "assigned_is_nearest": 0.570281124497992,
+ "assigned_in_two_nearest": 0.6746987951807228,
+ "median_distance_to_assigned_m": 956.8057250976562,
+ "p90_distance_to_assigned_m": 2175.774658203125,
+ "median_extra_over_nearest_m": 473.074951171875,
+ "by_school": [
+  {
+   "number": 2,
+   "houses": 70,
+   "nearest_share": 0.671,
+   "top2_share": 0.914,
+   "median_distance_m": 454.19500732421875
+  },
+  {
+   "number": 23,
+   "houses": 295,
+   "nearest_share": 0.766,
+   "top2_share": 0.786,
+   "median_distance_m": 919.072998046875
+  },
+  {
+   "number": 38,
+   "houses": 49,
+   "nearest_share": 0.98,
+   "top2_share": 1.0,
+   "median_distance_m": 417.4620056152344
+  },
+  {
+   "number": 41,
+   "houses": 1061,
+   "nearest_share": 0.272,
+   "top2_share": 0.379,
+   "median_distance_m": 1736.366943359375
+  },
+  {
+   "number": 48,
+   "houses": 147,
+   "nearest_share": 0.245,
+   "top2_share": 0.524,
+   "median_distance_m": 1093.9439697265625
+  },
+  {
+   "number": 52,
+   "houses": 185,
+   "nearest_share": 0.0,
+   "top2_share": 0.335,
+   "median_distance_m": 2029.904052734375
+  },
+  {
+   "number": 53,
+   "houses": 318,
+   "nearest_share": 0.874,
+   "top2_share": 0.972,
+   "median_distance_m": 742.8690185546875
+  },
+  {
+   "number": 64,
+   "houses": 37,
+   "nearest_share": 0.649,
+   "top2_share": 0.838,
+   "median_distance_m": 733.0659790039062
+  },
+  {
+   "number": 68,
+   "houses": 524,
+   "nearest_share": 0.996,
+   "top2_share": 1.0,
+   "median_distance_m": 747.3690185546875
+  },
+  {
+   "number": 70,
+   "houses": 111,
+   "nearest_share": 0.423,
+   "top2_share": 0.694,
+   "median_distance_m": 545.7589721679688
+  },
+  {
+   "number": 74,
+   "houses": 191,
+   "nearest_share": 0.979,
+   "top2_share": 0.99,
+   "median_distance_m": 1353.7359619140625
+  }
+ ]
+}
