@@ -98,6 +98,12 @@ def stage_programme() -> None:
     programme.run()
 
 
+def stage_figures() -> None:
+    from astana_access.viz import figures
+
+    figures.run()
+
+
 STAGES: dict[str, Callable[[], None]] = {
     "boundary": stage_boundary,
     "worldpop": stage_worldpop,
@@ -109,6 +115,7 @@ STAGES: dict[str, Callable[[], None]] = {
     "access": stage_access,
     "models": stage_models,
     "programme": stage_programme,
+    "figures": stage_figures,
 }
 
 
@@ -121,7 +128,7 @@ def list_stages() -> None:
 @app.command()
 def run(
     start: str = typer.Option("boundary", help="First stage to run."),
-    stop: str = typer.Option("programme", help="Last stage to run."),
+    stop: str = typer.Option("figures", help="Last stage to run."),
 ) -> None:
     names = list(STAGES)
     for name in names[names.index(start) : names.index(stop) + 1]:

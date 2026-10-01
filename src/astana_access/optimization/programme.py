@@ -189,9 +189,16 @@ def run() -> dict:
         _, cells_capacitated = realistic.capacitated(
             pairs_cells, unit_weight, k, realistic.CAPACITY
         )
-        _, plots_capacitated = realistic.capacitated(
+        chosen_plots, plots_capacitated = realistic.capacitated(
             pairs_plots, unit_weight, k, realistic.CAPACITY
         )
+        plots[plots["facility_id"].isin(chosen_plots)].to_crs(CRS_GEO).to_file(
+            PROCESSED / "backtest.gpkg", layer=f"optimal_2023_{radius}", driver="GPKG"
+        )
+        uncovered_points = points.set_index("point_id").loc[uncovered.index, ["x", "y", "h3"]]
+        uncovered_points.assign(children=uncovered.to_numpy()).groupby("h3")[
+            "children"
+        ].sum().to_frame().to_parquet(PROCESSED / f"uncovered_2023_{radius}.parquet")
         _, plots_free = realistic.capacitated(pairs_plots, unit_weight, k, 1e12)
         report["capacitated"][str(radius)] = {
             "realised": realised_capacitated,
@@ -216,6 +223,12 @@ def run() -> dict:
             "random_gain_p95": float(np.percentile(random_gains, 95)),
             "realised_random_percentile": float(np.mean(np.array(random_gains) < realised)),
         }
+    programme.to_crs(CRS_GEO).to_file(
+        PROCESSED / "backtest.gpkg", layer="programme_2023", driver="GPKG"
+    )
+    existing.to_crs(CRS_GEO).to_file(
+        PROCESSED / "backtest.gpkg", layer="existing_2023", driver="GPKG"
+    )
     (REPORTS / "programme_2023.json").write_text(
         json.dumps(report, indent=1, default=float), encoding="utf-8"
     )

@@ -1,13 +1,135 @@
 \chapter{Data and Methodology}
 \label{ch:methods}
 
+This chapter describes how the framework turns open data into measures of access to schools and preschools, and how each hypothesis of Section~\ref{sec:hypotheses} is tested. Every number reported here can be reproduced from public sources by a single command of the accompanying software, described in Section~\ref{sec:implementation}.
+
 \section{Study Area and Scope}
+\label{sec:study-area}
+
+Astana, the capital of Kazakhstan, had 1,638,233 residents on 1 January 2026, an increase of 7.2 per cent in one year \cite{astanapop2026}. Growth is concentrated in the districts of recent construction: in 2025 the population of Nura rose by 23 per cent and that of Esil by 9 per cent, while Baikonur lost 4 per cent. The city is divided into six districts, of which Saraishyk was separated from Almaty in 2024 and is still reported together with it in official statistics.
+
+The object of the analysis is the provision of state general schools that admit pupils by catchment, and of preschool organisations of every ownership listed in the municipal enrolment register. Private schools are excluded because they charge fees and do not serve a catchment; private preschools are included because places in them are allocated through the same municipal queue as places in state preschools, and they hold 56 per cent of attending children \cite{indigo2026}.
+
+All spatial data are stored in WGS~84 and processed in UTM zone 42N. Results are aggregated to the hexagonal grid of the H3 system at resolution 9 \cite{h3, sahr2003}, whose cells cover about 0.1\,km$^2$, small enough to resolve a walking catchment and large enough to hold a stable population estimate.
+
 \section{Data Sources and Provenance}
+\label{sec:sources}
+
+The framework was designed under the constraint that no input may depend on data requested from a state body: every source in Table~\ref{tab:sources} can be obtained by anyone. Automated access respects the \texttt{robots.txt} of each site; the preschool register, whose site disallows crawling, was saved manually from a browser.
+
+\begin{table}[ht]
+\centering
+\caption{Data sources}
+\label{tab:sources}
+\small
+\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}p{4.2cm}>{\raggedright\arraybackslash}X}
+\toprule
+Source & Use \\
+\midrule
+OpenStreetMap \cite{osm2026} & Streets and footpaths, 37,925 address points, schools, land use, history as of 1 January 2023 \\
+Overture Maps buildings \cite{overture2026, msbuildings2023} & 93,507 footprints, of which 43,412 machine-detected and absent from OSM \\
+Bureau of National Statistics \cite{astanapop2026, statpop2023, statconstruction2026} & Population of districts on 1 January 2023 and 2026, housing commissioned in 2025 \\
+Akim's decision on polling stations \cite{pollingstations2025} & Territories of 386 polling stations as house lists or street boundaries \\
+WorldPop \cite{tatem2017, worldpop2025} & Age structure at 100\,m and the benchmark population surface \\
+Municipal preschool register \cite{indigo2026} & 790 preschool organisations, ownership, attendance totals, free places \\
+School enrolment portal \cite{sakura2026} & Official catchments of 11 schools, 4,808 houses \\
+School websites, state school register \cite{egovschools} & Stated capacity and enrolment of 11 schools; record linkage \\
+SP RK 3.01-101-2013 \cite{sprk2013} & Service radii, provision norms, plot sizes \\
+Programme reports \cite{skc2023, comfortschool2022} & Sites, seats and dates of the Comfortable School programme \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
 \section{Facility Inventory and Record Linkage}
+\label{sec:inventory}
+
+\textbf{Schools.} OSM objects tagged as schools were merged with the state school register by record linkage \cite{fellegi1969, christen2012}. Names were normalised, school numbers and types extracted, a pairwise similarity combining number, type, name tokens and distance was computed, and pairs were assigned one to one by the Hungarian method \cite{kuhn1955}. Against a manually labelled sample, the frozen rules reached a precision of 0.977, a recall of 0.944 and an F1 score of 0.960. The supply layer holds 111 state schools with catchment admission. Five unnamed school grounds of 1.1 to 3.4\,ha mapped more than 150\,m from any known school are added as presumed new schools; three of them are identified with programme schools in Section~\ref{sec:programme-list}.
+
+\textbf{Preschools.} The municipal register lists 790 organisations, 148 state and 642 private, attended by 66,402 children, but gives no coordinates and no attendance per organisation. Addresses were resolved with a gazetteer built from OSM address points and street names, including Kazakh, Russian and former names, so that a street renamed since the address was registered is still found. A coordinate is accepted only when the house number matches exactly. 653 organisations, 82.7 per cent, were placed this way or through the OSM object of the same numbered state preschool; 75 were placed approximately and 62 not at all. Against the OSM buildings of 70 state preschools, exact matches lie a median of 9\,m away, and 98.6 per cent within 150\,m.
+
 \section{Population Surface and Test of H1}
+\label{sec:population}
+
+No population figure is published below the district level, so the population of each H3 cell has to be estimated. Dasymetric methods distribute a known total over an ancillary surface \cite{mennis2003, eicher2001}; the question is which surface.
+
+\textbf{Dwellings.} Of the 93,507 building footprints, only 4,755 carry a type in OSM. Residential use is therefore predicted by a LightGBM classifier \cite{ke2017} from footprint geometry, mapped floors, address points, land use and the density and size of neighbouring buildings. Positive labels come from typed residential buildings and from houses named in polling-station territories and school catchments; negative labels from typed non-residential buildings and buildings on industrial, commercial or institutional land. Under spatial cross-validation with 1\,km blocks \cite{roberts2017} the classifier reaches a ROC-AUC of 0.982 and an F1 score of 0.922; trained without any house-list label, it recovers 80.5 per cent of the 2,663 untyped buildings that the house lists prove residential. Missing floor counts of large buildings are imputed from the seven nearest tagged buildings, with a leave-one-out error of 2.0 floors.
+
+\textbf{Polling stations.} The akim's decision forming polling stations \cite{pollingstations2025} assigns every address of the city to one station, either by a list of houses or by a walk along named streets. The text was parsed into 386 territorial stations; walks were turned into polygons by intersecting the named streets in order, and houses were located with the gazetteer. 340 stations received territories, and 246 of 247 reconstructed polygons fall in the district the decision names.
+
+\textbf{Allocation.} Within each official reporting unit $u$ with population $P_u$, station $s$ receives a share proportional to $F_s^{\alpha}$, where $F_s$ is the residential floor area of its dwellings, and within the station each dwelling $b$ receives a share proportional to its weighted floor area $f_b$:
+\begin{equation}
+P_b = P_u \, \frac{F_s^{\alpha}}{\sum_{s' \in u} F_{s'}^{\alpha}} \, \frac{f_b}{F_s}, \qquad f_b = A_b \, n_b \, h_b,
+\label{eq:allocation}
+\end{equation}
+where $A_b$ is the footprint, $n_b$ the number of floors and $h_b$ equals 2.15 for houses and 1 for apartment blocks. The factor $h_b$ comes from the ratio of official living area to measured gross floor area for each building type \cite{statconstruction2026}. With $\alpha = 0$ every station in a unit holds the same population; with $\alpha = 1$ the station level disappears and floor area alone decides.
+
+\textbf{Test of H1.} Each candidate surface is scaled to the city total and compared with the five official district figures for 1 January 2026. Figure~\ref{fig:h1} shows the ratio of predicted to official population. WorldPop misallocates by 27.6 per cent on average and residential floor area by 27.8 per cent, in opposite directions: WorldPop overstates the established Baikonur district by 76 per cent, floor area overstates the new districts, where housing is not yet fully occupied. The number of polling stations misses by 8.7 per cent, with a correlation of 0.97 with official district population. H1 is supported. The final surface uses $\alpha = 0.2$, which fits the district totals best (9.0 per cent), and every later result is recomputed with $\alpha = 0$, with floor area alone and with WorldPop. Children of school and preschool age are taken as the age shares of WorldPop within each cell.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=\textwidth]{figures/h1_district_error}
+\caption{Predicted over official population of districts on 1 January 2026 for three population surfaces}
+\label{fig:h1}
+\end{figure}
+
 \section{Supply Measures}
+\label{sec:supply}
+
+Design capacity is published for 11 of the 111 state schools, on their own websites. Their floor area measured from OSM agrees with the area they state within 9 per cent, but floor area does not predict capacity school by school: six of the eleven have the same capacity of 1,200 places with floor areas between 14,600 and 23,700\,m$^2$. Supply is therefore measured in two ways, carried through all results: floor area, and equal weight per school. For preschools, attendance is known only as the means of the two ownership classes, 199 children per state and 58 per private organisation, and supply is measured by these means and by equal weight.
+
 \section{Accessibility Model}
+\label{sec:access-model}
+
+\textbf{Network.} Every OSM way with a highway tag inside the city, except motorways, ways under construction and ways closed to pedestrians, forms an undirected graph of 152,491 nodes and 5,934\,km \cite{boeing2017}. Walking distance from each dwelling to each facility within 4\,km is computed by Dijkstra's algorithm, adding the straight-line gaps from building and facility to their nearest nodes. Over 206,000 pairs more than 300\,m apart, the network distance is never shorter than the straight line, and is a median 1.41 times longer.
+
+\textbf{Normative coverage.} The share of children with a facility within the statutory radius, 500\,m for schools and 300\,m for preschools \cite{sprk2013}, is computed both along the network and in a straight line, since the standard does not say which is meant.
+
+\textbf{Floating catchment.} Accessibility per child follows the enhanced two-step floating catchment area method \cite{luo2003, luo2009} with one change. In the original first step a child counts towards every facility within the catchment, so that demand is multiplied in dense areas and children beyond the catchment load nothing. Here each child is allocated once among the facilities within a wider allocation radius $d_L$, in proportion to the distance weights, in the spirit of the selection weights of the three-step method \cite{wan2012}:
+\begin{equation}
+R_j = \frac{S_j}{\sum_i D_i \, \dfrac{W_L(d_{ij})}{\sum_{k} W_L(d_{ik})}}, \qquad
+A_i = \sum_{j:\, d_{ij} \le d_0} R_j \, W(d_{ij}),
+\label{eq:e2sfca}
+\end{equation}
+where $S_j$ is the supply of facility $j$, $D_i$ the number of children at dwelling $i$, and $W$ a distance decay that is Gaussian in the baseline and linear or a step in the sensitivity runs. The baseline uses a walking catchment $d_0$ of 1.5\,km, about 20 minutes, with an allocation radius $d_L$ of 3\,km for schools, and 1\,km with 2\,km for preschools. The choice was tested against the published enrolment of ten schools: with the original first step the modelled number of pupils per school had a rank correlation of 0.41 with enrolment and exceeded it by a median of 37 per cent; with allocation within 3\,km the correlation is 0.55 and the median ratio 0.95.
+
 \section{Inequality and Cluster Diagnostics}
-\section{Siting Model and Validation Protocol}
+\label{sec:equity-methods}
+
+The distribution of $A_i$ over children is summarised by the Gini coefficient and by Theil's index \cite{theil1967}, which decomposes exactly into a part between districts and a part within them:
+\begin{equation}
+T = \underbrace{\sum_g s_g \ln \frac{\bar A_g}{\bar A}}_{\text{between}} + \underbrace{\sum_g s_g T_g}_{\text{within}},
+\label{eq:theil}
+\end{equation}
+where $s_g$ is the share of total accessibility held by the children of district $g$, $\bar A_g$ its mean and $T_g$ the index within it. Spatial clustering is measured by global Moran's $I$ \cite{moran1950} and by local Moran statistics \cite{anselin1995} on H3 cells weighted by children, with the six adjacent cells as neighbours and 999 conditional permutations; significant low-low cells at the 5 per cent level are the deficit clusters.
+
+\textbf{Test of H3.} Each analysis is repeated 48 times per facility type, crossing four population surfaces, two supply measures, three decay functions and two catchment sizes. Stability is judged by the rank correlation of district means with the baseline and by the overlap of the worst-served fifth of children, measured by the Jaccard index of the cells concerned.
+
+\section{Models of Revealed Demand and Siting}
+\label{sec:siting-methods}
+
+\textbf{Preschool vacancy.} The register publishes free places only after the evening distribution to waiting lists, so an organisation with published places had no waiting list that day. Whether an organisation had free places is modelled from its own characteristics, and from these plus the demand around it: children within 500\,m and 1\,km, preschools within the same radii, and children per preschool. Logistic regression and a regularised LightGBM are compared under spatial cross-validation with 2\,km blocks, five folds repeated five times; models are explained with SHAP values \cite{lundberg2017, lundberg2020}.
+
+\textbf{Reconstruction of 2023.} Programme sites were chosen in 2022 and 2023, so the city is rebuilt as it was on 1 January 2023: OSM buildings mapped by that date are read through the history interface of the Overpass API, dwellings not overlapping them are removed, and the official population of 1 January 2023 \cite{statpop2023} is allocated by Equation~\eqref{eq:allocation}.
+
+\textbf{Test of the first part of H4.} Candidate cells are the 969 H3 cells with at least 20 school-age children in 2023. Each programme school marks its nearest cell. Two scores are computed from the state before the programme: the deficit, the number of children with no state school within walking distance who would gain one from a school in the cell, and the density, all children within the same distance. Their ability to single out the programme cells is compared by ROC-AUC with bootstrap intervals, an appropriate summary when only 21 of 969 cells are positive \cite{saito2015}.
+
 \section{Location Optimisation}
+\label{sec:optimisation-methods}
+
+The counterfactual to the programme is the maximal covering location problem \cite{church1974, murray2016} with capacities \cite{current1988}. With binary site variables $x_j$ and the share $z_{ij}$ of the uncovered children $w_{ij}$ of demand unit $i$ within walking distance $d_0$ of site $j$ served by $j$:
+\begin{equation}
+\max \sum_{i,j} w_{ij} z_{ij} \quad \text{s.t.} \quad
+\sum_j w_{ij} z_{ij} \le W_i, \quad
+\sum_i w_{ij} z_{ij} \le C_j x_j, \quad
+\sum_j x_j = k, \quad
+x_j \in \{0,1\}, \; 0 \le z_{ij} \le 1,
+\label{eq:mclp}
+\end{equation}
+where $W_i$ is the number of uncovered children in unit $i$, $C_j$ the capacity of site $j$ and $k$ the number of programme schools. Capacity is the number of seats times two shifts. Demand units are H3 cells at resolution 10. The problem is solved exactly with the HiGHS solver.
+
+Candidate sites are constrained by land. A raster of 10\,m cells marks as blocked every building, road, water body, railway, park, forest, cemetery, industrial site, allotment, construction site and institution mapped in 2023. A site is feasible if a disc of 3.8\,ha, the plot that the standard prescribes for a 2,000-seat school \cite{sprk2013}, fits on free land within 600\,m of a candidate cell; the school is then placed on that plot. The realised programme is compared with the optimum with and without the land constraint, with the 21 most populous cells, and with 200 random choices of 21 cells.
+
 \section{Implementation and Testing}
+\label{sec:implementation}
+
+The framework is a Python package organised in ten stages, from acquisition of boundaries to the programme backtest, each callable separately and all reproducible by one command. It relies on GeoPandas, SciPy, LightGBM, SHAP and the HiGHS solver; every stochastic step is seeded. Seventy unit tests cover address parsing and geocoding, the parsing of polling-station territories, population allocation, the accessibility index, the inequality measures, the standard's land rules and the optimisation models. The architecture is documented in UML in Appendix~A and the test results in Appendix~B.
