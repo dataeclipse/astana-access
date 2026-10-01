@@ -73,7 +73,7 @@ Checks against announced sites of the Comfortable School programme:
 | School 105, Koktal, Ulytau and Nauryz streets | Not in the layer; nearest school 657 m |
 | M. Tulebaev and Burabay streets, 2,000 places, 2025 | Not in the layer; nearest school 1.2 km |
 
-Five unnamed school grounds of 1.1 to 3.4 ha are mapped in OSM more than 150 m from any known school: two in Saraishyk, two in Nura and one in Saryarka. They are almost certainly new schools whose names are not yet mapped. They are added as a second supply variant, .
+Five unnamed school grounds of 1.1 to 3.4 ha are mapped in OSM more than 150 m from any known school: two in Saraishyk, two in Nura and one in Saryarka. They are almost certainly new schools whose names are not yet mapped. They are added as a second supply variant, `with_presumed`.
 
 Share of school-age children with a state school within walking distance, station model:
 
