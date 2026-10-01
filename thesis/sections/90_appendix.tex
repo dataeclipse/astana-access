@@ -1,4 +1,134 @@
 \chapter{Framework Architecture}
+\label{app:architecture}
+
+Figure~\ref{fig:uml-packages} shows the packages of the framework and their dependencies in UML package notation, and Figure~\ref{fig:uml-activity} the order in which the stages run. Each stage reads the outputs of the stages before it from disk, so any stage can be rerun alone.
+
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}[
+  pkg/.style={draw, rectangle, minimum width=3.3cm, minimum height=1.05cm, align=center, font=\small},
+  dep/.style={-{Stealth[length=2mm]}, dashed},
+  node distance=0.9cm and 0.7cm
+]
+\node[pkg] (ingest) {\guillemotleft package\guillemotright\\\textbf{ingest}};
+\node[pkg, right=of ingest] (grid) {\guillemotleft package\guillemotright\\\textbf{grid}};
+\node[pkg, right=of grid] (norms) {\guillemotleft module\guillemotright\\\textbf{norms}};
+\node[pkg, below=of ingest] (inventory) {\guillemotleft package\guillemotright\\\textbf{inventory}};
+\node[pkg, below=of grid] (population) {\guillemotleft package\guillemotright\\\textbf{population}};
+\node[pkg, below=of norms] (accessibility) {\guillemotleft package\guillemotright\\\textbf{accessibility}};
+\node[pkg, below=of inventory] (modeling) {\guillemotleft package\guillemotright\\\textbf{modeling}};
+\node[pkg, below=of population] (equity) {\guillemotleft package\guillemotright\\\textbf{equity}};
+\node[pkg, below=of accessibility] (optimization) {\guillemotleft package\guillemotright\\\textbf{optimization}};
+\node[pkg, below=of equity] (viz) {\guillemotleft package\guillemotright\\\textbf{viz}};
+\node[pkg, below=of viz] (pipeline) {\guillemotleft module\guillemotright\\\textbf{pipeline}};
+\draw[dep] (inventory) -- (ingest);
+\draw[dep] (population) -- (inventory);
+\draw[dep] (population) -- (grid);
+\draw[dep] (grid) -- (ingest);
+\draw[dep] (accessibility) -- (population);
+\draw[dep] (accessibility) -- (norms);
+\draw[dep] (equity) -- (accessibility);
+\draw[dep] (modeling) -- (population);
+\draw[dep] (modeling) -- (accessibility);
+\draw[dep] (optimization) -- (accessibility);
+\draw[dep] (optimization) -- (norms);
+\draw[dep] (viz) -- (equity);
+\draw[dep] (viz) -- (optimization);
+\draw[dep] (pipeline) -- (viz);
+\end{tikzpicture}
+\caption{UML package diagram of the framework; dashed arrows point from a package to the packages it depends on}
+\label{fig:uml-packages}
+\end{figure}
+
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}[
+  act/.style={draw, rounded corners=6pt, minimum width=6.2cm, minimum height=0.62cm, align=center, font=\small},
+  flow/.style={-{Stealth[length=2mm]}},
+  node distance=0.32cm
+]
+\node[circle, fill, inner sep=3pt] (start) {};
+\node[act, below=of start] (a1) {Acquire boundaries, districts, WorldPop, OSM};
+\node[act, below=of a1] (a2) {Build H3 grid and WorldPop age structure};
+\node[act, below=of a2] (a3) {Link school registry and OSM; measure floor area};
+\node[act, below=of a3] (a4) {Parse preschool register; geocode addresses};
+\node[act, below=of a4] (a5) {Reconstruct polling-station territories};
+\node[act, below=of a5] (a6) {Classify dwellings; allocate official totals};
+\node[act, below=of a6] (a7) {Walking distances; compliance; floating catchment};
+\node[act, below=of a7] (a8) {Inequality, clusters, sensitivity};
+\node[act, below=of a8] (a9) {Vacancy model and SHAP};
+\node[act, below=of a9] (a10) {Programme list; 2023 reconstruction; optimisation};
+\node[act, below=of a10] (a11) {Figures and report tables};
+\node[circle, draw, inner sep=3pt, below=of a11] (stop) {};
+\node[circle, fill, inner sep=1.8pt] at (stop) {};
+\foreach \a/\b in {start/a1, a1/a2, a2/a3, a3/a4, a4/a5, a5/a6, a6/a7, a7/a8, a8/a9, a9/a10, a10/a11, a11/stop}
+  \draw[flow] (\a) -- (\b);
+\end{tikzpicture}
+\caption{UML activity diagram of the pipeline stages}
+\label{fig:uml-activity}
+\end{figure}
+
 \chapter{Test Results}
-\chapter{Extended Result Tables}
-\chapter{Feature Definitions}
+\label{app:tests}
+
+The test suite is run with \texttt{pytest}. All 70 tests pass in about one second. Table~\ref{tab:tests} lists what each group verifies.
+
+\begin{table}[ht]
+\centering
+\caption{Unit tests}
+\label{tab:tests}
+\small
+\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}p{3.6cm}r>{\raggedright\arraybackslash}X}
+\toprule
+Test file & Tests & What is verified \\
+\midrule
+\texttt{test\_names.py} & 22 & Normalisation of school names, extraction of numbers and types, compatibility of school kinds \\
+\texttt{test\_addresses.py} & 26 & Street name variants in Kazakh and Russian, lanes kept apart from streets, house numbers, address splitting, district hints, alias resolution through former street names, refusal to guess an unknown house \\
+\texttt{test\_stations.py} & 9 & Parsing of house lists and street walks from the decision, inclusion and exclusion clauses, rivers as boundaries, polygon construction, preservation of official totals by the allocation \\
+\texttt{test\_access.py} & 8 & Distance decay functions, allocation of each child once, exclusion of children beyond the allocation radius, zero access without a facility, Gini extremes and weights, exact Theil decomposition \\
+\texttt{test\_optimization.py} & 5 & Plot sizes of the planning standard, statutory radii, detection of free plots, the maximal covering solution, the capacity constraint \\
+\midrule
+Total & 70 & All passed \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+Besides unit tests, each stage was checked against an observation that it did not use: positions against official coordinates, population against official district totals, reconstructed territories against the districts named in the decision, the residential classifier against house lists, and the floating catchment load against school enrolment. These checks are reported in Chapters~\ref{ch:methods} and~\ref{ch:results}.
+
+\chapter{Model Features}
+\label{app:features}
+
+\begin{table}[ht]
+\centering
+\caption{Features of the residential building classifier}
+\small
+\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}p{4.5cm}X}
+\toprule
+Feature & Definition \\
+\midrule
+Footprint, perimeter, compactness & Area and perimeter of the footprint and $4\pi A/P^2$ \\
+Tagged floors, tagged flats & OSM tags where present \\
+Mapped in OSM & Footprint from OSM rather than machine detection \\
+Address points, points of interest & Counts of OSM address and amenity points inside the footprint \\
+Land use & Residential, allotment or construction land at the centroid \\
+Neighbourhood at 100 and 300\,m & Number of buildings, median footprint, built-up share, median floors \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\begin{table}[ht]
+\centering
+\caption{Features of the preschool vacancy model}
+\small
+\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}p{4.5cm}X}
+\toprule
+Feature & Definition \\
+\midrule
+Own characteristics & Ownership, branch or mini-centre, minimum enrolment age, Kazakh-only or Russian groups, type, approximate position \\
+Children within 500\,m and 1\,km & Preschool-age children within walking distance, polling-station population model \\
+Preschools within 500\,m and 1\,km & Number of other preschools within the radius \\
+Children per preschool & Children within the radius divided by the number of preschools including this one \\
+Nearest preschool & Distance to the nearest other preschool \\
+\bottomrule
+\end{tabularx}
+\end{table}
