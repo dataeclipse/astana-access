@@ -17,11 +17,31 @@ RANDOM_DRAWS = 200
 DEMAND_COLUMN = "school_station"
 
 
-def split_schools() -> tuple[gpd.GeoDataFrame, gpd.GeoDataFrame]:
+def split_schools(year: int = 2026) -> tuple[gpd.GeoDataFrame, gpd.GeoDataFrame]:
+    from astana_access.inventory.programme_list import programme_sites
+
     schools = facilities()["school"]
-    presumed = schools["presumed_new"].astype(bool)
-    programme = presumed | (schools["number"] >= PROGRAMME_FIRST_NUMBER)
-    return schools[~programme], schools[programme]
+    sites = programme_sites()
+    matched = sites[sites["matched"]]
+    seats = dict(zip(matched["facility_id"], matched["seats"], strict=True))
+    programme = schools[schools["facility_id"].isin(seats)].copy()
+    programme["seats"] = programme["facility_id"].map(seats)
+    extra = sites[~sites["matched"]]
+    extra_frame = gpd.GeoDataFrame(
+        {
+            "facility_id": extra["facility_id"].to_numpy(),
+            "number": extra["number"].to_numpy(),
+            "presumed_new": False,
+            "seats": extra["seats"].to_numpy(),
+        },
+        geometry=extra.geometry.to_numpy(),
+        crs=CRS_METRIC,
+    )
+    programme = pd.concat([programme, extra_frame], ignore_index=True)
+    existing = schools[~schools["facility_id"].isin(seats)]
+    if year < 2024:
+        existing = existing[~existing["presumed_new"].astype(bool)]
+    return existing, programme
 
 
 def candidates(points: pd.DataFrame) -> gpd.GeoDataFrame:

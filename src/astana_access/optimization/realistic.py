@@ -28,9 +28,9 @@ PLOT_M2 = norms.school_land_m2(norms.COMFORTABLE_SCHOOL_SEATS)
 CLEARANCE_M = float(np.sqrt(PLOT_M2 / np.pi))
 
 
-def feasible_sites(points: pd.DataFrame) -> gpd.GeoDataFrame:
+def feasible_sites(points: pd.DataFrame, year: int = 2026) -> gpd.GeoDataFrame:
     cells = candidates(points)
-    clearance, transform = load_clearance()
+    clearance, transform = load_clearance(year)
     centres = np.column_stack([cells.geometry.x, cells.geometry.y])
     sites, distance = plot_sites(centres, clearance, transform, CLEARANCE_M, SEARCH_M)
     keep = np.isfinite(distance)
@@ -80,7 +80,7 @@ def capacitated(
     pairs: pd.DataFrame,
     unit_weight: pd.Series,
     k: int | None,
-    capacity: float,
+    capacity: float | pd.Series,
     fixed: list[str] | None = None,
 ) -> tuple[list[str], float]:
     sites = sorted(pairs["facility_id"].unique()) if fixed is None else sorted(fixed)
@@ -95,9 +95,13 @@ def capacitated(
     cols_s = pairs["facility_id"].map(site_index).to_numpy()
     flow_cols = n + np.arange(p)
     assignment = csr_matrix((reach, (rows_u, flow_cols)), shape=(m, n + p))
+    if isinstance(capacity, pd.Series):
+        limits = capacity.reindex(sites).fillna(float(capacity.max())).to_numpy(dtype=float)
+    else:
+        limits = np.full(n, float(capacity))
     capacity_rows = csr_matrix(
         (
-            np.concatenate([reach, -np.full(n, capacity)]),
+            np.concatenate([reach, -limits]),
             (np.concatenate([cols_s, np.arange(n)]), np.concatenate([flow_cols, np.arange(n)])),
         ),
         shape=(n, n + p),

@@ -194,79 +194,94 @@ In both cases nine-tenths of the inequality lies within districts rather than be
 
 H3 holds at district level under every specification: the worst district never changes from Nura or Esil for schools and from Baikonur for preschools. At the level of individual cells it holds across the three building-based population surfaces, where the same deficit areas recur, but not with WorldPop, whose deficit cells barely overlap with any building-based result. Where the deficit is depends on how population is placed, which is the reason H1 matters.
 
-## 8. Backtest of the school construction programme (H4b, first pass)
+## 8. The programme list and the comparison with 2026
 
-Code: `optimization/backtest.py`. Outputs: `reports/backtest.json`, `data/processed/backtest.gpkg`.
+Code: `inventory/programme_list.py`, `optimization/backtest.py`. Inputs: `data/labels/comfortable_schools.csv` and `data/labels/comfortable_schools_sources.csv`. Outputs: `reports/comfortable_schools.json`, `data/processed/comfortable_schools.gpkg`, `reports/backtest.json`.
 
-**Programme set.** Schools are numbered in order of opening, and the announced Comfortable School buildings carry numbers from 99 upwards. The programme is therefore approximated by the 16 mapped state schools numbered 99 or above plus the 5 presumed new school grounds: 21 schools, against 24 announced. The other 95 state schools form the network before the programme.
+### Which schools the programme built
 
-**Question.** With the same 21 sites, how many school-age children who had no state school within walking distance would the programme reach, and how many could a coverage-maximising choice have reached? Candidate sites are the 1,109 H3 cells with at least 20 school-age children, placed at the population-weighted centre of their dwellings. The maximal covering problem is solved exactly as a mixed-integer programme with HiGHS through SciPy. Demand is the station population model.
+The first pass approximated the programme by school number. It is now reconstructed site by site from ten public sources: the list of 24 sites published by Samruk-Kazyna Construction in August 2023, the enrolment announcement of July 2024 that gives the numbers of eight schools, completion and opening reports of December 2024 and of July, August and September 2025, a press report of April 2026 on a site still unbuilt, and public listing titles on 2GIS and krisha.kz for schools whose number and address are not given elsewhere.
+
+| | Sites |
+|---|---|
+| Listed in August 2023 | 24 |
+| Reported built by September 2025 | 23 (16 in 2024, 7 in 2025) |
+| Not built by April 2026 (Nazhimedenov and A56 streets) | 1 |
+| Located with high confidence: OSM school with the published number, or an address that resolves to it | 15 |
+| Located with medium confidence | 6 |
+| Not located | 2 |
+| Seats at the 21 located sites | 38,400 in one shift |
+
+Medium confidence covers two schools not yet mapped in OSM and placed at the announced street crossing (number 105 in Koktal; Tulebaev and Burabai streets), two schools placed on the only new unnamed school ground near the place the reports name (Otau; number 100 near school 90), and two numbered schools whose programme status rests on a listing title (115 and 118). The two sites not located are announced only by street codes (E48 and E77; E30, E751 and E796 near the Sat City complex) that OSM does not carry and no report links to a school number; the second may coincide with one of the located 2025 schools.
+
+The list differs from the number-based approximation in three places: two unnamed school grounds previously counted as programme schools are not confirmed by any source and are now treated as other new schools, and school 105 and the school at Tulebaev and Burabai streets, absent from OSM, are added.
+
+### Comparison with the population of 2026
 
 | | Within 1 km | Within 1.5 km |
 |---|---|---|
-| Children covered before the programme | 64.3% | 85.5% |
-| Children not covered | 108,619 | 44,031 |
-| Reached by the 21 programme schools | 22,037 | 17,286 |
-| Reached by the optimal 21 sites | 61,663 | 36,213 |
-| Programme as a share of the optimum | 36% | 48% |
-| 21 most populous cells | 18,514 | 5,847 |
-| 21 random cells, mean | 15,856 | 11,335 |
-| 21 random cells, 95th percentile | 22,350 | 16,615 |
-| Optimal sites within 1 km of a programme school | 67% | 48% |
+| Children without a state school, programme removed | 106,964 | 41,718 |
+| Reached by the 21 programme schools | 23,263 | 16,545 |
+| Optimal 21 cells, no land or capacity constraint | 60,685 | 34,132 |
+| Programme as a share of that optimum | 38% | 48% |
+| 21 most populous cells | 17,686 | 4,917 |
+| 21 random cells, mean and 95th percentile | 15,595 and 22,053 | 10,700 and 16,257 |
+| Optimal sites within 1 km of a programme school | 71% | 48% |
 
-**Reading.** H4b holds in its stated form: an allocation that maximises coverage with the same number of schools reaches two to three times as many uncovered children. The programme does better than a random choice on average, and at 1.5 km better than 95 per cent of random draws, so its sites are not arbitrary; two-thirds of the optimal sites at 1 km lie within 1 km of a programme school, so the programme went to the right areas more often than to the right places within them.
-
-**Limits of the comparison.** The programme sites were chosen in 2022 and 2023 against the demand of that time, while the backtest uses the population of 2026, which includes residents of housing finished since. The coverage objective ignores capacity; at about 2,900 children per optimal site at 1 km it stays within the 4,000 places that a 2,000-seat school offers in two shifts, but the optimum is an upper bound on what any real programme, constrained by land availability, could achieve. Land availability is not modelled at all. The programme set is an approximation by school number.
-
-The first half of H4, that programme sites are predicted by pre-programme deficits better than by density, needs the pre-programme demand surface and is not yet tested.
-
+This comparison is kept for reference. It judges a choice made in 2022 and 2023 against the city of 2026; section 9 replaces it.
 
 ## 9. The programme against the demand of 2023 (H4)
 
-Code: `population/history.py`, `optimization/land.py`, `optimization/programme.py`. Output: `reports/programme_2023.json`.
+Code: `population/history.py`, `optimization/land.py`, `optimization/realistic.py`, `optimization/programme.py`. Output: `reports/programme_2023.json`. The programme is the list of section 8: 21 located schools with their seats.
 
-Section 8 compared the programme with the population of 2026. This section rebuilds the city as it was on 1 January 2023, when the programme sites were being chosen.
+**Demand in 2023.** OSM as of 1 January 2023 is read through the Overpass history interface: 72,442 buildings, against 74,559 now. A current dwelling mapped in OSM counts as existing in 2023 if at least 30 per cent of its footprint overlaps a building that was mapped then; Microsoft footprints, which carry no date, are treated as existing. 36,714 of 39,735 dwellings pass, holding 70 per cent of current residential floor area. Floor area added since 2023 is 46 per cent of the current total in Nura, 38 in Esil and 34 in Saraishyk, against 8 to 12 per cent in the older districts. The official population on 1 January 2023 (Bureau of National Statistics, 1,354,435 in four reporting units, with Nura still inside Esil and Saraishyk inside Almaty) is allocated through the same station model. School-age children: 251,355. The 2023 school network is every state school except the programme and two new school grounds of unknown date. Buildings that stood in 2022 but were mapped only later count as new, which makes the 2023 city slightly emptier than it was.
 
-**Demand in 2023.** OSM as of 1 January 2023 is read through the Overpass history interface: 72,442 buildings, against 74,559 now. A current dwelling mapped in OSM counts as existing in 2023 if at least 30 per cent of its footprint overlaps a building that was mapped then; Microsoft footprints, which carry no date, are treated as existing. 36,714 of 39,735 dwellings pass, holding 70 per cent of today's residential floor area. Floor area added since 2023 is 46 per cent of the current total in Nura, 38 in Esil and 34 in Saraishyk, against 8 to 12 per cent in the older districts. The official population on 1 January 2023 (Bureau of National Statistics, 1,354,435 in four reporting units, with Nura still inside Esil and Saraishyk inside Almaty) is allocated through the same station model. School-age children: 251,355. Buildings that stood in 2022 but were mapped only later are counted as new, which makes the 2023 city slightly emptier than it was.
-
-**Land in 2023.** A site is feasible if a disc of 3.8 ha, the plot that SP RK prescribes for a 2,000-seat school, fits on land that in 2023 was free of buildings, roads, water, railways, parks, forest, cemeteries, industry, allotments, construction sites and other institutions, within 600 m of the cell. 283 of the 969 candidate cells are feasible. Ownership of the land is not known.
+**Land in 2023.** A plot is feasible if a disc of 3.8 ha, the plot that SP RK prescribes for a 2,000-seat school, fits on land that in 2023 was free of buildings, roads, water, railways, parks, forest, cemeteries, industry, allotments, construction sites and other institutions. Each candidate cell takes the nearest such plot within 600 m, and the school is placed on the plot itself; plots closer than 150 m to each other are merged. 191 plots remain. Ownership of the land is not known.
 
 ### Were programme sites chosen by deficit or by density?
 
-Each of the 21 programme schools is assigned to its nearest candidate cell. Scores are computed from the 2023 state before the programme: the number of children with no state school within walking distance who would gain one from a school in the cell, and the total number of children within the same distance.
+Each of the 21 programme schools is assigned to its nearest candidate cell. Scores come from the 2023 state before the programme: the number of children with no state school within walking distance who would gain one from a school in the cell (deficit), and the total number of children within the same distance (density).
 
-| Score, 1 km walking | ROC-AUC | 95% interval |
-|---|---|---|
-| Uncovered children within reach, deficit | 0.64 | 0.49 to 0.78 |
-| All children within reach, density | 0.48 | 0.35 to 0.60 |
-| Children in the cell | 0.52 | 0.37 to 0.67 |
-| Feasible plot in 2023 | 0.72 | 0.61 to 0.81 |
-| Deficit, counted only where a plot was feasible | 0.73 | 0.61 to 0.84 |
+| Score | ROC-AUC, 1 km | 95% interval | ROC-AUC, 1.5 km | 95% interval |
+|---|---|---|---|---|
+| Deficit | 0.63 | 0.48 to 0.77 | 0.64 | 0.51 to 0.75 |
+| Density | 0.46 | 0.33 to 0.59 | 0.45 | 0.34 to 0.56 |
+| Children in the cell | 0.48 | 0.32 to 0.63 | 0.48 | 0.32 to 0.63 |
+| Feasible plot in 2023 | 0.67 | 0.56 to 0.77 | 0.67 | 0.55 to 0.77 |
 
 | Difference of AUC, deficit minus density | Value | 95% interval | Bootstrap share above zero |
 |---|---|---|---|
-| 1 km | +0.17 | +0.01 to +0.28 | 97.9% |
-| 1.5 km | +0.20 | +0.02 to +0.36 | 98.3% |
+| 1 km | +0.18 | +0.02 to +0.29 | 98.7% |
+| 1.5 km | +0.19 | +0.00 to +0.34 | 97.5% |
 
-The programme went where children lacked a school, not where children were most numerous: density predicts the chosen sites no better than chance, and the deficit score does, with a difference whose interval excludes zero at both distances. The strongest single predictor is land: 15 of the 21 sites had a feasible plot in 2023, against 29 per cent of all cells. This is the first part of H4, and it holds.
+Density predicts the chosen sites no better than chance; deficit does, and the difference is positive in 97 to 99 per cent of bootstrap samples, with the lower bound of the interval at or just above zero. Land is again the strongest single predictor: 13 of the 21 sites had a feasible plot in 2023, against 29 per cent of all cells. The first part of H4 holds, with the caveat that 21 sites give wide intervals.
 
-### Backtest against the 2023 state
+### Backtest against the 2023 state, with land and capacity
+
+Capacity is the number of seats times two shifts: 4,000 children for a 2,000-seat school, 2,400 and 1,200 for the smaller programme schools. The optimisation is the capacitated maximal covering problem over 21 sites, solved exactly; demand is aggregated to H3 cells of resolution 10, about 70 m across, which changes realised coverage by less than 0.2 per cent.
 
 | | Within 1 km | Within 1.5 km |
 |---|---|---|
 | Children without a state school in 2023 | 78,459 | 29,927 |
-| Reached by the 21 programme schools | 16,055 | 11,242 |
-| Optimal 21 sites, any cell | 45,787 | 25,421 |
-| Optimal 21 sites, feasible plots only | 31,520 | 21,133 |
-| Programme as a share of the unconstrained optimum | 35% | 44% |
-| Programme as a share of the land-feasible optimum | 51% | 53% |
+| Reached by the programme, with its capacities | 17,197 | 11,649 |
+| Optimal 21 sites anywhere, with capacity | 45,810 | 25,424 |
+| Optimal 21 sites on feasible plots, with capacity | 19,063 | 17,275 |
+| Same, without capacity | 19,063 | 17,275 |
+| Programme as a share of the unconstrained optimum | 38% | 46% |
+| Programme as a share of the land-feasible optimum | 90% | 67% |
 | 21 most populous cells | 10,587 | 3,866 |
 | 21 random cells, mean | 12,208 | 7,665 |
-| Programme percentile among random draws | 92.5 | 93.0 |
+| Programme percentile among random draws | 96.5 | 95.0 |
 
-Against the city it was planned for, the programme reached about half of what the best land-feasible choice of 21 sites would have reached, and beat the density rule and 92 to 93 per cent of random choices. The second part of H4 holds, with a smaller gap than the comparison with 2026 suggested: requiring a plot removes about a third of the theoretical gain, and the rest is the room for better siting.
+Three findings.
 
-A comparison with land as it is in 2026, run first, gave the programme near parity with the optimum. That result is discarded: by 2026 much of the land that was free in 2023 had been built on, including the programme's own plots.
+Capacity never binds. With 4,000 places per school, no optimal or realised school receives more uncovered children within walking distance than it can seat, so the capacitated and uncapacitated optima coincide. The binding constraint is not school size but where a plot exists.
+
+Land explains most of the gap. Without a land constraint the best 21 sites would reach 2.7 times as many uncovered children within 1 km as the programme did. Restricted to plots that were free in 2023, the best choice reaches only 11 per cent more at 1 km and 48 per cent more at 1.5 km.
+
+The programme did well within the land it had. It beats the density rule by a wide margin and 95 to 97 per cent of random choices, and reaches 90 per cent of the land-feasible optimum at 1 km. The second part of H4, as stated, holds against the unconstrained optimum only; against land that was actually free, the room for better siting is modest at 1 km and about a third at 1.5 km.
+
+An earlier version of this section placed each optimal school at the population centre of its cell whenever a plot existed within 600 m, which gave a land-feasible optimum of 31,520 at 1 km. A school stands on its plot, not at the centre of the cell, so that figure overstated what free land allowed and is replaced by the values above. A first comparison with land as it is in 2026 is also discarded: by 2026 much of the land free in 2023 had been built on, including the plots of the programme itself.
 
 ## 10. Model explanations and the age-specific vacancy label
 

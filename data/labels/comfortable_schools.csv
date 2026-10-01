@@ -1,0 +1,25 @@
+site,number,seats,opened,locate,street_a,street_b,address_street,address_house,osm_number,anchor_number,status,confidence,sources,note
+P01,99,1200,2024,osm,,,,,99,,built,high,S1;S2,OSM school 99 lies 234 m from the announced crossing of Kabanbai Batyr avenue and Syganak street
+P02,100,2000,2024,osm_ground,,,,,,90,built,medium,S1;S3;S7,Announced at Korgalzhyn highway 127 next to school 90; the only new unnamed school ground near school 90 lies 767 m away
+P03,101,2000,2024,osm,,,,,101,,built,high,S1;S2,Announced at Tole bi and E758 streets; street codes are not mapped in OSM
+P04,102,600,2024,osm,,,,,102,,built,high,S1;S2,
+P05,103,2000,2024,osm,,,,,103,,built,high,S1;S2,Announced at Mangilik El avenue and E497 street
+P06,104,2000,2024,osm,,,,,104,,built,high,S1;S2,
+P07,105,2000,2024,intersection,улица Улытау,улица Наурыз,,,,,built,medium,S1;S2,School not mapped in OSM; placed at the announced street crossing
+P08,106,2000,2024,address,,,улица Бейбарыс Султан,15,,,built,high,S1;S2;S8,Matches an unnamed school ground 179 m from the address
+P09,107,600,2024,osm,,,,,107,,built,high,S1;S8,
+P10,108,2000,2024,osm,,,,,108,,built,high,S8,
+P11,109,2000,2024,osm,,,,,109,,built,high,S1;S3;S8,
+P12,111,2000,2024,osm,,,,,111,,built,high,S1;S2,Announced at Tole bi street and street 24
+P13,,2000,2024,osm_ground,,,,,,,built,medium,S3;S7,Otau school; the only new unnamed school ground near the Otau housing complex lies 664 m from it
+P14,,2000,2024,unresolved,,,,,,,built,none,S1;S3,Announced at E48 and E77 streets; codes not mapped and no school number published
+P15,113,2000,2025,osm,,,,,113,,built,high,S1;S3;S10,School 113 stands at Shamshi Kaldayakov street 38
+P16,114,2000,2025,osm,,,,,114,,built,high,S1;S4;S5,
+P17,,2000,2025,intersection,улица Мукан Тулебаев,улица Бурабай,,,,,built,medium,S1;S4;S6,School not mapped in OSM; placed at the announced street crossing
+P18,119,2000,2025,osm,,,,,119,,built,high,S1;S4;S6,OSM school 119 lies 142 m from the crossing of Egemen Kazakhstan and A. Imanov streets
+P19,,2000,2025,unresolved,,,,,,,built,none,S1;S4,Announced at E30 E751 and E796 streets near the Sat City complex; may coincide with one of schools 110 115 117
+P20,115,2000,2025,osm,,,,,115,,built,medium,S4;S8,Listed as comfortable school 115 at Uly Dala avenue 11
+P21,110,2000,2025,osm,,,,,110,,built,high,S5,
+P22,117,2000,2025,osm,,,,,117,,built,high,S5,
+P23,118,2000,2024,osm,,,,,118,,built,medium,S8,Listed as comfortable school 118 at Tole bi street 57a
+P24,,2000,,intersection,улица Жумекен Нажимеденов,улица А 56,,,,,not_built,none,S1;S9,Still in budget preparation in April 2026

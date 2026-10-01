@@ -1,0 +1,294 @@
+{
+ "sites_listed": 24,
+ "built": 23,
+ "located": 21,
+ "matched_to_school_layer": 19,
+ "unmatched_located": [
+  "P07",
+  "P17"
+ ],
+ "not_located": [
+  {
+   "site": "P14",
+   "method": "unresolved"
+  },
+  {
+   "site": "P19",
+   "method": "unresolved"
+  }
+ ],
+ "shared_facility": [],
+ "by_method": {
+  "osm_number": 16,
+  "ground_near_anchor": 2,
+  "intersection": 2,
+  "unresolved": 2,
+  "address": 1
+ },
+ "sites": [
+  {
+   "site": "P01",
+   "number": 99.0,
+   "seats": 1200,
+   "opened": 2024.0,
+   "method": "osm_number",
+   "gap_m": 0.0,
+   "nearest_number": 99.0,
+   "nearest_m": 0.0,
+   "matched": true
+  },
+  {
+   "site": "P02",
+   "number": 100.0,
+   "seats": 2000,
+   "opened": 2024.0,
+   "method": "ground_near_anchor",
+   "gap_m": 767.1614210277841,
+   "nearest_number": NaN,
+   "nearest_m": 0.0,
+   "matched": true
+  },
+  {
+   "site": "P03",
+   "number": 101.0,
+   "seats": 2000,
+   "opened": 2024.0,
+   "method": "osm_number",
+   "gap_m": 0.0,
+   "nearest_number": 101.0,
+   "nearest_m": 0.0,
+   "matched": true
+  },
+  {
+   "site": "P04",
+   "number": 102.0,
+   "seats": 600,
+   "opened": 2024.0,
+   "method": "osm_number",
+   "gap_m": 0.0,
+   "nearest_number": 102.0,
+   "nearest_m": 0.0,
+   "matched": true
+  },
+  {
+   "site": "P05",
+   "number": 103.0,
+   "seats": 2000,
+   "opened": 2024.0,
+   "method": "osm_number",
+   "gap_m": 0.0,
+   "nearest_number": 103.0,
+   "nearest_m": 0.0,
+   "matched": true
+  },
+  {
+   "site": "P06",
+   "number": 104.0,
+   "seats": 2000,
+   "opened": 2024.0,
+   "method": "osm_number",
+   "gap_m": 0.0,
+   "nearest_number": 104.0,
+   "nearest_m": 0.0,
+   "matched": true
+  },
+  {
+   "site": "P07",
+   "number": 105.0,
+   "seats": 2000,
+   "opened": 2024.0,
+   "method": "intersection",
+   "gap_m": 0.0,
+   "nearest_number": 68.0,
+   "nearest_m": 657.1591072429612,
+   "matched": false
+  },
+  {
+   "site": "P08",
+   "number": 106.0,
+   "seats": 2000,
+   "opened": 2024.0,
+   "method": "address",
+   "gap_m": 0.0,
+   "nearest_number": NaN,
+   "nearest_m": 179.1240055582048,
+   "matched": true
+  },
+  {
+   "site": "P09",
+   "number": 107.0,
+   "seats": 600,
+   "opened": 2024.0,
+   "method": "osm_number",
+   "gap_m": 0.0,
+   "nearest_number": 107.0,
+   "nearest_m": 0.0,
+   "matched": true
+  },
+  {
+   "site": "P10",
+   "number": 108.0,
+   "seats": 2000,
+   "opened": 2024.0,
+   "method": "osm_number",
+   "gap_m": 0.0,
+   "nearest_number": 108.0,
+   "nearest_m": 0.0,
+   "matched": true
+  },
+  {
+   "site": "P11",
+   "number": 109.0,
+   "seats": 2000,
+   "opened": 2024.0,
+   "method": "osm_number",
+   "gap_m": 0.0,
+   "nearest_number": 109.0,
+   "nearest_m": 0.0,
+   "matched": true
+  },
+  {
+   "site": "P12",
+   "number": 111.0,
+   "seats": 2000,
+   "opened": 2024.0,
+   "method": "osm_number",
+   "gap_m": 0.0,
+   "nearest_number": 111.0,
+   "nearest_m": 0.0,
+   "matched": true
+  },
+  {
+   "site": "P13",
+   "number": NaN,
+   "seats": 2000,
+   "opened": 2024.0,
+   "method": "ground_near_anchor",
+   "gap_m": 663.9114805293566,
+   "nearest_number": NaN,
+   "nearest_m": 0.0,
+   "matched": true
+  },
+  {
+   "site": "P14",
+   "number": NaN,
+   "seats": 2000,
+   "opened": 2024.0,
+   "method": "unresolved",
+   "gap_m": NaN,
+   "nearest_number": NaN,
+   "nearest_m": NaN,
+   "matched": false
+  },
+  {
+   "site": "P15",
+   "number": 113.0,
+   "seats": 2000,
+   "opened": 2025.0,
+   "method": "osm_number",
+   "gap_m": 0.0,
+   "nearest_number": 113.0,
+   "nearest_m": 0.0,
+   "matched": true
+  },
+  {
+   "site": "P16",
+   "number": 114.0,
+   "seats": 2000,
+   "opened": 2025.0,
+   "method": "osm_number",
+   "gap_m": 0.0,
+   "nearest_number": 114.0,
+   "nearest_m": 0.0,
+   "matched": true
+  },
+  {
+   "site": "P17",
+   "number": NaN,
+   "seats": 2000,
+   "opened": 2025.0,
+   "method": "intersection",
+   "gap_m": 0.0,
+   "nearest_number": 38.0,
+   "nearest_m": 1195.1888336926577,
+   "matched": false
+  },
+  {
+   "site": "P18",
+   "number": 119.0,
+   "seats": 2000,
+   "opened": 2025.0,
+   "method": "osm_number",
+   "gap_m": 0.0,
+   "nearest_number": 119.0,
+   "nearest_m": 0.0,
+   "matched": true
+  },
+  {
+   "site": "P19",
+   "number": NaN,
+   "seats": 2000,
+   "opened": 2025.0,
+   "method": "unresolved",
+   "gap_m": NaN,
+   "nearest_number": NaN,
+   "nearest_m": NaN,
+   "matched": false
+  },
+  {
+   "site": "P20",
+   "number": 115.0,
+   "seats": 2000,
+   "opened": 2025.0,
+   "method": "osm_number",
+   "gap_m": 0.0,
+   "nearest_number": 115.0,
+   "nearest_m": 0.0,
+   "matched": true
+  },
+  {
+   "site": "P21",
+   "number": 110.0,
+   "seats": 2000,
+   "opened": 2025.0,
+   "method": "osm_number",
+   "gap_m": 0.0,
+   "nearest_number": 110.0,
+   "nearest_m": 0.0,
+   "matched": true
+  },
+  {
+   "site": "P22",
+   "number": 117.0,
+   "seats": 2000,
+   "opened": 2025.0,
+   "method": "osm_number",
+   "gap_m": 0.0,
+   "nearest_number": 117.0,
+   "nearest_m": 0.0,
+   "matched": true
+  },
+  {
+   "site": "P23",
+   "number": 118.0,
+   "seats": 2000,
+   "opened": 2024.0,
+   "method": "osm_number",
+   "gap_m": 0.0,
+   "nearest_number": 118.0,
+   "nearest_m": 0.0,
+   "matched": true
+  },
+  {
+   "site": "P24",
+   "number": NaN,
+   "seats": 2000,
+   "opened": NaN,
+   "method": "intersection",
+   "gap_m": 0.0,
+   "nearest_number": NaN,
+   "nearest_m": 719.8808427773927,
+   "matched": false
+  }
+ ]
+}

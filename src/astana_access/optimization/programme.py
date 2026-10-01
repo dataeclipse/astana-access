@@ -6,6 +6,7 @@ import numpy as np
 import pandas as pd
 from sklearn.metrics import roc_auc_score
 
+from astana_access import norms
 from astana_access.accessibility.coverage import origin_destination
 from astana_access.accessibility.network import load
 from astana_access.config import CRS_GEO, CRS_METRIC, PROCESSED, REPORTS, SEED
@@ -94,11 +95,14 @@ def run() -> dict:
     network = load()
     points = demand_2023()
     weight = points.set_index("point_id")[DEMAND_COLUMN].fillna(0)
-    existing, programme = split_schools()
+    existing, programme = split_schools(YEAR)
     od_existing = origin_destination(network, points, existing, "facility_id")
     od_programme = origin_destination(network, points, programme, "facility_id")
     pool = candidates(points)
     od_pool = origin_destination(network, points, pool, "facility_id")
+    plots = realistic.feasible_sites(points, YEAR)
+    od_plots = origin_destination(network, points, plots, "facility_id")
+    programme_capacity = (programme.set_index("facility_id")["seats"] * norms.SHIFTS).astype(float)
     clearance, transform = load_clearance(YEAR)
     centres = np.column_stack([pool.geometry.x, pool.geometry.y])
     _, plot_distance = plot_sites(
@@ -120,8 +124,12 @@ def run() -> dict:
             pool.loc[pool["programme"] == 1, "land_feasible"].sum()
         ),
         "land_feasible_cells": int(pool["land_feasible"].sum()),
+        "programme_schools_located": int(len(programme)),
+        "programme_seats": float(programme["seats"].sum()),
+        "feasible_plots": int(len(plots)),
         "selection": {},
         "backtest": {},
+        "capacitated": {},
     }
     for radius in RADII_M:
         before = covered(od_existing, radius)
@@ -168,6 +176,32 @@ def run() -> dict:
         density_sites = (
             pool.sort_values("children", ascending=False)["facility_id"].head(k).tolist()
         )
+        unit = realistic.demand_units(points, uncovered)
+        unit_weight = uncovered.groupby(unit).sum()
+        units = pd.Series(unit.to_numpy(), index=uncovered.index)
+        pairs_plots = realistic.unit_pairs(od_plots, units, uncovered, radius)
+        pairs_cells = realistic.unit_pairs(od_pool, units, uncovered, radius)
+        pairs_programme = realistic.unit_pairs(od_programme, units, uncovered, radius)
+        fixed = list(pairs_programme["facility_id"].unique())
+        _, realised_capacitated = realistic.capacitated(
+            pairs_programme, unit_weight, None, programme_capacity, fixed=fixed
+        )
+        _, cells_capacitated = realistic.capacitated(
+            pairs_cells, unit_weight, k, realistic.CAPACITY
+        )
+        _, plots_capacitated = realistic.capacitated(
+            pairs_plots, unit_weight, k, realistic.CAPACITY
+        )
+        _, plots_free = realistic.capacitated(pairs_plots, unit_weight, k, 1e12)
+        report["capacitated"][str(radius)] = {
+            "realised": realised_capacitated,
+            "optimal_any_cell": cells_capacitated,
+            "optimal_feasible_plot": plots_capacitated,
+            "optimal_feasible_plot_without_capacity": plots_free,
+            "realised_over_optimal_any_cell": realised_capacitated / cells_capacitated,
+            "realised_over_optimal_feasible_plot": realised_capacitated / plots_capacitated,
+            "capacity_cost_feasible_plot": 1 - plots_capacitated / plots_free,
+        }
         report["backtest"][str(radius)] = {
             "uncovered_children_2023": float(uncovered.sum()),
             "realised_gain": realised,
