@@ -4,7 +4,7 @@ import re
 import geopandas as gpd
 import pandas as pd
 
-from astana_access.accessibility.coverage import facilities, origin_destination
+from astana_access.accessibility.coverage import LIMIT_M, facilities, origin_destination
 from astana_access.accessibility.network import load
 from astana_access.config import CRS_GEO, CRS_METRIC, INTERIM, RAW, REPORTS
 
@@ -49,7 +49,7 @@ def run() -> dict:
     summary = {
         "houses": int(len(joined)),
         "schools": int(joined["number"].nunique()),
-        "assigned_within_2500m": float(reached.mean()),
+        f"assigned_within_{int(LIMIT_M)}m": float(reached.mean()),
         "assigned_is_nearest": float((joined["rank"] == 1).mean()),
         "assigned_in_two_nearest": float((joined["rank"] <= 2).mean()),
         "median_distance_to_assigned_m": float(joined["distance_m"].median()),

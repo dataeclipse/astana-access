@@ -47,11 +47,14 @@ The school enrolment portal publishes the houses assigned to 11 schools. 2,988 o
 
 | Measure | Value |
 |---|---|
-| Assigned school is the nearest by network | 57.0% |
-| Assigned school is one of the two nearest | 67.5% |
-| Median walking distance to the assigned school | 957 m |
-| 90th percentile | 2,176 m |
-| Assigned school farther than 2.5 km | 15.3% |
+| Assigned school is the nearest by network | 57.3% |
+| Assigned school is one of the two nearest | 67.8% |
+| Assigned school within 4 km of walking | 99.1% |
+| Median walking distance to the assigned school | 1,133 m |
+| 90th percentile | 2,765 m |
+| Median extra distance when the assigned school is not the nearest | 767 m |
+
+A first run that searched only within 2.5 km reported a median of 957 m; it left out the 15 per cent of houses whose assigned school lies farther away, and the values above replace it.
 
 Three schools follow the nearest rule almost exactly (numbers 38, 68 and 74, above 97 per cent). Others do not: for number 41 the share is 27 per cent, for number 52 it is zero. The date of these lists is not published, schools opened since may have redrawn the boundaries, and part of the houses lie in streets of detached housing where geocoding is weakest.
 
