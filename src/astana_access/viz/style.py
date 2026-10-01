@@ -12,7 +12,7 @@ RC = {
     "savefig.bbox": "tight",
     "savefig.pad_inches": 0.02,
     "font.family": "serif",
-    "font.serif": ["Times New Roman", "DejaVu Serif"],
+    "font.serif": ["Times New Roman", "DejaVu Serif", "STIXGeneral"],
     "font.size": 9,
     "axes.titlesize": 10,
     "axes.labelsize": 9,
@@ -25,7 +25,6 @@ RC = {
     "legend.fontsize": 8,
     "xtick.labelsize": 8,
     "ytick.labelsize": 8,
-    "ps.useafm": True,
     "pdf.fonttype": 42,
     "ps.fonttype": 42,
 }

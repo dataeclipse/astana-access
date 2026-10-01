@@ -267,3 +267,13 @@ The programme went where children lacked a school, not where children were most 
 Against the city it was planned for, the programme reached about half of what the best land-feasible choice of 21 sites would have reached, and beat the density rule and 92 to 93 per cent of random choices. The second part of H4 holds, with a smaller gap than the comparison with 2026 suggested: requiring a plot removes about a third of the theoretical gain, and the rest is the room for better siting.
 
 A comparison with land as it is in 2026, run first, gave the programme near parity with the optimum. That result is discarded: by 2026 much of the land that was free in 2023 had been built on, including the programme's own plots.
+
+## 10. Model explanations and the age-specific vacancy label
+
+Code: `modeling/explain.py`. Figures: `thesis/figures/shap_residential.*`, `thesis/figures/shap_vacancy_private.*`. Values: `reports/shap.json`, mean absolute SHAP value per feature.
+
+**Residential classifier.** The largest contributions come from whether the footprint is mapped in OSM (1.42), whether it stands on residential land (1.41), the number of address points inside it (1.17), and the number of buildings within 300 m (0.79) and 100 m (0.70); footprint area follows (0.67). The model separates dwellings mainly by context and addressing, not by the shape of the building alone.
+
+**Vacancy among private preschools.** The largest contribution comes from children per preschool within 1 km (0.20), followed by whether the organisation runs Russian-language groups (0.16), children per preschool within 500 m (0.15), the distance to the nearest other preschool (0.14) and the number of preschools within 500 m (0.13). Demand pressure is the leading feature even though, as section 6 showed, the gain it brings in prediction is small.
+
+**Age-specific label.** A second label marks organisations with free places in groups for two- and three-year-olds, where waiting is longest: 276 of 728 organisations. Among private organisations, logistic regression reaches ROC-AUC 0.629 on own characteristics and 0.646 with demand pressure, against 0.574 and 0.610 for the any-age label. The age-specific label is easier to predict, but demand pressure adds less to it. Single-year age counts, which would allow a proper match of groups and children, are not available below the five-year WorldPop cohorts.
