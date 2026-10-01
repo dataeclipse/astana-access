@@ -4,12 +4,36 @@ Written 2026-10-01. Code: `src/astana_access/accessibility/network.py`, `coverag
 
 ## 1. Norms
 
-The full text of SP RK 3.01-101-2013 is not openly available; the Paragraph system shows only a demo, and copies on document mirrors could not be opened. What is official and citable:
+Source: SP RK 3.01-101-2013 "Urban planning. Planning and development of urban and rural settlements", edition of 9 July 2021 including orders 45-NK of 5 March 2018 and 46-NK of 1 April 2019, copy obtained from smeta-kz.com and kept in `data/raw/norms/`. The current edition is dated 2 June 2025; the values below must be checked against it before the thesis cites them as current.
 
-- Government decree No. 710 of 2 September 2025, "On the system of regional standards for settlements", in the edition of 14 July 2026, sets the principle of 20-minute walking access to services in the capital and refers the calculation of school and preschool places to SP RK 3.01-101-2013, appendix V, table V.1.
-- SP RK 3.01-101-2013 states that a residential quarter serves everyday needs within a radius of 500 m, with schools and preschools governed by its tables 10.1 and 10.2. The numbers in those tables are still to be read from the primary text.
+| Norm | Value | Place in SP RK |
+|---|---|---|
+| Service radius, preschools in cities | 300 m | Table 2-1, clause 7.7 |
+| Service radius, preschools in rural settlements and small towns with low-rise housing | 500 m | Table 2-1 |
+| Service radius, general schools | 500 m | Table 2-1 |
+| Allowed increase in settlements with a complex layout or under reconstruction | up to 10% | Table 2-1, note |
+| Transport access instead of walking | 15 min one way for primary grades, at most 50 min for other grades | Table 2-1, note |
+| Preschool provision | up to 85% of children; in new-build areas without demographic data up to 180 places per 1,000 residents, of which at most 100 inside housing areas | Table V.1 |
+| School provision | 100% of grades 1-9 and up to 75% of grades 10-11 in one shift; in new-build areas at least 180 places per 1,000 residents | Table V.1 |
+| School plot | 19 sq m per pupil for 900-1,200 pupils, so 3.8 ha for a 2,000-seat school | Table V.1 |
 
-Until the tables are read, coverage is reported at 300, 500, 750, 1,000 and 1,500 m. A 20-minute walk at 75 m per minute is 1,500 m.
+Government decree No. 710 of 2 September 2025 on regional standards, in the edition of 14 July 2026, adds the principle of 20-minute walking access in the capital and refers school and preschool provision to the same standard.
+
+Two readings of "radius" are reported: straight-line distance, which is how planners usually apply a service radius, and walking distance over the network, which is what a child actually walks.
+
+Compliance, share of children within the norm, station population model (`reports/compliance.json`):
+
+| District | School 500 m, straight line | School 500 m, walking | Preschool 300 m, straight line | Preschool 300 m, walking |
+|---|---|---|---|---|
+| City | 60.3% | 20.5% | 76.3% | 33.6% |
+| Almaty | 65.7% | 23.4% | 89.2% | 38.6% |
+| Baikonur | 67.8% | 24.7% | 70.1% | 30.7% |
+| Esil | 48.1% | 18.8% | 78.1% | 38.7% |
+| Nura | 48.1% | 9.7% | 73.4% | 34.6% |
+| Saraishyk | 61.9% | 22.1% | 71.1% | 27.0% |
+| Saryarka | 72.3% | 25.8% | 73.8% | 29.6% |
+
+The two readings differ by a factor of two to three: most children who live within the statutory radius of a school as the crow flies do not live within it on foot. Across the three building-based population surfaces the city-level shares vary by less than 2.5 points.
 
 ## 2. Network
 
@@ -195,3 +219,51 @@ Code: `optimization/backtest.py`. Outputs: `reports/backtest.json`, `data/proces
 **Limits of the comparison.** The programme sites were chosen in 2022 and 2023 against the demand of that time, while the backtest uses the population of 2026, which includes residents of housing finished since. The coverage objective ignores capacity; at about 2,900 children per optimal site at 1 km it stays within the 4,000 places that a 2,000-seat school offers in two shifts, but the optimum is an upper bound on what any real programme, constrained by land availability, could achieve. Land availability is not modelled at all. The programme set is an approximation by school number.
 
 The first half of H4, that programme sites are predicted by pre-programme deficits better than by density, needs the pre-programme demand surface and is not yet tested.
+
+
+## 9. The programme against the demand of 2023 (H4)
+
+Code: `population/history.py`, `optimization/land.py`, `optimization/programme.py`. Output: `reports/programme_2023.json`.
+
+Section 8 compared the programme with the population of 2026. This section rebuilds the city as it was on 1 January 2023, when the programme sites were being chosen.
+
+**Demand in 2023.** OSM as of 1 January 2023 is read through the Overpass history interface: 72,442 buildings, against 74,559 now. A current dwelling mapped in OSM counts as existing in 2023 if at least 30 per cent of its footprint overlaps a building that was mapped then; Microsoft footprints, which carry no date, are treated as existing. 36,714 of 39,735 dwellings pass, holding 70 per cent of today's residential floor area. Floor area added since 2023 is 46 per cent of the current total in Nura, 38 in Esil and 34 in Saraishyk, against 8 to 12 per cent in the older districts. The official population on 1 January 2023 (Bureau of National Statistics, 1,354,435 in four reporting units, with Nura still inside Esil and Saraishyk inside Almaty) is allocated through the same station model. School-age children: 251,355. Buildings that stood in 2022 but were mapped only later are counted as new, which makes the 2023 city slightly emptier than it was.
+
+**Land in 2023.** A site is feasible if a disc of 3.8 ha, the plot that SP RK prescribes for a 2,000-seat school, fits on land that in 2023 was free of buildings, roads, water, railways, parks, forest, cemeteries, industry, allotments, construction sites and other institutions, within 600 m of the cell. 283 of the 969 candidate cells are feasible. Ownership of the land is not known.
+
+### Were programme sites chosen by deficit or by density?
+
+Each of the 21 programme schools is assigned to its nearest candidate cell. Scores are computed from the 2023 state before the programme: the number of children with no state school within walking distance who would gain one from a school in the cell, and the total number of children within the same distance.
+
+| Score, 1 km walking | ROC-AUC | 95% interval |
+|---|---|---|
+| Uncovered children within reach, deficit | 0.64 | 0.49 to 0.78 |
+| All children within reach, density | 0.48 | 0.35 to 0.60 |
+| Children in the cell | 0.52 | 0.37 to 0.67 |
+| Feasible plot in 2023 | 0.72 | 0.61 to 0.81 |
+| Deficit, counted only where a plot was feasible | 0.73 | 0.61 to 0.84 |
+
+| Difference of AUC, deficit minus density | Value | 95% interval | Bootstrap share above zero |
+|---|---|---|---|
+| 1 km | +0.17 | +0.01 to +0.28 | 97.9% |
+| 1.5 km | +0.20 | +0.02 to +0.36 | 98.3% |
+
+The programme went where children lacked a school, not where children were most numerous: density predicts the chosen sites no better than chance, and the deficit score does, with a difference whose interval excludes zero at both distances. The strongest single predictor is land: 15 of the 21 sites had a feasible plot in 2023, against 29 per cent of all cells. This is the first part of H4, and it holds.
+
+### Backtest against the 2023 state
+
+| | Within 1 km | Within 1.5 km |
+|---|---|---|
+| Children without a state school in 2023 | 78,459 | 29,927 |
+| Reached by the 21 programme schools | 16,055 | 11,242 |
+| Optimal 21 sites, any cell | 45,787 | 25,421 |
+| Optimal 21 sites, feasible plots only | 31,520 | 21,133 |
+| Programme as a share of the unconstrained optimum | 35% | 44% |
+| Programme as a share of the land-feasible optimum | 51% | 53% |
+| 21 most populous cells | 10,587 | 3,866 |
+| 21 random cells, mean | 12,208 | 7,665 |
+| Programme percentile among random draws | 92.5 | 93.0 |
+
+Against the city it was planned for, the programme reached about half of what the best land-feasible choice of 21 sites would have reached, and beat the density rule and 92 to 93 per cent of random choices. The second part of H4 holds, with a smaller gap than the comparison with 2026 suggested: requiring a plot removes about a third of the theoretical gain, and the rest is the room for better siting.
+
+A comparison with land as it is in 2026, run first, gave the programme near parity with the optimum. That result is discarded: by 2026 much of the land that was free in 2023 had been built on, including the programme's own plots.

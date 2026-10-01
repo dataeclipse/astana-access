@@ -1,0 +1,26 @@
+{
+ "plot_m2": 38000.0,
+ "clearance_m": 109.98079684646791,
+ "capacity_children": 4000,
+ "feasible_plots": 229,
+ "median_shift_from_cell_centre_m": 328.2478264304212,
+ "programme_schools": 21,
+ "radii": {
+  "1000": {
+   "uncovered_children": 108619.24125163292,
+   "realised_uncapacitated": 22036.848062876816,
+   "realised_capacitated": 22036.848062876816,
+   "optimal_on_feasible_plots_uncapacitated": 20241.79662138052,
+   "optimal_on_feasible_plots_capacitated": 20241.796707679627,
+   "realised_over_optimal_capacitated": 1.0886804358881914
+  },
+  "1500": {
+   "uncovered_children": 44030.94853329571,
+   "realised_uncapacitated": 17310.366900650162,
+   "realised_capacitated": 17310.366900650162,
+   "optimal_on_feasible_plots_uncapacitated": 23491.707713523687,
+   "optimal_on_feasible_plots_capacitated": 23484.851045857016,
+   "realised_over_optimal_capacitated": 0.7370865102294911
+  }
+ }
+}

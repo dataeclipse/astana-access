@@ -1,0 +1,96 @@
+{
+ "source": "SP RK 3.01-101-2013, edition of 9 July 2021, with orders 45-NK of 5 March 2018 and 46-NK of 1 April 2019",
+ "radius_m": {
+  "preschool": 300.0,
+  "school": 500.0
+ },
+ "station_model": {
+  "preschool/network": {
+   "city": 0.336,
+   "Almaty": 0.386,
+   "Baikonur": 0.307,
+   "Esil": 0.387,
+   "Nura": 0.346,
+   "Saraishyk": 0.27,
+   "Saryarka": 0.296
+  },
+  "preschool/straight_line": {
+   "city": 0.763,
+   "Almaty": 0.892,
+   "Baikonur": 0.701,
+   "Esil": 0.781,
+   "Nura": 0.734,
+   "Saraishyk": 0.711,
+   "Saryarka": 0.738
+  },
+  "school/network": {
+   "city": 0.205,
+   "Almaty": 0.234,
+   "Baikonur": 0.247,
+   "Esil": 0.188,
+   "Nura": 0.097,
+   "Saraishyk": 0.221,
+   "Saryarka": 0.258
+  },
+  "school/network_named_only": {
+   "city": 0.203,
+   "Almaty": 0.234,
+   "Baikonur": 0.247,
+   "Esil": 0.188,
+   "Nura": 0.094,
+   "Saraishyk": 0.203,
+   "Saryarka": 0.258
+  },
+  "school/straight_line": {
+   "city": 0.603,
+   "Almaty": 0.657,
+   "Baikonur": 0.678,
+   "Esil": 0.481,
+   "Nura": 0.481,
+   "Saraishyk": 0.619,
+   "Saryarka": 0.723
+  }
+ },
+ "variant_range_city": {
+  "preschool/network/norm": [
+   0.32611054348173035,
+   0.33733431209673087
+  ],
+  "preschool/network/norm_plus_10pct": [
+   0.38743357192507116,
+   0.3982128778756741
+  ],
+  "preschool/straight_line/norm": [
+   0.7417181003743198,
+   0.7645454504463878
+  ],
+  "preschool/straight_line/norm_plus_10pct": [
+   0.7760625842596758,
+   0.8008100548701558
+  ],
+  "school/network/norm": [
+   0.19890762817804022,
+   0.20673863746667448
+  ],
+  "school/network/norm_plus_10pct": [
+   0.25207425061202393,
+   0.26409485640925123
+  ],
+  "school/network_named_only/norm": [
+   0.1946516291812789,
+   0.20273587930608722
+  ],
+  "school/network_named_only/norm_plus_10pct": [
+   0.24615744963303848,
+   0.2592766134829977
+  ],
+  "school/straight_line/norm": [
+   0.5855267698410617,
+   0.6071896376491058
+  ],
+  "school/straight_line/norm_plus_10pct": [
+   0.6415863415055171,
+   0.662766800923911
+  ]
+ }
+}
