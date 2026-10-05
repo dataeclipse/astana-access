@@ -395,3 +395,7 @@ City checks:
 | Births 2019 to 2025 | Baikonur 4,648 to 2,707; Saryarka 7,405 to 5,357; Nura 6,103 in 2025, the most of any district |
 
 The tables of places commissioned end in 2021 and 2024 and do not cover the programme; they are not used. The gross enrolment tables are in the old xls format and are not parsed.
+
+## 14. Current edition of the planning standard
+
+SP RK 3.01-101-2013 with amendments as of 2 June 2025, official publication of the Unified State Fund of Normative Technical Documents (`data/raw/norms/sp_rk_3.01-101-2013_2025-06-02.pdf`). Table 2-1 (radius 300 m for urban preschools, 500 m for schools, up to 10% more in complex layouts, transport access 15 and 50 min) and Table V.1 (provision norms, school plot 19 sq m per pupil above 900 pupils) are unchanged from the edition of 9 July 2021. New in note 2 to Table 2-1: the walk of primary pupils must not cross a main road at grade. The Astana norms SNiP RK 3.01-01As-2007 (amendments as of 15 May 2019, official edition 2023) set walking access of 300-500 m for everyday facilities, including preschools and schools. No result changes.
