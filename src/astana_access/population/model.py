@@ -6,16 +6,18 @@ import numpy as np
 import pandas as pd
 
 from astana_access.config import CRS_GEO, CRS_METRIC, H3_RESOLUTION, PROCESSED, REPORTS
+from astana_access.ingest.stat_ages import cohort_shares
 from astana_access.population.surface import assign_stations, impute_floors
 
 OFFICIAL_2026 = {
-    "Almaty+Saraishyk": 443_031,
-    "Baikonur": 218_232,
-    "Esil": 320_472,
-    "Nura": 303_914,
-    "Saryarka": 352_584,
+    "Almaty": 250_987,
+    "Baikonur": 218_341,
+    "Esil": 320_652,
+    "Nura": 304_136,
+    "Saraishyk": 192_351,
+    "Saryarka": 352_709,
 }
-UNIT = {"Almaty": "Almaty+Saraishyk", "Saraishyk": "Almaty+Saraishyk"}
+AGE_YEAR = 2026
 HOUSING_STOCK_2025_MM2 = 36.7
 APARTMENT_SHARE_2025 = 0.873
 COMMISSIONED_2025_MM2 = 4.904965
@@ -75,14 +77,14 @@ def build() -> tuple[gpd.GeoDataFrame, dict]:
     table, floors_quality = impute_floors(buildings)
     table = assign_stations(gpd.GeoDataFrame(table, geometry="geometry", crs=CRS_METRIC))
     dwellings = table[table["dwelling"] & table["station"].notna()].copy()
-    dwellings["unit"] = dwellings["district"].replace(UNIT)
+    dwellings["unit"] = dwellings["district"]
     factor, housing = house_factor(dwellings)
     dwellings["weight"] = dwellings["floor_area_m2"] * np.where(
         dwellings["form"] == "house", factor, 1.0
     )
 
     grid = gpd.read_file(PROCESSED / "grid_pop.gpkg")
-    grid["unit"] = grid["district"].replace(UNIT)
+    grid["unit"] = grid["district"]
     diagnostics = {
         "floors": floors_quality,
         "housing": {**housing, "house_factor": factor},
@@ -118,10 +120,17 @@ def build() -> tuple[gpd.GeoDataFrame, dict]:
         grid[model] = cells[model].reindex(grid.index).fillna(0.0)
     outside = float(cells[models[0]].sum() - grid[models[0]].sum())
     diagnostics["population_outside_grid"] = outside
+    official_shares = cohort_shares(AGE_YEAR)
+    diagnostics["cohort_share_official"] = official_shares.round(4).to_dict()
+    diagnostics["cohort_share_worldpop"] = {
+        cohort: (grid.groupby("unit")[cohort].sum() / grid.groupby("unit")["total"].sum())
+        .round(4)
+        .to_dict()
+        for cohort in COHORTS
+    }
     for cohort in COHORTS:
-        share = (grid[cohort] / grid["total"]).where(grid["total"] > 0)
-        unit_share = grid.groupby("unit")[cohort].transform("sum") / unit_total
-        share = share.fillna(unit_share)
+        share = grid["unit"].map(official_shares[cohort]).fillna(official_shares.at["City", cohort])
+        grid[cohort] = grid["total"] * share
         for model in ["pop_worldpop", *models]:
             grid[f"{cohort}_{model.removeprefix('pop_')}"] = grid[model] * share
     correlation = grid[["pop_worldpop", *models]].corr(method="spearman")

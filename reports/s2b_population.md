@@ -170,3 +170,35 @@ The variants disagree most on the split of the Almaty reporting unit: the statio
 
 1. Raise the share of reconstructed territories, starting with the 75 walks that have an unmatched feature.
 2. Carry the four population variants into the accessibility computation and report how far conclusions depend on the choice.
+
+## 8. Update of 5 October 2026: official totals of six districts and official age structure
+
+Source: Department of the Bureau of National Statistics for Astana, population of the city and of each district by single year of age at the beginning of the year, 2009-2026 (`data/raw/stat/population_single_age_districts.xlsx`, parsed by `ingest/stat_ages.py`). Saraishyk has its own figures for 1 January 2026; Nura has figures from 2023.
+
+**Totals.** The hard constraint now has six units: Almaty 250,987, Baikonur 218,341, Esil 320,652, Nura 304,136, Saraishyk 192,351, Saryarka 352,709; city 1,639,176, 943 more than bulletin 18-05 of February 2026. For 2023 the constraint has five units, with Esil (236,086) and Nura (173,180) separate instead of combined.
+
+**District error with six districts.**
+
+| Predictor | Mean abs. error |
+|---|---|
+| WorldPop | 26.0% |
+| Residential floor area | 27.5% |
+| Number of territorial stations | 9.2% (r = 0.88; 0.97 with Almaty and Saraishyk combined) |
+| Stations, alpha 0 | 12.0% |
+| Stations, alpha 0.2 (model) | 10.0% |
+
+H1 still holds. The station count overstates Almaty by 13 per cent and understates Esil by 15.
+
+**Age structure.** WorldPop gives every district the same age structure, 12.8% aged 1-6 and 18.6% aged 7-17. The official shares:
+
+| District | 1-6 | 7-17 |
+|---|---|---|
+| Almaty | 19.8% | 27.5% |
+| Baikonur | 7.3% | 15.0% |
+| Esil | 14.5% | 19.4% |
+| Nura | 13.6% | 18.8% |
+| Saraishyk | 8.1% | 12.9% |
+| Saryarka | 10.8% | 18.4% |
+| City | 12.6% | 19.0% |
+
+The cohorts of the model are now these shares applied to every cell of the district. The split between Almaty and Saraishyk is implausible, since Saraishyk is a district of new housing; combined, the two have 14.7% and 21.2%, close to Almaty alone in 2025 (14.8% and 20.6%). Results for these two districts are reported both ways.

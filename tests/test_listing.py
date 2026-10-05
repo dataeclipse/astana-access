@@ -3,7 +3,10 @@ import pandas as pd
 import pytest
 from shapely.geometry import Point
 
+from astana_access.ingest import stat_ages
 from astana_access.inventory.programme_list import locate
+from astana_access.population.history import OFFICIAL_2023
+from astana_access.population.model import OFFICIAL_2026
 from astana_access.validation.listing import reweighted, school_number
 
 
@@ -36,3 +39,21 @@ def test_reweighting_keeps_station_totals() -> None:
     assert population["a"] == pytest.approx(150.0)
     assert population["b"] == pytest.approx(50.0)
     assert population["c"] == pytest.approx(50.0)
+
+
+def test_official_ages_match_model_constants() -> None:
+    if not stat_ages.SOURCE.exists():
+        pytest.skip("statistics file not present")
+    table = stat_ages.load()
+    assert stat_ages.totals(2026, table) == OFFICIAL_2026
+    assert stat_ages.totals(2023, table) == OFFICIAL_2023
+    shares = stat_ages.cohort_shares(2026, table)
+    assert shares.loc["City", "preschool"] == pytest.approx(0.1264, abs=1e-3)
+    assert shares.loc["City", "school"] == pytest.approx(0.1897, abs=1e-3)
+
+
+def test_sheet_parsing_skips_empty_year() -> None:
+    header = [None] * 6 + [("Возраст", 2009, 2010, "Возраст", 2009, 2010)]
+    rows = header + [("Всего", None, 120, "Всего", None, 60), (0, None, 7, 0, None, 3)]
+    records = stat_ages.parse_sheet(rows)
+    assert records == [("Всего", 2010, 120), (0, 2010, 7)]

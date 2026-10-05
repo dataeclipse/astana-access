@@ -21,20 +21,20 @@
    "brier_sd": 0.0009918599048617993
   },
   "all/own_context/logistic": {
-   "roc_auc_mean": 0.6972398753894081,
-   "roc_auc_sd": 0.004370327918190821,
-   "pr_auc_mean": 0.7338766702876782,
-   "pr_auc_sd": 0.006212925065818086,
-   "brier_mean": 0.21277513216555916,
-   "brier_sd": 0.0011476893619808656
+   "roc_auc_mean": 0.686303738317757,
+   "roc_auc_sd": 0.0031794196254361197,
+   "pr_auc_mean": 0.7297919079533026,
+   "pr_auc_sd": 0.004047966899335748,
+   "brier_mean": 0.21476582467287447,
+   "brier_sd": 0.0007409327609836419
   },
   "all/own_context/lightgbm": {
-   "roc_auc_mean": 0.6932359813084112,
-   "roc_auc_sd": 0.005174797923098054,
-   "pr_auc_mean": 0.7216084928079637,
-   "pr_auc_sd": 0.007838276749887935,
-   "brier_mean": 0.21104629712707026,
-   "brier_sd": 0.0011832599792813547
+   "roc_auc_mean": 0.6657858255451714,
+   "roc_auc_sd": 0.00443063217282574,
+   "pr_auc_mean": 0.7007051043460178,
+   "pr_auc_sd": 0.005792704082260592,
+   "brier_mean": 0.21847266399029142,
+   "brier_sd": 0.0013294984940465352
   },
   "private/own/logistic": {
    "roc_auc_mean": 0.5739679669336087,
@@ -53,40 +53,40 @@
    "brier_sd": 0.0008863523203592626
   },
   "private/own_context/logistic": {
-   "roc_auc_mean": 0.609863084474296,
-   "roc_auc_sd": 0.005803797340433507,
-   "pr_auc_mean": 0.7457380742291951,
-   "pr_auc_sd": 0.008284696511485468,
-   "brier_mean": 0.21739419657047138,
-   "brier_sd": 0.0012074873675864365
+   "roc_auc_mean": 0.5949677086024284,
+   "roc_auc_sd": 0.010724760135785057,
+   "pr_auc_mean": 0.7408318153804683,
+   "pr_auc_sd": 0.00890979993677814,
+   "brier_mean": 0.21976427999076079,
+   "brier_sd": 0.0018377674952380586
   },
   "private/own_context/lightgbm": {
-   "roc_auc_mean": 0.5637225523120641,
-   "roc_auc_sd": 0.007594248453535726,
-   "pr_auc_mean": 0.7144464092315416,
-   "pr_auc_sd": 0.009580525034276881,
-   "brier_mean": 0.22338301660707588,
-   "brier_sd": 0.00123424864158941
+   "roc_auc_mean": 0.5455089124257297,
+   "roc_auc_sd": 0.010859626942233969,
+   "pr_auc_mean": 0.7089720564312747,
+   "pr_auc_sd": 0.011519254875350639,
+   "brier_mean": 0.2263131735540381,
+   "brier_sd": 0.001988033942003596
   }
  },
  "importance_private": {
-  "children_per_org_1000": 92,
-  "children_per_org_500": 90,
-  "nearest_rival_m": 64,
-  "children_500": 42,
-  "rivals_500": 42,
-  "children_1000": 32,
-  "russian": 31,
-  "rivals_1000": 27,
-  "approximate_position": 17,
-  "kazakh_only": 9,
-  "min_age": 4,
+  "children_500": 78,
+  "nearest_rival_m": 68,
+  "children_per_org_500": 63,
+  "children_per_org_1000": 51,
+  "rivals_1000": 44,
+  "rivals_500": 41,
+  "children_1000": 37,
+  "russian": 34,
+  "approximate_position": 14,
+  "min_age": 12,
+  "kazakh_only": 8,
   "branch": 0,
   "nursery": 0,
   "mini_centre": 0
  },
  "free_share_by_pressure_private": {
-  "below_median": 0.7297297297297297,
-  "above_median": 0.6067796610169491
+  "below_median": 0.6824324324324325,
+  "above_median": 0.6542372881355932
  }
 }

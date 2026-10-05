@@ -345,3 +345,32 @@ Preschool results do not change. The direction of every hypothesis is unchanged.
 | Population with listed floors for those 438 buildings | district ranking unchanged for both facility types, largest district change 0.003 of the city mean, 99% of worst-served cells unchanged |
 
 Not used from the listing: walking distances to the nearest school (computed on the same OSM network and including private schools), bus stops, parking and entrance counts. The 351 complexes marked as under construction are not used; the listing does not state how complete it is.
+
+## 12. Update of 5 October 2026: official age structure and six district totals
+
+Population model updated as in section 8 of `s2b_population.md`. The values below replace earlier ones.
+
+| Result | Before | After |
+|---|---|---|
+| Compliance, city, school 500 m straight / walking | 60.7% / 20.6% | 60.8% / 20.6% |
+| Compliance, city, preschool 300 m straight / walking | 76.3% / 33.6% | 77.9% / 34.7% |
+| Schools, access relative to mean: Almaty, Baikonur, Esil, Nura, Saraishyk, Saryarka | 1.13, 1.11, 0.71, 0.71, 0.94, 1.38 | 0.88, 1.30, 0.70, 0.72, 1.12, 1.46 |
+| Same with the combined age share of Almaty and Saraishyk | - | 1.06, 1.31, 0.69, 0.71, 0.80, 1.45 |
+| Preschools, same order | 1.59, 0.64, 1.08, 0.90, 1.01, 0.79 | 1.17, 0.99, 0.94, 0.83, 1.25, 0.94 |
+| Preschools with combined share | - | 1.43, 1.01, 0.94, 0.83, 0.83, 0.95 |
+| Gini schools / preschools | 0.390 / 0.460 | 0.398 / 0.435 |
+| Theil share between districts | 12% / 11% | 16% / 3% |
+| Low-low clusters, share of children | 11.1% / 9.6% | 10.8% / 8.2% |
+| H3 schools, worst district | Nura 30, Esil 6 | Nura 28, Esil 8 |
+| H3 preschools, worst district | Baikonur 36 | Saryarka 16, Nura 12, Baikonur 8 |
+| H3 district rank correlation, median, buildings | 0.89 / 0.94 | 0.94 / 0.57 |
+| Vacancy, private, logistic with pressure | 0.610 | 0.595 |
+| Vacancy, pressure coefficient and 95% interval | -0.16 (-0.35, 0.02) | -0.09 (-0.26, 0.08) |
+| H4, school-age children 2023 | 251,355 (modelled share) | 236,457 (official) |
+| H4, deficit AUC 1 km / 1.5 km | 0.61 / 0.64 | 0.62 / 0.63 |
+| H4, deficit minus density | +0.15 / +0.18 | +0.17 (+0.03, +0.30) / +0.19 (-0.00, +0.36) |
+| Programme over land-feasible optimum | 83% / 66% | 89% / 64% |
+| Programme over unconstrained optimum | 35% / 45% | 33% / 43% |
+| Programme percentile among random choices | 91.5 / 94.5 | 81 / 89 |
+
+Consequences. For schools nothing qualitative changes: Esil and Nura remain the worst served. For preschools the deficit of Baikonur was an artefact of the uniform age structure: Baikonur has the smallest share of preschool children in the city. Under the official structure the districts are close, Nura lowest at 0.83, and 97 per cent of inequality lies within districts; H2 is not supported for preschools, and H3 holds for them only at the cell level.

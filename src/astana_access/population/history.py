@@ -11,16 +11,17 @@ from astana_access.ingest.http import post_json
 SNAPSHOT = "2023-01-01T00:00:00Z"
 BBOX = "50.95,71.15,51.40,71.85"
 OFFICIAL_2023 = {
-    "Almaty+Saraishyk": 366_708,
-    "Esil+Nura": 409_282,
-    "Saryarka": 345_193,
-    "Baikonur": 233_252,
+    "Almaty": 366_785,
+    "Esil": 236_086,
+    "Nura": 173_180,
+    "Saryarka": 345_226,
+    "Baikonur": 233_282,
 }
 UNIT_2023 = {
-    "Almaty": "Almaty+Saraishyk",
-    "Saraishyk": "Almaty+Saraishyk",
-    "Esil": "Esil+Nura",
-    "Nura": "Esil+Nura",
+    "Almaty": "Almaty",
+    "Saraishyk": "Almaty",
+    "Esil": "Esil",
+    "Nura": "Nura",
     "Saryarka": "Saryarka",
     "Baikonur": "Baikonur",
 }

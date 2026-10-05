@@ -1,124 +1,124 @@
 {
  "year": 2023,
- "school_age_children_2023": 251355.30349162105,
- "candidate_cells": 969,
+ "school_age_children_2023": 236457.0,
+ "candidate_cells": 954,
  "programme_cells": 21,
  "programme_cells_land_feasible": 14,
- "land_feasible_cells": 283,
+ "land_feasible_cells": 276,
  "programme_schools_located": 21,
  "programme_seats": 38400.0,
- "feasible_plots": 191,
+ "feasible_plots": 185,
  "selection": {
   "1000": {
    "deficit": {
-    "auc": 0.6125929274663451,
-    "low": 0.458607221495385,
-    "high": 0.7584571665314226
+    "auc": 0.6188689838207523,
+    "low": 0.47889887985622603,
+    "high": 0.7551209350857467
    },
    "density": {
-    "auc": 0.45946353224834235,
-    "low": 0.3324208128850748,
-    "high": 0.5865605926659636
+    "auc": 0.44694533762057875,
+    "low": 0.32497936970236097,
+    "high": 0.5601706218752139
    },
    "cell_children": {
-    "auc": 0.49884468555354633,
-    "low": 0.3511593747907039,
-    "high": 0.6508456569505007
+    "auc": 0.49364568978716883,
+    "low": 0.3637406818054467,
+    "high": 0.6336668127751967
    },
    "land_feasible": {
-    "auc": 0.6914556962025316,
-    "low": 0.5873678033548131,
-    "high": 0.7904564628482971
+    "auc": 0.6929260450160772,
+    "low": 0.587108564058061,
+    "high": 0.7899376030316433
    },
    "deficit_if_feasible": {
-    "auc": 0.6871358247940527,
-    "low": 0.5693305940208238,
-    "high": 0.798345613538478
+    "auc": 0.7111213188383607,
+    "low": 0.592554287400025,
+    "high": 0.8224332869888215
    },
    "deficit_minus_density": {
-    "difference": 0.15312939521800273,
-    "low": -0.0020226015317339045,
-    "high": 0.2718781177652737,
-    "share_above_zero": 0.9735
+    "difference": 0.17192364620017353,
+    "low": 0.02707155535766094,
+    "high": 0.29530175080477306,
+    "share_above_zero": 0.9885
    }
   },
   "1500": {
    "deficit": {
-    "auc": 0.6396925858951176,
-    "low": 0.5117696927672896,
-    "high": 0.755283767918932
+    "auc": 0.6346909610575205,
+    "low": 0.5170390460239082,
+    "high": 0.7524028851279319
    },
    "density": {
-    "auc": 0.4595137633112316,
-    "low": 0.3496064084589321,
-    "high": 0.5650007330444572
+    "auc": 0.44281120808451996,
+    "low": 0.3391963538534533,
+    "high": 0.545391257463782
    },
    "cell_children": {
-    "auc": 0.49884468555354633,
-    "low": 0.348696776993307,
-    "high": 0.6442722934770234
+    "auc": 0.49364568978716883,
+    "low": 0.3616383762547404,
+    "high": 0.6381212501852587
    },
    "land_feasible": {
-    "auc": 0.6914556962025316,
-    "low": 0.5823093102710979,
-    "high": 0.7935511896390061
+    "auc": 0.6929260450160772,
+    "low": 0.5873935246849067,
+    "high": 0.7943724771548318
    },
    "deficit_if_feasible": {
-    "auc": 0.684774964838256,
-    "low": 0.5720973662365196,
-    "high": 0.7978952823055318
+    "auc": 0.6860868677588935,
+    "low": 0.5715160924188032,
+    "high": 0.8041896854793144
    },
    "deficit_minus_density": {
-    "difference": 0.18017882258388596,
-    "low": -0.003667933138216452,
-    "high": 0.3350707384095196,
-    "share_above_zero": 0.973
+    "difference": 0.19187975297300058,
+    "low": -0.0013757016455074088,
+    "high": 0.3631696085502843,
+    "share_above_zero": 0.974
    }
   }
  },
  "backtest": {
   "1000": {
-   "uncovered_children_2023": 78458.64233068361,
-   "realised_gain": 15844.46896863497,
-   "optimal_gain": 45786.53532641925,
-   "optimal_gain_land_feasible": 31520.14812629842,
-   "realised_over_optimal": 0.3460508390878959,
-   "realised_over_optimal_land_feasible": 0.5026774907639265,
-   "density_gain": 10587.012033491725,
-   "random_gain_mean": 12207.973428713745,
-   "random_gain_p95": 16798.129717537624,
-   "realised_random_percentile": 0.915
+   "uncovered_children_2023": 71819.00888494469,
+   "realised_gain": 14018.634194525866,
+   "optimal_gain": 41737.23303927585,
+   "optimal_gain_land_feasible": 27287.816634500487,
+   "realised_over_optimal": 0.3358783794156636,
+   "realised_over_optimal_land_feasible": 0.513732351044966,
+   "density_gain": 8853.303619911163,
+   "random_gain_mean": 11679.722589294977,
+   "random_gain_p95": 16185.179009873957,
+   "realised_random_percentile": 0.81
   },
   "1500": {
-   "uncovered_children_2023": 29926.885605165386,
-   "realised_gain": 11400.450977273542,
-   "optimal_gain": 25421.138028764854,
-   "optimal_gain_land_feasible": 21133.145342616823,
-   "realised_over_optimal": 0.44846343874824,
-   "realised_over_optimal_land_feasible": 0.5394583150045129,
-   "density_gain": 3866.4540514928904,
-   "random_gain_mean": 7665.449945232109,
-   "random_gain_p95": 11631.079099048422,
-   "realised_random_percentile": 0.945
+   "uncovered_children_2023": 27397.927138033563,
+   "realised_gain": 10061.021106896682,
+   "optimal_gain": 23292.322621438445,
+   "optimal_gain_land_feasible": 18853.14954036674,
+   "realised_over_optimal": 0.43194580765579965,
+   "realised_over_optimal_land_feasible": 0.5336520078703503,
+   "density_gain": 3300.7023048659225,
+   "random_gain_mean": 7388.66025537597,
+   "random_gain_p95": 11139.560158079741,
+   "realised_random_percentile": 0.89
   }
  },
  "capacitated": {
   "1000": {
-   "realised": 15844.46896863497,
-   "optimal_any_cell": 45809.79212722263,
-   "optimal_feasible_plot": 19062.96171380904,
-   "optimal_feasible_plot_without_capacity": 19062.96171380904,
-   "realised_over_optimal_any_cell": 0.3458751553517602,
-   "realised_over_optimal_feasible_plot": 0.8311651256770546,
+   "realised": 13907.999449784047,
+   "optimal_any_cell": 41747.932196489484,
+   "optimal_feasible_plot": 15604.774380183393,
+   "optimal_feasible_plot_without_capacity": 15604.774380183393,
+   "realised_over_optimal_any_cell": 0.3331422352686859,
+   "realised_over_optimal_feasible_plot": 0.8912656544042,
    "capacity_cost_feasible_plot": 0.0
   },
   "1500": {
-   "realised": 11418.220239168724,
-   "optimal_any_cell": 25424.116647595958,
-   "optimal_feasible_plot": 17274.63902416167,
-   "optimal_feasible_plot_without_capacity": 17274.63902416167,
-   "realised_over_optimal_any_cell": 0.449109811657838,
-   "realised_over_optimal_feasible_plot": 0.660981698268676,
+   "realised": 10080.668359970188,
+   "optimal_any_cell": 23295.54548454498,
+   "optimal_feasible_plot": 15652.034896512887,
+   "optimal_feasible_plot_without_capacity": 15652.034896512887,
+   "realised_over_optimal_any_cell": 0.43272944034120303,
+   "realised_over_optimal_feasible_plot": 0.6440484209638491,
    "capacity_cost_feasible_plot": 0.0
   }
  }

@@ -10,6 +10,7 @@ from astana_access import norms
 from astana_access.accessibility.coverage import origin_destination
 from astana_access.accessibility.network import load
 from astana_access.config import CRS_GEO, CRS_METRIC, PROCESSED, REPORTS, SEED
+from astana_access.ingest.stat_ages import cohort_shares
 from astana_access.optimization import realistic
 from astana_access.optimization.backtest import (
     DEMAND_COLUMN,
@@ -33,13 +34,8 @@ def demand_2023() -> pd.DataFrame:
     centre = dwellings.geometry.representative_point()
     lonlat = gpd.GeoSeries(centre, crs=CRS_METRIC).to_crs(CRS_GEO)
     cells = [h3.latlng_to_cell(p.y, p.x, 9) for p in lonlat]
-    grid = gpd.read_file(PROCESSED / "grid_population.gpkg").set_index("h3")
-    unit = grid["district"].map(UNIT_2023)
-    ratio = (grid["school"] / grid["total"]).where(grid["total"] > 0)
-    fallback = grid.groupby(unit)["school"].transform("sum") / grid.groupby(unit)[
-        "total"
-    ].transform("sum")
-    share = ratio.fillna(fallback)
+    shares = cohort_shares(YEAR)["school"]
+    share = dwellings["district"].map(UNIT_2023).map(shares).fillna(shares["City"])
     frame = pd.DataFrame(
         {
             "point_id": "b" + dwellings["id"].astype(str),
@@ -49,10 +45,7 @@ def demand_2023() -> pd.DataFrame:
             "y": centre.y.to_numpy(),
         }
     )
-    frame[DEMAND_COLUMN] = (
-        dwellings["pop_2023"].to_numpy()
-        * frame["h3"].map(share).fillna(float(share.median())).to_numpy()
-    )
+    frame[DEMAND_COLUMN] = dwellings["pop_2023"].to_numpy() * share.to_numpy()
     return frame
 
 

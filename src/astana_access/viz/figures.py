@@ -46,23 +46,23 @@ def base_map(ax: plt.Axes, frame: gpd.GeoDataFrame) -> None:
 def h1_district_error() -> None:
     model = json.loads((REPORTS / "population_model.json").read_text(encoding="utf-8"))
     fits = model["district_fit"]
-    units = ["Almaty+Saraishyk", "Baikonur", "Esil", "Nura", "Saryarka"]
+    units = ORDER
     series = {
         "WorldPop": fits["worldpop"],
         "Residential floor area": fits["floor_area"],
         "Polling stations, model": fits["stations_alpha_0.2"],
     }
-    fig, ax = plt.subplots(figsize=(6.3, 3.2))
+    fig, ax = plt.subplots(figsize=(6.3, 3.6))
     width = 0.26
     y = np.arange(len(units))
     for i, (name, fit) in enumerate(series.items()):
         values = [fit[f"ratio_{unit}"] for unit in units]
         ax.barh(y + (i - 1) * width, values, height=width - 0.04, color=SERIES[i], label=name)
     ax.axvline(1.0, color=INK, linewidth=0.8)
-    ax.set_yticks(y, [u.replace("+", " + ") for u in units])
+    ax.set_yticks(y, units)
     ax.invert_yaxis()
     ax.set_xlabel("Predicted over official population, 1 January 2026")
-    ax.legend(loc="lower right")
+    ax.legend(loc="upper right")
     style.save(fig, "h1_district_error")
     plt.close(fig)
 
