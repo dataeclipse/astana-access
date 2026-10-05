@@ -21,6 +21,7 @@ Figure~\ref{fig:uml-packages} shows the packages of the framework and their depe
 \node[pkg, below=of accessibility] (optimization) {\guillemotleft package\guillemotright\\\textbf{optimization}};
 \node[pkg, below=of equity] (viz) {\guillemotleft package\guillemotright\\\textbf{viz}};
 \node[pkg, below=of viz] (pipeline) {\guillemotleft module\guillemotright\\\textbf{pipeline}};
+\node[pkg, below=of modeling] (validation) {\guillemotleft package\guillemotright\\\textbf{validation}};
 \draw[dep] (inventory) -- (ingest);
 \draw[dep] (population) -- (inventory);
 \draw[dep] (population) -- (grid);
@@ -35,6 +36,7 @@ Figure~\ref{fig:uml-packages} shows the packages of the framework and their depe
 \draw[dep] (viz) -- (equity);
 \draw[dep] (viz) -- (optimization);
 \draw[dep] (pipeline) -- (viz);
+\draw[dep] (validation) -- (equity);
 \end{tikzpicture}
 \caption{UML package diagram of the framework; dashed arrows point from a package to the packages it depends on}
 \label{fig:uml-packages}
@@ -58,10 +60,11 @@ Figure~\ref{fig:uml-packages} shows the packages of the framework and their depe
 \node[act, below=of a7] (a8) {Inequality, clusters, sensitivity};
 \node[act, below=of a8] (a9) {Vacancy model and SHAP};
 \node[act, below=of a9] (a10) {Programme list; 2023 reconstruction; optimisation};
-\node[act, below=of a10] (a11) {Figures and report tables};
+\node[act, below=of a10] (a11) {Checks against the team's 2GIS listing};
+\node[act, below=of a11] (a12) {Figures and report tables};
 \node[circle, draw, inner sep=3pt, below=of a11] (stop) {};
 \node[circle, fill, inner sep=1.8pt] at (stop) {};
-\foreach \a/\b in {start/a1, a1/a2, a2/a3, a3/a4, a4/a5, a5/a6, a6/a7, a7/a8, a8/a9, a9/a10, a10/a11, a11/stop}
+\foreach \a/\b in {start/a1, a1/a2, a2/a3, a3/a4, a4/a5, a5/a6, a6/a7, a7/a8, a8/a9, a9/a10, a10/a11, a11/a12, a12/stop}
   \draw[flow] (\a) -- (\b);
 \end{tikzpicture}
 \caption{UML activity diagram of the pipeline stages}
@@ -71,7 +74,7 @@ Figure~\ref{fig:uml-packages} shows the packages of the framework and their depe
 \chapter{Test Results}
 \label{app:tests}
 
-The test suite is run with \texttt{pytest}. All 70 tests pass in about one second. Table~\ref{tab:tests} lists what each group verifies.
+The test suite is run with \texttt{pytest}. All 73 tests pass in a few seconds. Table~\ref{tab:tests} lists what each group verifies.
 
 \begin{table}[ht]
 \centering
@@ -87,13 +90,14 @@ Test file & Tests & What is verified \\
 \texttt{test\_stations.py} & 9 & Parsing of house lists and street walks from the decision, inclusion and exclusion clauses, rivers as boundaries, polygon construction, preservation of official totals by the allocation \\
 \texttt{test\_access.py} & 8 & Distance decay functions, allocation of each child once, exclusion of children beyond the allocation radius, zero access without a facility, Gini extremes and weights, exact Theil decomposition \\
 \texttt{test\_optimization.py} & 5 & Plot sizes of the planning standard, statutory radii, detection of free plots, the maximal covering solution, the capacity constraint \\
+\texttt{test\_listing.py} & 3 & School numbers read from listings, projection of listed positions, preservation of station totals when floors are replaced \\
 \midrule
-Total & 70 & All passed \\
+Total & 73 & All passed \\
 \bottomrule
 \end{tabularx}
 \end{table}
 
-Besides unit tests, each stage was checked against an observation that it did not use: positions against official coordinates, population against official district totals, reconstructed territories against the districts named in the decision, the residential classifier against house lists, and the floating catchment load against school enrolment. These checks are reported in Chapters~\ref{ch:methods} and~\ref{ch:results}.
+Besides unit tests, each stage was checked against an observation that it did not use: positions against official coordinates, population against official district totals, reconstructed territories against the districts named in the decision, the residential classifier against house lists and the 2GIS listing, programme schools and imputed floors against the same listing, and the floating catchment load against school enrolment. These checks are reported in Chapters~\ref{ch:methods} and~\ref{ch:results}.
 
 \chapter{Model Features}
 \label{app:features}
