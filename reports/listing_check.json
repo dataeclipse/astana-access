@@ -1,0 +1,127 @@
+{
+ "schools": {
+  "listing_schools_in_city": 164,
+  "listing_numbered": 112,
+  "our_state_catchment_schools": 111,
+  "same_number_pairs": 104,
+  "pair_distance_median_m": 32.09080243180576,
+  "pair_distance_p90_m": 70.4104873658571,
+  "pairs_within_150m": 0.9711538461538461,
+  "numbers_only_in_listing": [
+   9.0,
+   39.0,
+   81.0,
+   82.0,
+   100.0,
+   105.0,
+   106.0,
+   112.0,
+   116.0
+  ],
+  "only_in_listing_selective_or_evening": [
+   9.0,
+   39.0,
+   81.0,
+   82.0
+  ],
+  "only_in_listing_programme": [
+   100.0,
+   105.0,
+   106.0,
+   112.0,
+   116.0
+  ],
+  "only_in_listing_unexplained": [],
+  "numbers_only_in_ours": [
+   14.0,
+   18.0,
+   19.0,
+   20.0,
+   46.0,
+   63.0,
+   113.0
+  ],
+  "listing_schools_over_150m_from_any_school_object": 28
+ },
+ "residential_classifier": {
+  "listing_homes_in_city": 2022,
+  "inside_a_footprint": 1584,
+  "classified_residential": 0.9166666666666666,
+  "model_decided": 551,
+  "model_recall": 0.778584392014519
+ },
+ "floors": {
+  "tagged": {
+   "buildings": 966,
+   "mae_floors": 1.879399585921325,
+   "bias_floors": -0.29554865424430643,
+   "within_2_floors": 0.7256728778467909
+  },
+  "imputed": {
+   "buildings": 438,
+   "mae_floors": 4.360730593607306,
+   "bias_floors": -1.9200913242009132,
+   "within_2_floors": 0.3378995433789954
+  }
+ },
+ "floors_population_sensitivity": {
+  "buildings_refloored": 438,
+  "dwellings_reweighted": 12969,
+  "school": {
+   "district_relative_base": {
+    "Almaty": 1.1265087898293193,
+    "Baikonur": 1.1117449660535246,
+    "Esil": 0.7068585475205548,
+    "Nura": 0.7113883902713743,
+    "Saraishyk": 0.9374245254566773,
+    "Saryarka": 1.3782516179818511
+   },
+   "district_relative_listing_floors": {
+    "Almaty": 1.1274113045558338,
+    "Baikonur": 1.1123998591378994,
+    "Esil": 0.7047663253590271,
+    "Nura": 0.7136121643326796,
+    "Saraishyk": 0.9404679093553445,
+    "Saryarka": 1.3755398364880382
+   },
+   "district_rank_rho": 1.0,
+   "max_district_change": 0.003043383898667207,
+   "gini_base": 0.38975929465336656,
+   "gini_listing_floors": 0.39016897575587217,
+   "deficit_jaccard": 0.9940357852882704
+  },
+  "preschool": {
+   "district_relative_base": {
+    "Almaty": 1.587023264506921,
+    "Baikonur": 0.6423686384132975,
+    "Esil": 1.0763612281412878,
+    "Nura": 0.9024650814789111,
+    "Saraishyk": 1.0102516974481597,
+    "Saryarka": 0.7856550155408061
+   },
+   "district_relative_listing_floors": {
+    "Almaty": 1.5841341602206662,
+    "Baikonur": 0.6416469794628773,
+    "Esil": 1.0782245384737952,
+    "Nura": 0.9005706260711885,
+    "Saraishyk": 1.011729012290401,
+    "Saryarka": 0.786586700109743
+   },
+   "district_rank_rho": 1.0,
+   "max_district_change": 0.0028891042862548844,
+   "gini_base": 0.4600242593541627,
+   "gini_listing_floors": 0.4592246826499008,
+   "deficit_jaccard": 0.9936908517350158
+  }
+ },
+ "listing_homes_by_district": {
+  "Нура район": 538,
+  "Есиль район": 525,
+  "Сарайшык район": 352,
+  "Алматы район": 221,
+  "Сарыарка район": 183,
+  "Байконыр район": 111,
+  "NaN": 92
+ },
+ "listing_homes_under_construction": 135
+}

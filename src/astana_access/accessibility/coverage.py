@@ -35,17 +35,42 @@ def unnamed_school_grounds(schools: gpd.GeoDataFrame) -> gpd.GeoDataFrame:
     )
 
 
-def facilities() -> dict[str, gpd.GeoDataFrame]:
+def unmapped_programme_schools(schools: gpd.GeoDataFrame) -> gpd.GeoDataFrame:
+    path = PROCESSED / "comfortable_schools.gpkg"
+    if not path.exists():
+        return schools.iloc[0:0]
+    sites = gpd.read_file(path).to_crs(CRS_METRIC)
+    sites = sites[sites["status"] == "built"]
+    matched = sites["matched"].astype(bool)
+    floor = schools.set_index("facility_id")["floor_m2"]
+    per_seat = (sites.loc[matched, "facility_id"].map(floor) / sites.loc[matched, "seats"]).median()
+    extra = sites[~matched]
+    return gpd.GeoDataFrame(
+        {
+            "facility_id": extra["facility_id"].to_numpy(),
+            "number": extra["number"].to_numpy(),
+            "presumed_new": False,
+            "floor_m2": (extra["seats"] * per_seat).to_numpy(),
+            "source": "programme_list",
+        },
+        geometry=extra.geometry.to_numpy(),
+        crs=CRS_METRIC,
+    )
+
+
+def facilities(programme: bool = True) -> dict[str, gpd.GeoDataFrame]:
     every = gpd.read_file(PROCESSED / "facilities.gpkg", layer="schools")
     schools = every[every["catchment_based"] & every.geometry.notna()].copy()
     schools["facility_id"] = schools["facility_id"].astype(str)
     schools["presumed_new"] = False
     schools = schools.to_crs(CRS_METRIC)
-    grounds = unnamed_school_grounds(every)
+    parts = [schools, unnamed_school_grounds(every)]
+    if programme:
+        parts.append(unmapped_programme_schools(schools))
     preschools = gpd.read_file(PROCESSED / "facilities.gpkg", layer="preschools")
     preschools = preschools[preschools.geometry.notna()].copy()
     return {
-        "school": pd.concat([schools, grounds], ignore_index=True),
+        "school": pd.concat(parts, ignore_index=True),
         "preschool": preschools.to_crs(CRS_METRIC),
     }
 

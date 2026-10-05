@@ -7,48 +7,48 @@
    "d0": 1500,
    "d0_load": 3000
   },
-  "mean": 7.10231352307777,
-  "zero_access_share": 0.08743853689102947,
-  "gini": 0.395430804855722,
-  "theil": 0.2840345017447106,
-  "between": 0.031238267149363175,
-  "within": 0.2527962345953474,
-  "between_share": 0.10998053742583723,
+  "mean": 7.287810405680745,
+  "zero_access_share": 0.08324655807262053,
+  "gini": 0.38975929465336656,
+  "theil": 0.27530326717296166,
+  "between": 0.034124107327368244,
+  "within": 0.2411791598455934,
+  "between_share": 0.1239509711518588,
   "district_relative": {
-   "Almaty": 1.060839436253669,
-   "Baikonur": 1.1406390058164906,
-   "Esil": 0.725320145245755,
-   "Nura": 0.7298433368301885,
-   "Saraishyk": 0.9378126293931399,
-   "Saryarka": 1.3775558597360187
+   "Almaty": 1.1265087898293193,
+   "Baikonur": 1.1117449660535246,
+   "Esil": 0.7068585475205548,
+   "Nura": 0.7113883902713743,
+   "Saraishyk": 0.9374245254566773,
+   "Saryarka": 1.3782516179818511
   },
-  "global_moran_i": 0.8386721447351518,
-  "cold_spot_cells": 322,
-  "cold_spot_children_share": 0.11149844088491742,
+  "global_moran_i": 0.8366653815393731,
+  "cold_spot_cells": 315,
+  "cold_spot_children_share": 0.11099495989198101,
   "cold_spot_children_by_district": {
-   "Almaty": 0.0139,
-   "Baikonur": 0.0099,
-   "Esil": 0.0443,
-   "Nura": 0.0202,
-   "Saraishyk": 0.0101,
-   "Saryarka": 0.0131
+   "Almaty": 0.0048,
+   "Baikonur": 0.0103,
+   "Esil": 0.0474,
+   "Nura": 0.0236,
+   "Saraishyk": 0.0097,
+   "Saryarka": 0.0151
   },
-  "hot_spot_children_share": 0.20176856667016094,
+  "hot_spot_children_share": 0.1908837009095785,
   "without_presumed_new": {
-   "mean": 6.812210907749383,
-   "zero_access_share": 0.10352291917464185,
-   "gini": 0.410066499200626,
-   "theil": 0.30768878388116616,
-   "between": 0.03385778561881823,
-   "within": 0.27383099826234797,
-   "between_share": 0.11003906347101229,
+   "mean": 6.993892758131416,
+   "zero_access_share": 0.09933094035623294,
+   "gini": 0.40451556396322885,
+   "theil": 0.2989077672171763,
+   "between": 0.03713058455524414,
+   "within": 0.2617771826619321,
+   "between_share": 0.12422087555947084,
    "district_relative": {
-    "Almaty": 1.1037868425028359,
-    "Baikonur": 1.1891038224516697,
-    "Esil": 0.7471213657302493,
-    "Nura": 0.6956240091020413,
-    "Saraishyk": 0.8549705816811284,
-    "Saryarka": 1.3667725662264762
+    "Almaty": 1.1709392924599134,
+    "Baikonur": 1.1583586961794972,
+    "Esil": 0.7277132342282342,
+    "Nura": 0.6775708525049593,
+    "Saraishyk": 0.854470864570494,
+    "Saryarka": 1.368029207855889
    }
   }
  },
@@ -111,10 +111,10 @@
   },
   "school/buildings": {
    "runs": 36,
-   "district_rank_rho_median": 0.9142857142857144,
+   "district_rank_rho_median": 0.8857142857142858,
    "district_rank_rho_min": 0.7714285714285715,
-   "deficit_jaccard_median": 0.831260568890235,
-   "deficit_jaccard_min": 0.6556521739130434,
+   "deficit_jaccard_median": 0.8230561589573218,
+   "deficit_jaccard_min": 0.6619964973730298,
    "worst_district_counts": {
     "Nura": 30,
     "Esil": 6
@@ -122,10 +122,10 @@
   },
   "school/worldpop": {
    "runs": 12,
-   "district_rank_rho_median": 0.7714285714285715,
-   "district_rank_rho_min": 0.6571428571428573,
-   "deficit_jaccard_median": 0.14167495854063017,
-   "deficit_jaccard_min": 0.12,
+   "district_rank_rho_median": 0.8571428571428572,
+   "district_rank_rho_min": 0.7714285714285715,
+   "deficit_jaccard_median": 0.1466316310340135,
+   "deficit_jaccard_min": 0.12337259764414135,
    "worst_district_counts": {
     "Nura": 7,
     "Esil": 5
@@ -150,16 +150,16 @@
   "school": {
    "runs": 48,
    "district_rank_rho_median": 0.8857142857142858,
-   "district_rank_rho_min": 0.6571428571428573,
-   "deficit_jaccard_median": 0.8170289855072463,
-   "deficit_jaccard_min": 0.12,
+   "district_rank_rho_min": 0.7714285714285715,
+   "deficit_jaccard_median": 0.8171846435100548,
+   "deficit_jaccard_min": 0.12337259764414135,
    "worst_district_counts": {
     "Nura": 37,
     "Esil": 11
    },
    "gini_range": [
-    0.3382714470124656,
-    0.799050333971135
+    0.3342319313795439,
+    0.793694934633236
    ]
   }
  }

@@ -295,3 +295,53 @@ Code: `modeling/explain.py`. Figures: `thesis/figures/shap_residential.*`, `thes
 **Vacancy among private preschools.** The largest contribution comes from children per preschool within 1 km (0.20), followed by whether the organisation runs Russian-language groups (0.16), children per preschool within 500 m (0.15), the distance to the nearest other preschool (0.14) and the number of preschools within 500 m (0.13). Demand pressure is the leading feature even though, as section 6 showed, the gain it brings in prediction is small.
 
 **Age-specific label.** A second label marks organisations with free places in groups for two- and three-year-olds, where waiting is longest: 276 of 728 organisations. Among private organisations, logistic regression reaches ROC-AUC 0.629 on own characteristics and 0.646 with demand pressure, against 0.574 and 0.610 for the any-age label. The age-specific label is easier to predict, but demand pressure adds less to it. Single-year age counts, which would allow a proper match of groups and children, are not available below the five-year WorldPop cohorts.
+
+## 11. Correction of 5 October 2026: programme schools from the 2GIS listing
+
+Code: `validation/listing.py`, `inventory/programme_list.py`, `accessibility/coverage.py`. Input: `data/raw/team/astana_spatial_inequity.xlsx`, a listing of residential complexes and schools compiled from 2GIS by a member of the team. Output: `reports/listing_check.json`. The values below replace those of sections 1, 3, 7, 8 and 9 wherever they differ.
+
+### What changed
+
+| Site | Before | After |
+|---|---|---|
+| P07, school 105 | Street crossing of Ulytau and Nauryz, medium confidence | Listed position at Ulytau 48, 1.07 km away |
+| P17, school 116 | Crossing of Tulebaev and Burabai, number unknown | Listed position at Mukan Tulebaev 3, 235 m away; number 116 confirmed by a krisha.kz listing |
+| P13, school 112 | Unnamed ground near Otau, number unknown | Same ground; the listing of school 112 lies 7 m from it |
+| P02, P20, P23 | Medium confidence | High: listings of schools 100, 115 and 118 lie within 79 m |
+
+All 21 located sites are now located with high confidence. Two built schools that OSM does not map, 105 and 116, were missing from the 2026 supply; they are now added with the floor area per seat of the mapped programme schools.
+
+### Effect on results
+
+| Result | Before | After |
+|---|---|---|
+| Schools within 500 m, straight line / walking | 60.3% / 20.5% | 60.7% / 20.6% |
+| School access, Esil and Nura, share of city mean | 0.73 / 0.73 | 0.71 / 0.71 |
+| School access, Almaty / Baikonur | 1.06 / 1.14 | 1.13 / 1.11 |
+| School Gini / Theil / between share | 0.395 / 0.284 / 11% | 0.390 / 0.275 / 12% |
+| Low-low school clusters, Esil / Nura | 4.4% / 2.0% | 4.7% / 2.4% |
+| H3, schools, district rank correlation median (buildings / WorldPop) | 0.91 / 0.77 | 0.89 / 0.86 |
+| Catchment check, assigned school nearest / in two nearest | 57.3% / 67.8% | 52.4% / 66.4% |
+| H4, deficit AUC 1 km / 1.5 km | 0.63 / 0.64 | 0.61 / 0.64 |
+| H4, deficit minus density, 1 km | +0.18 (+0.02 to +0.29) | +0.15 (-0.00 to +0.27), positive in 97% |
+| H4, sites with a feasible plot in 2023 | 13 of 21, AUC 0.67 | 14 of 21, AUC 0.69 |
+| Programme, children reached 1 km / 1.5 km | 17,197 / 11,649 | 15,844 / 11,418 |
+| Programme over land-feasible optimum | 90% / 67% | 83% / 66% |
+| Programme over unconstrained optimum | 38% / 46% | 35% / 45% |
+| Programme percentile among random choices | 96.5 / 95.0 | 91.5 / 94.5 |
+
+Preschool results do not change. The direction of every hypothesis is unchanged. The first part of H4 is weaker: the bootstrap interval of the difference between deficit and density now touches zero at both distances.
+
+### Checks against the listing
+
+| Check | Result |
+|---|---|
+| School numbers in both sources | 104; median distance 32 m, 97% within 150 m |
+| Numbers only in the listing | 9, 39, 81, 82 (selective or evening, excluded by design); 100, 105, 106, 112, 116 (programme); none unexplained |
+| Residential complexes inside a footprint | 1,584 of 2,022; 91.7% classed as dwellings |
+| Recall on buildings decided by the model alone | 77.9% of 551, against 80.5% in the house-list transfer test |
+| Floors where OSM has a tag | MAE 1.9, bias -0.3 |
+| Floors imputed | MAE 4.4, bias -1.9 over 438 buildings |
+| Population with listed floors for those 438 buildings | district ranking unchanged for both facility types, largest district change 0.003 of the city mean, 99% of worst-served cells unchanged |
+
+Not used from the listing: walking distances to the nearest school (computed on the same OSM network and including private schools), bus stops, parking and entrance counts. The 351 complexes marked as under construction are not used; the listing does not state how complete it is.

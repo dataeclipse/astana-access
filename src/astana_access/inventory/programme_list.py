@@ -33,6 +33,9 @@ def locate(row: pd.Series, index: LineIndex, gazetteer, schools: gpd.GeoDataFram
         return grounds.geometry[distance.idxmin()], "ground_near_anchor", float(distance.min())
     if row["locate"] == "unresolved":
         return None, "unresolved", np.nan
+    if row["locate"] == "point":
+        point = gpd.GeoSeries([Point(row["lon"], row["lat"])], crs=CRS_GEO).to_crs(CRS_METRIC)
+        return point.iloc[0], "listed_point", 0.0
     if row["locate"] == "address":
         found = gazetteer.locate(row["address_street"], str(row["address_house"]))
         if found.precision == "house":
@@ -54,7 +57,7 @@ def locate(row: pd.Series, index: LineIndex, gazetteer, schools: gpd.GeoDataFram
 
 def build() -> tuple[gpd.GeoDataFrame, dict]:
     table = pd.read_csv(TABLE, dtype={"address_house": str})
-    schools = facilities()["school"]
+    schools = facilities(programme=False)["school"]
     index = LineIndex()
     gazetteer = load_gazetteer()
     rows = []

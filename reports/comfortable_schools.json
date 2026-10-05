@@ -21,7 +21,7 @@
  "by_method": {
   "osm_number": 16,
   "ground_near_anchor": 2,
-  "intersection": 2,
+  "listed_point": 2,
   "unresolved": 2,
   "address": 1
  },
@@ -97,10 +97,10 @@
    "number": 105.0,
    "seats": 2000,
    "opened": 2024.0,
-   "method": "intersection",
+   "method": "listed_point",
    "gap_m": 0.0,
    "nearest_number": 68.0,
-   "nearest_m": 657.1591072429612,
+   "nearest_m": 603.7004666037419,
    "matched": false
   },
   {
@@ -160,7 +160,7 @@
   },
   {
    "site": "P13",
-   "number": NaN,
+   "number": 112.0,
    "seats": 2000,
    "opened": 2024.0,
    "method": "ground_near_anchor",
@@ -204,13 +204,13 @@
   },
   {
    "site": "P17",
-   "number": NaN,
+   "number": 116.0,
    "seats": 2000,
    "opened": 2025.0,
-   "method": "intersection",
+   "method": "listed_point",
    "gap_m": 0.0,
    "nearest_number": 38.0,
-   "nearest_m": 1195.1888336926577,
+   "nearest_m": 1297.4404040254105,
    "matched": false
   },
   {

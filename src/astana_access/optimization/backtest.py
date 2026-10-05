@@ -22,22 +22,9 @@ def split_schools(year: int = 2026) -> tuple[gpd.GeoDataFrame, gpd.GeoDataFrame]
 
     schools = facilities()["school"]
     sites = programme_sites()
-    matched = sites[sites["matched"]]
-    seats = dict(zip(matched["facility_id"], matched["seats"], strict=True))
+    seats = dict(zip(sites["facility_id"], sites["seats"], strict=True))
     programme = schools[schools["facility_id"].isin(seats)].copy()
     programme["seats"] = programme["facility_id"].map(seats)
-    extra = sites[~sites["matched"]]
-    extra_frame = gpd.GeoDataFrame(
-        {
-            "facility_id": extra["facility_id"].to_numpy(),
-            "number": extra["number"].to_numpy(),
-            "presumed_new": False,
-            "seats": extra["seats"].to_numpy(),
-        },
-        geometry=extra.geometry.to_numpy(),
-        crs=CRS_METRIC,
-    )
-    programme = pd.concat([programme, extra_frame], ignore_index=True)
     existing = schools[~schools["facility_id"].isin(seats)]
     if year < 2024:
         existing = existing[~existing["presumed_new"].astype(bool)]

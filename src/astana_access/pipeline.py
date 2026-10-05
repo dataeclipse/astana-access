@@ -75,7 +75,9 @@ def stage_population() -> None:
 def stage_access() -> None:
     from astana_access.accessibility import catchment_check, compliance, coverage
     from astana_access.equity import analysis
+    from astana_access.inventory import programme_list
 
+    programme_list.build()
     coverage.build()
     compliance.run()
     catchment_check.run()
@@ -90,12 +92,17 @@ def stage_models() -> None:
 
 
 def stage_programme() -> None:
-    from astana_access.inventory import programme_list
     from astana_access.optimization import backtest, programme
 
-    programme_list.build()
     backtest.run()
     programme.run()
+
+
+def stage_checks() -> None:
+    from astana_access.validation import listing
+
+    if listing.run() is None:
+        typer.echo("team listing not found, check skipped")
 
 
 def stage_figures() -> None:
@@ -115,6 +122,7 @@ STAGES: dict[str, Callable[[], None]] = {
     "access": stage_access,
     "models": stage_models,
     "programme": stage_programme,
+    "checks": stage_checks,
     "figures": stage_figures,
 }
 
