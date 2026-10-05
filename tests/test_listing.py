@@ -7,6 +7,7 @@ from astana_access.ingest import stat_ages
 from astana_access.inventory.programme_list import locate
 from astana_access.population.history import OFFICIAL_2023
 from astana_access.population.model import OFFICIAL_2026
+from astana_access.validation import official
 from astana_access.validation.listing import reweighted, school_number
 
 
@@ -57,3 +58,10 @@ def test_sheet_parsing_skips_empty_year() -> None:
     rows = header + [("Всего", None, 120, "Всего", None, 60), (0, None, 7, 0, None, 3)]
     records = stat_ages.parse_sheet(rows)
     assert records == [("Всего", 2010, 120), (0, 2010, 7)]
+
+
+def test_year_labels_of_official_tables() -> None:
+    assert official.year_of(2025.0) == 2025
+    assert official.year_of("20091)") == 2009
+    assert official.year_of("2024/25") == 2024
+    assert official.year_of("Всего") is None

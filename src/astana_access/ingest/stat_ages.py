@@ -3,7 +3,7 @@ import pandas as pd
 
 from astana_access.config import RAW
 
-SOURCE = RAW / "stat" / "population_single_age_districts.xlsx"
+SOURCE = RAW / "stat" / "astana" / "population_single_age.xlsx"
 SHEETS = {
     "г. Астана": "City",
     "район Алматы": "Almaty",

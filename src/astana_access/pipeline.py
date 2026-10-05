@@ -99,10 +99,12 @@ def stage_programme() -> None:
 
 
 def stage_checks() -> None:
-    from astana_access.validation import listing
+    from astana_access.validation import listing, official
 
     if listing.run() is None:
         typer.echo("team listing not found, check skipped")
+    if official.run() is None:
+        typer.echo("official city tables not found, check skipped")
 
 
 def stage_figures() -> None:

@@ -374,3 +374,24 @@ Population model updated as in section 8 of `s2b_population.md`. The values belo
 | Programme percentile among random choices | 91.5 / 94.5 | 81 / 89 |
 
 Consequences. For schools nothing qualitative changes: Esil and Nura remain the worst served. For preschools the deficit of Baikonur was an artefact of the uniform age structure: Baikonur has the smallest share of preschool children in the city. Under the official structure the districts are close, Nura lowest at 0.83, and 97 per cent of inequality lies within districts; H2 is not supported for preschools, and H3 holds for them only at the cell level.
+
+## 13. Update of 5 October 2026: official tables downloaded from stat.gov.kz
+
+Files in `data/raw/stat/astana/`, checks in `validation/official.py` and `reports/official_checks.json`.
+
+The official single-age table differs from the copy used in section 12 for past years: the Bureau recomputes the series of every district in its present boundaries, with Nura and Saraishyk from 2022. The 2026 values are identical. The 2023 reconstruction now uses six districts (Almaty 202,962, Saraishyk 163,827, Esil 236,086, Nura 173,179, Saryarka 345,226, Baikonur 233,282) and their own age shares. In 2023 Saraishyk had 13.7% preschool children and Almaty 14.2%, which confirms that the 2026 split (8.1% and 19.8%) is an anomaly of that year.
+
+H4 after the change: deficit AUC 0.62 / 0.64, density 0.45 / 0.45; difference +0.17 (+0.01, +0.30) and +0.19 (+0.01, +0.36). Programme 14,083 / 10,395 children; optimum anywhere 42,423 / 23,960; on feasible plots 16,304 / 16,271; programme at 86% / 64% of the land-feasible optimum and 33% / 43% of the unconstrained one; percentile among random choices 86 / 92.
+
+City checks:
+
+| Check | Value |
+|---|---|
+| Pupils in day schools, 2025/26 | 311,282, against 310,892 children aged 7-17 on 1 January 2026 |
+| General schools, all types, 2025/26 | 208 (state catchment schools in the inventory: 111) |
+| Preschool organisations, 2025 | 737: 122 state, 615 private (register, September 2026: 790) |
+| Preschool places / children, 2025 | 80,521 / 63,637, 79 children per 100 places |
+| Attendance over children aged 1-6 | 31% |
+| Births 2019 to 2025 | Baikonur 4,648 to 2,707; Saryarka 7,405 to 5,357; Nura 6,103 in 2025, the most of any district |
+
+The tables of places commissioned end in 2021 and 2024 and do not cover the programme; they are not used. The gross enrolment tables are in the old xls format and are not parsed.

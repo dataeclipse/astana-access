@@ -186,7 +186,7 @@ Of the 24 sites announced in 2023 \cite{skc2023}, 23 were reported built \cite{s
 
 \subsection{Were sites chosen by deficit or by density?}
 
-Against the city of 1 January 2023, the deficit score singles out the programme cells with a ROC-AUC of 0.62 at 1\,km and 0.63 at 1.5\,km, while density scores 0.45 and 0.44, no better than chance. The difference is positive in 98.9 and 97.4 per cent of bootstrap samples, with 95 per cent intervals from $+0.03$ to $+0.30$ and from $-0.00$ to $+0.36$. The strongest single predictor is the availability of a plot: 14 of the 21 sites had a feasible plot in 2023, against 29 per cent of all cells (ROC-AUC 0.69). The first part of H4 holds: the programme went where children lacked a school within walking distance and where land was available, not where children were most numerous. With 21 sites the evidence is moderate; at 1.5\,km the lower bound of the interval touches zero.
+Against the city of 1 January 2023, the deficit score singles out the programme cells with a ROC-AUC of 0.62 at 1\,km and 0.64 at 1.5\,km, while density scores 0.45 at both, no better than chance. The difference is positive in 98.2 and 97.8 per cent of bootstrap samples, with 95 per cent intervals from $+0.01$ to $+0.30$ and from $+0.01$ to $+0.36$. The strongest single predictor is the availability of a plot: 14 of the 21 sites had a feasible plot in 2023, against 29 per cent of all cells (ROC-AUC 0.69). The first part of H4 holds: the programme went where children lacked a school within walking distance and where land was available, not where children were most numerous. With 21 sites the evidence is moderate: both intervals exclude zero, but narrowly.
 
 \subsection{Could the same schools have reached more children?}
 
@@ -199,20 +199,20 @@ Against the city of 1 January 2023, the deficit score singles out the programme 
 \toprule
 & Within 1\,km & Within 1.5\,km \\
 \midrule
-Children without a state school & 71,819 & 27,398 \\
-Programme, with its capacities & 13,908 & 10,081 \\
-Optimum anywhere, with capacity & 41,748 & 23,296 \\
-Optimum on feasible plots, with capacity & 15,605 & 15,652 \\
+Children without a state school & 73,175 & 28,115 \\
+Programme, with its capacities & 14,083 & 10,395 \\
+Optimum anywhere, with capacity & 42,423 & 23,960 \\
+Optimum on feasible plots, with capacity & 16,304 & 16,271 \\
 Programme over optimum anywhere, \% & 33 & 43 \\
-Programme over optimum on feasible plots, \% & 89 & 64 \\
-21 most populous cells & 8,853 & 3,301 \\
-21 random cells, mean & 11,680 & 7,389 \\
-Programme percentile among random choices & 81 & 89 \\
+Programme over optimum on feasible plots, \% & 86 & 64 \\
+21 most populous cells & 8,357 & 3,404 \\
+21 random cells, mean & 11,836 & 7,409 \\
+Programme percentile among random choices & 86 & 92 \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-Table~\ref{tab:backtest} and Figure~\ref{fig:programme} compare the programme with the optimum of Equation~\eqref{eq:mclp}. Three results stand out. Capacity never binds: no school receives more uncovered children within walking distance than its 4,000 places in two shifts, and the capacitated optimum equals the uncapacitated one. Land explains most of the distance from the theoretical optimum: without a land constraint 21 schools could have reached 3.0 times as many uncovered children within 1\,km, but on plots that were actually free the best choice reaches 12 per cent more at 1\,km and 55 per cent more at 1.5\,km. And the programme did well within the land it had, beating the density rule by a wide margin and 81 to 89 per cent of random choices.
+Table~\ref{tab:backtest} and Figure~\ref{fig:programme} compare the programme with the optimum of Equation~\eqref{eq:mclp}. Three results stand out. Capacity never binds: no school receives more uncovered children within walking distance than its 4,000 places in two shifts, and the capacitated optimum equals the uncapacitated one. Land explains most of the distance from the theoretical optimum: without a land constraint 21 schools could have reached 3.0 times as many uncovered children within 1\,km, but on plots that were actually free the best choice reaches 16 per cent more at 1\,km and 57 per cent more at 1.5\,km. And the programme did well within the land it had, beating the density rule by a wide margin and 86 to 92 per cent of random choices.
 
 The second part of H4 therefore holds against the unconstrained optimum and only partly against the land-feasible one. The planning lever with the largest effect is not the choice among available plots but the reservation of plots in the right places before housing is built around them.
 
@@ -228,9 +228,11 @@ The second part of H4 therefore holds against the unconstrained optimum and only
 
 \textbf{A data-driven framework without official microdata.} The work set out to assess access to social infrastructure using only open data, and the main methodological finding is that this is feasible when the ancillary sources are chosen for what they encode rather than for their resolution. Polling-station territories encode the distribution of registered residents, are published as law, and change with the city. Building footprints encode where people can live but not whether they do. Satellite-derived population grids encode the past, and a single age structure for the whole city. Combined in a hierarchy anchored to official totals and official age counts, the sources give a surface that reproduces district populations within 10 per cent, and the choice matters for every downstream result: the age structure alone moved the preschool deficit from one district to the blocks of all of them.
 
-\textbf{Measurement choices that change conclusions.} Three choices changed results by large factors: straight-line against walking distance, by a factor of two to three in statutory compliance; the first step of the floating catchment method, which multiplied demand until it was checked against observed enrolment; and the land constraint, which shrank the apparent room for better siting from 3.0 times to 12 per cent within 1\,km. In each case the more careful choice was the one that could be checked against an observation.
+\textbf{Measurement choices that change conclusions.} Three choices changed results by large factors: straight-line against walking distance, by a factor of two to three in statutory compliance; the first step of the floating catchment method, which multiplied demand until it was checked against observed enrolment; and the land constraint, which shrank the apparent room for better siting from 3.0 times to 16 per cent within 1\,km. In each case the more careful choice was the one that could be checked against an observation.
 
-\textbf{Implications for planning in Astana.} Schools are the binding problem in the new districts, while the preschool deficit is spread over blocks in every district, so a single district-level indicator of provision misleads in both. Within districts, deficits cluster in identifiable groups of blocks, which suggests that siting can be targeted at a finer scale than the district. The national programme behaved better than a density rule would have and close to the best that free land allowed within 1\,km; the larger gains lie in reserving land early, since plots that were free in 2023 had largely been built over by 2026.
+\textbf{A deficit of distribution, not of places.} Across the city, preschool places exceed attendance: in 2025 the official statistics count 80,521 places for 63,637 children, 79 children per 100 places \cite{stateducation2026}, and 428 of the 728 located preschools published free places on a single evening. Yet only 35 per cent of preschool-age children live within 300\,m of a preschool on foot, and the floating catchment index finds 8 per cent of them in significant low-access clusters. The shortage is one of location: places exist, but not near all the children who need them. City-level provision ratios, which compare totals, hide it.
+
+\textbf{Implications for planning in Astana.} Schools are the binding problem in the new districts, while the preschool deficit is spread over blocks in every district, so a single district-level indicator of provision misleads in both. Within districts, deficits cluster in identifiable groups of blocks, which suggests that siting can be targeted at a finer scale than the district. The national programme behaved better than a density rule would have and close to the best that free land allowed within 1\,km; the larger gains lie in reserving land early, since plots that were free in 2023 had largely been built over by 2026. Births point the same way for preschools: they are rising in Nura, already the district with the lowest preschool access, and falling in Baikonur and Saryarka.
 
 \section{Limitations}
 \label{sec:limitations}
