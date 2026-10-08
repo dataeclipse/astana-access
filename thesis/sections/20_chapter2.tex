@@ -1,7 +1,7 @@
 \chapter{Data and Methodology}
 \label{ch:methods}
 
-This chapter describes how the framework turns open data into measures of access to schools and preschools, and how each hypothesis of Section~\ref{sec:hypotheses} is tested. Every number reported here can be reproduced from public sources by a single command of the accompanying software, described in Section~\ref{sec:implementation}.
+This chapter describes how the framework turns open data into measures of access to schools and preschools, and how each hypothesis of Section~\ref{sec:hypotheses} is tested. Every number reported here can be reproduced from the sources of Table~\ref{tab:sources} by a single command of the accompanying software, described in Section~\ref{sec:implementation}.
 
 \section{Study Area and Scope}
 \label{sec:study-area}
@@ -15,7 +15,7 @@ All spatial data are stored in WGS~84 and processed in UTM zone 42N. Results are
 \section{Data Sources and Provenance}
 \label{sec:sources}
 
-The framework was designed under the constraint that no input may depend on data requested from a state body: every source in Table~\ref{tab:sources} can be obtained by anyone. Automated access respects the \texttt{robots.txt} of each site; the preschool register, whose site disallows crawling, was saved manually from a browser.
+The framework was designed under the constraint that no result may wait for data requested from a state body: every estimate is first built from sources that anyone can obtain. Information requests were nevertheless sent, and the reply of the education department, which arrived late in the work, is used to test those estimates and to correct the list of schools; it does not replace any open source except the sample of 11 catchments. Automated access respects the \texttt{robots.txt} of each site; the preschool register, whose site disallows crawling, was saved manually from a browser.
 
 \begin{table}[ht]
 \centering
@@ -116,7 +116,7 @@ where $s_g$ is the share of total accessibility held by the children of district
 
 \textbf{Reconstruction of 2023.} Programme sites were chosen in 2022 and 2023, so the city is rebuilt as it was on 1 January 2023: OSM buildings mapped by that date are read through the history interface of the Overpass API, dwellings not overlapping them are removed, and the official population of 1 January 2023, recomputed by the Bureau for the six districts within their present boundaries \cite{statages2026}, is allocated by Equation~\eqref{eq:allocation}, with the age shares of the same date.
 
-\textbf{Test of the first part of H4.} Candidate cells are the 969 H3 cells with at least 20 school-age children in 2023. Each programme school marks its nearest cell. Two scores are computed from the state before the programme: the deficit, the number of children with no state school within walking distance who would gain one from a school in the cell, and the density, all children within the same distance. Their ability to single out the programme cells is compared by ROC-AUC with bootstrap intervals, an appropriate summary when only 21 of 969 cells are positive \cite{saito2015}.
+\textbf{Test of the first part of H4.} Candidate cells are the 957 H3 cells with at least 20 school-age children in 2023. Each programme school marks its nearest cell. Two scores are computed from the state before the programme: the deficit, the number of children with no state school within walking distance who would gain one from a school in the cell, and the density, all children within the same distance. Their ability to single out the programme cells is compared by ROC-AUC with bootstrap intervals, an appropriate summary when only 21 of 957 cells are positive \cite{saito2015}.
 
 \section{Location Optimisation}
 \label{sec:optimisation-methods}
@@ -137,4 +137,4 @@ Candidate sites are constrained by land. A raster of 10\,m cells marks as blocke
 \section{Implementation and Testing}
 \label{sec:implementation}
 
-The framework is a Python package organised in twelve stages, from acquisition of boundaries to the figures of this chapter and the next, each callable separately and all reproducible by one command. It relies on GeoPandas, SciPy, LightGBM, SHAP and the HiGHS solver; every stochastic step is seeded. Eighty-one unit tests cover address parsing and geocoding, the parsing of polling-station territories, population allocation, the accessibility index, the inequality measures, the standard's land rules, the optimisation models the parsing of official service territories and the checks against external listings. The architecture is documented in UML in Appendix~A and the test results in Appendix~B.
+The framework is a Python package organised in twelve stages, from acquisition of boundaries to the figures of this chapter and the next, each callable separately and all reproducible by one command. It relies on GeoPandas, SciPy, LightGBM, SHAP and the HiGHS solver; every stochastic step is seeded. Eighty-one unit tests cover address parsing and geocoding, the parsing of polling-station territories, population allocation, the accessibility index, the inequality measures, the standard's land rules, the optimisation models, the parsing of official service territories and the checks against external listings. The architecture is documented in UML in Appendix~A and the test results in Appendix~B.
