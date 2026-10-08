@@ -2,31 +2,31 @@
  "programme_schools": 21,
  "programme_numbered": 18,
  "programme_presumed": 3,
- "existing_schools": 97,
+ "existing_schools": 103,
  "candidate_cells": 1099,
  "school_age_children": 311692.8803037787,
  "radii": {
   "1000": {
-   "covered_before_share": 0.6520463219490421,
-   "uncovered_children": 108454.68412399672,
-   "realised_gain": 22820.54444089825,
-   "optimal_gain": 63151.294696020464,
-   "density_gain": 16979.959679301952,
-   "random_gain_mean": 16199.036236556962,
-   "random_gain_p95": 22757.386758473876,
-   "realised_over_optimal": 0.3613630496531421,
-   "optimal_sites_within_1km_of_a_programme_school": 0.5714285714285714
+   "covered_before_share": 0.6966299386460016,
+   "uncovered_children": 94558.28822136178,
+   "realised_gain": 18016.018434925423,
+   "optimal_gain": 53834.97012355699,
+   "density_gain": 13398.12271016463,
+   "random_gain_mean": 13696.14674926328,
+   "random_gain_p95": 19184.34097310634,
+   "realised_over_optimal": 0.33465270610491177,
+   "optimal_sites_within_1km_of_a_programme_school": 0.5238095238095238
   },
   "1500": {
-   "covered_before_share": 0.8670973235798173,
-   "uncovered_children": 41424.818013487784,
-   "realised_gain": 16289.732705258462,
-   "optimal_gain": 34023.33243865247,
-   "density_gain": 6091.45831038053,
-   "random_gain_mean": 10875.356718988272,
-   "random_gain_p95": 15947.05822279667,
-   "realised_over_optimal": 0.4787812226985851,
-   "optimal_sites_within_1km_of_a_programme_school": 0.47619047619047616
+   "covered_before_share": 0.8993309105199341,
+   "uncovered_children": 31377.838457600534,
+   "realised_gain": 11548.220218331347,
+   "optimal_gain": 24723.08148770825,
+   "density_gain": 4141.675728470624,
+   "random_gain_mean": 7278.855149927675,
+   "random_gain_p95": 10988.972921720131,
+   "realised_over_optimal": 0.46710278506637043,
+   "optimal_sites_within_1km_of_a_programme_school": 0.38095238095238093
   }
  }
 }

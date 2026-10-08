@@ -11,9 +11,9 @@
  "selection": {
   "1000": {
    "deficit": {
-    "auc": 0.622481684981685,
-    "low": 0.4771886303013561,
-    "high": 0.7575739955860394
+    "auc": 0.5889041514041513,
+    "low": 0.44455380644518633,
+    "high": 0.7311812491097007
    },
    "density": {
     "auc": 0.4507529507529507,
@@ -31,22 +31,22 @@
     "high": 0.7928109878834013
    },
    "deficit_if_feasible": {
-    "auc": 0.7112586487586487,
-    "low": 0.6006988247214572,
-    "high": 0.817976014614825
+    "auc": 0.6898402523402523,
+    "low": 0.5749323630152218,
+    "high": 0.8038030063309065
    },
    "deficit_minus_density": {
-    "difference": 0.1717287342287343,
-    "low": 0.012451702832530293,
-    "high": 0.29915861847449504,
-    "share_above_zero": 0.9815
+    "difference": 0.13815120065120062,
+    "low": -0.031247633543126433,
+    "high": 0.29241499970456614,
+    "share_above_zero": 0.948
    }
   },
   "1500": {
    "deficit": {
-    "auc": 0.636421448921449,
-    "low": 0.5118703821060103,
-    "high": 0.752848955777959
+    "auc": 0.5704873829873829,
+    "low": 0.421753593222327,
+    "high": 0.7143866085315492
    },
    "density": {
     "auc": 0.4452584452584452,
@@ -64,62 +64,62 @@
     "high": 0.7932192144373673
    },
    "deficit_if_feasible": {
-    "auc": 0.6862281237281237,
-    "low": 0.563164672019391,
-    "high": 0.8070473267661945
+    "auc": 0.6206501831501832,
+    "low": 0.5038336123617448,
+    "high": 0.7479015374515585
    },
    "deficit_minus_density": {
-    "difference": 0.19116300366300382,
-    "low": 0.009608700153827915,
-    "high": 0.3594683482840777,
-    "share_above_zero": 0.978
+    "difference": 0.12522893772893767,
+    "low": -0.08271229854897331,
+    "high": 0.3242812489303663,
+    "share_above_zero": 0.892
    }
   }
  },
  "backtest": {
   "1000": {
-   "uncovered_children_2023": 73175.04041799965,
-   "realised_gain": 14334.946244827015,
-   "optimal_gain": 42395.86983954677,
-   "optimal_gain_land_feasible": 28183.68557712842,
-   "realised_over_optimal": 0.3381212910380107,
-   "realised_over_optimal_land_feasible": 0.5086256801154526,
+   "uncovered_children_2023": 66215.78956525945,
+   "realised_gain": 11691.853457937632,
+   "optimal_gain": 39231.86881222512,
+   "optimal_gain_land_feasible": 23709.020273794285,
+   "realised_over_optimal": 0.2980192841156298,
+   "realised_over_optimal_land_feasible": 0.4931394601260982,
    "density_gain": 8357.315564806027,
-   "random_gain_mean": 11836.408094679984,
-   "random_gain_p95": 16372.657290227668,
-   "realised_random_percentile": 0.86
+   "random_gain_mean": 10531.410378824057,
+   "random_gain_p95": 13941.844949658214,
+   "realised_random_percentile": 0.74
   },
   "1500": {
-   "uncovered_children_2023": 28115.391438423565,
-   "realised_gain": 10375.355509029618,
-   "optimal_gain": 23956.18486193972,
-   "optimal_gain_land_feasible": 19490.315181357128,
-   "realised_over_optimal": 0.43309715502794505,
-   "realised_over_optimal_land_feasible": 0.5323339008367526,
+   "uncovered_children_2023": 21935.769359880913,
+   "realised_gain": 6946.678401212237,
+   "optimal_gain": 18192.466186836427,
+   "optimal_gain_land_feasible": 13839.771877320643,
+   "realised_over_optimal": 0.3818436890232433,
+   "realised_over_optimal_land_feasible": 0.5019359034808818,
    "density_gain": 3403.950672682111,
-   "random_gain_mean": 7408.507819483048,
-   "random_gain_p95": 10730.725486062705,
-   "realised_random_percentile": 0.915
+   "random_gain_mean": 5306.306439301697,
+   "random_gain_p95": 7753.299595274185,
+   "realised_random_percentile": 0.87
   }
  },
  "capacitated": {
   "1000": {
-   "realised": 14082.635061024203,
-   "optimal_any_cell": 42423.32268282727,
-   "optimal_feasible_plot": 16304.190462894852,
-   "optimal_feasible_plot_without_capacity": 16304.190314367263,
-   "realised_over_optimal_any_cell": 0.33195502309687724,
-   "realised_over_optimal_feasible_plot": 0.8637432869220661,
-   "capacity_cost_feasible_plot": -9.10978026347209e-09
+   "realised": 11569.307081742192,
+   "optimal_any_cell": 39233.231565203794,
+   "optimal_feasible_plot": 13298.7520178913,
+   "optimal_feasible_plot_without_capacity": 13298.7520178913,
+   "realised_over_optimal_any_cell": 0.2948853974089426,
+   "realised_over_optimal_feasible_plot": 0.8699543435487463,
+   "capacity_cost_feasible_plot": 0.0
   },
   "1500": {
-   "realised": 10395.289533980598,
-   "optimal_any_cell": 23959.513917330067,
-   "optimal_feasible_plot": 16271.07048794115,
-   "optimal_feasible_plot_without_capacity": 16271.070416020244,
-   "realised_over_optimal_any_cell": 0.43386896620058807,
-   "realised_over_optimal_feasible_plot": 0.6388817221143979,
-   "capacity_cost_feasible_plot": -4.420170451879812e-09
+   "realised": 6946.678401212237,
+   "optimal_any_cell": 18178.06644964362,
+   "optimal_feasible_plot": 12415.305470336225,
+   "optimal_feasible_plot_without_capacity": 12415.305426074032,
+   "realised_over_optimal_any_cell": 0.38214616612034813,
+   "realised_over_optimal_feasible_plot": 0.5595253711485288,
+   "capacity_cost_feasible_plot": -3.5651313012863284e-09
   }
  }
 }

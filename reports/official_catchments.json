@@ -1,0 +1,126 @@
+{
+ "schools_with_territory": 115,
+ "dwellings_assigned": 13764,
+ "dwellings_with_several_schools": 1140,
+ "school_age_children_in_assigned_dwellings": 0.5729767367238715,
+ "school_age_children_in_assigned_dwellings_by_district": {
+  "Almaty": 0.648,
+  "Baikonur": 0.633,
+  "Esil": 0.599,
+  "Nura": 0.409,
+  "Saraishyk": 0.437,
+  "Saryarka": 0.634
+ },
+ "assigned_school_reached_within_4km": 0.984661222718551,
+ "assigned_is_nearest": 0.6152914657964752,
+ "assigned_in_two_nearest": 0.8292836729323037,
+ "median_distance_to_assigned_m": 786.1815185546875,
+ "assigned_within_500m": 0.1958494046649466,
+ "assigned_within_1000m": 0.6758062475736071,
+ "assigned_within_1500m": 0.8767590826594012,
+ "assigned_within_2000m": 0.9492445592188345,
+ "by_district": {
+  "Almaty": {
+   "within_500m": 0.227,
+   "within_1000m": 0.73,
+   "nearest_share": 0.586
+  },
+  "Baikonur": {
+   "within_500m": 0.243,
+   "within_1000m": 0.819,
+   "nearest_share": 0.722
+  },
+  "Esil": {
+   "within_500m": 0.158,
+   "within_1000m": 0.576,
+   "nearest_share": 0.595
+  },
+  "Nura": {
+   "within_500m": 0.12,
+   "within_1000m": 0.515,
+   "nearest_share": 0.566
+  },
+  "Saraishyk": {
+   "within_500m": 0.255,
+   "within_1000m": 0.631,
+   "nearest_share": 0.573
+  },
+  "Saryarka": {
+   "within_500m": 0.198,
+   "within_1000m": 0.737,
+   "nearest_share": 0.65
+  }
+ },
+ "load_rank_correlation_assigned_vs_model": 0.6183224177384993,
+ "load_schools_compared": 115,
+ "assigned_over_model_load_median": 0.5254747152027938,
+ "load_rank_correlation_by_allocation_radius": {
+  "1500": 0.6306872879349799,
+  "2000": 0.6337962597648545,
+  "3000": 0.6183224177384993,
+  "4000": 0.6316894184486705,
+  "e2sfca_counted_at_every_school": 0.5842657618559142
+ },
+ "most_overloaded": [
+  {
+   "facility_id": "sch0121",
+   "name": "Коммунальное государственное учреждение 'Школа-гимназия № 22'",
+   "assigned_children": 4215,
+   "children_per_place_proxy": 9.84
+  },
+  {
+   "facility_id": "sch0106",
+   "name": "ГУ средняя школа №25",
+   "assigned_children": 2408,
+   "children_per_place_proxy": 8.75
+  },
+  {
+   "facility_id": "sch0143",
+   "name": "Государственное учреждение 'Школа-гимназия №14' Управления образования города Ас",
+   "assigned_children": 3544,
+   "children_per_place_proxy": 8.43
+  },
+  {
+   "facility_id": "sch0116",
+   "name": "ГУ 'Средняя школа №16 имени Толегена Айбергенова' Управления образования г.Астан",
+   "assigned_children": 2110,
+   "children_per_place_proxy": 5.66
+  },
+  {
+   "facility_id": "sch0007",
+   "name": "Школа-гимназия №2 им.Гафу Каирбекова",
+   "assigned_children": 1772,
+   "children_per_place_proxy": 5.51
+  },
+  {
+   "facility_id": "sch0136",
+   "name": "Коммунальное государственное учреждение 'Школа-лицей № 38' акимата города Астаны",
+   "assigned_children": 3002,
+   "children_per_place_proxy": 4.6
+  },
+  {
+   "facility_id": "sch0160",
+   "name": "Государственное учреждение 'Школа -лицей №15'Управления образования г.Астана",
+   "assigned_children": 1046,
+   "children_per_place_proxy": 4.26
+  },
+  {
+   "facility_id": "sch0108",
+   "name": "ГУ 'Школа-гимназия №31' Управления образования г.Астаны",
+   "assigned_children": 2301,
+   "children_per_place_proxy": 4.25
+  },
+  {
+   "facility_id": "sch0126",
+   "name": "Общеобразовательная школа №114",
+   "assigned_children": 4505,
+   "children_per_place_proxy": 4.11
+  },
+  {
+   "facility_id": "sch0048",
+   "name": "Общеобразовательная школа №99",
+   "assigned_children": 3205,
+   "children_per_place_proxy": 3.81
+  }
+ ]
+}

@@ -1,6 +1,7 @@
 SOURCE = (
     "SP RK 3.01-101-2013 with amendments as of 2 June 2025, official publication of the "
-    "unified fund of normative technical documents; values unchanged since the edition of 9 July 2021"
+    "unified fund of normative technical documents; "
+    "values unchanged since the edition of 9 July 2021"
 )
 
 RADIUS_M = {"preschool": 300.0, "school": 500.0}

@@ -1,0 +1,9 @@
+facility_id,catchment_based,floor_missing,name,lon,lat,district,source
+sch0041,True,True,,,,,Official school service territories 2026; OSM floor area 341 sq m is a mapping error
+sch0043,True,False,,,,,Official school service territories 2026
+sch0061,True,False,,,,,Official school service territories 2026
+sch0063,True,False,,,,,Official school service territories 2026; Daryn lyceum 82 has a service territory
+sch0073,True,False,,,,,Official school service territories 2026
+sch0153,True,False,,,,,Official school service territories 2026
+sch0008,False,False,,,,,Not in the official list of school service territories 2026
+binom_bokeikhan,True,True,Binom School named after A. Bokeikhan,71.376489,51.121711,Nura,Official school service territories 2026; position from the 2GIS listing at Shafik Chokin street 5

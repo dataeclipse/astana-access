@@ -4,7 +4,7 @@ import numpy as np
 import pandas as pd
 
 from astana_access.accessibility.network import WalkNetwork, load
-from astana_access.config import CRS_GEO, CRS_METRIC, H3_RESOLUTION, PROCESSED, RAW
+from astana_access.config import CRS_GEO, CRS_METRIC, DATA, H3_RESOLUTION, PROCESSED, RAW
 
 LIMIT_M = 4000.0
 RADII_M = (300, 500, 750, 1000, 1500)
@@ -58,8 +58,42 @@ def unmapped_programme_schools(schools: gpd.GeoDataFrame) -> gpd.GeoDataFrame:
     )
 
 
+def apply_overrides(every: gpd.GeoDataFrame) -> gpd.GeoDataFrame:
+    path = DATA / "labels" / "catchment_overrides.csv"
+    if not path.exists():
+        return every
+    table = pd.read_csv(path)
+    every = every.copy()
+    known = table[table["facility_id"].isin(every["facility_id"])].set_index("facility_id")
+    mask = every["facility_id"].isin(known.index)
+    every.loc[mask, "catchment_based"] = (
+        every.loc[mask, "facility_id"].map(known["catchment_based"]).astype(bool)
+    )
+    every.loc[mask, "in_scope"] = True
+    missing = every["facility_id"].map(known["floor_missing"]).fillna(False).astype(bool)
+    every.loc[missing, "floor_m2"] = np.nan
+    extra = table[~table["facility_id"].isin(every["facility_id"])]
+    if len(extra):
+        added = gpd.GeoDataFrame(
+            {
+                "facility_id": extra["facility_id"].to_numpy(),
+                "name": extra["name"].to_numpy(),
+                "number": np.nan,
+                "catchment_based": extra["catchment_based"].astype(bool).to_numpy(),
+                "in_scope": True,
+                "district": extra["district"].to_numpy(),
+                "source": "override",
+                "floor_m2": np.nan,
+            },
+            geometry=gpd.points_from_xy(extra["lon"], extra["lat"]),
+            crs=CRS_GEO,
+        ).to_crs(every.crs)
+        every = pd.concat([every, added], ignore_index=True)
+    return every
+
+
 def facilities(programme: bool = True) -> dict[str, gpd.GeoDataFrame]:
-    every = gpd.read_file(PROCESSED / "facilities.gpkg", layer="schools")
+    every = apply_overrides(gpd.read_file(PROCESSED / "facilities.gpkg", layer="schools"))
     schools = every[every["catchment_based"] & every.geometry.notna()].copy()
     schools["facility_id"] = schools["facility_id"].astype(str)
     schools["presumed_new"] = False

@@ -24,30 +24,30 @@
    "Saryarka": 0.738
   },
   "school/network": {
-   "city": 0.206,
+   "city": 0.221,
    "Almaty": 0.235,
    "Baikonur": 0.247,
-   "Esil": 0.188,
-   "Nura": 0.097,
-   "Saraishyk": 0.221,
-   "Saryarka": 0.259
+   "Esil": 0.223,
+   "Nura": 0.137,
+   "Saraishyk": 0.254,
+   "Saryarka": 0.253
   },
   "school/network_named_only": {
-   "city": 0.204,
+   "city": 0.219,
    "Almaty": 0.235,
    "Baikonur": 0.247,
-   "Esil": 0.188,
-   "Nura": 0.094,
-   "Saraishyk": 0.204,
-   "Saryarka": 0.258
+   "Esil": 0.223,
+   "Nura": 0.134,
+   "Saraishyk": 0.236,
+   "Saryarka": 0.252
   },
   "school/straight_line": {
-   "city": 0.608,
+   "city": 0.639,
    "Almaty": 0.68,
    "Baikonur": 0.679,
-   "Esil": 0.481,
-   "Nura": 0.481,
-   "Saraishyk": 0.619,
+   "Esil": 0.548,
+   "Nura": 0.568,
+   "Saraishyk": 0.641,
    "Saryarka": 0.724
   }
  },
@@ -69,28 +69,28 @@
    0.8153898959535353
   ],
   "school/network/norm": [
-   0.19871173826584032,
-   0.2070811192081901
+   0.2163319246696665,
+   0.22230249861876092
   ],
   "school/network/norm_plus_10pct": [
-   0.25169143398407917,
-   0.26461402153817587
+   0.2723909793239216,
+   0.28098948451311634
   ],
   "school/network_named_only/norm": [
-   0.19573915706393774,
-   0.2039077963568244
+   0.21336023556532263,
+   0.21912953280886538
   ],
   "school/network_named_only/norm_plus_10pct": [
-   0.24749507730860743,
-   0.26070929281001504
+   0.2688028203730442,
+   0.27732817289514206
   ],
   "school/straight_line/norm": [
-   0.5874667852418173,
-   0.6124084555578077
+   0.6279582319541758,
+   0.6413140136609644
   ],
   "school/straight_line/norm_plus_10pct": [
-   0.6436385409295701,
-   0.668814088048258
+   0.687802232074228,
+   0.6986843324701622
   ]
  }
 }

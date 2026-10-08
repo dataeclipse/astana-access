@@ -74,7 +74,7 @@ Figure~\ref{fig:uml-packages} shows the packages of the framework and their depe
 \chapter{Test Results}
 \label{app:tests}
 
-The test suite is run with \texttt{pytest}. All 76 tests pass in a few seconds. Table~\ref{tab:tests} lists what each group verifies.
+The test suite is run with \texttt{pytest}. All 81 tests pass in a few seconds. Table~\ref{tab:tests} lists what each group verifies.
 
 \begin{table}[ht]
 \centering
@@ -91,8 +91,9 @@ Test file & Tests & What is verified \\
 \texttt{test\_access.py} & 8 & Distance decay functions, allocation of each child once, exclusion of children beyond the allocation radius, zero access without a facility, Gini extremes and weights, exact Theil decomposition \\
 \texttt{test\_optimization.py} & 5 & Plot sizes of the planning standard, statutory radii, detection of free plots, the maximal covering solution, the capacity constraint \\
 \texttt{test\_listing.py} & 6 & School numbers read from listings, projection of listed positions, preservation of station totals when floors are replaced, parsing of the official age table and agreement of its totals with the model, year labels of official tables \\
+\texttt{test\_catchments.py} & 5 & Parsing of official service territories: house lists, initials not taken for street types, ranges, whole streets, settlements, removal of notes on language of instruction; weighted median of walking distance \\
 \midrule
-Total & 76 & All passed \\
+Total & 81 & All passed \\
 \bottomrule
 \end{tabularx}
 \end{table}

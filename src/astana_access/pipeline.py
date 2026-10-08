@@ -73,14 +73,23 @@ def stage_population() -> None:
 
 
 def stage_access() -> None:
-    from astana_access.accessibility import catchment_check, compliance, coverage
+    from astana_access.accessibility import (
+        catchment_check,
+        compliance,
+        coverage,
+        official_catchments,
+    )
     from astana_access.equity import analysis
+    from astana_access.ingest import catchments
     from astana_access.inventory import programme_list
 
     programme_list.build()
     coverage.build()
     compliance.run()
     catchment_check.run()
+    if catchments.SOURCE.exists():
+        catchments.geocode()
+        official_catchments.run()
     analysis.run()
 
 

@@ -399,3 +399,59 @@ The tables of places commissioned end in 2021 and 2024 and do not cover the prog
 ## 14. Current edition of the planning standard
 
 SP RK 3.01-101-2013 with amendments as of 2 June 2025, official publication of the Unified State Fund of Normative Technical Documents (`data/raw/norms/sp_rk_3.01-101-2013_2025-06-02.pdf`). Table 2-1 (radius 300 m for urban preschools, 500 m for schools, up to 10% more in complex layouts, transport access 15 and 50 min) and Table V.1 (provision norms, school plot 19 sq m per pupil above 900 pupils) are unchanged from the edition of 9 July 2021. New in note 2 to Table 2-1: the walk of primary pupils must not cross a main road at grade. The Astana norms SNiP RK 3.01-01As-2007 (amendments as of 15 May 2019, official edition 2023) set walking access of 300-500 m for everyday facilities, including preschools and schools. No result changes.
+
+## 15. Official reply of 8 October 2026: school service territories
+
+Files in `data/raw/official_reply/` (not in git): population of districts 2023-2026 and children 0-17 by single year of age (identical to the Bureau tables downloaded in section 13, within 2 persons), the two joint decisions on the Saraishyk district, and the service territories of all 121 schools with catchment admission in six district files. The reply contains no capacity, enrolment or shifts.
+
+Code: `ingest/catchments.py` (parser and geocoder), `accessibility/official_catchments.py`, `data/labels/catchment_overrides.csv`. Output: `reports/official_catchments.json`, `data/interim/catchments_geocoded.csv`, `data/interim/catchment_dwellings.csv`.
+
+### Parsing and matching
+
+| Item | Value |
+|---|---|
+| Schools in the reply | 121 (115 numbered, 6 Binom schools named) |
+| Parsed entries | 8,938: 8,272 houses, 254 ranges, 373 whole streets, 39 named places |
+| Single houses geocoded exactly | 77% (Almaty 88%, Saryarka 79%, Baikonur 76%, Esil 75%, Nura 59%, Saraishyk 51%) |
+| Address points after expanding ranges and streets | 19,690 |
+| Dwellings assigned, within 25 m | 13,764, of which 1,140 to more than one school (classes by language) |
+| School-age children in assigned dwellings | 57% (Almaty 65%, Baikonur 63%, Saryarka 63%, Esil 60%, Saraishyk 44%, Nura 41%) |
+
+### Supply corrected
+
+Every numbered school in the reply is in the supply layer or among programme schools. Changes: six Binom schools (private, financed by state order) and Daryn lyceum 82 have service territories and enter the supply; complex 47 (kindergarten-school) has none and leaves it. Binom named after Bokeikhan is absent from OSM and placed from the 2GIS listing. All Binom buildings were mapped in OSM on 1 January 2023 and enter the 2023 supply too.
+
+### Assigned school against walking distance (children-weighted)
+
+| Measure | Value |
+|---|---|
+| Assigned school reached within 4 km | 98.5% |
+| Assigned school is the nearest | 61.5% |
+| One of the two nearest | 82.9% |
+| Median walk to the assigned school | 786 m |
+| Within 500 / 1000 / 1500 / 2000 m | 19.6% / 67.6% / 87.7% / 94.9% |
+| Within 1 km, by district | Baikonur 82%, Saryarka 74%, Almaty 73%, Saraishyk 63%, Esil 58%, Nura 52% |
+
+### Load step
+
+Spearman correlation between children assigned to each school and the load allocated by the index, 115 schools: allocation within 1.5 km 0.63, 2 km 0.63, 3 km 0.62, 4 km 0.63; original E2SFCA first step 0.58. Allocating each child once describes school loads better; the radius barely matters. Assigned children over model load, median 0.53, because only 57% of children could be matched.
+
+### Effect of the supply correction on results
+
+| Result | Before | After |
+|---|---|---|
+| School access relative to mean: Almaty, Baikonur, Esil, Nura, Saraishyk, Saryarka | 0.88, 1.30, 0.70, 0.72, 1.12, 1.46 | 0.80, 1.13, 0.97, 0.83, 1.27, 1.22 |
+| Same with combined age share of Almaty and Saraishyk | 1.06, 1.31, 0.69, 0.71, 0.80, 1.45 | 0.97, 1.15, 0.95, 0.82, 0.90, 1.21 |
+| School Gini / Theil / between share | 0.398 / 0.284 / 16% | 0.380 / 0.256 / 6% |
+| Low-low school clusters, Esil / Nura | 4.8% / 2.3% | 3.4% / 1.3% |
+| Compliance, school 500 m straight / walking | 60.8% / 20.6% | 63.9% / 22.1% |
+| Walking compliance Esil / Nura | 18.8% / 9.7% | 22.3% / 13.7% |
+| H3 schools, worst district (buildings) | Nura 28, Esil 8 | Nura 20, Almaty 16 |
+| H4 deficit AUC 1 km / 1.5 km | 0.62 / 0.64 | 0.59 / 0.57 |
+| H4 deficit minus density | +0.17 (+0.01, +0.30) / +0.19 (+0.01, +0.36) | +0.14 (-0.03, +0.29) / +0.13 (-0.08, +0.32) |
+| H4 land-feasible plot AUC | 0.69 | 0.69 (0.59, 0.79) |
+| Programme over land-feasible optimum | 86% / 64% | 87% / 56% |
+| Programme over unconstrained optimum | 33% / 43% | 29% / 38% |
+| Percentile among random choices | 86 / 92 | 74 / 87 |
+
+Preschool results do not change. H2 for schools becomes partial: Nura stays lowest wherever the age structure is plausible, Esil moves to the mean but keeps the largest cluster. H4 part 1 keeps its direction but the deficit-density difference is no longer significant; land availability is the significant predictor.

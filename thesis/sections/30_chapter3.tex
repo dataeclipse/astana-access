@@ -15,7 +15,7 @@ Figure~\ref{fig:population} shows the estimated population density. Residents co
 \label{fig:population}
 \end{figure}
 
-\textbf{Statutory compliance.} Table~\ref{tab:compliance} and Figure~\ref{fig:compliance} give the share of children living within the radius of the planning standard. Read as a straight-line radius, the standard is met for 61 per cent of school-age children and 78 per cent of preschool-age children. Read as a walking distance, the shares fall to 21 and 35 per cent. The gap is not a technicality: superblocks, fenced courtyards, rivers and highways lengthen the walk, on average, to 1.41 times the straight line, and the norm that a planner checks on a map is met for a minority of children on foot. Across the three building-based population surfaces the city shares vary by less than 2.5 points. District shares do not depend on the age structure, which is uniform within a district; the city shares do.
+\textbf{Statutory compliance.} Table~\ref{tab:compliance} and Figure~\ref{fig:compliance} give the share of children living within the radius of the planning standard. Read as a straight-line radius, the standard is met for 64 per cent of school-age children and 78 per cent of preschool-age children. Read as a walking distance, the shares fall to 22 and 35 per cent. The gap is not a technicality: superblocks, fenced courtyards, rivers and highways lengthen the walk, on average, to 1.41 times the straight line, and the norm that a planner checks on a map is met for a minority of children on foot. Across the three building-based population surfaces the city shares vary by less than 2.5 points. District shares do not depend on the age structure, which is uniform within a district; the city shares do.
 
 \begin{table}[ht]
 \centering
@@ -28,13 +28,13 @@ Figure~\ref{fig:population} shows the estimated population density. Residents co
 \cmidrule(lr){2-3}\cmidrule(lr){4-5}
 District & Straight line & Walking & Straight line & Walking \\
 \midrule
-City & 60.8 & 20.6 & 77.9 & 34.7 \\
+City & 63.9 & 22.1 & 77.9 & 34.7 \\
 Almaty & 68.0 & 23.5 & 89.2 & 38.6 \\
 Baikonur & 67.9 & 24.7 & 70.1 & 30.7 \\
-Esil & 48.1 & 18.8 & 78.1 & 38.7 \\
-Nura & 48.1 & 9.7 & 73.4 & 34.6 \\
-Saraishyk & 61.9 & 22.1 & 71.1 & 27.0 \\
-Saryarka & 72.4 & 25.9 & 73.8 & 29.6 \\
+Esil & 54.8 & 22.3 & 78.1 & 38.7 \\
+Nura & 56.8 & 13.7 & 73.4 & 34.6 \\
+Saraishyk & 64.1 & 25.4 & 71.1 & 27.0 \\
+Saryarka & 72.4 & 25.3 & 73.8 & 29.6 \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -46,7 +46,9 @@ Saryarka & 72.4 & 25.9 & 73.8 & 29.6 \\
 \label{fig:compliance}
 \end{figure}
 
-\textbf{Do families use the nearest school?} The official catchments of 11 schools \cite{sakura2026} assign 2,988 located houses. Against the schools of 2026, the assigned school is the nearest by walking distance for 52.4 per cent of them and one of the two nearest for 66.4 per cent; the median walk to the assigned school is 1,133\,m, and for one house in ten it exceeds 2.8\,km. Three schools follow the nearest rule almost exactly and others hardly at all; the lists are undated, and schools opened since may have taken over part of the houses. Catchments are administrative, not geometric, which is why the accessibility index below lets a child reach every school within walking distance rather than assigning each child to the nearest one.
+\textbf{Do families use the nearest school?} The education department assigns every address of the city to a school. Its lists for all 121 schools with a service territory \cite{catchments2026} were parsed and geocoded (Section~\ref{sec:catchments}); 13,764 dwellings, home to 57 per cent of school-age children, are matched to their assigned school. For 62 per cent of these children the assigned school is the nearest by walking distance and for 83 per cent one of the two nearest. The median walk to the assigned school is 786\,m; 20 per cent of children live within the statutory 500\,m of it, 68 per cent within 1\,km and 88 per cent within 1.5\,km. In Esil and Nura only 58 and 52 per cent live within 1\,km of their assigned school, against 82 per cent in Baikonur. Catchments are administrative, not geometric: four children in ten are sent past a nearer school. This is why the accessibility index below lets a child reach every school within walking distance rather than assigning each child to the nearest one.
+
+The same lists test the load step of the index. The number of children assigned to each school correlates with the load the index allocates to it at 0.63 (Spearman, 115 schools), whether children are allocated within 1.5, 2, 3 or 4\,km, and at 0.58 when every child is counted at every school within reach, as in the original method. Allocating each child once is the better description of how schools are loaded; the choice of allocation radius matters little.
 
 \section{Inequality, Deficit Clusters and Statutory Compliance: Test of H2}
 \label{sec:results-h2}
@@ -62,12 +64,12 @@ Table~\ref{tab:access-district} gives the mean accessibility per child of each d
 \toprule
 District & Schools & Preschools \\
 \midrule
-Almaty & 0.88 (1.06) & 1.17 (1.43) \\
-Baikonur & 1.30 & 0.99 \\
-Esil & 0.70 & 0.94 \\
-Nura & 0.72 & 0.83 \\
-Saraishyk & 1.12 (0.80) & 1.25 (0.83) \\
-Saryarka & 1.46 & 0.94 \\
+Almaty & 0.80 (0.97) & 1.17 (1.43) \\
+Baikonur & 1.13 & 0.99 \\
+Esil & 0.97 & 0.94 \\
+Nura & 0.83 & 0.83 \\
+Saraishyk & 1.27 (0.90) & 1.25 (0.83) \\
+Saryarka & 1.22 & 0.94 \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -81,21 +83,23 @@ Saryarka & 1.46 & 0.94 \\
 \toprule
 Measure & Schools & Preschools \\
 \midrule
-Children with no facility within the catchment, \% & 8.0 & 6.5 \\
-Gini coefficient & 0.398 & 0.435 \\
-Theil index & 0.284 & 0.331 \\
-Share of Theil index between districts, \% & 16 & 3 \\
-Global Moran's $I$ & 0.85 & 0.82 \\
-Children in significant low-low clusters, \% & 10.8 & 8.2 \\
+Children with no facility within the catchment, \% & 6.3 & 6.5 \\
+Gini coefficient & 0.380 & 0.435 \\
+Theil index & 0.256 & 0.331 \\
+Share of Theil index between districts, \% & 6 & 3 \\
+Global Moran's $I$ & 0.83 & 0.82 \\
+Children in significant low-low clusters, \% & 9.1 & 8.2 \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-For schools, H2 is supported. Esil and Nura, where 38 and 46 per cent of residential floor area was built after 2022, have 70 and 72 per cent of the city's accessibility per child, against 130 and 146 per cent in Baikonur and Saryarka. The result does not depend on how the official age structure splits Almaty and Saraishyk, which changes only those two districts. The largest deficit clusters lie in Esil, which holds 4.8 per cent of all school-age children inside significant low-low clusters, followed by Nura with 2.3 per cent (Figure~\ref{fig:access-school}). The school layer is complete in the sense that matters for this result: every state school number listed in 2GIS \cite{twogis2026} is either in the layer, a selective or evening school excluded by design, or a programme school added below, and the 104 schools found in both lie a median of 32\,m apart. Removing the five presumed new schools lowers Nura further, to 69 per cent of the mean, so their inclusion does not create the result. The supply includes two programme schools that OSM does not yet map, numbers 105 and 116, placed from their listings.
+For schools, H2 is supported only in part. Nura, where 46 per cent of residential floor area was built after 2022, has the lowest accessibility per child under the plausible age structure, 82 to 83 per cent of the city mean, and the lowest walking compliance, 14 per cent. Esil, the other district of recent growth, lies near the mean on average, 97 per cent, but holds the largest deficit cluster of the city: 3.4 per cent of all school-age children live in significant low-low clusters in Esil, against 1.3 in Nura (Figure~\ref{fig:access-school}). Almaty appears low, 80 per cent, only under the official split of children between Almaty and Saraishyk, which is implausible; with their combined age share it reaches 97 per cent. Differences between districts are small: 6 per cent of inequality lies between them.
+
+The supply follows the official list of service territories. It contains six Binom schools, private schools financed by state order, which the education department assigns territories like state schools, and the Daryn lyceum, which also has one; an earlier version of the model treated all seven as selective and excluded them. Five of them stand in Esil and Nura, and their inclusion raises Esil from 70 to 97 per cent of the mean. Every number in the official list is matched in the supply layer or among the programme schools, and every state school number listed in 2GIS \cite{twogis2026} is either in the layer, an evening school or a programme school. Removing the five presumed new schools lowers Nura to 80 per cent of the mean.
 
 For preschools, H2 is not supported. Nura, the fastest-growing district, has the lowest accessibility, 83 per cent of the mean, but Esil and Saryarka follow at 94 and the differences between districts are small: only 3 per cent of inequality lies between them (Figure~\ref{fig:access-preschool}). The deficit is a matter of blocks, not of districts. An earlier version of the model, which took the age structure from WorldPop, placed the deficit in Baikonur at 64 per cent of the mean; the official age counts show that Baikonur has the smallest share of preschool children in the city, 7.3 per cent against 12.6, and the apparent deficit disappears. The age structure of the population is as consequential for the conclusions as its spatial distribution.
 
-In both cases most of the inequality lies within districts, 84 per cent for schools and 97 per cent for preschools (Equation~\eqref{eq:theil}), and accessibility is strongly clustered. Planning that compares district averages, the form in which provision is usually reported, misses most of the inequality the cell-level surface reveals. Figure~\ref{fig:lorenz} shows the Lorenz curves.
+In both cases most of the inequality lies within districts, 94 per cent for schools and 97 per cent for preschools (Equation~\eqref{eq:theil}), and accessibility is strongly clustered. Planning that compares district averages, the form in which provision is usually reported, misses most of the inequality the cell-level surface reveals. Figure~\ref{fig:lorenz} shows the Lorenz curves.
 
 \begin{figure}[ht]
 \centering
@@ -121,7 +125,7 @@ In both cases most of the inequality lies within districts, 84 per cent for scho
 \section{Robustness of the Deficit Pattern: Test of H3}
 \label{sec:results-h3}
 
-Table~\ref{tab:sensitivity} summarises the 48 runs per facility type. For schools the worst-served district is always one of the two new districts, Nura in 28 of 36 building-based runs and Esil in the other eight, and district rankings correlate with the baseline at 0.94 in the median. For preschools the worst-served district changes between Saryarka, Nura and Baikonur, and the median correlation of rankings is 0.57: with district averages this close, the ranking is not stable. Across the three building-based population surfaces, the worst-served fifth of children falls in largely the same cells for both facility types, with a Jaccard overlap of about 0.8.
+Table~\ref{tab:sensitivity} summarises the 48 runs per facility type. For schools the worst-served district is Nura in 20 of 36 building-based runs and Almaty in the other 16, the latter only through the age split discussed above, and district rankings correlate with the baseline at 0.89 in the median. For preschools the worst-served district changes between Saryarka, Nura and Baikonur, and the median correlation of rankings is 0.57: with district averages this close, the ranking is not stable. Across the three building-based population surfaces, the worst-served fifth of children falls in largely the same cells for both facility types, with a Jaccard overlap of about 0.8.
 
 \begin{table}[ht]
 \centering
@@ -135,15 +139,15 @@ Table~\ref{tab:sensitivity} summarises the 48 runs per facility type. For school
 Population surface & Buildings & WorldPop & Buildings & WorldPop \\
 \midrule
 Runs & 36 & 12 & 36 & 12 \\
-District rank correlation, median & 0.94 & 0.89 & 0.57 & 0.37 \\
-District rank correlation, minimum & 0.83 & 0.66 & 0.14 & 0.09 \\
-Overlap of worst-served fifth, median & 0.81 & 0.15 & 0.81 & 0.14 \\
+District rank correlation, median & 0.89 & 0.77 & 0.57 & 0.37 \\
+District rank correlation, minimum & 0.71 & 0.54 & 0.14 & 0.09 \\
+Overlap of worst-served fifth, median & 0.79 & 0.14 & 0.81 & 0.14 \\
 Overlap of worst-served fifth, minimum & 0.64 & 0.12 & 0.76 & 0.11 \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-For schools, H3 holds at the district level under every specification and at the cell level across the building-based surfaces. For preschools it holds at the cell level only, which is consistent with a deficit that lies within districts rather than between them. It does not hold at the cell level when population comes from WorldPop: the cells it marks as worst served overlap those of the building-based surfaces by only 14 to 15 per cent. Supply measure, decay function and catchment size move individual cells; the choice of population surface moves the deficit itself. This is the practical consequence of H1: an assessment that takes its population from the standard gridded product would direct new facilities to different places.
+For both facility types H3 holds at the cell level across the building-based surfaces, and for schools also at the district level in the sense that Nura remains the worst-served district wherever the age structure is plausible. For preschools the district ranking is not stable, which is consistent with a deficit that lies within districts rather than between them. It does not hold at the cell level when population comes from WorldPop: the cells it marks as worst served overlap those of the building-based surfaces by only 14 to 15 per cent. Supply measure, decay function and catchment size move individual cells; the choice of population surface moves the deficit itself. This is the practical consequence of H1: an assessment that takes its population from the standard gridded product would direct new facilities to different places.
 
 \section{Revealed Demand for Preschool Places}
 \label{sec:results-vacancy}
@@ -186,7 +190,7 @@ Of the 24 sites announced in 2023 \cite{skc2023}, 23 were reported built \cite{s
 
 \subsection{Were sites chosen by deficit or by density?}
 
-Against the city of 1 January 2023, the deficit score singles out the programme cells with a ROC-AUC of 0.62 at 1\,km and 0.64 at 1.5\,km, while density scores 0.45 at both, no better than chance. The difference is positive in 98.2 and 97.8 per cent of bootstrap samples, with 95 per cent intervals from $+0.01$ to $+0.30$ and from $+0.01$ to $+0.36$. The strongest single predictor is the availability of a plot: 14 of the 21 sites had a feasible plot in 2023, against 29 per cent of all cells (ROC-AUC 0.69). The first part of H4 holds: the programme went where children lacked a school within walking distance and where land was available, not where children were most numerous. With 21 sites the evidence is moderate: both intervals exclude zero, but narrowly.
+Against the city of 1 January 2023, the deficit score singles out the programme cells with a ROC-AUC of 0.59 at 1\,km and 0.57 at 1.5\,km, while density scores 0.45 at both, no better than chance. The difference is positive in 95 and 89 per cent of bootstrap samples, but its 95 per cent intervals, from $-0.03$ to $+0.29$ and from $-0.08$ to $+0.32$, include zero. The one predictor that clearly singles out the chosen sites is the availability of a plot: 14 of the 21 sites had a feasible plot in 2023, against 29 per cent of all cells (ROC-AUC 0.69, interval 0.59 to 0.79), and among cells with a plot the deficit scores 0.69 at 1\,km. The first part of H4 holds in direction only: the programme went where land was available and, among such places, where children lacked a school, but with 21 sites the preference for deficit over density cannot be distinguished from chance.
 
 \subsection{Could the same schools have reached more children?}
 
@@ -199,20 +203,20 @@ Against the city of 1 January 2023, the deficit score singles out the programme 
 \toprule
 & Within 1\,km & Within 1.5\,km \\
 \midrule
-Children without a state school & 73,175 & 28,115 \\
-Programme, with its capacities & 14,083 & 10,395 \\
-Optimum anywhere, with capacity & 42,423 & 23,960 \\
-Optimum on feasible plots, with capacity & 16,304 & 16,271 \\
-Programme over optimum anywhere, \% & 33 & 43 \\
-Programme over optimum on feasible plots, \% & 86 & 64 \\
+Children without a state school & 66,216 & 21,936 \\
+Programme, with its capacities & 11,569 & 6,947 \\
+Optimum anywhere, with capacity & 39,233 & 18,178 \\
+Optimum on feasible plots, with capacity & 13,299 & 12,415 \\
+Programme over optimum anywhere, \% & 29 & 38 \\
+Programme over optimum on feasible plots, \% & 87 & 56 \\
 21 most populous cells & 8,357 & 3,404 \\
-21 random cells, mean & 11,836 & 7,409 \\
-Programme percentile among random choices & 86 & 92 \\
+21 random cells, mean & 10,531 & 5,306 \\
+Programme percentile among random choices & 74 & 87 \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-Table~\ref{tab:backtest} and Figure~\ref{fig:programme} compare the programme with the optimum of Equation~\eqref{eq:mclp}. Three results stand out. Capacity never binds: no school receives more uncovered children within walking distance than its 4,000 places in two shifts, and the capacitated optimum equals the uncapacitated one. Land explains most of the distance from the theoretical optimum: without a land constraint 21 schools could have reached 3.0 times as many uncovered children within 1\,km, but on plots that were actually free the best choice reaches 16 per cent more at 1\,km and 57 per cent more at 1.5\,km. And the programme did well within the land it had, beating the density rule by a wide margin and 86 to 92 per cent of random choices.
+Table~\ref{tab:backtest} and Figure~\ref{fig:programme} compare the programme with the optimum of Equation~\eqref{eq:mclp}. Three results stand out. Capacity never binds: no school receives more uncovered children within walking distance than its 4,000 places in two shifts, and the capacitated optimum equals the uncapacitated one. Land explains most of the distance from the theoretical optimum: without a land constraint 21 schools could have reached 3.4 times as many uncovered children within 1\,km, but on plots that were actually free the best choice reaches 15 per cent more at 1\,km and 79 per cent more at 1.5\,km. And the programme did reasonably within the land it had, beating the density rule and 74 to 87 per cent of random choices.
 
 The second part of H4 therefore holds against the unconstrained optimum and only partly against the land-feasible one. The planning lever with the largest effect is not the choice among available plots but the reservation of plots in the right places before housing is built around them.
 
@@ -228,14 +232,13 @@ The second part of H4 therefore holds against the unconstrained optimum and only
 
 \textbf{A data-driven framework without official microdata.} The work set out to assess access to social infrastructure using only open data, and the main methodological finding is that this is feasible when the ancillary sources are chosen for what they encode rather than for their resolution. Polling-station territories encode the distribution of registered residents, are published as law, and change with the city. Building footprints encode where people can live but not whether they do. Satellite-derived population grids encode the past, and a single age structure for the whole city. Combined in a hierarchy anchored to official totals and official age counts, the sources give a surface that reproduces district populations within 10 per cent, and the choice matters for every downstream result: the age structure alone moved the preschool deficit from one district to the blocks of all of them.
 
-\textbf{Measurement choices that change conclusions.} Three choices changed results by large factors: straight-line against walking distance, by a factor of two to three in statutory compliance; the first step of the floating catchment method, which multiplied demand until it was checked against observed enrolment; and the land constraint, which shrank the apparent room for better siting from 3.0 times to 16 per cent within 1\,km. In each case the more careful choice was the one that could be checked against an observation.
+\textbf{Measurement choices that change conclusions.} Three choices changed results by large factors: straight-line against walking distance, by a factor of two to three in statutory compliance; the first step of the floating catchment method, which multiplied demand until it was checked against observed enrolment; and the land constraint, which shrank the apparent room for better siting from 3.4 times to 15 per cent within 1\,km. In each case the more careful choice was the one that could be checked against an observation.
 
 \textbf{A deficit of distribution, not of places.} Across the city, preschool places exceed attendance: in 2025 the official statistics count 80,521 places for 63,637 children, 79 children per 100 places \cite{stateducation2026}, and 428 of the 728 located preschools published free places on a single evening. Yet only 35 per cent of preschool-age children live within 300\,m of a preschool on foot, and the floating catchment index finds 8 per cent of them in significant low-access clusters. The shortage is one of location: places exist, but not near all the children who need them. City-level provision ratios, which compare totals, hide it.
 
-\textbf{Implications for planning in Astana.} Schools are the binding problem in the new districts, while the preschool deficit is spread over blocks in every district, so a single district-level indicator of provision misleads in both. Within districts, deficits cluster in identifiable groups of blocks, which suggests that siting can be targeted at a finer scale than the district. The national programme behaved better than a density rule would have and close to the best that free land allowed within 1\,km; the larger gains lie in reserving land early, since plots that were free in 2023 had largely been built over by 2026. Births point the same way for preschools: they are rising in Nura, already the district with the lowest preschool access, and falling in Baikonur and Saryarka.
+\textbf{Implications for planning in Astana.} For both schools and preschools Nura, the district that grows fastest, is the worst served, but most of the deficit lies in groups of blocks within districts, so a single district-level indicator of provision misleads. The official service territories add a planning finding of their own: four children in ten are assigned past a nearer school, and in the new districts half of them live more than 1\,km from it. Within districts, deficits cluster in identifiable groups of blocks, which suggests that siting can be targeted at a finer scale than the district. The national programme behaved better than a density rule would have and close to the best that free land allowed within 1\,km; the larger gains lie in reserving land early, since plots that were free in 2023 had largely been built over by 2026. Births point the same way for preschools: they are rising in Nura, already the district with the lowest preschool access, and falling in Baikonur and Saryarka.
 
 \section{Limitations}
 \label{sec:limitations}
 
-Population below the district level is an estimate; equal shares per polling station are an assumption supported by district totals, not an observation, and 46 territorial stations have no reconstructed territory. Age structure is known only by district, so children are spread within a district in proportion to population, and the official split of children between Almaty and Saraishyk looks implausible; results for those two districts are given both ways. School capacity is known for 11 schools and preschool attendance only as class means, so supply measures are proxies, and results are reported for two of them. Two of the 23 programme sites could not be located, and two are placed from listings because OSM does not map them yet. Floors imputed for untagged buildings are understated by about two floors in new residential complexes, which shifts population between dwellings of a station but, as tested in Section~
-ef{sec:population}, not the results. Land ownership is unknown, so free land is land without buildings, not land available for a school. The vacancy label comes from a single evening.
+Population below the district level is an estimate; equal shares per polling station are an assumption supported by district totals, not an observation, and 46 territorial stations have no reconstructed territory. Age structure is known only by district, so children are spread within a district in proportion to population, and the official split of children between Almaty and Saraishyk looks implausible; results for those two districts are given both ways. School capacity is known for 11 schools and preschool attendance only as class means, so supply measures are proxies, and results are reported for two of them; the official reply to the information request did not include capacity, enrolment or shifts. Official service territories could be matched to dwellings for 57 per cent of school-age children, less in Nura and Saraishyk, where OSM carries fewer house numbers. Two of the 23 programme sites could not be located, and two are placed from listings because OSM does not map them yet. Floors imputed for untagged buildings are understated by about two floors in new residential complexes, which shifts population between dwellings of a station but, as tested in Section~\ref{sec:population}, not the results. Land ownership is unknown, so free land is land without buildings, not land available for a school. The vacancy label comes from a single evening.
