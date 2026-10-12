@@ -2,19 +2,19 @@
  "programme_schools": 21,
  "programme_numbered": 18,
  "programme_presumed": 3,
- "existing_schools": 103,
+ "existing_schools": 102,
  "candidate_cells": 1099,
  "school_age_children": 311692.8803037787,
  "radii": {
   "1000": {
-   "covered_before_share": 0.6966299386460016,
-   "uncovered_children": 94558.28822136178,
-   "realised_gain": 18016.018434925423,
-   "optimal_gain": 53834.97012355699,
+   "covered_before_share": 0.6914884895602694,
+   "uncovered_children": 96160.84129582891,
+   "realised_gain": 19618.57150939254,
+   "optimal_gain": 54295.84083884898,
    "density_gain": 13398.12271016463,
-   "random_gain_mean": 13696.14674926328,
-   "random_gain_p95": 19184.34097310634,
-   "realised_over_optimal": 0.33465270610491177,
+   "random_gain_mean": 13964.805273095733,
+   "random_gain_p95": 19472.7330062827,
+   "realised_over_optimal": 0.3613273356907909,
    "optimal_sites_within_1km_of_a_programme_school": 0.5238095238095238
   },
   "1500": {

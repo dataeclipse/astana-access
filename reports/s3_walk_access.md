@@ -455,3 +455,34 @@ Spearman correlation between children assigned to each school and the load alloc
 | Percentile among random choices | 86 / 92 | 74 / 87 |
 
 Preschool results do not change. H2 for schools becomes partial: Nura stays lowest wherever the age structure is plausible, Esil moves to the mean but keeps the largest cluster. H4 part 1 keeps its direction but the deficit-density difference is no longer significant; land availability is the significant predictor.
+
+## 16. Audit of processed data, 12 October 2026
+
+Script-based checks of every processed layer (counts, totals against official figures, ranges, ids, point positions, distances against the straight line). All passed except one finding, fixed below.
+
+| Layer | Check | Result |
+|---|---|---|
+| facilities | 117 schools with territory, 790 preschools (728 placed), all points inside the city, ids unique | ok; school number 45 appeared twice (fixed) |
+| buildings | 93,507 unique ids (50,095 OSM, 43,412 Microsoft), p in [0, 1] | ok; 43,123 classed residential, of which 3,388 under 35 sq m are excluded from dwellings by rule |
+| dwellings 2026 | 39,735; three surfaces sum to 1,639,176; every district equals its official total | ok |
+| dwellings 2023 | 36,714, a subset of 2026; total 1,354,562 equals the sum of six official districts (city figure 1,354,559) | ok |
+| grid | 6,710 H3 cells; all four surfaces sum to 1,639,176; children 1-6 and 7-17 within 0.3% of official age counts | ok |
+| network | 155,433 nodes stored, 152,491 (98.1%) in the connected component used | ok |
+| OD | distances 19-4,000 m; walk never shorter than the straight line (median ratio 1.35 on a 20k sample) | ok |
+| access cells | 1,307 cells, no NaN or negative values | ok |
+| polling | 422 stations, 386 territorial, 247 polygons | ok |
+| free land 2023 | 10 m raster, EPSG:32642; 186 feasible plots after the supply corrections (191 before) | ok |
+| catchments | 13,764 dwellings, 115 schools, all ids valid | ok |
+
+**School 45.** OSM carries two objects named school 45: an old building in Esil (sch0072, 4,011 sq m, linked to the stale egov register) and a new building in Nura (sch0078, 27,650 sq m) at Tole bi 25/2, which the official list of service territories, the 2GIS listing and the company register give as the school's address. The Esil object is now excluded (`data/labels/catchment_overrides.csv`). Before the fix, the official catchment of school 45 had been matched to the Esil object 4 km away.
+
+Whether the new building already operated on 1 January 2023 is not known; OSM history is too incomplete to tell (it also misses buildings of schools 2, 8, 12, 25 and 30, which are old). H4 under both readings:
+
+| 2023 school 45 | Deficit AUC 1 km | Difference to density, 1 km | Programme over land-feasible optimum, 1 km |
+|---|---|---|---|
+| New building in Nura (baseline) | 0.62 | +0.17 (+0.01, +0.31) | 90% |
+| Old building in Esil | 0.59 | +0.14 (-0.03, +0.29) | 86% |
+
+At 1.5 km the difference is not significant in either reading. The thesis reports H4 part 1 as holding in direction but not robustly.
+
+Other changes from the fix: school access Esil 0.97 to 0.92, Nura 0.83 to 0.84; between-district share 6% to 7%; load correlation with assigned children 0.62 to 0.63, original first step 0.58 to 0.60; programme at 90% / 56% of the land-feasible optimum, 33% / 38% of the unconstrained one, percentile 86 / 87 among random choices.
