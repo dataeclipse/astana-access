@@ -1,0 +1,26 @@
+plan_id,year,name,district,seats,stage,kind,locate,school_number,street_a,street_b,address_street,address_house,lon,lat,confidence,note
+N01,2026,Школа в районе ул.Е522 Е679 Е682 (ЖМ Пригородное),Esil,4000,construction,new,point,,,,,,71.43074,51.04083,low,Streets E679 and E682 are not mapped in OSM; placed at the two OSM address points of street E522
+N02,2026,Пристройка к ШГ №83 ул. А.Байтұрсынұлы 35,Saraishyk,1200,construction,extension,school,83,,,,,,,high,Extension of an existing school
+N03,2026,Пристройка к ШГ №80 ул.Ш.Қосшығұлұлы 17/2,Saryarka,1150,construction,extension,school,80,,,,,,,high,Extension of an existing school
+N04,2026,Строительство школы №15,Saryarka,1800,construction,rebuild,school,15,,,,,,,high,New building for an existing school
+N05,2027,Школа ул. Әйтеке би и Е 251 (ЖК Аркада),Nura,1198,construction,new,intersection,,улица Әйтеке би,улица Е 251,,,,,high,The 2GIS listing of the Arcada complex at Aiteke bi 15 lies next to the crossing
+N06,2027,Школа ул.Кабанбай батыра и Бухар жырау (ЖК Алау),Nura,2400,construction,new,intersection,,проспект Кабанбай батыр,улица Бухар жырау,,,,,high,
+N07,2027,Школа ул.А.Тоқпанова (ГК Южный),Almaty,4000,construction,new,street,,улица Аскар Токпанов,,,,,,medium,Placed at the middle of Tokpanov street; the garage cooperative is not mapped
+N08,2027,Школа ул.Ш.Айтматова (ЖК Шарын №67 СШ),Saryarka,1000,construction,new,school,67,,,,,,,medium,Placed at gymnasium 67 named in the description
+N09,2027,Строительство школы №19,Saryarka,768,construction,rebuild,school,19,,,,,,,high,New building for an existing school
+N10,2027,Школа Тұран и Бұхар жырау (Барыс Арена север),Nura,4000,design,new,intersection,,проспект Туран,улица Бухар жырау,,,,,high,
+N11,2027,Школа в районе улицы Багланова,Nura,3000,design,new,street,,улица Багланова,,,,,,low,Placed at the middle of Baglanov street
+N12,2027,Школа пр.Туран и ул.Хусейн бен Талал,Nura,5000,design,new,intersection,,проспект Туран,улица Хусейн бен Талал,,,,,high,
+N13,2027,Школа Ж.Нәжімеденов и А56,Saraishyk,4000,design,new,intersection,,улица Жумекен Нажимеденов,улица А 56,,,,,high,Comfortable School site P24 still unbuilt
+N14,2027,Пристройка к школе №74,Saraishyk,1200,design,extension,school,74,,,,,,,high,Extension of an existing school
+N15,2027,Строительство школы №25,Saryarka,1200,design,rebuild,school,25,,,,,,,high,New building for an existing school
+N16,2027,Школа ул.Жанибека Тархана 16 (вместо школы №5),Baikonur,1800,design,rebuild,school,5,,,,,,,high,Replaces school 5 at the same address
+N17,2028,Школа Орынбор и Каратобе (Сфера Парк),Esil,5000,permits,new,intersection,,улица Орынбор,улица Каратобе,,,,,high,
+N18,2028,Школа ул.Ф.Оңғарсынова уч.6/1 (ЖК Бестерек),Esil,1800,permits,new,address,,,,улица Фариза Онгарсынова,6/1,,,medium,House base 6 located
+N19,2028,Школа Қазыбек би и Хусейн бен Талал,Nura,3000,permits,new,intersection,,улица Казыбек би,улица Хусейн бен Талал,,,,,low,The two streets do not meet in OSM; placed midway between their nearest points
+N20,2028,Школа ул.Ш.Айтматова (Aristokrat School),Nura,2400,permits,new,street,,улица Шынгыс Айтматов,,,,,,low,Placed at the middle of Aitmatov street
+N21,2028,Школа в квадрате улиц А103 А104 А18 А129,Saraishyk,4000,permits,new,point,,,,,,71.55151,51.13005,low,Streets not mapped in OSM; placed at the only listed address on street A129
+N22,2028,Школа ул.А.Байтұрсынұлы уч.6/1,Saraishyk,6000,permits,new,address,,,,улица Ахмет Байтурсынулы,6/1,,,medium,Neighbouring house numbers located
+N23,2028,Школа ул.Ахмет Байтурсынулы 55,Saraishyk,2400,permits,new,address,,,,улица Ахмет Байтурсынулы,55,,,high,
+N24,2028,Школа Ж.Нәжімеденова и А 90,Saraishyk,4000,permits,new,unresolved,,улица Жумекен Нажимеденов,улица А 90,,,,,none,Street A90 is not mapped in OSM and has no listed address
+N25,2028,Школа ул. С 189 (дачный массив Земляничная),Saryarka,4000,permits,new,street,,улица Земляничная,,,,,,low,Street C189 is not mapped in OSM; placed at the middle of Zemlyanichnaya street in the dacha area of the same name

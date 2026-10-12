@@ -227,6 +227,44 @@ The second part of H4 therefore holds against the unconstrained optimum and only
 \label{fig:programme}
 \end{figure}
 
+\subsection{Does the construction plan for 2026--2028 follow the deficit?}
+\label{sec:plan}
+
+In reply to an information request, the city's construction department listed 25 school projects to be completed from 2026 to 2028 \cite{constructionplan2026}: 18 new schools, three extensions and four new buildings for existing schools, with 70,316 places in two shifts, of which 8,150 are due in 2026, 29,566 in 2027 and 32,600 in 2028. The list gives a street crossing, an address, a street or the number of the school being replaced, and was located in the same way as the programme: 24 of the 25 projects are placed, 14 with high, four with medium and six with low confidence; one new school is named after a street that neither OSM nor any address list contains. Each new school is then given the coverage test of Section~\ref{sec:results-h4} with the demand of 2026, its own capacity and the existing schools fixed; the plan is compared with the optimum for the same number of sites, and the selection test is repeated for the planned cells.
+
+\begin{table}[ht]
+\centering
+\caption{School-age children without a school within walking distance, before and after the construction plan}
+\label{tab:plan}
+\small
+\begin{tabular}{lrr}
+\toprule
+& Within 1\,km & Within 1.5\,km \\
+\midrule
+Without a school, 2026 & 76,542 & 19,830 \\
+Reached by the one new school of 2026 & 165 & 18 \\
+Reached by the nine new schools of 2026--2027 & 7,829 & 3,131 \\
+Reached by the 17 located new schools of 2026--2028 & 11,145 & 3,780 \\
+\quad of which without the six sites located with low confidence & 8,291 & 3,398 \\
+Optimum anywhere, 17 sites & 38,917 & 14,637 \\
+Optimum on feasible plots, 17 sites & 9,379 & 8,443 \\
+ROC-AUC of the deficit for the planned cells & 0.54 & 0.49 \\
+ROC-AUC of density for the planned cells & 0.55 & 0.50 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Table~\ref{tab:plan} and Figure~\ref{fig:plan} give the result. By 2028 the plan brings a school within 1\,km of 11,145 of the 76,542 children who lack one, 15 per cent, and within 1.5\,km of 19 per cent; capacity never binds, as in the programme. The deficit does not single out the planned cells: its ROC-AUC is 0.54 at 1\,km, with an interval from 0.38 to 0.69, no different from density at 0.55. The districts tell the same story. Esil has the most children without a school within 1\,km, 21,521, and 10,926 of the 28,626 children in significant low-access clusters of Figure~\ref{fig:access-school}, but its three planned schools reach 793 of them; Saraishyk has the fewest, 5,870, and receives the most places, 22,800. Within 1\,km of all new schools live 12 per cent of the children in low-access clusters. Two sites lie where few children live today and anticipate housing under construction, and four lie inside areas already within 1\,km of a school, where they would relieve crowded schools, which a walking measure does not credit and the missing data on shifts cannot test.
+
+The plan reaches more children than the optimum on plots that the land layer finds free, 119 per cent of it at 1\,km, because the city plans schools on land the layer counts as built, such as a garage cooperative in Almaty that is to be cleared: land can be made, not only found. Against the optimum anywhere the plan reaches 29 per cent at 1\,km and 26 per cent at 1.5\,km. Adding the floor area of all 24 projects to the floating catchment index raises mean access by 37 per cent and lowers the share of children without any school in reach from 6.3 to 5.1 per cent, but the Gini coefficient rises from 0.378 to 0.391: Nura gains, from 0.84 to 1.08 of the city mean, Saraishyk gains most, from 1.28 to 1.64, and Almaty falls from 0.81 to 0.73. For future decisions, then, the first part of H4 does not hold: the plan is not targeted at the deficit, and about 85 per cent of the children now without a school within 1\,km would still be without one in 2028.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.9\textwidth]{figures/plan_2026_2028_1000}
+\caption{School-age children without a school within 1\,km in 2026 and the school projects of 2026--2028}
+\label{fig:plan}
+\end{figure}
+
 \section{Discussion}
 \label{sec:discussion}
 
@@ -236,9 +274,9 @@ The second part of H4 therefore holds against the unconstrained optimum and only
 
 \textbf{A deficit of distribution, not of places.} Across the city, preschool places exceed attendance: in 2025 the official statistics count 80,521 places for 63,637 children, 79 children per 100 places \cite{stateducation2026}, and 428 of the 728 located preschools published free places on a single evening. Yet only 35 per cent of preschool-age children live within 300\,m of a preschool on foot, and the floating catchment index finds 8 per cent of them in significant low-access clusters. The shortage is one of location: places exist, but not near all the children who need them. City-level provision ratios, which compare totals, hide it.
 
-\textbf{Implications for planning in Astana.} For both schools and preschools Nura, the district that grows fastest, is the worst served, but most of the deficit lies in groups of blocks within districts, so a single district-level indicator of provision misleads. The official service territories add a planning finding of their own: four children in ten are assigned past a nearer school, and in Nura and Esil more than four in ten live farther than 1\,km from the school they are assigned to. Within districts, deficits cluster in identifiable groups of blocks, which suggests that siting can be targeted at a finer scale than the district. The national programme behaved better than a density rule would have and close to the best that free land allowed within 1\,km; the larger gains lie in reserving land early, since plots that were free in 2023 had largely been built over by 2026. Births point the same way for preschools: they are rising in Nura, already the district with the lowest preschool access, and falling in Baikonur and Saryarka.
+\textbf{Implications for planning in Astana.} For both schools and preschools Nura, the district that grows fastest, is the worst served, but most of the deficit lies in groups of blocks within districts, so a single district-level indicator of provision misleads. The official service territories add a planning finding of their own: four children in ten are assigned past a nearer school, and in Nura and Esil more than four in ten live farther than 1\,km from the school they are assigned to. Within districts, deficits cluster in identifiable groups of blocks, which suggests that siting can be targeted at a finer scale than the district. The national programme behaved better than a density rule would have and close to the best that free land allowed within 1\,km; the larger gains lie in reserving land early, since plots that were free in 2023 had largely been built over by 2026. The construction plan for 2026--2028 repeats the pattern rather than correcting it: it reaches 15 per cent of the children without a school within 1\,km and sends the most places to Saraishyk, while Esil, with the largest deficit, gains little; screening planned sites by the uncovered children they would reach would cost the city nothing. Births point the same way for preschools: they are rising in Nura, already the district with the lowest preschool access, and falling in Baikonur and Saryarka.
 
 \section{Limitations}
 \label{sec:limitations}
 
-Population below the district level is an estimate; equal shares per polling station are an assumption supported by district totals, not an observation, and 46 territorial stations have no reconstructed territory. Age structure is known only by district, so children are spread within a district in proportion to population, and the official split of children between Almaty and Saraishyk looks implausible; results for those two districts are given both ways. School capacity is known for 11 schools and preschool attendance only as class means, so supply measures are proxies, and results are reported for two of them; the official reply to the information request did not include capacity, enrolment or shifts. Official service territories could be matched to dwellings for 57 per cent of school-age children, less in Nura and Saraishyk, where OSM carries fewer house numbers. Two of the 23 programme sites could not be located, and two are placed from listings because OSM does not map them yet. Floors imputed for untagged buildings are understated by about two floors in new residential complexes, which shifts population between dwellings of a station but, as tested in Section~\ref{sec:population}, not the results. Land ownership is unknown, so free land is land without buildings, not land available for a school. The vacancy label comes from a single evening.
+Population below the district level is an estimate; equal shares per polling station are an assumption supported by district totals, not an observation, and 46 territorial stations have no reconstructed territory. Age structure is known only by district, so children are spread within a district in proportion to population, and the official split of children between Almaty and Saraishyk looks implausible; results for those two districts are given both ways. School capacity is known for 11 schools and preschool attendance only as class means, so supply measures are proxies, and results are reported for two of them; the official reply to the information request did not include capacity, enrolment or shifts. Official service territories could be matched to dwellings for 57 per cent of school-age children, less in Nura and Saraishyk, where OSM carries fewer house numbers. Two of the 23 programme sites could not be located, and two are placed from listings because OSM does not map them yet; of the 25 planned projects one could not be located and six are placed only to a street or a nearby address. Floors imputed for untagged buildings are understated by about two floors in new residential complexes, which shifts population between dwellings of a station but, as tested in Section~\ref{sec:population}, not the results. Land ownership is unknown, so free land is land without buildings, not land available for a school. The vacancy label comes from a single evening.

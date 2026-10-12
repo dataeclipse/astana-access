@@ -486,3 +486,35 @@ Whether the new building already operated on 1 January 2023 is not known; OSM hi
 At 1.5 km the difference is not significant in either reading. The thesis reports H4 part 1 as holding in direction but not robustly.
 
 Other changes from the fix: school access Esil 0.97 to 0.92, Nura 0.83 to 0.84; between-district share 6% to 7%; load correlation with assigned children 0.62 to 0.63, original first step 0.58 to 0.60; programme at 90% / 56% of the land-feasible optimum, 33% / 38% of the unconstrained one, percentile 86 / 87 among random choices.
+
+## 17. Construction plan for 2026-2028, 12 October 2026
+
+Source: reply of the Construction Department of Astana, letter ZhT-2026-04463590 of 8 October 2026, with the table of 25 school projects (`data/raw/official_reply_2/`). Transcribed to `data/labels/planned_schools_2026_2028.csv`; code `src/astana_access/optimization/plan.py`; output `reports/plan_2026_2028.json`, layers `plan_2026_2028` and `plan_optimal_{1000,1500}` in `data/processed/backtest.gpkg`, figure `plan_2026_2028_1000`.
+
+Plan: 25 projects, 70,316 places in two shifts (2026: 4 projects, 8,150; 2027: 12, 29,566; 2028: 9, 32,600). 18 new schools (61,198), 3 extensions (3,550), 4 new buildings for existing schools (5,568). The official table's 2027 total row shows `#REF!` and "14 projects"; the 12 listed rows are used.
+
+Location: 24 of 25 placed (14 high, 4 medium, 6 low confidence). N24 (Nazhimedenov x A90) not placed: street A90 absent from OSM and from all address lists. Street C189 (N25) is not in OSM; the fuzzy match had picked a wrong street, so N25 is placed at the middle of Zemlyanichnaya street in the dacha area of the same name.
+
+Coverage of children without a school within walking distance, demand of 2026, new schools only (extensions and rebuilds do not change walking coverage):
+
+| | 1 km | 1.5 km |
+|---|---|---|
+| Without a school, 2026 | 76,542 | 19,830 |
+| Reached, 2026 (1 site) | 165 | 18 |
+| Reached, to 2027 (9 sites) | 7,829 | 3,131 |
+| Reached, to 2028 (17 sites) | 11,145 | 3,780 |
+| Without 6 low-confidence sites | 8,291 | 3,398 |
+| Optimum anywhere, 17 sites, mean planned capacity | 38,917 | 14,637 |
+| Optimum on feasible plots, 17 sites | 9,379 | 8,443 |
+| Deficit AUC (95% CI) | 0.54 (0.38-0.69) | 0.49 (0.33-0.65) |
+| Density AUC | 0.55 (0.42-0.66) | 0.50 (0.38-0.60) |
+
+Capacity never binds. Remaining in 2028 at 1 km by district: Esil 20,728 (from 21,521), Nura 13,563 (19,032), Saryarka 11,525 (12,689), Almaty 8,657 (10,517), Baikonur 6,733 (6,733), Saraishyk 4,011 (5,870). Places by district: Saraishyk 22,800, Nura 20,998, Esil 10,800, Saryarka 9,918, Almaty 4,000, Baikonur 1,800.
+
+Per site, uncovered children within 1 km: N06 2,825, N10 2,799, N07 1,860, N25 1,165, N12 981, N13 940, N21 919, N20 605, N18 369, N05 318, N17 259, N01 165, N19 132; N08, N11, N22 and N23 reach none (inside areas already covered; they would relieve crowded schools). N12 and N19 have few children around today (981 and 132 within 1 km in all), i.e. they anticipate housing.
+
+Low-low clusters (school E2SFCA, p < 0.05): 28,626 children, of them 3,513 (12%) within 1 km of a planned new school; Esil holds 10,926.
+
+E2SFCA with the plan (added floor = places / 2 x 13.35 sq m, the median floor per place of programme schools; extensions add, rebuilds take the larger of old and new): mean access +37%, zero-access share 6.3% to 5.1%, Gini 0.378 to 0.391. District relative: Nura 0.84 to 1.08, Saraishyk 1.28 to 1.64, Saryarka 1.24 to 1.09, Baikonur 1.15 to 0.85, Esil 0.92 to 0.96, Almaty 0.81 to 0.73.
+
+Reading: for future decisions the first part of H4 does not hold; the plan is not targeted at the deficit. The plan beats the optimum on currently free plots (119% at 1 km) because it uses land the layer counts as built (for example the garage cooperative on Tokpanov street).

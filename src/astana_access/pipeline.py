@@ -101,10 +101,11 @@ def stage_models() -> None:
 
 
 def stage_programme() -> None:
-    from astana_access.optimization import backtest, programme
+    from astana_access.optimization import backtest, plan, programme
 
     backtest.run()
     programme.run()
+    plan.run()
 
 
 def stage_checks() -> None:

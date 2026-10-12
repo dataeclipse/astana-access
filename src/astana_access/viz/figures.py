@@ -21,6 +21,7 @@ DIVERGING = LinearSegmentedColormap.from_list(
     "access", ["#c23b3a", "#e34948", NEUTRAL, "#3987e5", "#1c5cab"]
 )
 SEQUENTIAL = LinearSegmentedColormap.from_list("blue", BLUE_RAMP)
+GRAYS = LinearSegmentedColormap.from_list("gray", [NEUTRAL, "#bdbcb8", "#7a7975", "#3d3c39"])
 ORDER = ["Almaty", "Saraishyk", "Baikonur", "Saryarka", "Esil", "Nura"]
 
 
@@ -233,6 +234,71 @@ def programme_map(radius: int = 1000) -> None:
     plt.close(fig)
 
 
+def plan_map(radius: int = 1000) -> None:
+    points = pd.read_parquet(PROCESSED / "demand_points.parquet")
+    points = points[points["kind"] == "dwelling"]
+    od = pd.read_parquet(PROCESSED / "od_walk_school.parquet")
+    reached = set(od.loc[od["distance_m"] <= radius, "point_id"])
+    left = points[~points["point_id"].isin(reached)]
+    uncovered = left.groupby("h3")["school_station"].sum().rename("children").to_frame()
+    uncovered = uncovered[uncovered["children"] > 0]
+    grid = gpd.read_file(PROCESSED / "grid_population.gpkg")[["h3", "geometry"]].set_index("h3")
+    cells = gpd.GeoDataFrame(
+        uncovered.join(grid, how="inner"), geometry="geometry", crs=grid.crs
+    ).to_crs(CRS_METRIC)
+    sites = gpd.read_file(PROCESSED / "backtest.gpkg", layer="plan_2026_2028").to_crs(CRS_METRIC)
+    fig, ax = plt.subplots(figsize=(6.3, 6.0))
+    vmax = float(cells["children"].quantile(0.95))
+    cells.plot(ax=ax, column="children", cmap=GRAYS, linewidth=0, vmax=vmax)
+    base_map(ax, districts())
+    handles = []
+    for i, year in enumerate((2026, 2027, 2028)):
+        for kind, marker, size in (("new", "o", 48), ("existing", "D", 30)):
+            chosen = sites[(sites["year"] == year) & ((sites["kind"] == "new") == (kind == "new"))]
+            if len(chosen):
+                chosen.plot(
+                    ax=ax,
+                    color=SERIES[i],
+                    markersize=size,
+                    marker=marker,
+                    edgecolor="white",
+                    linewidth=0.8,
+                )
+        handles.append(
+            Line2D(
+                [0],
+                [0],
+                marker="o",
+                linestyle="",
+                markersize=7,
+                markerfacecolor=SERIES[i],
+                markeredgecolor="white",
+                label=f"Completion in {year}",
+            )
+        )
+    handles.append(
+        Line2D(
+            [0],
+            [0],
+            marker="D",
+            linestyle="",
+            markersize=5,
+            markerfacecolor=INK_SECONDARY,
+            markeredgecolor="white",
+            label="Extension or new building of an existing school",
+        )
+    )
+    frame_extent(ax, cells, 1500.0)
+    ax.legend(handles=handles, loc="upper left")
+    mappable = plt.cm.ScalarMappable(norm=plt.Normalize(0, vmax), cmap=GRAYS)
+    bar = fig.colorbar(mappable, ax=ax, shrink=0.6, pad=0.01)
+    bar.set_label(
+        f"School-age children without a school within {radius / 1000:g} km in 2026, per cell"
+    )
+    style.save(fig, f"plan_2026_2028_{radius}")
+    plt.close(fig)
+
+
 def lorenz() -> None:
     reported = json.loads((REPORTS / "access_equity.json").read_text(encoding="utf-8"))
     fig, ax = plt.subplots(figsize=(4.2, 4.0))
@@ -263,6 +329,8 @@ def run() -> None:
     lorenz()
     if (PROCESSED / "uncovered_2023_1000.parquet").exists():
         programme_map(1000)
+    if "plan_2026_2028" in gpd.list_layers(PROCESSED / "backtest.gpkg")["name"].to_list():
+        plan_map(1000)
 
 
 if __name__ == "__main__":
