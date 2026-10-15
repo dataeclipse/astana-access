@@ -361,6 +361,8 @@ ul.sources li::before { content: ""; position: absolute; left: 0; top: 0.65em; w
 (function () {
   "use strict";
   const DATA = {};
+  const THEME = new URLSearchParams(location.search).get("theme");
+  if (THEME === "light" || THEME === "dark") document.documentElement.dataset.theme = THEME;
   const FILES = ["base", "cells", "schools", "preschools", "sites", "reach", "summary"];
   const DISTRICTS = ["Almaty", "Baikonur", "Esil", "Nura", "Saraishyk", "Saryarka"];
   const fmt = (v, d = 0) => (v == null || Number.isNaN(v) ? "–" : Number(v).toLocaleString("en-US", { minimumFractionDigits: d, maximumFractionDigits: d }));

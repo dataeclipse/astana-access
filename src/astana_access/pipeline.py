@@ -164,7 +164,7 @@ def list_stages() -> None:
 @app.command()
 def run(
     start: str = typer.Option("boundary", help="First stage to run."),
-    stop: str = typer.Option("figures", help="Last stage to run."),
+    stop: str = typer.Option("dashboard", help="Last stage to run."),
 ) -> None:
     names = list(STAGES)
     for name in names[names.index(start) : names.index(stop) + 1]:

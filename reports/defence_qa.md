@@ -20,7 +20,7 @@ The 2026 series gives Saraishyk, a district of new housing, 8 per cent preschool
 Official data came as replies to information requests through eGov. The preschool register forbids crawling, so its list was saved by hand. The INDIGO organisation cards, the geoportal layer and 2GIS listings were compiled by the team; they are used to check and to locate, and no personal data are used. [Confirm with the team how they were collected before the defence.]
 
 **6. Can the results be reproduced?**
-Yes: one command runs the twelve pipeline stages from the raw sources; 90 unit tests cover parsing, allocation, the index, inequality and optimisation. Letters with personal data are kept out of the repository.
+Yes: one command runs the thirteen pipeline stages from the raw sources, the last of which publishes the web atlas; 91 unit tests cover parsing, allocation, the index, inequality and optimisation. Letters with personal data are kept out of the repository.
 
 ## Method
 
