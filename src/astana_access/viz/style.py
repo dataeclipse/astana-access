@@ -1,3 +1,4 @@
+import os
 from pathlib import Path
 
 import matplotlib as mpl
@@ -28,6 +29,7 @@ RC = {
     "pdf.fonttype": 42,
     "ps.fonttype": 42,
 }
+SOURCE_DATE_EPOCH = "1767225600"
 
 
 def apply() -> None:
@@ -37,6 +39,7 @@ def apply() -> None:
 def save(fig: plt.Figure, name: str, directory: Path | None = None) -> list[Path]:
     target = directory or FIGURES
     target.mkdir(parents=True, exist_ok=True)
+    os.environ["SOURCE_DATE_EPOCH"] = SOURCE_DATE_EPOCH
     written = []
     for suffix in (".eps", ".pdf"):
         path = target / f"{name}{suffix}"
