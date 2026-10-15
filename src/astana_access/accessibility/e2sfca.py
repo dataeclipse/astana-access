@@ -47,6 +47,16 @@ def preschool_capacity(preschools: pd.DataFrame, class_mean: pd.Series) -> pd.Se
     return capacity.fillna(typical).fillna(class_mean).astype(float)
 
 
+def preschool_attendance(preschools: pd.DataFrame, class_mean: pd.Series) -> pd.Series:
+    from astana_access.ingest import preschool_capacity as cards
+
+    by_id = cards.attendance_by_id()
+    if not len(by_id):
+        return class_mean
+    ids = pd.to_numeric(preschools["indigo_id"], errors="coerce")
+    return ids.map(by_id).fillna(class_mean).astype(float)
+
+
 def supply_measures() -> dict[str, dict[str, pd.Series]]:
     sites = facilities()
     schools = sites["school"].set_index("facility_id")
@@ -62,7 +72,7 @@ def supply_measures() -> dict[str, dict[str, pd.Series]]:
         },
         "preschool": {
             "capacity": preschool_capacity(preschools, class_mean),
-            "class_mean": class_mean,
+            "attendance": preschool_attendance(preschools, class_mean),
             "equal": pd.Series(1.0, index=preschools.index),
         },
     }

@@ -10,10 +10,6 @@
   "state": 29429,
   "private": 36973
  },
- "children_per_place": {
-  "state": 0.9829653629045726,
-  "private": 0.850344986200552
- },
  "registry_without_card": 1,
  "cards_not_in_registry": 5,
  "ownership_agreement": 1.0,
@@ -22,5 +18,112 @@
  "free_share_of_places": {
   "private": 0.10286175859681514,
   "state": 0.014162129663649421
+ },
+ "attendance": {
+  "attending": 66574.0,
+  "attending_by_ownership": {
+   "private": 37152,
+   "state": 29422
+  },
+  "children_per_place_by_ownership": {
+   "private": 0.8544618215271389,
+   "state": 0.9827315541601256
+  },
+  "above_capacity": 58,
+  "at_capacity": 148,
+  "median_children_per_place": 0.94,
+  "spearman_free_places_vs_spare_places": 0.7555930647361595,
+  "by_district": {
+   "Almaty": {
+    "capacity": 16596,
+    "attending": 15042,
+    "children_per_place": 0.906
+   },
+   "Baikonur": {
+    "capacity": 5965,
+    "attending": 5152,
+    "children_per_place": 0.864
+   },
+   "Esil": {
+    "capacity": 12321,
+    "attending": 10840,
+    "children_per_place": 0.88
+   },
+   "Nura": {
+    "capacity": 11277,
+    "attending": 10413,
+    "children_per_place": 0.923
+   },
+   "Saraishyk": {
+    "capacity": 7853,
+    "attending": 7556,
+    "children_per_place": 0.962
+   },
+   "Saryarka": {
+    "capacity": 15362,
+    "attending": 14081,
+    "children_per_place": 0.917
+   }
+  },
+  "organisations": 723,
+  "spearman_allocated_load": 0.015000321000408814,
+  "attending_by_district": {
+   "Almaty": 15042.0,
+   "Baikonur": 5152.0,
+   "Esil": 10840.0,
+   "Nura": 10413.0,
+   "Saraishyk": 7556.0,
+   "Saryarka": 14081.0
+  }
+ },
+ "queue_city": {
+  "Общеобразовательная / Чистая потребность": {
+   "total": 19518,
+   "До 2 лет": 19308,
+   "2 года": 74,
+   "3 года": 50,
+   "4 года": 33,
+   "От 5 лет": 53
+  },
+  "Общеобразовательная / Полная очередь": {
+   "total": 25621,
+   "До 2 лет": 19308,
+   "2 года": 1113,
+   "3 года": 590,
+   "4 года": 2693,
+   "От 5 лет": 1917
+  },
+  "Специальная / Чистая потребность": {
+   "total": 288,
+   "До 2 лет": 0,
+   "2 года": 4,
+   "3 года": 62,
+   "4 года": 96,
+   "От 5 лет": 126
+  },
+  "Специальная / Полная очередь": {
+   "total": 1018,
+   "До 2 лет": 0,
+   "2 года": 6,
+   "3 года": 80,
+   "4 года": 146,
+   "От 5 лет": 786
+  },
+  "Санаторная / Чистая потребность": {
+   "total": 0,
+   "До 2 лет": 0,
+   "2 года": 0,
+   "3 года": 0,
+   "4 года": 0,
+   "От 5 лет": 0
+  },
+  "Санаторная / Полная очередь": {
+   "total": 2,
+   "До 2 лет": 0,
+   "2 года": 0,
+   "3 года": 1,
+   "4 года": 1,
+   "От 5 лет": 0
+  }
  }
 }

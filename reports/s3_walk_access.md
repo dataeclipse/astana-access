@@ -555,3 +555,15 @@ Source: the public organisation cards of the INDIGO register (`https://indigo-nu
 **Use.** Design capacity is the baseline preschool supply (`e2sfca.preschool_capacity`; missing values by ownership median); mean attendance and equal weight are alternatives (72 runs per facility type). Vacancy model: capacity added to the own characteristics; children per place within 500 m and 1 km replace children per preschool.
 
 **Changed results.** Preschool access relative to the city mean: Nura 0.83 to 0.77, Esil 0.94 to 0.87, Baikonur 0.99 to 0.91, Saryarka 0.94 to 1.01, Saraishyk 1.25 to 1.18 (combined share 0.79), Almaty 1.17 to 1.27 (1.57). Gini 0.435 to 0.454, between-district share 3% to 5%, LL children 8.2% to 8.9%. Sensitivity: Nura worst in 24 of 54 building runs (12 of 18 with capacity), Saryarka in the 16 equal-weight runs, Baikonur in 14; rank correlation median 0.77, minimum -0.09. Vacancy ROC-AUC, own / with pressure: all logistic 0.707 / 0.708, LightGBM 0.736 / 0.712; private logistic 0.677 / 0.669, LightGBM 0.678 / 0.640. Capacity is the largest SHAP contribution (0.48). Pressure coefficient (children per place within 1 km, private, standardised) -0.087, bootstrap interval -0.27 to 0.11. Free places: 69% below and 65% above the median pressure.
+
+## 20. Attending children and waiting list from INDIGO, 15 October 2026
+
+Source: the cards of the INDIGO register (field "actual load of the preschool organisation") and the queue statistics page (`/ru/queue`), compiled by the project team; snapshot date 15 October 2026 in every row (`data/raw/indigo/team_2026-10-15/`). The team said the data were collected the day before; the files carry 15 October.
+
+**Checks.** 794 organisations, 66,574 attending children (state 29,422, private 37,152) against the register totals of 30 September, 66,402 (29,429 and 36,973): within 0.3%. Capacity identical to the capacity file for every organisation. Free places of 30 September correlate with spare places (capacity minus attendance) at Spearman 0.76. Median 0.94 children per place; 148 organisations exactly full, 58 above capacity. Attendance vs capacity: Spearman 0.95.
+
+**Load step.** Allocated E2SFCA load vs attendance, 723 organisations: Spearman 0.02. Preschools fill to capacity and are chosen through the city queue, so the load step cannot be validated for preschools; the index measures potential access.
+
+**Supply.** The alternative preschool supply is now attendance per organisation (replacing the mean attendance of the two ownership classes). Sensitivity: Nura worst in 23 of 54 building runs (12 of 18 capacity, 11 of 18 attendance), Baikonur 15, Saryarka 16 (equal weight); WorldPop rank correlation median 0.77.
+
+**Waiting list (city only; no district or year of birth on the public pages).** General list, net need 19,518 (under 2 years 19,308; 2 years 74; 3 years 50; 4 years 33; 5 and over 53); full list 25,621. Special list: net need 288, full 1,018. Sanatorium: 0 and 2.

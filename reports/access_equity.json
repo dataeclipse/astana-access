@@ -93,17 +93,17 @@
    "runs": 54,
    "district_rank_rho_median": 0.7714285714285715,
    "district_rank_rho_min": -0.08571428571428573,
-   "deficit_jaccard_median": 0.7694817242872163,
-   "deficit_jaccard_min": 0.7381294964028777,
+   "deficit_jaccard_median": 0.7711019344426306,
+   "deficit_jaccard_min": 0.7413793103448276,
    "worst_district_counts": {
-    "Nura": 24,
+    "Nura": 23,
     "Saryarka": 16,
-    "Baikonur": 14
+    "Baikonur": 15
    }
   },
   "preschool/worldpop": {
    "runs": 18,
-   "district_rank_rho_median": 0.5428571428571429,
+   "district_rank_rho_median": 0.7714285714285715,
    "district_rank_rho_min": 0.14285714285714288,
    "deficit_jaccard_median": 0.13474549739892971,
    "deficit_jaccard_min": 0.11581291759465479,
@@ -139,16 +139,16 @@
    "runs": 72,
    "district_rank_rho_median": 0.7714285714285715,
    "district_rank_rho_min": -0.08571428571428573,
-   "deficit_jaccard_median": 0.7517970062246813,
+   "deficit_jaccard_median": 0.7570290017798627,
    "deficit_jaccard_min": 0.11581291759465479,
    "worst_district_counts": {
-    "Baikonur": 32,
-    "Nura": 24,
+    "Baikonur": 33,
+    "Nura": 23,
     "Saryarka": 16
    },
    "gini_range": [
-    0.4044994193571403,
-    0.8418862534735871
+    0.40788458520265736,
+    0.84616012074253
    ]
   },
   "school": {

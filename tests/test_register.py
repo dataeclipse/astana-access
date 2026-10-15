@@ -84,3 +84,11 @@ def test_preschool_capacity_fills_missing_by_ownership() -> None:
     capacity = preschool_capacity(preschools, class_mean)
     assert capacity.notna().all()
     assert (capacity > 0).all()
+
+
+def test_preschool_attendance_falls_back_to_class_mean() -> None:
+    from astana_access.accessibility.e2sfca import preschool_attendance
+
+    preschools = pd.DataFrame({"indigo_id": ["999999999"]}, index=["a"])
+    class_mean = pd.Series(58.0, index=preschools.index)
+    assert preschool_attendance(preschools, class_mean).iloc[0] == pytest.approx(58.0)
