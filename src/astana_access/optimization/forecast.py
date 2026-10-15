@@ -9,7 +9,8 @@ from astana_access.accessibility.e2sfca import load_inputs
 from astana_access.accessibility.network import load
 from astana_access.config import CRS_METRIC, PROCESSED, REPORTS
 from astana_access.ingest import stat_ages
-from astana_access.population.projection import POOLED_NAME, project, single_ages
+from astana_access.population.demography import school_age_factors
+from astana_access.population.projection import POOLED_NAME
 from astana_access.validation.uncertainty import (
     RADIUS_M,
     SITES_COMPARED,
@@ -73,7 +74,7 @@ def reach_of(sites: list[str], lists: dict, weight: np.ndarray) -> float:
 
 
 def run() -> dict:
-    districts = project(single_ages(stat_ages.load()))
+    districts = school_age_factors()
     points, od = load_inputs()
     dwellings = dwelling_table(points)
     new = new_housing_points(districts)

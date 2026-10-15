@@ -41,7 +41,7 @@ uv run astana-access run --start access --stop dashboard
 | `osm` | Facilities, buildings, streets, land use | `data/raw/osm/` |
 | `schools` | School inventory linked to the register | `data/processed/facilities.gpkg` |
 | `preschools` | Preschool inventory from the INDIGO register | `data/processed/facilities.gpkg` |
-| `population` | Polling stations, residential classifier, population surface, 2023 city | `reports/population_model.json` |
+| `population` | Polling stations, residential classifier, population surface, 2023 city, projection of population and children to 2030 | `reports/population_model.json`, `reports/demography_2030.json` |
 | `access` | Walking access, E2SFCA, compliance, official territories, inequality | `reports/access_equity.json`, `reports/compliance.json` |
 | `models` | Preschool vacancy model and SHAP | `reports/preschool_vacancy.json`, `reports/shap.json` |
 | `programme` | Programme backtest, plan 2026-2028, model of siting choices, housing forecast, detailed plans, siting on 2028 demand, ranking by distance and crowding | `reports/programme_2023.json`, `reports/plan_2026_2028.json`, `reports/siting_model.json`, `reports/housing_forecast.json`, `reports/detailed_plans.json`, `reports/siting_2028.json`, `reports/two_objective.json` |

@@ -260,6 +260,8 @@ ul.sources li::before { content: ""; position: absolute; left: 0; top: 0.65em; w
         <p class="prose">A forecast of new housing, trained on what was built in 2020–2026, places the children that migration adds by 2028 in the estates being built. The plan already follows the cranes: most of its new schools stand next to construction sites. Yet many of these children will still have no school within walking distance.</p>
         <div class="stat-row wide" id="future-stats"></div>
         <p class="prose small" id="future-note"></p>
+        <div id="future-chart"></div>
+        <p class="prose small" id="future-chart-note"></p>
       </article>
       <article class="chapter" data-state="preschool">
         <p class="idx">07</p>
@@ -675,6 +677,33 @@ ul.sources li::before { content: ""; position: absolute; left: 0; top: 0.65em; w
       s += `<text x="${left - 10}" y="${y + rowH / 2 + 4}" text-anchor="end" class="ink">${r.name}</text><rect x="${x0}" y="${y + 5}" width="${Math.max(1, x1 - x0)}" height="${rowH - 10}" rx="2" fill="${r.color}"><title>${r.name}: ${r.text}</title></rect><text x="${x1 + 6}" y="${y + rowH / 2 + 4}" class="mono">${r.text}</text>`; });
     return s + "</svg>";
   }
+  function futureChart(dm) {
+    if (!dm.observed || !dm.projection || !dm.projection.trend) { setHTML(q("#future-chart"), ""); return; }
+    const W = 380, H = 220, l = 40, r = 92, t = 14, b = 26;
+    const years = []; for (let y = 2016; y <= 2030; y++) years.push(y);
+    const series = [["school", "School age", css("--ink")], ["preschool", "Preschool age", css("--teal")]];
+    let maxY = 0; series.forEach(([k]) => { years.forEach((y) => { const o = dm.observed[y]; if (o) maxY = Math.max(maxY, o[k]); const p = dm.projection.trend[y]; if (p) maxY = Math.max(maxY, p[k]); }); });
+    maxY *= 1.08;
+    const x = (y) => l + ((y - 2016) / 14) * (W - l - r), yv = (v) => H - b - (v / maxY) * (H - t - b);
+    let s = `<svg viewBox="0 0 ${W} ${H}" width="100%" role="img" aria-label="School-age and preschool-age children in Astana, official 2016 to 2026 and projected to 2030 with a range of scenarios">`;
+    niceTicks(maxY, 4).forEach((v) => (s += `<line x1="${l}" x2="${W - r}" y1="${yv(v)}" y2="${yv(v)}" stroke="${css("--hair")}"/><text x="${l - 6}" y="${yv(v) + 4}" text-anchor="end">${fmt(v / 1000)}k</text>`));
+    [2016, 2020, 2026, 2030].forEach((y) => (s += `<text x="${x(y)}" y="${H - 8}" text-anchor="middle">${y}</text>`));
+    s += `<line x1="${x(2026)}" x2="${x(2026)}" y1="${t}" y2="${H - b}" stroke="${css("--ink-2")}" stroke-dasharray="2 3"/><text x="${x(2026) + 4}" y="${t + 8}">projection</text>`;
+    series.forEach(([k, name, color]) => {
+      const fut = years.filter((y) => y >= 2026);
+      const upper = fut.map((y) => `${x(y)},${yv(dm.projection.trend[y][k])}`), lower = fut.slice().reverse().map((y) => `${x(y)},${yv(dm.projection.ageing[y][k])}`);
+      s += `<polygon points="${upper.concat(lower).join(" ")}" fill="${alpha(color, 0.14)}"/>`;
+      const obs = years.filter((y) => dm.observed[y]).map((y) => `${x(y)},${yv(dm.observed[y][k])}`);
+      s += `<polyline points="${obs.join(" ")}" fill="none" stroke="${color}" stroke-width="2"/>`;
+      s += `<polyline points="${fut.map((y) => `${x(y)},${yv(dm.projection.average[y][k])}`).join(" ")}" fill="none" stroke="${color}" stroke-width="2" stroke-dasharray="4 3"/>`;
+      const last = dm.projection.average[2030][k];
+      s += `<text x="${x(2030) + 6}" y="${yv(last) + 4}" class="ink">${name}</text>`;
+      fut.forEach((y) => (s += `<circle cx="${x(y)}" cy="${yv(dm.projection.average[y][k])}" r="7" fill="transparent"><title>${name}, ${y}: ${fmt(dm.projection.average[y][k])} (range ${fmt(dm.projection.ageing[y][k])}–${fmt(dm.projection.trend[y][k])})</title></circle>`));
+    });
+    setHTML(q("#future-chart"), s + "</svg>");
+    const sc = dm.projection, o = dm.observed[2026];
+    setHTML(q("#future-chart-note"), `By 2030 school-age children grow from ${fmt(o.school / 1000)} to <b>${fmt(sc.ageing[2030].school / 1000)}–${fmt(sc.trend[2030].school / 1000)} thousand</b>, while preschool-age children stay at ${fmt(sc.ageing[2030].preschool / 1000)}–${fmt(sc.trend[2030].preschool / 1000)} thousand because births have fallen since 2022. The band runs from no migration to the pace of 2024–2026; the dashed line is the average of 2022–2026.`);
+  }
   function storyContent() {
     const S = DATA.summary; const comp = S.compliance || {}; const crowd = S.crowding || {}; const eq = S.equity;
     const unc = DATA.reach.total_uncovered["1000"]; const planReach = reachOf(DATA.planNew.map((p) => p.id), "1000"); const best = DATA.sites.ranking["1000"][16].cumulative;
@@ -704,6 +733,7 @@ ul.sources li::before { content: ""; position: absolute; left: 0; top: 0.65em; w
       setHTML(q("#future-stats"), stat(fmt(FS.uncovered / 1000, 1) + "<small>k</small>", "children with no school within 1 km in 2028, new housing included", "deficit") + stat(fmt(F.children_in_new_housing / 1000) + "<small>k</small>", "children in housing built after 2026") + stat(`${F.sites_in_common}<small> of 17</small>`, "best reserved sites that stay the same", "goldc"));
       setHTML(q("#future-note"), `The plan reaches ${pct(FS.plan_share)} of these children and the best 17 reserved sites ${FS.best_over_plan.toFixed(1)} times as many.` + (SM.plan_cells_near_construction ? ` ${SM.plan_cells_near_construction} of the plan’s 17 new schools stand within 500 m of a construction site, against ${pct(SM.cells_near_construction_share)} of all blocks.` : ""));
     }
+    futureChart(S.demography || {});
     const P = S.preschool || {}; const qn = (P.queue_city || {})["Общеобразовательная / Чистая потребность"] || {};
     setHTML(q("#pre-stats"), stat(fmt(P.places), `places for ${fmt(P.attending)} attending children`) + stat(fmt((qn.total || 0) - (qn["До 2 лет"] || 0)), "children aged two or older waiting", "surplus") + stat(pct(comp["preschool/network"]?.city), "live within 300 m of a preschool on foot", "deficit"));
   }

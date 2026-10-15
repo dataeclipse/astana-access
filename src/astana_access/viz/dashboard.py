@@ -345,6 +345,14 @@ def summary() -> dict:
             .get("univariate_2026", {})
             .get("construction_share")
         },
+        "demography": {
+            "observed": report("demography_2030.json").get("observed", {}).get("City"),
+            "projection": {
+                scenario: values.get("City")
+                for scenario, values in report("demography_2030.json").get("projection", {}).items()
+            },
+            "backtest_city": report("demography_2030.json").get("backtest_city"),
+        },
         "housing": {
             k: report("housing_forecast.json").get(k)
             for k in (

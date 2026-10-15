@@ -78,7 +78,7 @@ Figure~\ref{fig:uml-packages} shows the packages of the framework and their depe
 \chapter{Test Results}
 \label{app:tests}
 
-The test suite is run with \texttt{pytest}. All 105 tests pass in a few seconds. Table~\ref{tab:tests} lists what each group verifies.
+The test suite is run with \texttt{pytest}. All 108 tests pass in a few seconds. Table~\ref{tab:tests} lists what each group verifies.
 
 \begin{table}[ht]
 \centering
@@ -98,10 +98,10 @@ Test file & Tests & What is verified \\
 \texttt{test\_catchments.py} & 5 & Parsing of official service territories: house lists, initials not taken for street types, ranges, whole streets, settlements, removal of notes on language of instruction; weighted median of walking distance \\
 \texttt{test\_plan.py} & 5 & Agreement of the transcribed construction plan with the official totals by year, placement of planned schools by number and by listed point, refusal to place an unresolved site, sums of reach by site and by district, places read from the detailed plans, greedy ranking of sites for the atlas \\
 \texttt{test\_register.py} & 5 & Reading of the official list of schools: school numbers, districts, years of commissioning and registration, linking of Binom schools by name, count of pupils beyond two shifts; preschool capacity and attendance filled for every organisation \\
-\texttt{test\_uncertainty.py} & 6 & Agreement of the fast index of the Monte Carlo simulation with the reference E2SFCA, allocation without noise equal to the population model, official district totals kept under noise, points without a district ignored, percentile bands, cohort ageing and change ratios of the projection to 2028 \\
+\texttt{test\_uncertainty.py} & 9 & Agreement of the fast index of the Monte Carlo simulation with the reference E2SFCA, allocation without noise equal to the population model, official district totals kept under noise, points without a district ignored, percentile bands, cohort ageing and change ratios of the projection to 2028, the two-year step of the population projection, bounded change ratios, districts adding up to the city \\
 \texttt{test\_siting\_models.py} & 8 & Land shares around candidate cells, labelling of the cell nearest each site, log transform of count features, sums over H3 rings without the cell itself, clipped area shares of cells, metrics of the housing forecast, weighting and capacity caps of the two-objective ranking \\
 \midrule
-Total & 105 & All passed \\
+Total & 108 & All passed \\
 \bottomrule
 \end{tabularx}
 \end{table}

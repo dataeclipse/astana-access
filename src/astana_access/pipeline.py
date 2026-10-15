@@ -63,13 +63,21 @@ def stage_preschools() -> None:
 
 
 def stage_population() -> None:
-    from astana_access.population import buildings, history, model, residential, stations
+    from astana_access.population import (
+        buildings,
+        demography,
+        history,
+        model,
+        residential,
+        stations,
+    )
 
     stations.build()
     buildings.build()
     residential.fit_predict()
     model.build()
     history.build()
+    demography.run()
 
 
 def stage_access() -> None:

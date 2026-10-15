@@ -20,7 +20,7 @@ Every estimate is built first from open sources — OpenStreetMap, ninety-three 
 
 ## Slide 5. Method (0:30, 2:30)
 
-Five stages: population, walking distances on the street network, accessibility per child with a floating catchment index in which each child is counted once, inequality, and capacitated covering on free land. One command runs the whole pipeline, and one hundred and five unit tests cover it.
+Five stages: population, walking distances on the street network, accessibility per child with a floating catchment index in which each child is counted once, inequality, and capacitated covering on free land. One command runs the whole pipeline, and one hundred and eight unit tests cover it.
 
 ## Slide 6. H1: polling stations beat the satellite grid (0:40, 3:10)
 
@@ -48,7 +48,7 @@ We rebuilt the city of 2023 from OpenStreetMap history. The programme's 23 sites
 
 ## Slide 12. The plan answers crowding more than distance (0:45, 7:10)
 
-The construction plan for 2026 to 2028 has 25 projects. Its 17 new schools reach 15 per cent of the 78 thousand children without a school within a kilometre. Projected to 2028, when the schools open, those children grow to between 84 and 103 thousand, and the plan still reaches only 15 to 17 per cent. Planned places follow crowding and construction sites: 16 of the 17 new schools stand next to land under construction.
+The construction plan for 2026 to 2028 has 25 projects. Its 17 new schools reach 15 per cent of the 78 thousand children without a school within a kilometre. Projected to 2028, when the schools open, those children grow to between 84 and 99 thousand, and the plan still reaches only 15 to 17 per cent. Planned places follow crowding and construction sites: 16 of the 17 new schools stand next to land under construction.
 
 ## Slide 13. The land is already reserved (0:50, 8:00)
 

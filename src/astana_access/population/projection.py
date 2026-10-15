@@ -6,6 +6,7 @@ import pandas as pd
 from astana_access.accessibility.e2sfca import load_inputs
 from astana_access.config import REPORTS
 from astana_access.ingest import stat_ages
+from astana_access.population.demography import school_age_factors
 from astana_access.validation.uncertainty import (
     RADIUS_M,
     SITES_COMPARED,
@@ -80,8 +81,7 @@ def scenario(
 
 
 def run() -> dict:
-    table = stat_ages.load()
-    districts = project(single_ages(table))
+    districts = school_age_factors()
     points, od = load_inputs()
     dwellings = dwelling_table(points)
     ids = pd.Index(dwellings["point_id"])
@@ -97,7 +97,7 @@ def run() -> dict:
         "base_year": BASE_YEAR,
         "target_year": TARGET_YEAR,
         "ages": [LOW, HIGH],
-        "method": "Hamilton-Perry cohort change ratios of the official single-age tables",
+        "method": "Hamilton-Perry cohort change ratios, districts controlled to the city",
         "districts": districts.round(4).to_dict(orient="index"),
         "city": {
             column: float(districts[column].sum())

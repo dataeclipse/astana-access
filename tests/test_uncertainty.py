@@ -74,3 +74,35 @@ def test_projection_ages_cohorts_and_applies_change_ratios() -> None:
     row = project(people).loc["Nura"]
     assert row["ageing_factor"] == pytest.approx(1.0)
     assert row["cohort_factor"] == pytest.approx(1.5)
+
+
+def test_demography_step_ages_cohorts_and_keeps_infant_ratio() -> None:
+    from astana_access.population.demography import OLDEST, infant_ratio, step
+
+    now = np.full(OLDEST + 1, 100.0)
+    nxt = step(now, np.ones(OLDEST + 1), infant_ratio(now))
+    assert nxt[10] == pytest.approx(100.0)
+    assert infant_ratio(nxt) == pytest.approx(infant_ratio(now))
+    assert nxt[OLDEST] == pytest.approx(300.0)
+
+
+def test_demography_ratios_are_bounded() -> None:
+    from astana_access.population.demography import OLDEST, RATIO_BOUNDS, ratios
+
+    start = np.full(OLDEST + 1, 10.0)
+    end = np.full(OLDEST + 1, 1000.0)
+    assert ratios(start, end)[20] == pytest.approx(RATIO_BOUNDS[1])
+
+
+def test_demography_districts_add_up_to_the_city() -> None:
+    from astana_access.population.demography import OLDEST, cohorts, controlled
+
+    city = {2028: np.full(OLDEST + 1, 30.0)}
+    districts = {
+        "a": {2028: np.full(OLDEST + 1, 1.0)},
+        "b": {2028: np.full(OLDEST + 1, 2.0)},
+    }
+    joint = controlled(city, districts)
+    for name, value in cohorts(city[2028]).items():
+        assert joint["a"][2028][name] + joint["b"][2028][name] == pytest.approx(value)
+    assert joint["b"][2028]["total"] == pytest.approx(2 * joint["a"][2028]["total"])
