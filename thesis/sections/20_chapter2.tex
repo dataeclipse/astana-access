@@ -127,11 +127,13 @@ where $s_g$ is the share of total accessibility held by the children of district
 
 The counterfactual to the programme is the maximal covering location problem \cite{church1974, murray2016} with capacities \cite{current1988}. With binary site variables $x_j$ and the share $z_{ij}$ of the uncovered children $w_{ij}$ of demand unit $i$ within walking distance $d_0$ of site $j$ served by $j$:
 \begin{equation}
+\begin{gathered}
 \max \sum_{i,j} w_{ij} z_{ij} \quad \text{s.t.} \quad
 \sum_j w_{ij} z_{ij} \le W_i, \quad
-\sum_i w_{ij} z_{ij} \le C_j x_j, \quad
+\sum_i w_{ij} z_{ij} \le C_j x_j, \\
 \sum_j x_j = k, \quad
-x_j \in \{0,1\}, \; 0 \le z_{ij} \le 1,
+x_j \in \{0,1\}, \quad 0 \le z_{ij} \le 1,
+\end{gathered}
 \label{eq:mclp}
 \end{equation}
 where $W_i$ is the number of uncovered children in unit $i$, $C_j$ the capacity of site $j$ and $k$ the number of programme schools. Capacity is the number of seats times two shifts. Demand units are H3 cells at resolution 10. The problem is solved exactly with the HiGHS solver.

@@ -38,3 +38,4 @@ reports/*.html
 graphify-out/
 
 dashboard/offline/
+thesis/build/

@@ -186,6 +186,7 @@ def rekey(bibtex: str, key: str, year: int | None = None, article_number: str = 
     )
     text = text.replace("&amp;", "\\&").replace("–", "--").replace("—", "---")
     text = text.replace("‐", "-").replace("‑", "-").replace("ε", r"$\varepsilon$")
+    text = re.sub(r"(title=\{[^{}]*?)(?<!\\)%", r"\1\\%", text)
     if re.search(r"DOI=\{", text):
         text = re.sub(r",\s*url=\{http://dx\.doi\.org/[^}]*\}", "", text)
     text = re.sub(r",\s*ISSN=\{[^}]*\}", "", text)

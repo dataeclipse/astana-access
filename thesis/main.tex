@@ -18,6 +18,7 @@
   \usepackage[T2A,T1]{fontenc}
   \usepackage[utf8]{inputenc}
   \usepackage{tempora}
+  \renewcommand{\ttdefault}{lmtt}
   \usepackage[russian,english]{babel}
 \fi
 
@@ -34,10 +35,16 @@
 \usepackage{enumitem}
 \usepackage{setspace}
 \onehalfspacing
+\usepackage{csquotes}
+\usepackage{xurl}
 \usepackage[hidelinks]{hyperref}
 
 \usepackage[backend=biber,style=numeric-comp,sorting=none,maxbibnames=99]{biblatex}
 \addbibresource{bib/references.bib}
+\setcounter{biburlnumpenalty}{100}
+\setcounter{biburlucpenalty}{100}
+\setcounter{biburllcpenalty}{100}
+\renewcommand*{\bibfont}{\raggedright}
 
 \newcommand{\thesistitle}{Data-Driven Framework for Spatial Accessibility Assessment and Optimal Siting of Social Infrastructure}
 \newcommand{\thesisauthor}{Dias Bolatov}
