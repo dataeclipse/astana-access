@@ -11,15 +11,13 @@
      \newfontfamily\cyrillicfont{Times New Roman}[Ligatures=TeX]}
     {\setmainfont{TeX Gyre Termes}[Ligatures=TeX]
      \newfontfamily\cyrillicfont{DejaVu Serif}[Ligatures=TeX]}
-  \usepackage{polyglossia}
-  \setdefaultlanguage{english}
-  \setotherlanguages{russian,kazakh}
+  \usepackage[english]{babel}
 \else
   \usepackage[T2A,T1]{fontenc}
   \usepackage[utf8]{inputenc}
   \usepackage{tempora}
   \renewcommand{\ttdefault}{lmtt}
-  \usepackage[russian,english]{babel}
+  \usepackage[english]{babel}
 \fi
 
 \usepackage{amsmath,amssymb,mathtools}
