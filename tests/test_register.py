@@ -68,3 +68,19 @@ def test_crowding_counts_pupils_beyond_two_shifts() -> None:
     assert result["pupils_beyond_two_shifts"] == pytest.approx(500.0)
     assert result["schools_beyond_two_shifts"] == 1
     assert result["by_district"]["Nura"]["pupils_per_place"] == pytest.approx(2.0)
+
+
+def test_preschool_capacity_fills_missing_by_ownership() -> None:
+    from astana_access.accessibility.e2sfca import preschool_capacity
+
+    preschools = pd.DataFrame(
+        {
+            "indigo_id": ["1", "2", "999999999"],
+            "ownership": ["state", "state", "state"],
+        },
+        index=["a", "b", "c"],
+    )
+    class_mean = pd.Series(200.0, index=preschools.index)
+    capacity = preschool_capacity(preschools, class_mean)
+    assert capacity.notna().all()
+    assert (capacity > 0).all()

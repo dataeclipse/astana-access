@@ -111,6 +111,7 @@ def stage_programme() -> None:
 
 
 def stage_checks() -> None:
+    from astana_access.ingest import preschool_capacity
     from astana_access.validation import listing, official, register
 
     if listing.run() is None:
@@ -119,6 +120,8 @@ def stage_checks() -> None:
         typer.echo("official city tables not found, check skipped")
     if register.run() is None:
         typer.echo("official list of schools not found, check skipped")
+    if preschool_capacity.check() is None:
+        typer.echo("preschool capacity cards not found, check skipped")
 
 
 def stage_figures() -> None:

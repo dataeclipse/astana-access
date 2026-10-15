@@ -41,12 +41,13 @@ LABELS = {
     "nursery": "Nursery and kindergarten",
     "mini_centre": "Mini-centre",
     "approximate_position": "Approximate position",
+    "capacity": "Design capacity",
     "children_500": "Children within 500 m",
     "children_1000": "Children within 1 km",
     "rivals_500": "Preschools within 500 m",
     "rivals_1000": "Preschools within 1 km",
-    "children_per_org_500": "Children per preschool, 500 m",
-    "children_per_org_1000": "Children per preschool, 1 km",
+    "children_per_place_500": "Children per place, 500 m",
+    "children_per_place_1000": "Children per place, 1 km",
     "nearest_rival_m": "Distance to nearest preschool",
 }
 

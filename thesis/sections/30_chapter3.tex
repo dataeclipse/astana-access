@@ -66,12 +66,12 @@ Table~\ref{tab:access-district} gives the mean accessibility per child of each d
 \toprule
 District & Schools & Preschools \\
 \midrule
-Almaty & 0.87 (1.05) & 1.17 (1.43) \\
-Baikonur & 1.24 & 0.99 \\
-Esil & 0.82 & 0.94 \\
-Nura & 0.77 & 0.83 \\
-Saraishyk & 1.33 (0.94) & 1.25 (0.83) \\
-Saryarka & 1.27 & 0.94 \\
+Almaty & 0.87 (1.05) & 1.27 (1.57) \\
+Baikonur & 1.24 & 0.91 \\
+Esil & 0.82 & 0.87 \\
+Nura & 0.77 & 0.77 \\
+Saraishyk & 1.33 (0.94) & 1.18 (0.79) \\
+Saryarka & 1.27 & 1.01 \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -86,11 +86,11 @@ Saryarka & 1.27 & 0.94 \\
 Measure & Schools & Preschools \\
 \midrule
 Children with no facility within the catchment, \% & 6.3 & 6.5 \\
-Gini coefficient & 0.380 & 0.435 \\
-Theil index & 0.259 & 0.331 \\
-Share of Theil index between districts, \% & 9 & 3 \\
-Global Moran's $I$ & 0.82 & 0.82 \\
-Children in significant low-low clusters, \% & 10.0 & 8.2 \\
+Gini coefficient & 0.380 & 0.454 \\
+Theil index & 0.259 & 0.359 \\
+Share of Theil index between districts, \% & 9 & 5 \\
+Global Moran's $I$ & 0.82 & 0.81 \\
+Children in significant low-low clusters, \% & 10.0 & 8.9 \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -99,9 +99,9 @@ For schools, H2 is supported at the level of district means. With official desig
 
 The supply follows the official list of service territories. It contains six Binom schools, private schools financed by state order, which the education department assigns territories like state schools, and the Daryn lyceum, which also has one; an earlier version of the model treated all seven as selective and excluded them. Six of the seven stand in Esil and Nura, and their inclusion raises Esil from 54 to 82 per cent of the mean. OSM maps two objects as school 45; the official list of schools shows that it moved in 2025 into a Comfortable School building in Nura, so its old building in Esil is left out of the present supply and kept in that of 2023. Every number in the official list is matched in the supply layer or among the programme schools, and every state school number listed in 2GIS \cite{twogis2026} is either in the layer, a selective or evening school or a programme school. Removing the five presumed new schools lowers Nura to 74 per cent of the mean.
 
-For preschools, H2 is not supported. Nura, the fastest-growing district, has the lowest accessibility, 83 per cent of the mean, but Esil and Saryarka follow at 94 and the differences between districts are small: only 3 per cent of inequality lies between them (Figure~\ref{fig:access-preschool}). The deficit is a matter of blocks, not of districts. An earlier version of the model, which took the age structure from WorldPop, placed the deficit in Baikonur at 64 per cent of the mean; the official age counts show that Baikonur has the smallest share of preschool children in the city, 7.3 per cent against 12.6, and the apparent deficit disappears. The age structure of the population is as consequential for the conclusions as its spatial distribution.
+For preschools, H2 is supported in direction. With design capacity as supply, Nura, the fastest-growing district, has the lowest accessibility, 77 per cent of the mean, and Esil follows at 87; with mean attendance per organisation, as in earlier versions of the model, Nura stood at 83 and Esil at 94 per cent. Under the combined age share of Almaty and Saraishyk, Saraishyk falls to 79 per cent, close to Nura. Differences between districts remain small: 5 per cent of inequality lies between them (Figure~\ref{fig:access-preschool}), and the deficit is mostly a matter of blocks. An earlier version of the model, which took the age structure from WorldPop, placed the deficit in Baikonur at 64 per cent of the mean; the official age counts show that Baikonur has the smallest share of preschool children in the city, 7.3 per cent against 12.6, and the apparent deficit disappears. The age structure of the population is as consequential for the conclusions as its spatial distribution.
 
-In both cases most of the inequality lies within districts, 91 per cent for schools and 97 per cent for preschools (Equation~\eqref{eq:theil}), and accessibility is strongly clustered. Planning that compares district averages, the form in which provision is usually reported, misses most of the inequality the cell-level surface reveals. Figure~\ref{fig:lorenz} shows the Lorenz curves.
+In both cases most of the inequality lies within districts, 91 per cent for schools and 95 per cent for preschools (Equation~\eqref{eq:theil}), and accessibility is strongly clustered. Planning that compares district averages, the form in which provision is usually reported, misses most of the inequality the cell-level surface reveals. Figure~\ref{fig:lorenz} shows the Lorenz curves.
 
 \begin{figure}[ht]
 \centering
@@ -127,11 +127,11 @@ In both cases most of the inequality lies within districts, 91 per cent for scho
 \section{Robustness of the Deficit Pattern: Test of H3}
 \label{sec:results-h3}
 
-Table~\ref{tab:sensitivity} summarises the 72 runs for schools and 48 for preschools. For schools the worst-served district is Nura in 32 of 54 building-based runs and Almaty in the other 22: in 16 of the 18 runs with floor area as supply and in 6 of the 18 with design capacity. District rankings correlate with the baseline at 0.83 in the median. For preschools the worst-served district changes between Saryarka, Nura and Baikonur, and the median correlation of rankings is 0.57: with district averages this close, the ranking is not stable. Across the three building-based population surfaces, the worst-served fifth of children falls in largely the same cells for both facility types, with a Jaccard overlap of about 0.8.
+Table~\ref{tab:sensitivity} summarises the 72 runs for schools and 48 for preschools. For schools the worst-served district is Nura in 32 of 54 building-based runs and Almaty in the other 22: in 16 of the 18 runs with floor area as supply and in 6 of the 18 with design capacity. District rankings correlate with the baseline at 0.83 in the median. For preschools the worst-served district is Nura in 24 of 54 building-based runs, in 12 of the 18 with design capacity and of the 18 with mean attendance, Baikonur in 14 and Saryarka in the 16 runs with equal weight per organisation, which ignores the size of a preschool; the median correlation of rankings is 0.77, but it falls below zero in the equal-weight runs. Across the three building-based population surfaces, the worst-served fifth of children falls in largely the same cells for both facility types, with a Jaccard overlap of about 0.8.
 
 \begin{table}[ht]
 \centering
-\caption{Stability of results under 72 specifications for schools and 48 for preschools}
+\caption{Stability of results under 72 specifications per facility type}
 \label{tab:sensitivity}
 \small
 \begin{tabular}{lrrrr}
@@ -140,16 +140,16 @@ Table~\ref{tab:sensitivity} summarises the 72 runs for schools and 48 for presch
 \cmidrule(lr){2-3}\cmidrule(lr){4-5}
 Population surface & Buildings & WorldPop & Buildings & WorldPop \\
 \midrule
-Runs & 54 & 18 & 36 & 12 \\
-District rank correlation, median & 0.83 & 0.86 & 0.57 & 0.37 \\
-District rank correlation, minimum & 0.77 & 0.43 & 0.14 & 0.09 \\
-Overlap of worst-served fifth, median & 0.81 & 0.13 & 0.81 & 0.14 \\
-Overlap of worst-served fifth, minimum & 0.66 & 0.12 & 0.76 & 0.11 \\
+Runs & 54 & 18 & 54 & 18 \\
+District rank correlation, median & 0.83 & 0.86 & 0.77 & 0.54 \\
+District rank correlation, minimum & 0.77 & 0.43 & $-0.09$ & 0.14 \\
+Overlap of worst-served fifth, median & 0.81 & 0.13 & 0.77 & 0.13 \\
+Overlap of worst-served fifth, minimum & 0.66 & 0.12 & 0.74 & 0.12 \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-For both facility types H3 holds at the cell level across the building-based surfaces, and for schools also at the district level in the sense that Nura is the worst-served district in most runs; Almaty takes its place mainly when supply is measured by floor area. For preschools the district ranking is not stable, which is consistent with a deficit that lies within districts rather than between them. It does not hold at the cell level when population comes from WorldPop: the cells it marks as worst served overlap those of the building-based surfaces by only 13 to 14 per cent. Supply measure, decay function and catchment size move individual cells; the choice of population surface moves the deficit itself. This is the practical consequence of H1: an assessment that takes its population from the standard gridded product would direct new facilities to different places.
+For both facility types H3 holds at the cell level across the building-based surfaces, and for schools also at the district level in the sense that Nura is the worst-served district in most runs; Almaty takes its place mainly when supply is measured by floor area. For preschools the district ranking holds when supply reflects the size of organisations and not otherwise, which is consistent with a deficit that lies mostly within districts. It does not hold at the cell level when population comes from WorldPop: the cells it marks as worst served overlap those of the building-based surfaces by only 13 to 14 per cent. Supply measure, decay function and catchment size move individual cells; the choice of population surface moves the deficit itself. This is the practical consequence of H1: an assessment that takes its population from the standard gridded product would direct new facilities to different places.
 
 \section{Revealed Demand for Preschool Places}
 \label{sec:results-vacancy}
@@ -165,15 +165,15 @@ On 30 September 2026, 428 of the 728 located preschools had free places, 395 of 
 \toprule
 Organisations & Model & Own characteristics & With demand pressure \\
 \midrule
-All & Logistic regression & 0.660 & 0.686 \\
-All & LightGBM & 0.680 & 0.666 \\
-Private & Logistic regression & 0.574 & 0.595 \\
-Private & LightGBM & 0.585 & 0.546 \\
+All & Logistic regression & 0.707 & 0.708 \\
+All & LightGBM & 0.736 & 0.712 \\
+Private & Logistic regression & 0.677 & 0.669 \\
+Private & LightGBM & 0.678 & 0.640 \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-Demand pressure moves the prediction in the expected direction, and the features that describe it, children and competing preschools within 500\,m and the distance to the nearest competitor, are among the largest contributions in the SHAP decomposition of the private model, after the language of instruction (Figure~\ref{fig:shap}). Among private organisations, 68 per cent of those below the median number of children per preschool within 1\,km had free places, against 65 per cent above it. The gain in prediction is small, and the standardised coefficient of the pressure term, $-0.09$, has a bootstrap interval from $-0.26$ to $0.08$, which includes zero. A single evening of the register is a noisy label; several snapshots and single-year age counts would be needed to turn this direction into a firm result.
+Design capacity is the strongest predictor: larger organisations are more likely to have free places, and with it the models reach a ROC-AUC of 0.71 to 0.74 for all organisations, against 0.66 to 0.68 without it. Demand pressure adds nothing to prediction. It moves the probability in the expected direction: among private organisations, 69 per cent of those below the median number of children per place within 1\,km had free places, against 65 per cent above it, and children per place are among the larger contributions in the SHAP decomposition of the private model after capacity, the number of preschools within 500\,m and the language of instruction (Figure~\ref{fig:shap}). But the standardised coefficient of children per place within 1\,km, $-0.09$, has a bootstrap interval from $-0.27$ to $0.11$, which includes zero. A single evening of the register is a noisy label; several snapshots and single-year age counts would be needed to turn this direction into a firm result.
 
 \begin{figure}[ht]
 \centering
@@ -276,11 +276,11 @@ The plan reaches more children than the optimum on plots that the land layer fin
 
 \textbf{Measurement choices that change conclusions.} Four choices changed results by large factors: straight-line against walking distance, by a factor of two to three in statutory compliance; the first step of the floating catchment method, which multiplied demand until it was checked against observed enrolment and the official service territories; the land constraint, which shrank the apparent room for better siting from 3.4 times to 19 per cent within 1\,km; and the supply measure, since official design capacity put Esil at 82 per cent of the mean where floor area had put it at 92. In each case the more careful choice was the one that could be checked against an observation.
 
-\textbf{A deficit of distribution, not of places.} Across the city, preschool places exceed attendance: in 2025 the official statistics count 80,521 places for 63,637 children, 79 children per 100 places \cite{stateducation2026}, and 428 of the 728 located preschools published free places on a single evening. Yet only 35 per cent of preschool-age children live within 300\,m of a preschool on foot, and the floating catchment index finds 8 per cent of them in significant low-access clusters. The shortage is one of location: places exist, but not near all the children who need them. City-level provision ratios, which compare totals, hide it. Schools suffer both deficits: 1.7 pupils per design place and 18,486 pupils beyond what two shifts can hold, most of them in Saraishyk, alongside the walking deficit concentrated in Esil and Nura.
+\textbf{A deficit of distribution, not of places.} Across the city, preschool places exceed attendance: in 2025 the official statistics count 80,521 places for 63,637 children, 79 children per 100 places \cite{stateducation2026}; the register counts 73,419 places for 66,402 children \cite{indigocards2026}, and 428 of the 728 located preschools published free places on a single evening. Yet only 35 per cent of preschool-age children live within 300\,m of a preschool on foot, and the floating catchment index finds 9 per cent of them in significant low-access clusters. The shortage is one of location: places exist, but not near all the children who need them. City-level provision ratios, which compare totals, hide it. Schools suffer both deficits: 1.7 pupils per design place and 18,486 pupils beyond what two shifts can hold, most of them in Saraishyk, alongside the walking deficit concentrated in Esil and Nura.
 
 \textbf{Implications for planning in Astana.} For both schools and preschools Nura, the district that grows fastest, is the worst served, but most of the deficit lies in groups of blocks within districts, so a single district-level indicator of provision misleads. The official service territories add a planning finding of their own: four children in ten are assigned past a nearer school, and in Nura and Esil more than four in ten live farther than 1\,km from the school they are assigned to. Within districts, deficits cluster in identifiable groups of blocks, which suggests that siting can be targeted at a finer scale than the district. The national programme behaved better than a density rule would have and reached 84 per cent of the best that free land allowed within 1\,km; the larger gains lie in reserving land early, since plots that were free in 2023 had largely been built over by 2026. The construction plan for 2026--2028 repeats the pattern rather than correcting it: it reaches 15 per cent of the children without a school within 1\,km and sends the most places to crowded Saraishyk, while Esil, with the largest walking deficit, gains little; screening planned sites by the uncovered children they would reach would cost the city nothing. Births point the same way for preschools: they are rising in Nura, already the district with the lowest preschool access, and falling in Baikonur and Saryarka.
 
 \section{Limitations}
 \label{sec:limitations}
 
-Population below the district level is an estimate; equal shares per polling station are an assumption supported by district totals, not an observation, and 46 territorial stations have no reconstructed territory. Age structure is known only by district, so children are spread within a district in proportion to population, and the official split of children between Almaty and Saraishyk is contradicted by enrolment; results for those two districts are given both ways. School capacity and enrolment are official, but design capacity counts places in one shift and does not say how many shifts a building can run; preschool attendance is known only as class means, so preschool supply is a proxy, and results are reported for two measures. Official service territories could be matched to dwellings for 57 per cent of school-age children, less in Nura and Saraishyk, where OSM carries fewer house numbers. Two of the 23 programme schools are placed from listings because OSM does not map them yet, and the official address of school 118 differs from its listed position; of the 25 planned projects one could not be located and six are placed only to a street or a nearby address. Floors imputed for untagged buildings are understated by about two floors in new residential complexes, which shifts population between dwellings of a station but, as tested in Section~\ref{sec:population}, not the results. Land ownership is unknown, so free land is land without buildings, not land available for a school. The vacancy label comes from a single evening.
+Population below the district level is an estimate; equal shares per polling station are an assumption supported by district totals, not an observation, and 46 territorial stations have no reconstructed territory. Age structure is known only by district, so children are spread within a district in proportion to population, and the official split of children between Almaty and Saraishyk is contradicted by enrolment; results for those two districts are given both ways. School capacity and enrolment are official, but design capacity counts places in one shift and does not say how many shifts a building can run; preschool capacity comes from the cards of the register, compiled by the project team, and attendance is known only as class means. Official service territories could be matched to dwellings for 57 per cent of school-age children, less in Nura and Saraishyk, where OSM carries fewer house numbers. Two of the 23 programme schools are placed from listings because OSM does not map them yet, and the official address of school 118 differs from its listed position; of the 25 planned projects one could not be located and six are placed only to a street or a nearby address. Floors imputed for untagged buildings are understated by about two floors in new residential complexes, which shifts population between dwellings of a station but, as tested in Section~\ref{sec:population}, not the results. Land ownership is unknown, so free land is land without buildings, not land available for a school. The vacancy label comes from a single evening.

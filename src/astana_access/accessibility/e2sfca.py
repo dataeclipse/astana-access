@@ -35,6 +35,18 @@ def design_capacity(floor: pd.Series) -> pd.Series:
     return capacity.fillna(floor * per_floor)
 
 
+def preschool_capacity(preschools: pd.DataFrame, class_mean: pd.Series) -> pd.Series:
+    from astana_access.ingest import preschool_capacity as cards
+
+    if not cards.SOURCE.exists():
+        return class_mean
+    by_id = cards.capacity_by_id()
+    ids = pd.to_numeric(preschools["indigo_id"], errors="coerce")
+    capacity = ids.map(by_id)
+    typical = capacity.groupby(preschools["ownership"]).transform("median")
+    return capacity.fillna(typical).fillna(class_mean).astype(float)
+
+
 def supply_measures() -> dict[str, dict[str, pd.Series]]:
     sites = facilities()
     schools = sites["school"].set_index("facility_id")
@@ -49,6 +61,7 @@ def supply_measures() -> dict[str, dict[str, pd.Series]]:
             "equal": pd.Series(1.0, index=schools.index),
         },
         "preschool": {
+            "capacity": preschool_capacity(preschools, class_mean),
             "class_mean": class_mean,
             "equal": pd.Series(1.0, index=preschools.index),
         },

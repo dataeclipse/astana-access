@@ -1,0 +1,26 @@
+{
+ "organisations": 794,
+ "with_capacity": 794,
+ "places": 73419.0,
+ "places_by_ownership": {
+  "private": 43480,
+  "state": 29939
+ },
+ "children_by_ownership_2026_09_30": {
+  "state": 29429,
+  "private": 36973
+ },
+ "children_per_place": {
+  "state": 0.9829653629045726,
+  "private": 0.850344986200552
+ },
+ "registry_without_card": 1,
+ "cards_not_in_registry": 5,
+ "ownership_agreement": 1.0,
+ "address_agreement": 1.0,
+ "free_places_above_capacity": 1,
+ "free_share_of_places": {
+  "private": 0.10286175859681514,
+  "state": 0.014162129663649421
+ }
+}

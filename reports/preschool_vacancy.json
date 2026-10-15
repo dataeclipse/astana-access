@@ -5,88 +5,94 @@
  "state_total": 137,
  "results": {
   "all/own/logistic": {
-   "roc_auc_mean": 0.6601137071651091,
-   "roc_auc_sd": 0.006585910993174706,
-   "pr_auc_mean": 0.7016311659606203,
-   "pr_auc_sd": 0.002935521627107844,
-   "brier_mean": 0.2146625389458133,
-   "brier_sd": 0.0009976036061554387
+   "roc_auc_mean": 0.7073193146417445,
+   "roc_auc_sd": 0.004149882928912163,
+   "pr_auc_mean": 0.7433285154505601,
+   "pr_auc_sd": 0.0025781427347238003,
+   "brier_mean": 0.21028399493604294,
+   "brier_sd": 0.0006416032216563729
   },
   "all/own/lightgbm": {
-   "roc_auc_mean": 0.6802024922118382,
-   "roc_auc_sd": 0.005393629723400775,
-   "pr_auc_mean": 0.6953558005370856,
-   "pr_auc_sd": 0.0017399968364145994,
-   "brier_mean": 0.21131893876096922,
-   "brier_sd": 0.0009918599048617993
+   "roc_auc_mean": 0.7362320872274144,
+   "roc_auc_sd": 0.0014028566096536909,
+   "pr_auc_mean": 0.7629502640107662,
+   "pr_auc_sd": 0.003823120651171994,
+   "brier_mean": 0.20016884673778773,
+   "brier_sd": 0.0003953101274243947
   },
   "all/own_context/logistic": {
-   "roc_auc_mean": 0.686303738317757,
-   "roc_auc_sd": 0.0031794196254361197,
-   "pr_auc_mean": 0.7297919079533026,
-   "pr_auc_sd": 0.004047966899335748,
-   "brier_mean": 0.21476582467287447,
-   "brier_sd": 0.0007409327609836419
+   "roc_auc_mean": 0.7075942367601246,
+   "roc_auc_sd": 0.00416399337772755,
+   "pr_auc_mean": 0.7501176552420876,
+   "pr_auc_sd": 0.003931455827962501,
+   "brier_mean": 0.21036534009810653,
+   "brier_sd": 0.0010692986029133998
   },
   "all/own_context/lightgbm": {
-   "roc_auc_mean": 0.6657858255451714,
-   "roc_auc_sd": 0.00443063217282574,
-   "pr_auc_mean": 0.7007051043460178,
-   "pr_auc_sd": 0.005792704082260592,
-   "brier_mean": 0.21847266399029142,
-   "brier_sd": 0.0013294984940465352
+   "roc_auc_mean": 0.7119182242990654,
+   "roc_auc_sd": 0.003924571131598758,
+   "pr_auc_mean": 0.7515211056977006,
+   "pr_auc_sd": 0.005033033092537086,
+   "brier_mean": 0.2091593371862086,
+   "brier_sd": 0.001213091982018802
   },
   "private/own/logistic": {
-   "roc_auc_mean": 0.5739679669336087,
-   "roc_auc_sd": 0.008793414093644203,
-   "pr_auc_mean": 0.729579953905792,
-   "pr_auc_sd": 0.004269316903360158,
-   "brier_mean": 0.21774045341066278,
-   "brier_sd": 0.0008491105959132969
+   "roc_auc_mean": 0.677056316197365,
+   "roc_auc_sd": 0.00590685217564264,
+   "pr_auc_mean": 0.7955048362326606,
+   "pr_auc_sd": 0.004023239089427763,
+   "brier_mean": 0.20485776433987563,
+   "brier_sd": 0.0011493866995352022
   },
   "private/own/lightgbm": {
-   "roc_auc_mean": 0.5853603719968999,
-   "roc_auc_sd": 0.0058426244035599895,
-   "pr_auc_mean": 0.7148553083031824,
-   "pr_auc_sd": 0.003804860447506007,
-   "brier_mean": 0.216722347376123,
-   "brier_sd": 0.0008863523203592626
+   "roc_auc_mean": 0.678156807026608,
+   "roc_auc_sd": 0.002796759863792784,
+   "pr_auc_mean": 0.7873008281777509,
+   "pr_auc_sd": 0.004993141896436032,
+   "brier_mean": 0.20236533267924545,
+   "brier_sd": 0.0006807374845190264
   },
   "private/own_context/logistic": {
-   "roc_auc_mean": 0.5949677086024284,
-   "roc_auc_sd": 0.010724760135785057,
-   "pr_auc_mean": 0.7408318153804683,
-   "pr_auc_sd": 0.00890979993677814,
-   "brier_mean": 0.21976427999076079,
-   "brier_sd": 0.0018377674952380586
+   "roc_auc_mean": 0.6686812193231721,
+   "roc_auc_sd": 0.005545109931473768,
+   "pr_auc_mean": 0.7898227028143416,
+   "pr_auc_sd": 0.004293374150282086,
+   "brier_mean": 0.20692891550758707,
+   "brier_sd": 0.001704459205943582
   },
   "private/own_context/lightgbm": {
-   "roc_auc_mean": 0.5455089124257297,
-   "roc_auc_sd": 0.010859626942233969,
-   "pr_auc_mean": 0.7089720564312747,
-   "pr_auc_sd": 0.011519254875350639,
-   "brier_mean": 0.2263131735540381,
-   "brier_sd": 0.001988033942003596
+   "roc_auc_mean": 0.6398462929475588,
+   "roc_auc_sd": 0.008078478430155592,
+   "pr_auc_mean": 0.7709722314682734,
+   "pr_auc_sd": 0.011430194123462207,
+   "brier_mean": 0.21158585072909145,
+   "brier_sd": 0.0019983085701849655
   }
  },
  "importance_private": {
-  "children_500": 78,
-  "nearest_rival_m": 68,
-  "children_per_org_500": 63,
-  "children_per_org_1000": 51,
-  "rivals_1000": 44,
-  "rivals_500": 41,
-  "children_1000": 37,
-  "russian": 34,
-  "approximate_position": 14,
-  "min_age": 12,
-  "kazakh_only": 8,
+  "capacity": 105,
+  "children_per_place_1000": 62,
+  "nearest_rival_m": 51,
+  "rivals_500": 47,
+  "children_500": 41,
+  "rivals_1000": 40,
+  "children_1000": 33,
+  "children_per_place_500": 30,
+  "russian": 22,
+  "min_age": 7,
+  "kazakh_only": 6,
+  "approximate_position": 6,
   "branch": 0,
   "nursery": 0,
   "mini_centre": 0
  },
+ "pressure_coefficient_private": {
+  "coefficient": -0.08714706484175642,
+  "low": -0.2705250274036738,
+  "high": 0.11319030090342841
+ },
  "free_share_by_pressure_private": {
-  "below_median": 0.6824324324324325,
-  "above_median": 0.6542372881355932
+  "below_median": 0.6891891891891891,
+  "above_median": 0.6474576271186441
  }
 }

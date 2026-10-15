@@ -21,7 +21,7 @@ BASE = {
     },
     "preschool": {
         "variant": "station",
-        "supply": "class_mean",
+        "supply": "capacity",
         "decay": "gaussian",
         "d0": 1000,
         "d0_load": 2000,

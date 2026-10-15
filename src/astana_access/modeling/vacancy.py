@@ -11,12 +11,15 @@ from sklearn.model_selection import GroupKFold
 from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import StandardScaler
 
+from astana_access.accessibility.e2sfca import supply_measures
 from astana_access.config import CRS_METRIC, PROCESSED, REPORTS, SEED
 
 RADII_M = (500, 1000)
 BLOCK_M = 2000.0
 FOLDS = 5
 REPEATS = 5
+BOOTSTRAP = 1000
+PRESSURE = "children_per_place_1000"
 OWN = [
     "state",
     "branch",
@@ -26,14 +29,15 @@ OWN = [
     "nursery",
     "mini_centre",
     "approximate_position",
+    "capacity",
 ]
 CONTEXT = [
     "children_500",
     "children_1000",
     "rivals_500",
     "rivals_1000",
-    "children_per_org_500",
-    "children_per_org_1000",
+    "children_per_place_500",
+    "children_per_place_1000",
     "nearest_rival_m",
 ]
 PARAMS = {
@@ -76,15 +80,19 @@ def dataset() -> pd.DataFrame:
             ),
         }
     )
+    places = supply_measures()["preschool"]["capacity"]
+    frame["capacity"] = frame["facility_id"].map(places).to_numpy()
     centre = preschools.geometry
     xy = np.column_stack([centre.x, centre.y])
     tree = cKDTree(xy)
     for radius in RADII_M:
         near = od[od["distance_m"] <= radius].groupby("facility_id")["children"].sum()
         frame[f"children_{radius}"] = frame["facility_id"].map(near).fillna(0).to_numpy()
-        rivals = np.array([len(items) - 1 for items in tree.query_ball_point(xy, r=radius)])
+        groups = tree.query_ball_point(xy, r=radius)
+        rivals = np.array([len(items) - 1 for items in groups])
+        nearby = np.array([frame["capacity"].to_numpy()[items].sum() for items in groups])
         frame[f"rivals_{radius}"] = rivals
-        frame[f"children_per_org_{radius}"] = frame[f"children_{radius}"] / (rivals + 1)
+        frame[f"children_per_place_{radius}"] = frame[f"children_{radius}"] / nearby
     distance, _ = tree.query(xy, k=2)
     frame["nearest_rival_m"] = distance[:, 1]
     frame["x"] = xy[:, 0]
@@ -123,6 +131,22 @@ def evaluate(frame: pd.DataFrame, features: list[str], model: str) -> dict[str, 
     }
 
 
+def pressure_coefficient(data: pd.DataFrame, own: list[str]) -> dict[str, float]:
+    features = [*own, PRESSURE]
+    rng = np.random.default_rng(SEED)
+    target = data["free"].to_numpy()
+
+    def coefficient(index: np.ndarray) -> float:
+        fitted = make_pipeline(StandardScaler(), LogisticRegression(max_iter=2000))
+        fitted.fit(data.iloc[index][features], target[index])
+        return float(fitted[-1].coef_[0][-1])
+
+    point = coefficient(np.arange(len(data)))
+    draws = [coefficient(rng.integers(0, len(data), len(data))) for _ in range(BOOTSTRAP)]
+    low, high = np.percentile(draws, [2.5, 97.5])
+    return {"coefficient": point, "low": float(low), "high": float(high)}
+
+
 def run() -> dict:
     frame = dataset()
     frame.to_parquet(PROCESSED / "preschool_vacancy.parquet")
@@ -150,8 +174,9 @@ def run() -> dict:
             key=lambda item: -item[1],
         )
     )
+    report["pressure_coefficient_private"] = pressure_coefficient(data, own)
     contrast = data.assign(
-        high=data["children_per_org_1000"] > data["children_per_org_1000"].median()
+        high=data["children_per_place_1000"] > data["children_per_place_1000"].median()
     )
     report["free_share_by_pressure_private"] = (
         contrast.groupby("high")["free"]
