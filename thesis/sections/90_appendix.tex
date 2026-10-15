@@ -37,6 +37,8 @@ Figure~\ref{fig:uml-packages} shows the packages of the framework and their depe
 \draw[dep] (viz) -- (optimization);
 \draw[dep] (pipeline) -- (viz);
 \draw[dep] (validation) -- (equity);
+\draw[dep] (optimization) -- (equity);
+\draw[dep] (accessibility.east) -- ++(0.4,0) |- ([yshift=0.5cm]norms.north) -| (ingest.north);
 \end{tikzpicture}
 \caption{UML package diagram of the framework; dashed arrows point from a package to the packages it depends on}
 \label{fig:uml-packages}
@@ -51,18 +53,18 @@ Figure~\ref{fig:uml-packages} shows the packages of the framework and their depe
 ]
 \node[circle, fill, inner sep=3pt] (start) {};
 \node[act, below=of start] (a1) {Acquire boundaries, districts, WorldPop, OSM};
-\node[act, below=of a1] (a2) {Build H3 grid and WorldPop age structure};
-\node[act, below=of a2] (a3) {Link school registry and OSM; measure floor area};
-\node[act, below=of a3] (a4) {Parse preschool register; geocode addresses};
+\node[act, below=of a1] (a2) {Build H3 grid; read official age structure};
+\node[act, below=of a2] (a3) {Link school registry, OSM and official list};
+\node[act, below=of a3] (a4) {Parse preschool register and cards; geocode};
 \node[act, below=of a4] (a5) {Reconstruct polling-station territories};
 \node[act, below=of a5] (a6) {Classify dwellings; allocate official totals};
 \node[act, below=of a6] (a7) {Walking distances; compliance; floating catchment};
 \node[act, below=of a7] (a8) {Inequality, clusters, sensitivity};
 \node[act, below=of a8] (a9) {Vacancy model and SHAP};
-\node[act, below=of a9] (a10) {Programme list; 2023 reconstruction; optimisation};
-\node[act, below=of a10] (a11) {Checks against the team's 2GIS listing};
+\node[act, below=of a9] (a10) {Programme backtest; plan 2026--2028; detailed plans};
+\node[act, below=of a10] (a11) {Checks against 2GIS and official lists};
 \node[act, below=of a11] (a12) {Figures and report tables};
-\node[circle, draw, inner sep=3pt, below=of a11] (stop) {};
+\node[circle, draw, inner sep=3pt, below=of a12] (stop) {};
 \node[circle, fill, inner sep=1.8pt] at (stop) {};
 \foreach \a/\b in {start/a1, a1/a2, a2/a3, a3/a4, a4/a5, a5/a6, a6/a7, a7/a8, a8/a9, a9/a10, a10/a11, a11/a12, a12/stop}
   \draw[flow] (\a) -- (\b);
