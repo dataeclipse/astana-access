@@ -1,0 +1,869 @@
+<meta charset="utf-8">
+<title>Astana Access Atlas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..125,400..800&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: an operator's atlas. Sticky tab bar, then per-tab grids; map tabs are a canvas beside a control rail. */
+:root {
+  --bg: #f2f4f5;
+  --surface: #ffffff;
+  --surface-2: #e9edef;
+  --ink: #111820;
+  --muted: #566070;
+  --line: #d7dde2;
+  --accent: #1f5fb0;
+  --series-1: #2a78d6;
+  --series-2: #eb6834;
+  --series-3: #1baf7a;
+  --neg: #e34948;
+  --mid: #eceeee;
+  --serious: #ec835a;
+  --focus: #1f5fb0;
+  --font-display: "Archivo", "Arial Narrow", Arial, sans-serif;
+  --font-body: "Archivo", Arial, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, Consolas, monospace;
+  --radius: 10px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0f1317; --surface: #161b21; --surface-2: #1f262e; --ink: #eef2f6; --muted: #a3acb8;
+    --line: #2b333c; --accent: #6aa4ec; --series-1: #3987e5; --series-2: #d95926; --series-3: #199e70;
+    --neg: #e66767; --mid: #353b40; --serious: #ec835a; --focus: #6aa4ec; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0f1317; --surface: #161b21; --surface-2: #1f262e; --ink: #eef2f6; --muted: #a3acb8;
+  --line: #2b333c; --accent: #6aa4ec; --series-1: #3987e5; --series-2: #d95926; --series-3: #199e70;
+  --neg: #e66767; --mid: #353b40; --serious: #ec835a; --focus: #6aa4ec; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html, body { height: 100%; }
+body { background: var(--bg); color: var(--ink); font-family: var(--font-body); font-size: 15px; line-height: 1.45; }
+.num { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+header.top { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; background: var(--surface); border-bottom: 1px solid var(--line); }
+.top-inner { display: flex; align-items: center; gap: 12px 24px; padding: 12px 20px; flex-wrap: wrap; max-width: 1480px; margin: 0 auto; }
+.brand { display: flex; flex-direction: column; min-width: 0; }
+.brand h1 { margin: 0; font-family: var(--font-display); font-stretch: 115%; font-weight: 750; font-size: 19px; letter-spacing: 0.01em; }
+.brand span { color: var(--muted); font-size: 12.5px; }
+nav.tabs { display: flex; gap: 4px; flex-wrap: wrap; margin-left: auto; }
+nav.tabs a { text-decoration: none; color: var(--muted); padding: 7px 12px; border-radius: 999px; font-weight: 600; font-size: 14px; }
+nav.tabs a[aria-current="page"] { background: var(--ink); color: var(--surface); }
+nav.tabs a:hover:not([aria-current="page"]) { background: var(--surface-2); color: var(--ink); }
+a:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+main { padding-block: 20px 40px; padding-inline: 20px; max-width: 1480px; margin: 0 auto; }
+section.tab { display: flex; flex-direction: column; gap: 20px; }
+.head { display: flex; flex-direction: column; gap: 6px; }
+.eyebrow { font-size: 12px; text-transform: uppercase; letter-spacing: 0.09em; color: var(--muted); font-weight: 600; margin: 0; }
+h2 { font-family: var(--font-display); font-stretch: 110%; font-weight: 720; font-size: 26px; line-height: 1.15; margin: 0; text-wrap: balance; }
+h3 { font-family: var(--font-display); font-stretch: 105%; font-weight: 680; font-size: 17px; margin: 0; }
+p { margin: 0; }
+.lede { color: var(--muted); max-width: 72ch; }
+.panel { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 16px; display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+.panel-head { display: flex; justify-content: space-between; gap: 8px 12px; flex-wrap: wrap; align-items: baseline; }
+.kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 12px; }
+.kpi { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 14px 16px; display: flex; flex-direction: column; gap: 4px; }
+.kpi .value { font-family: var(--font-display); font-weight: 760; font-size: 32px; line-height: 1.05; font-variant-numeric: tabular-nums; }
+.kpi .label { font-size: 14px; }
+.kpi .note { color: var(--muted); font-size: 12.5px; }
+.grid-2 { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); gap: 20px; }
+@media (max-width: 980px) { .grid-2 { grid-template-columns: 1fr; } }
+.scroll-x { overflow-x: auto; }
+table.data { border-collapse: collapse; width: 100%; font-size: 14px; }
+table.data th { text-align: left; font-weight: 600; color: var(--muted); font-size: 12.5px; padding: 6px 8px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+table.data th button { all: unset; cursor: pointer; }
+table.data th button:hover { color: var(--ink); }
+table.data th button:focus-visible { outline: 2px solid var(--focus); }
+table.data td { padding: 7px 8px; border-bottom: 1px solid var(--line); vertical-align: middle; }
+table.data td.r, table.data th.r { text-align: right; }
+table.data tr:last-child td { border-bottom: none; }
+.bar-cell { display: flex; align-items: center; gap: 8px; justify-content: flex-end; }
+.bar-track { width: 70px; height: 8px; background: var(--surface-2); border-radius: 4px; position: relative; overflow: hidden; flex: none; }
+.bar-fill { position: absolute; top: 0; bottom: 0; left: 0; border-radius: 4px; }
+.pill { display: inline-flex; align-items: center; gap: 6px; font-size: 12.5px; padding: 2px 8px; border-radius: 999px; background: var(--surface-2); color: var(--ink); white-space: nowrap; width: fit-content; }
+.pill .dot { width: 8px; height: 8px; border-radius: 50%; }
+.map-layout { display: grid; grid-template-columns: 300px minmax(0, 1fr); gap: 16px; align-items: start; }
+@media (max-width: 900px) { .map-layout { grid-template-columns: 1fr; } }
+.rail { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+.map-wrap { position: relative; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; height: min(74vh, 760px); min-height: 420px; }
+.map-wrap.short { height: min(60vh, 620px); }
+.map-wrap canvas { width: 100%; height: 100%; display: block; touch-action: none; cursor: grab; }
+.map-wrap canvas.dragging { cursor: grabbing; }
+.map-tools { position: absolute; right: 10px; top: 10px; display: flex; flex-direction: column; gap: 6px; }
+.map-tools button { width: 34px; height: 34px; border-radius: 8px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); font-size: 17px; cursor: pointer; font-family: var(--font-body); }
+.map-tools button:hover { background: var(--surface-2); }
+.map-hint { position: absolute; left: 10px; bottom: 8px; font-size: 12px; color: var(--muted); background: var(--surface); padding: 2px 6px; border-radius: 4px; }
+.tip { position: absolute; pointer-events: none; background: var(--ink); color: var(--surface); font-size: 13px; padding: 6px 9px; border-radius: 6px; max-width: 280px; z-index: 5; line-height: 1.35; }
+.legend { display: flex; flex-direction: column; gap: 6px; font-size: 13px; }
+.legend .ramp { height: 10px; border-radius: 5px; }
+.legend .ticks { display: flex; justify-content: space-between; color: var(--muted); font-size: 12px; gap: 4px; }
+.legend .row { display: flex; align-items: center; gap: 8px; }
+.sym { width: 14px; height: 14px; flex: none; display: inline-block; }
+fieldset { border: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+legend.fs { font-weight: 600; font-size: 13px; color: var(--muted); padding: 0; margin-bottom: 4px; }
+label.opt { display: flex; align-items: center; gap: 8px; cursor: pointer; font-size: 14px; }
+label.opt input { accent-color: var(--accent); margin: 0; }
+.detail { font-size: 14px; display: flex; flex-direction: column; gap: 6px; }
+.detail dl { display: grid; grid-template-columns: auto 1fr; gap: 3px 12px; margin: 0; }
+.detail dt { color: var(--muted); }
+.detail dd { margin: 0; text-align: right; font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+.detail .name { font-weight: 600; }
+.btn-row { display: flex; gap: 8px; flex-wrap: wrap; }
+button.btn { font-family: var(--font-body); font-size: 13.5px; font-weight: 600; padding: 7px 12px; border-radius: 8px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); cursor: pointer; }
+button.btn:hover { background: var(--surface-2); }
+.seg { display: inline-flex; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+.seg button { all: unset; cursor: pointer; padding: 6px 12px; font-size: 13.5px; font-weight: 600; color: var(--muted); }
+.seg button[aria-pressed="true"] { background: var(--ink); color: var(--surface); }
+.seg button:focus-visible { outline: 2px solid var(--focus); outline-offset: -2px; }
+input[type="range"] { width: 100%; accent-color: var(--accent); }
+input[type="search"] { width: 100%; padding: 7px 10px; border-radius: 8px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); font-family: var(--font-body); font-size: 14px; }
+.big { font-family: var(--font-display); font-weight: 760; font-size: 34px; line-height: 1; font-variant-numeric: tabular-nums; }
+.compare { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.compare > div { display: flex; flex-direction: column; gap: 2px; }
+.muted { color: var(--muted); }
+.small { font-size: 13px; }
+.list { max-height: 260px; overflow-y: auto; border-top: 1px solid var(--line); }
+.list table.data td { padding: 5px 6px; }
+svg text { fill: var(--muted); font-family: var(--font-body); font-size: 12px; }
+svg text.ink { fill: var(--ink); }
+.steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; }
+.step { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 14px; display: flex; flex-direction: column; gap: 6px; }
+.step b { font-family: var(--font-mono); color: var(--accent); font-size: 13px; }
+ul.plain { margin: 0; padding-left: 18px; display: flex; flex-direction: column; gap: 4px; }
+.loading { padding: 40px; color: var(--muted); }
+</style>
+
+<header class="top">
+  <div class="top-inner">
+    <div class="brand">
+      <h1>Astana Access Atlas</h1>
+      <span>Walking access to state schools and preschools, 2026 · diploma work, Astana IT University</span>
+    </div>
+    <nav class="tabs" aria-label="Sections">
+      <a href="#overview" data-tab="overview">Overview</a>
+      <a href="#map" data-tab="map">Map</a>
+      <a href="#screening" data-tab="screening">Site screening</a>
+      <a href="#crowding" data-tab="crowding">Crowding</a>
+      <a href="#method" data-tab="method">Method &amp; data</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <p class="loading" id="loading">Loading the atlas data…</p>
+
+  <section class="tab" id="tab-overview" hidden>
+    <div class="head">
+      <p class="eyebrow">Overview</p>
+      <h2>Where children in Astana lack a school or preschool on foot</h2>
+      <p class="lede">Accessibility per child from a floating catchment index over a 152,491-node walking network, with official design capacity, enrolment and population. Access is relative to the city mean; 1.00 is average.</p>
+    </div>
+    <div class="kpis" id="kpis"></div>
+    <div class="grid-2">
+      <div class="panel">
+        <div class="panel-head"><h3>Districts</h3><span class="small muted">Click a column to sort</span></div>
+        <div class="scroll-x"><table class="data" id="district-table"></table></div>
+        <p class="small muted">On foot: share of children within the statutory radius (500 m school, 300 m preschool) along the network. Almaty and Saraishyk use their combined official age share.</p>
+      </div>
+      <div class="panel">
+        <h3>Accessibility per child by district</h3>
+        <div id="district-chart"></div>
+        <p class="small muted">Over nine tenths of the inequality lies within districts, so district means hide most of it. The map shows where.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="tab" id="tab-map" hidden>
+    <div class="map-layout">
+      <div class="rail">
+        <div class="panel">
+          <fieldset>
+            <legend class="fs">Colour blocks by</legend>
+            <label class="opt"><input type="radio" name="base" value="school_access" id="base-school" checked> School access per child</label>
+            <label class="opt"><input type="radio" name="base" value="preschool_access" id="base-pre"> Preschool access per child</label>
+            <label class="opt"><input type="radio" name="base" value="uncovered_1000" id="base-unc"> Children without a school within 1 km</label>
+            <label class="opt"><input type="radio" name="base" value="school_children" id="base-kids"> School-age children</label>
+            <label class="opt"><input type="radio" name="base" value="none" id="base-none"> No blocks</label>
+          </fieldset>
+          <div class="legend" id="map-legend"></div>
+        </div>
+        <div class="panel">
+          <fieldset>
+            <legend class="fs">Show</legend>
+            <label class="opt"><input type="checkbox" id="ov-cluster" checked> Low-access clusters</label>
+            <label class="opt"><input type="checkbox" id="ov-schools" checked> State schools</label>
+            <label class="opt"><input type="checkbox" id="ov-prog" checked> Comfortable School buildings</label>
+            <label class="opt"><input type="checkbox" id="ov-pre"> Preschools</label>
+            <label class="opt"><input type="checkbox" id="ov-plan"> Construction plan 2026–2028</label>
+            <label class="opt"><input type="checkbox" id="ov-pdp"> School sites in detailed plans</label>
+          </fieldset>
+          <div class="legend" id="symbol-legend"></div>
+        </div>
+        <div class="panel">
+          <label for="school-search" class="small muted">Find a school by number</label>
+          <input type="search" id="school-search" placeholder="e.g. 83" inputmode="numeric">
+          <div class="detail" id="map-detail"></div>
+        </div>
+      </div>
+      <div class="map-wrap" id="map-main"></div>
+    </div>
+  </section>
+
+  <section class="tab" id="tab-screening" hidden>
+    <div class="head">
+      <p class="eyebrow">Site screening</p>
+      <h2>Which reserved school sites to build first</h2>
+      <p class="lede">The city’s detailed planning projects hold 238 sites for new schools. Take the best ones in order or pick sites on the map; the count of children who gain a state school within walking distance is recomputed here from the walking-distance matrix.</p>
+    </div>
+    <div class="map-layout">
+      <div class="rail">
+        <div class="panel">
+          <div class="panel-head">
+            <span class="small muted">Walking distance</span>
+            <div class="seg" role="group" aria-label="Walking distance">
+              <button type="button" data-radius="1000" aria-pressed="true">1 km</button>
+              <button type="button" data-radius="1500" aria-pressed="false">1.5 km</button>
+            </div>
+          </div>
+          <label for="best-n" class="small">Take the best <b class="num" id="best-n-label">17</b> sites in order</label>
+          <input type="range" id="best-n" min="0" max="60" value="17">
+          <div class="btn-row">
+            <button type="button" class="btn" id="sel-17">Best 17, as many as the plan</button>
+            <button type="button" class="btn" id="sel-clear">Clear</button>
+            <button type="button" class="btn" id="sel-copy">Copy list</button>
+          </div>
+          <p class="small muted" id="copy-status" aria-live="polite"></p>
+        </div>
+        <div class="panel">
+          <div class="compare">
+            <div><span class="small muted">Your selection</span><span class="big num" id="sel-total">0</span><span class="small" id="sel-meta"></span></div>
+            <div><span class="small muted">Plan 2026–2028</span><span class="big num" id="plan-total">0</span><span class="small muted">17 new schools</span></div>
+          </div>
+          <p class="small muted" id="sel-share"></p>
+        </div>
+        <div class="panel">
+          <h3>Children reached as sites are added</h3>
+          <div id="curve"></div>
+        </div>
+      </div>
+      <div class="rail">
+        <div class="map-wrap short" id="map-screen"></div>
+        <div class="panel">
+          <div class="panel-head"><h3>Selected sites</h3><span class="small muted">Click a green site on the map to add or remove it</span></div>
+          <div class="list scroll-x"><table class="data" id="sel-table"></table></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="tab" id="tab-crowding" hidden>
+    <div class="head">
+      <p class="eyebrow">Crowding</p>
+      <h2>Places are short as well as far</h2>
+      <p class="lede">From the official list of schools for 2025–2026. Design capacity counts places in one shift, so more than two pupils per place is more than two full shifts can hold.</p>
+    </div>
+    <div class="kpis" id="crowd-kpis"></div>
+    <div class="grid-2">
+      <div class="panel"><h3>Pupils per design place, by district</h3><div id="crowd-chart"></div></div>
+      <div class="panel"><h3>Share of pupils in schools beyond two shifts</h3><div id="crowd-share"></div></div>
+    </div>
+    <div class="panel">
+      <div class="panel-head"><h3>Schools enrolling more than two shifts can hold</h3><span class="small muted" id="crowd-count"></span></div>
+      <div class="scroll-x"><table class="data" id="crowd-table"></table></div>
+    </div>
+  </section>
+
+  <section class="tab" id="tab-method" hidden>
+    <div class="head">
+      <p class="eyebrow">Method &amp; data</p>
+      <h2>How the atlas is built and checked</h2>
+      <p class="lede">Every figure comes from one reproducible pipeline run on open data and official replies. Each model is checked against an observation it did not use.</p>
+    </div>
+    <div class="steps" id="steps"></div>
+    <div class="grid-2">
+      <div class="panel">
+        <h3>Population model against official district totals</h3>
+        <div id="h1-chart"></div>
+        <p class="small muted">Predicted over official population of each district on 1 January 2026. Mean absolute error: polling-station model 10%, WorldPop 26%, floor area alone 28%.</p>
+      </div>
+      <div class="panel">
+        <h3>Checks</h3>
+        <div class="scroll-x"><table class="data" id="checks"></table></div>
+      </div>
+    </div>
+    <div class="grid-2">
+      <div class="panel"><h3>Sources</h3><ul class="plain small" id="sources"></ul></div>
+      <div class="panel">
+        <h3>Limits</h3>
+        <ul class="plain small">
+          <li>Population below the district level is an estimate; the official age split of Almaty and Saraishyk is replaced by their combined share, which school enrolment supports.</li>
+          <li>Site screening counts children without a state school within walking distance and ignores capacity; for the plan’s schools capacity never binds.</li>
+          <li>Detailed-plan sites are building contours on the geoportal; their reservation status is not published.</li>
+          <li>Preschool capacity and attendance come from register cards compiled on one day; the waiting list is published for the city only.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</main>
+
+<script>
+(function () {
+  "use strict";
+  const DATA = {};
+  const FILES = ["base", "cells", "schools", "preschools", "sites", "reach", "summary"];
+  const DISTRICTS = ["Almaty", "Baikonur", "Esil", "Nura", "Saraishyk", "Saryarka"];
+  const fmt = (v, d = 0) => (v == null || Number.isNaN(v) ? "–" : Number(v).toLocaleString("en-US", { minimumFractionDigits: d, maximumFractionDigits: d }));
+  const pct = (v, d = 0) => (v == null || Number.isNaN(v) ? "–" : (v * 100).toFixed(d) + "%");
+  const css = (name) => getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+  const q = (s) => document.querySelector(s);
+  const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+  function setHTML(node, markup) { node.replaceChildren(document.createRange().createContextualFragment(markup)); }
+  function make(tag, attrs = {}, text = "") { const n = document.createElement(tag); for (const k in attrs) n.setAttribute(k, attrs[k]); if (text) n.textContent = text; return n; }
+
+  function hexToRgb(h) { h = h.replace("#", ""); const n = parseInt(h, 16); return [(n >> 16) & 255, (n >> 8) & 255, n & 255]; }
+  function mix(a, b, t) { const x = hexToRgb(a), y = hexToRgb(b); return `rgb(${x.map((v, i) => Math.round(v + (y[i] - v) * t)).join(",")})`; }
+  const BLUE_RAMP = ["#cde2fb", "#9ec5f4", "#6da7ec", "#3987e5", "#256abf", "#184f95", "#0d366b"];
+  function ramp(t) { t = Math.max(0, Math.min(1, t)); const p = t * (BLUE_RAMP.length - 1); const i = Math.min(BLUE_RAMP.length - 2, Math.floor(p)); return mix(BLUE_RAMP[i], BLUE_RAMP[i + 1], p - i); }
+  function diverging(rel) {
+    if (rel == null) return null;
+    const v = Math.max(-2, Math.min(2, Math.log2(Math.max(rel, 0.25))));
+    return v < 0 ? mix(css("--mid"), css("--neg"), -v / 2) : mix(css("--mid"), css("--series-1"), v / 2);
+  }
+
+  // ---------- canvas map ----------
+  class MapView {
+    constructor(host, opts) {
+      this.host = host; this.opts = opts;
+      this.canvas = make("canvas", { role: "img", "aria-label": opts.label }); host.appendChild(this.canvas);
+      this.tip = make("div", { class: "tip", hidden: "" }); host.appendChild(this.tip);
+      host.appendChild(make("p", { class: "map-hint" }, "Drag to pan · scroll or pinch to zoom"));
+      const tools = make("div", { class: "map-tools" });
+      [["+", 1.5, "Zoom in"], ["−", 1 / 1.5, "Zoom out"], ["⤢", 0, "Show the whole city"]].forEach(([t, f, label]) => {
+        const b = make("button", { type: "button", "aria-label": label, title: label }, t);
+        b.addEventListener("click", () => (f ? this.zoomAt(this.w / 2, this.h / 2, f) : this.fit()));
+        tools.appendChild(b);
+      });
+      host.appendChild(tools);
+      this.k = 1; this.tx = 0; this.ty = 0; this.cos = Math.cos((51.13 * Math.PI) / 180);
+      this.pointers = new Map(); this.fitted = false;
+      new ResizeObserver(() => this.resize()).observe(host);
+      this.bind(); this.resize();
+    }
+    project(lon, lat) { return [lon * this.cos * this.k + this.tx, -lat * this.k + this.ty]; }
+    unproject(x, y) { return [(x - this.tx) / (this.k * this.cos), -(y - this.ty) / this.k]; }
+    resize() {
+      const r = this.host.getBoundingClientRect(); if (!r.width) return;
+      this.w = r.width; this.h = r.height; const d = window.devicePixelRatio || 1;
+      this.canvas.width = Math.round(r.width * d); this.canvas.height = Math.round(r.height * d); this.dpr = d;
+      if (this.fitted) this.draw(); else this.fit();
+    }
+    fit() {
+      if (!this.w) return; const [x0, y0, x1, y1] = this.opts.bounds;
+      this.k = 1 / (Math.max(((x1 - x0) * this.cos) / this.w, (y1 - y0) / this.h) * 1.06);
+      this.tx = this.w / 2 - ((x0 + x1) / 2) * this.cos * this.k; this.ty = this.h / 2 + ((y0 + y1) / 2) * this.k;
+      this.fitted = true; this.draw();
+    }
+    zoomAt(x, y, f) {
+      const k = Math.max(500, Math.min(this.k * f, 500000)); f = k / this.k;
+      this.tx = x - (x - this.tx) * f; this.ty = y - (y - this.ty) * f; this.k = k; this.draw();
+    }
+    centerOn(lon, lat, k) { if (k) this.k = k; const [x, y] = this.project(lon, lat); this.tx += this.w / 2 - x; this.ty += this.h / 2 - y; this.draw(); }
+    bind() {
+      const c = this.canvas;
+      c.addEventListener("wheel", (e) => { e.preventDefault(); const r = c.getBoundingClientRect(); this.zoomAt(e.clientX - r.left, e.clientY - r.top, Math.exp(-e.deltaY * 0.0015)); }, { passive: false });
+      c.addEventListener("pointerdown", (e) => { c.setPointerCapture(e.pointerId); this.pointers.set(e.pointerId, [e.clientX, e.clientY]); this.moved = 0; c.classList.add("dragging"); });
+      c.addEventListener("pointermove", (e) => {
+        const r = c.getBoundingClientRect();
+        if (this.pointers.has(e.pointerId)) {
+          const prev = this.pointers.get(e.pointerId);
+          if (this.pointers.size === 2) {
+            const other = [...this.pointers.entries()].find(([id]) => id !== e.pointerId)[1];
+            const d0 = Math.hypot(prev[0] - other[0], prev[1] - other[1]), d1 = Math.hypot(e.clientX - other[0], e.clientY - other[1]);
+            if (d0 > 0) this.zoomAt((e.clientX + other[0]) / 2 - r.left, (e.clientY + other[1]) / 2 - r.top, d1 / d0);
+          } else { this.tx += e.clientX - prev[0]; this.ty += e.clientY - prev[1]; this.draw(); }
+          this.moved += Math.abs(e.clientX - prev[0]) + Math.abs(e.clientY - prev[1]);
+          this.pointers.set(e.pointerId, [e.clientX, e.clientY]); this.tip.hidden = true; return;
+        }
+        this.hover(e.clientX - r.left, e.clientY - r.top);
+      });
+      const end = (e) => {
+        const click = this.pointers.size === 1 && this.moved < 5 && e.type === "pointerup";
+        this.pointers.delete(e.pointerId); c.classList.remove("dragging");
+        if (click && this.opts.onClick) { const r = c.getBoundingClientRect(); this.opts.onClick(this.hit(e.clientX - r.left, e.clientY - r.top)); }
+      };
+      c.addEventListener("pointerup", end); c.addEventListener("pointercancel", end);
+      c.addEventListener("pointerleave", () => { this.tip.hidden = true; });
+      c.addEventListener("dblclick", (e) => { const r = c.getBoundingClientRect(); this.zoomAt(e.clientX - r.left, e.clientY - r.top, 2); });
+    }
+    hit(x, y) {
+      const pts = this.opts.points ? this.opts.points() : [];
+      let best = null, bd = 10;
+      for (let i = pts.length - 1; i >= 0; i--) { const p = pts[i]; const [px, py] = this.project(p.lon, p.lat); const d = Math.hypot(px - x, py - y) - (p.r || 4); if (d < bd) { bd = d; best = p; } }
+      if (best) return best;
+      const cells = this.opts.cells ? this.opts.cells() : null;
+      if (cells) {
+        const [lon, lat] = this.unproject(x, y);
+        for (const c of cells) if (c.bbox[0] <= lon && lon <= c.bbox[2] && c.bbox[1] <= lat && lat <= c.bbox[3] && inRing(lon, lat, c.ring)) return { type: "cell", cell: c };
+      }
+      return null;
+    }
+    hover(x, y) {
+      const hit = this.hit(x, y);
+      if (!hit || !this.opts.tooltip) { this.tip.hidden = true; return; }
+      setHTML(this.tip, this.opts.tooltip(hit)); this.tip.hidden = false;
+      const tw = this.tip.offsetWidth, th = this.tip.offsetHeight;
+      this.tip.style.left = Math.max(6, Math.min(this.w - tw - 6, x + 14)) + "px";
+      this.tip.style.top = Math.max(6, Math.min(this.h - th - 6, y + 14)) + "px";
+    }
+    draw() {
+      if (!this.w) return;
+      const g = this.canvas.getContext("2d"); g.setTransform(this.dpr, 0, 0, this.dpr, 0, 0);
+      g.fillStyle = css("--surface"); g.fillRect(0, 0, this.w, this.h);
+      this.opts.render(g, this);
+    }
+    path(g, coords) { coords.forEach((pt, i) => { const [x, y] = this.project(pt[0], pt[1]); if (i) g.lineTo(x, y); else g.moveTo(x, y); }); }
+    hex(g, ring) { g.beginPath(); for (let j = 0; j < ring.length; j += 2) { const [x, y] = this.project(ring[j], ring[j + 1]); if (j) g.lineTo(x, y); else g.moveTo(x, y); } g.closePath(); }
+  }
+  function inRing(x, y, ring) {
+    let inside = false;
+    for (let i = 0, j = ring.length - 2; i < ring.length; j = i, i += 2) {
+      const xi = ring[i], yi = ring[i + 1], xj = ring[j], yj = ring[j + 1];
+      if (yi > y !== yj > y && x < ((xj - xi) * (y - yi)) / (yj - yi) + xi) inside = !inside;
+    }
+    return inside;
+  }
+  function drawBase(g, m, cells) {
+    g.lineCap = "round"; g.lineJoin = "round";
+    for (const f of DATA.base.lines.features) {
+      const t = f.properties.type; const geom = f.geometry;
+      g.strokeStyle = t === "river" ? mix(css("--series-1"), css("--surface").startsWith("#") ? css("--surface") : "#ffffff", 0.45) : css("--line");
+      g.lineWidth = t === "river" ? 2.4 : t === "major" ? 1.6 : 0.8;
+      const parts = geom.type === "LineString" ? [geom.coordinates] : geom.coordinates;
+      g.beginPath(); parts.forEach((p) => m.path(g, p)); g.stroke();
+    }
+    if (cells) cells();
+    g.strokeStyle = css("--muted"); g.lineWidth = 1.2;
+    for (const f of DATA.base.districts.features) {
+      const polys = f.geometry.type === "Polygon" ? [f.geometry.coordinates] : f.geometry.coordinates;
+      g.beginPath(); polys.forEach((poly) => poly.forEach((ring) => { m.path(g, ring); g.closePath(); })); g.stroke();
+    }
+  }
+  function drawLabels(g, m) {
+    g.font = `600 12px ${css("--font-body")}`; g.textAlign = "center"; g.lineWidth = 3; g.strokeStyle = css("--surface"); g.fillStyle = css("--ink");
+    for (const d of DATA.districtCentres) { const [x, y] = m.project(d.lon, d.lat); g.strokeText(d.name, x, y); g.fillText(d.name, x, y); }
+  }
+  function marker(g, x, y, shape, r, fill, stroke, lw = 1.5) {
+    g.beginPath();
+    if (shape === "square") g.rect(x - r, y - r, 2 * r, 2 * r);
+    else if (shape === "diamond") { g.moveTo(x, y - r * 1.3); g.lineTo(x + r * 1.3, y); g.lineTo(x, y + r * 1.3); g.lineTo(x - r * 1.3, y); g.closePath(); }
+    else g.arc(x, y, r, 0, Math.PI * 2);
+    if (fill) { g.fillStyle = fill; g.fill(); }
+    if (stroke) { g.strokeStyle = stroke; g.lineWidth = lw; g.stroke(); }
+  }
+
+  // ---------- data ----------
+  function prepare() {
+    const c = DATA.cells; const f = c.fields;
+    DATA.cellList = c.rows.map((row, i) => {
+      const o = {}; f.forEach((k, j) => (o[k] = row[j])); const ring = c.rings[i];
+      let x0 = 1e9, y0 = 1e9, x1 = -1e9, y1 = -1e9;
+      for (let j = 0; j < ring.length; j += 2) { x0 = Math.min(x0, ring[j]); x1 = Math.max(x1, ring[j]); y0 = Math.min(y0, ring[j + 1]); y1 = Math.max(y1, ring[j + 1]); }
+      o.ring = ring; o.bbox = [x0, y0, x1, y1]; return o;
+    });
+    let x0 = 1e9, y0 = 1e9, x1 = -1e9, y1 = -1e9;
+    DATA.cellList.forEach((o) => { x0 = Math.min(x0, o.bbox[0]); y0 = Math.min(y0, o.bbox[1]); x1 = Math.max(x1, o.bbox[2]); y1 = Math.max(y1, o.bbox[3]); });
+    DATA.bounds = [x0, y0, x1, y1];
+    DATA.schoolChildren = DATA.cellList.reduce((s, o) => s + (o.school_children || 0), 0);
+    DATA.districtCentres = DATA.base.districts.features.map((ft) => {
+      const polys = ft.geometry.type === "Polygon" ? [ft.geometry.coordinates] : ft.geometry.coordinates;
+      let best = null; polys.forEach((p) => { if (!best || p[0].length > best.length) best = p[0]; });
+      let sx = 0, sy = 0; best.forEach((pt) => { sx += pt[0]; sy += pt[1]; });
+      return { name: ft.properties.name_en, lon: sx / best.length, lat: sy / best.length };
+    });
+    DATA.schools.forEach((s) => { s.ratio = s.enrolment_2025 && s.capacity ? s.enrolment_2025 / s.capacity : null; });
+    DATA.planNew = DATA.sites.plan.filter((p) => p.kind === "new");
+    DATA.pdpById = Object.fromEntries(DATA.sites.pdp.map((p) => [p.id, p]));
+    DATA.rankOf = {};
+    for (const r in DATA.sites.ranking) DATA.rankOf[r] = Object.fromEntries(DATA.sites.ranking[r].map((x, i) => [x.id, i + 1]));
+  }
+  function siteReach(id, r) { const list = DATA.reach.sites[r][id]; let s = 0; if (list) for (const i of list) s += DATA.reach.children[i]; return s; }
+  function reachOf(ids, r) {
+    const seen = new Uint8Array(DATA.reach.children.length); let s = 0;
+    for (const id of ids) { const list = DATA.reach.sites[r][id]; if (!list) continue; for (const i of list) if (!seen[i]) { seen[i] = 1; s += DATA.reach.children[i]; } }
+    return s;
+  }
+
+  // ---------- overview ----------
+  function overview() {
+    const S = DATA.summary; const comp = S.compliance || {}; const crowd = S.crowding || {};
+    const unc = DATA.reach.total_uncovered["1000"];
+    const planReach = reachOf(DATA.planNew.map((p) => p.id), "1000");
+    const best17 = DATA.sites.ranking["1000"][16].cumulative;
+    const kp = [
+      [pct(comp["school/network"]?.city), "of school-age children live within 500 m of a school on foot", `${pct(comp["school/straight_line"]?.city)} by straight line`],
+      [pct(comp["preschool/network"]?.city), "of preschool-age children live within 300 m of a preschool on foot", `${pct(comp["preschool/straight_line"]?.city)} by straight line`],
+      [fmt(unc), "children have no state school within 1 km on foot", `${pct(unc / DATA.schoolChildren)} of school-age children`],
+      [fmt(crowd.pupils_per_place, 1), "pupils per design place in state schools", `${pct(crowd.pupils_in_schools_beyond_two_shifts_share)} study in schools beyond two shifts`],
+      [pct(planReach / unc), "of them get a school within 1 km from the 2026–2028 plan", `${fmt(planReach)} children, 17 new schools`],
+      [(best17 / planReach).toFixed(1) + "×", "as many reached by the best 17 reserved sites", `${fmt(best17)} children with the same number of schools`],
+    ];
+    setHTML(q("#kpis"), kp.map(([v, l, n]) => `<div class="kpi"><span class="value">${v}</span><span class="label">${l}</span><span class="note">${n}</span></div>`).join(""));
+    districtTable(); districtChart();
+  }
+  function districtRows() {
+    const S = DATA.summary; const comp = S.compliance || {}; const crowd = (S.crowding || {}).by_district || {};
+    const lost = {}; DATA.cellList.forEach((c) => { lost[c.district] = (lost[c.district] || 0) + (c.uncovered_1000 || 0); });
+    return DISTRICTS.map((d) => ({
+      district: d, residents: S.official_population[d],
+      school: S.equity.school.district_relative[d], preschool: S.equity.preschool.district_relative[d],
+      walkSchool: comp["school/network"]?.[d], walkPre: comp["preschool/network"]?.[d],
+      ppp: crowd[d]?.pupils_per_place, uncovered: lost[d], places: (S.plan.seats_by_district || {})[d] || 0,
+    }));
+  }
+  let sortKey = "school", sortDir = 1;
+  function relBar(v) {
+    if (v == null) return "–";
+    const w = Math.min(1, v / 1.6) * 100; const col = v < 1 ? css("--neg") : css("--series-1");
+    return `<span class="bar-cell"><span class="num">${v.toFixed(2)}</span><span class="bar-track" aria-hidden="true"><span class="bar-fill" style="width:${w}%;background:${col}"></span></span></span>`;
+  }
+  function districtTable() {
+    const rows = districtRows().sort((a, b) => sortDir * ((a[sortKey] ?? 0) - (b[sortKey] ?? 0)) || a.district.localeCompare(b.district));
+    const cols = [
+      ["district", "District", (r) => `<b>${r.district}</b>`, false],
+      ["residents", "Residents", (r) => fmt(r.residents), true],
+      ["school", "School access", (r) => relBar(r.school), true],
+      ["preschool", "Preschool access", (r) => relBar(r.preschool), true],
+      ["walkSchool", "On foot, school", (r) => pct(r.walkSchool), true],
+      ["walkPre", "On foot, preschool", (r) => pct(r.walkPre), true],
+      ["ppp", "Pupils per place", (r) => fmt(r.ppp, 2), true],
+      ["uncovered", "No school within 1 km", (r) => fmt(r.uncovered), true],
+      ["places", "Planned places", (r) => fmt(r.places), true],
+    ];
+    const t = q("#district-table");
+    const head = cols.map(([k, l, , r]) => `<th class="${r ? "r" : ""}"><button type="button" data-k="${k}">${l}${sortKey === k ? (sortDir > 0 ? " ↑" : " ↓") : ""}</button></th>`).join("");
+    const body = rows.map((r) => `<tr>${cols.map(([, , fn, rr]) => `<td class="${rr ? "r num" : ""}">${fn(r)}</td>`).join("")}</tr>`).join("");
+    setHTML(t, `<thead><tr>${head}</tr></thead><tbody>${body}</tbody>`);
+    t.querySelectorAll("th button").forEach((b) => b.addEventListener("click", () => { const k = b.dataset.k; if (sortKey === k) sortDir = -sortDir; else { sortKey = k; sortDir = 1; } districtTable(); }));
+  }
+  function districtChart() {
+    const S = DATA.summary;
+    const rows = DISTRICTS.map((d) => ({ d, s: S.equity.school.district_relative[d], p: S.equity.preschool.district_relative[d] })).sort((a, b) => a.s - b.s);
+    const W = 520, rowH = 40, top = 30, left = 92, right = 36, H = top + rows.length * rowH + 30;
+    const max = 1.7; const x = (v) => left + (v / max) * (W - left - right);
+    let s = `<svg viewBox="0 0 ${W} ${H}" width="100%" role="img" aria-label="Accessibility per child by district relative to the city mean, schools and preschools">`;
+    [0, 0.5, 1, 1.5].forEach((t) => { s += `<line x1="${x(t)}" x2="${x(t)}" y1="${top - 8}" y2="${H - 26}" stroke="${t === 1 ? css("--muted") : css("--line")}" ${t === 1 ? 'stroke-dasharray="3 3"' : ""}/><text x="${x(t)}" y="${H - 10}" text-anchor="middle">${t === 1 ? "city mean" : t.toFixed(1)}</text>`; });
+    rows.forEach((r, i) => {
+      const y = top + i * rowH;
+      s += `<text x="${left - 10}" y="${y + 20}" text-anchor="end" class="ink">${r.d}</text>`;
+      s += `<rect x="${x(0)}" y="${y + 3}" width="${x(r.s) - x(0)}" height="14" rx="3" fill="${css("--series-1")}"><title>${r.d}, schools: ${r.s.toFixed(2)}</title></rect>`;
+      s += `<rect x="${x(0)}" y="${y + 19}" width="${x(r.p) - x(0)}" height="14" rx="3" fill="${css("--series-2")}"><title>${r.d}, preschools: ${r.p.toFixed(2)}</title></rect>`;
+      s += `<text x="${x(r.s) + 5}" y="${y + 14}">${r.s.toFixed(2)}</text><text x="${x(r.p) + 5}" y="${y + 30}">${r.p.toFixed(2)}</text>`;
+    });
+    s += `<rect x="${left}" y="4" width="10" height="10" rx="2" fill="${css("--series-1")}"/><text x="${left + 15}" y="13" class="ink">Schools</text><rect x="${left + 85}" y="4" width="10" height="10" rx="2" fill="${css("--series-2")}"/><text x="${left + 100}" y="13" class="ink">Preschools</text></svg>`;
+    setHTML(q("#district-chart"), s);
+  }
+
+  // ---------- main map ----------
+  let mainMap, baseKey = "school_access", selectedHit = null;
+  const ov = () => ({ cluster: q("#ov-cluster").checked, schools: q("#ov-schools").checked, pre: q("#ov-pre").checked, prog: q("#ov-prog").checked, plan: q("#ov-plan").checked, pdp: q("#ov-pdp").checked });
+  function cellColor(c, key) {
+    if (key === "school_access") return c.school_children > 0 ? diverging(c.school_access) : null;
+    if (key === "preschool_access") return c.preschool_children > 0 ? diverging(c.preschool_access) : null;
+    if (key === "uncovered_1000") return c.uncovered_1000 > 0 ? ramp(Math.sqrt(c.uncovered_1000 / 350)) : null;
+    if (key === "school_children") return c.school_children > 0 ? ramp(Math.sqrt(c.school_children / 900)) : null;
+    return null;
+  }
+  function drawCells(g, m, key, clusterKey) {
+    for (const c of DATA.cellList) { const col = cellColor(c, key); if (!col) continue; m.hex(g, c.ring); g.fillStyle = col; g.globalAlpha = 0.92; g.fill(); g.globalAlpha = 1; }
+    if (clusterKey) { g.strokeStyle = css("--ink"); g.lineWidth = 1.3; for (const c of DATA.cellList) { if (!c[clusterKey]) continue; m.hex(g, c.ring); g.stroke(); } }
+  }
+  function mainPoints() {
+    const o = ov(); const pts = [];
+    if (o.pre) DATA.preschools.forEach((p) => pts.push({ type: "preschool", item: p, lon: p.lon, lat: p.lat, r: 3 }));
+    if (o.pdp) DATA.sites.pdp.forEach((p) => pts.push({ type: "pdp", item: p, lon: p.lon, lat: p.lat, r: 3.5 }));
+    if (o.schools) DATA.schools.filter((s) => !s.programme).forEach((s) => pts.push({ type: "school", item: s, lon: s.lon, lat: s.lat, r: 4.5 }));
+    if (o.prog) DATA.schools.filter((s) => s.programme).forEach((s) => pts.push({ type: "programme", item: s, lon: s.lon, lat: s.lat, r: 5 }));
+    if (o.plan) DATA.sites.plan.forEach((p) => pts.push({ type: "plan", item: p, lon: p.lon, lat: p.lat, r: 5.5 }));
+    return pts;
+  }
+  function drawPoint(g, m, p, selected) {
+    const [x, y] = m.project(p.lon, p.lat); const surf = css("--surface");
+    if (p.type === "preschool") marker(g, x, y, "circle", 2.6, css("--series-3"), surf, 0.8);
+    else if (p.type === "pdp") marker(g, x, y, "circle", 3.2, null, css("--series-3"), 1.6);
+    else if (p.type === "school") marker(g, x, y, "circle", 4.2, p.item.ratio > 2 ? css("--serious") : css("--ink"), surf, 1.4);
+    else if (p.type === "programme") marker(g, x, y, "square", 4.4, p.item.ratio > 2 ? css("--serious") : css("--ink"), surf, 1.4);
+    else if (p.type === "plan") marker(g, x, y, "diamond", 4.4, css("--series-2"), surf, 1.4);
+    if (selected) marker(g, x, y, "circle", 10, null, css("--ink"), 2);
+  }
+  function renderMain(g, m) {
+    const o = ov();
+    const clusterKey = o.cluster ? (baseKey === "preschool_access" ? "preschool_cluster" : "school_cluster") : null;
+    drawBase(g, m, () => drawCells(g, m, baseKey, clusterKey));
+    for (const p of mainPoints()) drawPoint(g, m, p, selectedHit && selectedHit.item && selectedHit.item === p.item);
+    if (selectedHit && selectedHit.type === "cell") { g.strokeStyle = css("--ink"); g.lineWidth = 2.5; m.hex(g, selectedHit.cell.ring); g.stroke(); }
+    drawLabels(g, m);
+  }
+  function access(v) { return v == null ? "–" : v.toFixed(2); }
+  function tipFor(hit) {
+    if (hit.type === "cell") {
+      const c = hit.cell;
+      return `<b>${c.district}</b><br>School access ${access(c.school_access)} · preschool ${access(c.preschool_access)}<br>${fmt(c.school_children)} school-age children, ${fmt(c.uncovered_1000)} without a school within 1 km`;
+    }
+    const it = hit.item;
+    if (hit.type === "school" || hit.type === "programme") return `<b>${it.number ? "School " + it.number : esc(it.name).slice(0, 60)}</b>${hit.type === "programme" ? " · Comfortable School" : ""}<br>${it.capacity ? fmt(it.capacity) + " places" : ""}${it.enrolment_2025 ? " · " + fmt(it.enrolment_2025) + " pupils" : ""}${it.ratio ? " · " + it.ratio.toFixed(2) + " per place" : ""}`;
+    if (hit.type === "preschool") return `<b>${esc(it.name)}</b><br>${esc(it.ownership)} · ${fmt(it.capacity)} places · ${fmt(it.attending)} children`;
+    if (hit.type === "plan") return `<b>${esc(it.code)} · ${it.year}</b> · ${esc(it.kind)}<br>${esc(it.name)}<br>${fmt(it.seats)} places in two shifts`;
+    if (hit.type === "pdp") { const rk = DATA.rankOf[radius][it.id]; return `<b>Detailed-plan site</b>${rk ? " · rank " + rk : ""}<br>${esc(it.purpose)}<br>${fmt(siteReach(it.id, radius))} children without a school within ${radius === "1000" ? "1 km" : "1.5 km"}`; }
+    return "";
+  }
+  function detailFor(hit) {
+    const box = q("#map-detail");
+    if (!hit) { setHTML(box, `<p class="muted small">Click a block, school or site on the map to see its figures.</p>`); return; }
+    const dl = (pairs) => `<dl>${pairs.map(([a, b]) => `<dt>${a}</dt><dd>${b}</dd>`).join("")}</dl>`;
+    if (hit.type === "cell") {
+      const c = hit.cell;
+      setHTML(box, `<p class="name">${c.district} · block ${esc(c.h3)}</p>` + dl([["School access", access(c.school_access)], ["Preschool access", access(c.preschool_access)], ["School-age children", fmt(c.school_children)], ["Preschool-age children", fmt(c.preschool_children)], ["No school within 1 km", fmt(c.uncovered_1000)], ["No school within 1.5 km", fmt(c.uncovered_1500)], ["Low-access cluster, schools", c.school_cluster ? "yes" : "no"]]));
+      return;
+    }
+    const it = hit.item;
+    if (hit.type === "school" || hit.type === "programme") {
+      setHTML(box, `<p class="name">${esc(it.name)}</p>` + dl([["District", esc(it.district || "–")], ["Design capacity", fmt(it.capacity)], ["Pupils 2025–2026", fmt(it.enrolment_2025)], ["Pupils 2026–2027", fmt(it.enrolment_2026)], ["Pupils per place", it.ratio ? it.ratio.toFixed(2) : "–"], ["Shifts", fmt(it.shifts)], ["Comfortable School", it.programme ? "yes" : "no"]]) + (it.ratio > 2 ? `<span class="pill"><span class="dot" style="background:${css("--serious")}"></span>Beyond two shifts</span>` : ""));
+      return;
+    }
+    if (hit.type === "preschool") { setHTML(box, `<p class="name">${esc(it.name)}</p>` + dl([["Ownership", esc(it.ownership)], ["District", esc(it.district || "–")], ["Design capacity", fmt(it.capacity)], ["Attending", fmt(it.attending)], ["Free places, 30 Sep", fmt(it.free)]])); return; }
+    if (hit.type === "plan") { setHTML(box, `<p class="name">${esc(it.code)}: ${esc(it.name)}</p>` + dl([["Completion", it.year], ["Kind", esc(it.kind)], ["Places in two shifts", fmt(it.seats)], ["District", esc(it.district)], ["Position", esc(it.confidence) + " confidence"], ["Children reached, 1 km", it.kind === "new" ? fmt(siteReach(it.id, "1000")) : "–"]])); return; }
+    if (hit.type === "pdp") { setHTML(box, `<p class="name">${esc(it.purpose)}</p>` + dl([["Rank at 1 km", DATA.rankOf["1000"][it.id] || "adds none"], ["Reached alone, 1 km", fmt(siteReach(it.id, "1000"))], ["Reached alone, 1.5 km", fmt(siteReach(it.id, "1500"))], ["Places", fmt(it.seats)]])); }
+  }
+  function symbol(shape, fill, stroke) {
+    let d;
+    if (shape === "square") d = `<rect x="3" y="3" width="8" height="8" fill="${fill}" stroke="${stroke}"/>`;
+    else if (shape === "diamond") d = `<path d="M7 1 L13 7 L7 13 L1 7 Z" fill="${fill}" stroke="${stroke}"/>`;
+    else if (shape === "ring") d = `<circle cx="7" cy="7" r="4" fill="none" stroke="${fill}" stroke-width="1.8"/>`;
+    else if (shape === "hex") d = `<path d="M7 1 L12.5 4 L12.5 10 L7 13 L1.5 10 L1.5 4 Z" fill="none" stroke="${fill}" stroke-width="1.5"/>`;
+    else d = `<circle cx="7" cy="7" r="4.5" fill="${fill}" stroke="${stroke}"/>`;
+    return `<svg class="sym" viewBox="0 0 14 14" aria-hidden="true">${d}</svg>`;
+  }
+  function legendMain() {
+    const L = q("#map-legend");
+    if (baseKey.endsWith("access")) {
+      const stops = [0.25, 0.5, 1, 2, 4].map((v) => diverging(v));
+      setHTML(L, `<div class="ramp" style="background:linear-gradient(90deg,${stops.join(",")})"></div><div class="ticks"><span>¼ or less</span><span>½</span><span>city mean</span><span>2×</span><span>4×</span></div>`);
+    } else if (baseKey === "none") setHTML(L, "");
+    else {
+      const st = [0, 0.25, 0.5, 0.75, 1].map((t) => ramp(t)); const max = baseKey === "uncovered_1000" ? 350 : 900;
+      setHTML(L, `<div class="ramp" style="background:linear-gradient(90deg,${st.join(",")})"></div><div class="ticks"><span>0</span><span>${fmt(max / 4)}</span><span>${fmt(max)}+ children per block</span></div>`);
+    }
+    const surf = css("--surface");
+    setHTML(q("#symbol-legend"), [
+      [symbol("hex", css("--ink")), "Low-access cluster (local Moran, p < 0.05)"],
+      [symbol("circle", css("--ink"), surf), "State school"],
+      [symbol("circle", css("--serious"), surf), "School beyond two shifts"],
+      [symbol("square", css("--ink"), surf), "Comfortable School"],
+      [symbol("diamond", css("--series-2"), surf), "Plan 2026–2028"],
+      [symbol("ring", css("--series-3")), "Detailed-plan school site"],
+      [symbol("circle", css("--series-3"), surf), "Preschool"],
+    ].map(([s, l]) => `<div class="row">${s}<span>${l}</span></div>`).join(""));
+  }
+  function initMain() {
+    mainMap = new MapView(q("#map-main"), {
+      label: "Map of Astana with accessibility per block, schools and planned sites",
+      bounds: DATA.bounds, render: renderMain, points: mainPoints, cells: () => (baseKey === "none" ? null : DATA.cellList), tooltip: tipFor,
+      onClick: (hit) => { selectedHit = hit; detailFor(hit); mainMap.draw(); },
+    });
+    document.querySelectorAll('input[name="base"]').forEach((r) => r.addEventListener("change", () => { baseKey = r.value; legendMain(); mainMap.draw(); }));
+    ["#ov-cluster", "#ov-schools", "#ov-pre", "#ov-prog", "#ov-plan", "#ov-pdp"].forEach((s) => q(s).addEventListener("change", () => mainMap.draw()));
+    q("#school-search").addEventListener("input", (e) => {
+      const n = parseInt(e.target.value, 10); if (!n) return;
+      const s = DATA.schools.find((x) => x.number === n); if (!s) return;
+      q("#ov-schools").checked = true; q("#ov-prog").checked = true;
+      selectedHit = { type: s.programme ? "programme" : "school", item: s, lon: s.lon, lat: s.lat };
+      detailFor(selectedHit); mainMap.centerOn(s.lon, s.lat, Math.max(mainMap.k, 25000));
+    });
+    legendMain(); detailFor(null);
+  }
+
+  // ---------- screening ----------
+  let screenMap, radius = "1000"; const selection = new Set();
+  function screenPoints() {
+    const pts = DATA.sites.pdp.map((p) => ({ type: "pdp", item: p, lon: p.lon, lat: p.lat, r: 5 }));
+    DATA.planNew.forEach((p) => pts.push({ type: "plan", item: p, lon: p.lon, lat: p.lat, r: 5 }));
+    return pts;
+  }
+  function renderScreen(g, m) {
+    const key = radius === "1000" ? "uncovered_1000" : "uncovered_1500";
+    drawBase(g, m, () => { for (const c of DATA.cellList) { const v = c[key]; if (!(v > 0)) continue; m.hex(g, c.ring); g.fillStyle = ramp(Math.sqrt(v / 350)); g.fill(); } });
+    const surf = css("--surface");
+    for (const p of DATA.planNew) { const [x, y] = m.project(p.lon, p.lat); marker(g, x, y, "diamond", 4.2, css("--series-2"), surf, 1.3); }
+    for (const p of DATA.sites.pdp) {
+      const [x, y] = m.project(p.lon, p.lat);
+      if (selection.has(p.id)) {
+        marker(g, x, y, "circle", 8, css("--series-3"), surf, 2);
+        const rk = DATA.rankOf[radius][p.id];
+        if (rk && rk < 100) { g.font = `700 10px ${css("--font-mono")}`; g.fillStyle = "#ffffff"; g.textAlign = "center"; g.textBaseline = "middle"; g.fillText(String(rk), x, y + 0.5); g.textBaseline = "alphabetic"; }
+      } else marker(g, x, y, "circle", 3.2, null, css("--series-3"), 1.5);
+    }
+    drawLabels(g, m);
+  }
+  function setBest(n) { selection.clear(); DATA.sites.ranking[radius].slice(0, n).forEach((x) => selection.add(x.id)); }
+  function syncSlider(n) { const s = q("#best-n"); s.value = n; q("#best-n-label").textContent = String(n); }
+  function updateScreen() {
+    const ids = [...selection]; const total = reachOf(ids, radius); const plan = reachOf(DATA.planNew.map((p) => p.id), radius);
+    const all = DATA.reach.total_uncovered[radius]; const dist = radius === "1000" ? "1 km" : "1.5 km";
+    q("#sel-total").textContent = fmt(total); q("#plan-total").textContent = fmt(plan);
+    q("#sel-meta").textContent = `${ids.length} site${ids.length === 1 ? "" : "s"}`;
+    q("#sel-share").textContent = `${fmt(all)} children have no state school within ${dist}. Your selection reaches ${pct(total / all, 1)}, the plan ${pct(plan / all, 1)}.` + (plan > 0 && ids.length ? ` That is ${(total / plan).toFixed(1)}× the plan.` : "");
+    const ordered = ids.map((id) => ({ id, rk: DATA.rankOf[radius][id] || 999, solo: siteReach(id, radius) })).sort((a, b) => a.rk - b.rk);
+    const seen = new Uint8Array(DATA.reach.children.length);
+    ordered.forEach((o) => { let gain = 0; (DATA.reach.sites[radius][o.id] || []).forEach((i) => { if (!seen[i]) { seen[i] = 1; gain += DATA.reach.children[i]; } }); o.gain = gain; });
+    setHTML(q("#sel-table"), ids.length
+      ? `<thead><tr><th>Rank</th><th>Site in the detailed plan</th><th class="r">Adds</th><th class="r">Alone</th></tr></thead><tbody>${ordered.map((o) => `<tr><td class="num">${o.rk === 999 ? "–" : o.rk}</td><td>${esc(DATA.pdpById[o.id].purpose).slice(0, 60)}</td><td class="r num">${fmt(o.gain)}</td><td class="r num">${fmt(o.solo)}</td></tr>`).join("")}</tbody>`
+      : `<tbody><tr><td class="muted">No sites selected. Move the slider or click sites on the map.</td></tr></tbody>`);
+    curve(total, ids.length, plan); screenMap.draw();
+  }
+  function niceTicks(max, n) { const step0 = max / n; const mag = Math.pow(10, Math.floor(Math.log10(step0))); const step = [1, 2, 5, 10].map((v) => v * mag).find((v) => v >= step0); const out = []; for (let v = 0; v <= max; v += step) out.push(v); return out; }
+  function curve(total, n, plan) {
+    const R = DATA.sites.ranking[radius];
+    const W = 300, H = 200, l = 46, r = 14, t = 14, b = 32; const maxN = R.length; const maxY = Math.max(R[R.length - 1].cumulative, total, plan) * 1.05;
+    const x = (v) => l + (v / maxN) * (W - l - r), y = (v) => H - b - (v / maxY) * (H - t - b);
+    let d = `M${x(0)},${y(0)}`; R.forEach((p, i) => (d += ` L${x(i + 1)},${y(p.cumulative)}`));
+    let s = `<svg viewBox="0 0 ${W} ${H}" width="100%" role="img" aria-label="Children reached as detailed-plan sites are added in order of gain, with the plan for comparison">`;
+    niceTicks(maxY, 4).forEach((v) => (s += `<line x1="${l}" x2="${W - r}" y1="${y(v)}" y2="${y(v)}" stroke="${css("--line")}"/><text x="${l - 6}" y="${y(v) + 4}" text-anchor="end">${v >= 1000 ? fmt(v / 1000) + "k" : fmt(v)}</text>`));
+    [0, Math.round(maxN / 2), maxN].forEach((v) => (s += `<text x="${x(v)}" y="${H - 12}" text-anchor="middle">${v}</text>`));
+    s += `<path d="${d}" fill="none" stroke="${css("--series-3")}" stroke-width="2"/>`;
+    s += `<circle cx="${x(17)}" cy="${y(plan)}" r="5" fill="${css("--series-2")}" stroke="${css("--surface")}" stroke-width="2"><title>Plan 2026–2028: ${fmt(plan)} children with 17 schools</title></circle><text x="${x(17) + 8}" y="${y(plan) + 4}" class="ink">plan</text>`;
+    if (n) s += `<circle cx="${x(Math.min(n, maxN))}" cy="${y(total)}" r="5" fill="${css("--ink")}" stroke="${css("--surface")}" stroke-width="2"><title>Your selection: ${fmt(total)} children with ${n} sites</title></circle><text x="${x(Math.min(n, maxN)) + 8}" y="${y(total) - 6}" class="ink">you</text>`;
+    s += `<text x="${W - r}" y="${H - 12}" text-anchor="end">sites →</text></svg>`;
+    setHTML(q("#curve"), s);
+  }
+  function initScreen() {
+    screenMap = new MapView(q("#map-screen"), {
+      label: "Map of children without a school within walking distance and the school sites of the detailed plans",
+      bounds: DATA.bounds, render: renderScreen, points: screenPoints, tooltip: tipFor,
+      onClick: (hit) => { if (hit && hit.type === "pdp") { const id = hit.item.id; if (selection.has(id)) selection.delete(id); else selection.add(id); updateScreen(); } },
+    });
+    const slider = q("#best-n"); slider.max = String(DATA.sites.ranking["1000"].length);
+    slider.addEventListener("input", () => { syncSlider(+slider.value); setBest(+slider.value); updateScreen(); });
+    document.querySelectorAll(".seg button[data-radius]").forEach((b) => b.addEventListener("click", () => {
+      radius = b.dataset.radius; document.querySelectorAll(".seg button[data-radius]").forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
+      slider.max = String(DATA.sites.ranking[radius].length); const n = Math.min(+slider.value, +slider.max); syncSlider(n); setBest(n); updateScreen();
+    }));
+    q("#sel-17").addEventListener("click", () => { syncSlider(17); setBest(17); updateScreen(); });
+    q("#sel-clear").addEventListener("click", () => { selection.clear(); syncSlider(0); updateScreen(); });
+    q("#sel-copy").addEventListener("click", () => {
+      const lines = [...selection].map((id) => { const p = DATA.pdpById[id]; return `${DATA.rankOf[radius][id] || "-"}\t${p.purpose}\t${p.lat}, ${p.lon}\t${Math.round(siteReach(id, radius))}`; });
+      const text = "Rank\tSite\tLat, lon\tChildren reached alone\n" + lines.join("\n"); const status = q("#copy-status");
+      if (!navigator.clipboard) { status.textContent = "Copying is not available here; select the table below instead."; return; }
+      navigator.clipboard.writeText(text).then(() => (status.textContent = `Copied ${lines.length} sites as a table.`)).catch(() => (status.textContent = "Copying is blocked here; select the table below instead."));
+    });
+    syncSlider(17); setBest(17); updateScreen();
+  }
+
+  // ---------- crowding ----------
+  function hbars(rows, max, grid, color, label, notes = {}) {
+    const W = 520, rowH = 30, top = 8, left = 92, right = 54, H = top + rows.length * rowH + 28;
+    const x = (v) => left + (v / max) * (W - left - right);
+    let s = `<svg viewBox="0 0 ${W} ${H}" width="100%" role="img" aria-label="${label}">`;
+    grid.forEach((gv) => (s += `<line x1="${x(gv)}" x2="${x(gv)}" y1="${top}" y2="${H - 24}" stroke="${notes[gv] ? css("--muted") : css("--line")}" ${notes[gv] ? 'stroke-dasharray="3 3"' : ""}/><text x="${x(gv)}" y="${H - 8}" text-anchor="middle">${notes[gv] || (max <= 1 ? pct(gv) : gv)}</text>`));
+    rows.forEach(([name, v, txt], i) => { const y = top + i * rowH; s += `<text x="${left - 10}" y="${y + 17}" text-anchor="end" class="ink">${name}</text><rect x="${x(0)}" y="${y + 5}" width="${Math.max(0, x(v) - x(0))}" height="16" rx="3" fill="${color}"><title>${name}: ${txt}</title></rect><text x="${x(v) + 6}" y="${y + 17}">${txt}</text>`; });
+    return s + "</svg>";
+  }
+  function crowding() {
+    const C = DATA.summary.crowding; const by = C.by_district;
+    setHTML(q("#crowd-kpis"), [
+      [fmt(C.capacity), "design places in state and Binom schools", `${fmt(C.schools)} schools`],
+      [fmt(C.enrolment_2025), "pupils in 2025–2026", `${fmt(C.enrolment_2026)} in 2026–2027`],
+      [fmt(C.schools_beyond_two_shifts), "schools enrol more than two shifts can hold", `${pct(C.pupils_in_schools_beyond_two_shifts_share)} of pupils study in them`],
+      [fmt(C.pupils_beyond_two_shifts), "pupils beyond two full shifts", "places the city is short of"],
+    ].map(([v, l, n]) => `<div class="kpi"><span class="value">${v}</span><span class="label">${l}</span><span class="note">${n}</span></div>`).join(""));
+    const rows = DISTRICTS.map((d) => ({ d, v: by[d].pupils_per_place, s: by[d].share_in_schools_beyond_two_shifts })).sort((a, b) => b.v - a.v);
+    setHTML(q("#crowd-chart"), hbars(rows.map((r) => [r.d, r.v, r.v.toFixed(2)]), 2.3, [1, 2], css("--series-1"), "Pupils per design place by district", { 2: "two shifts" }));
+    setHTML(q("#crowd-share"), hbars(rows.map((r) => [r.d, r.s, pct(r.s)]), 1, [0.25, 0.5, 0.75], css("--serious"), "Share of pupils in schools beyond two shifts by district"));
+    const list = DATA.schools.filter((s) => s.ratio > 2).sort((a, b) => b.ratio - a.ratio);
+    q("#crowd-count").textContent = `${list.length} schools`;
+    setHTML(q("#crowd-table"), `<thead><tr><th>School</th><th>District</th><th class="r">Places</th><th class="r">Pupils 2025–26</th><th class="r">Per place</th><th class="r">Change to 2026–27</th></tr></thead><tbody>${list.map((s) => `<tr><td>${s.number ? "No. " + s.number : esc(s.name).slice(0, 40)}${s.programme ? ' <span class="pill">Comfortable</span>' : ""}</td><td>${esc(s.district || "–")}</td><td class="r num">${fmt(s.capacity)}</td><td class="r num">${fmt(s.enrolment_2025)}</td><td class="r num">${s.ratio.toFixed(2)}</td><td class="r num">${s.enrolment_2026 ? (s.enrolment_2026 >= s.enrolment_2025 ? "+" : "") + pct(s.enrolment_2026 / s.enrolment_2025 - 1) : "–"}</td></tr>`).join("")}</tbody>`);
+  }
+
+  // ---------- method ----------
+  function h1Chart() {
+    const fit = DATA.summary.population_fit || {};
+    const series = [["stations_alpha_0.2", "Polling stations", css("--series-1"), "circle"], ["worldpop", "WorldPop", css("--series-2"), "square"], ["floor_area", "Floor area", css("--series-3"), "diamond"]];
+    const W = 520, rowH = 34, top = 30, left = 92, right = 20, H = top + DISTRICTS.length * rowH + 30;
+    const lo = 0.5, hi = 1.9, x = (v) => left + ((v - lo) / (hi - lo)) * (W - left - right);
+    let s = `<svg viewBox="0 0 ${W} ${H}" width="100%" role="img" aria-label="Predicted over official district population for three population surfaces">`;
+    [0.6, 0.8, 1, 1.2, 1.4, 1.6, 1.8].forEach((t) => (s += `<line x1="${x(t)}" x2="${x(t)}" y1="${top - 6}" y2="${H - 24}" stroke="${t === 1 ? css("--muted") : css("--line")}" ${t === 1 ? 'stroke-dasharray="3 3"' : ""}/><text x="${x(t)}" y="${H - 8}" text-anchor="middle">${t === 1 ? "exact" : t.toFixed(1)}</text>`));
+    DISTRICTS.forEach((d, i) => {
+      const y = top + i * rowH + 12; s += `<text x="${left - 10}" y="${y + 4}" text-anchor="end" class="ink">${d}</text>`;
+      series.forEach(([k, name, col, shape], j) => {
+        const v = fit[k]?.["ratio_" + d]; if (v == null) return;
+        const cx = x(Math.max(lo, Math.min(hi, v))), cy = y + (j - 1) * 7; const st = `fill="${col}" stroke="${css("--surface")}" stroke-width="1.5"`;
+        const title = `<title>${d}, ${name}: ${v.toFixed(2)}</title>`;
+        if (shape === "square") s += `<rect x="${cx - 4.5}" y="${cy - 4.5}" width="9" height="9" ${st}>${title}</rect>`;
+        else if (shape === "diamond") s += `<path d="M${cx} ${cy - 6} L${cx + 6} ${cy} L${cx} ${cy + 6} L${cx - 6} ${cy} Z" ${st}>${title}</path>`;
+        else s += `<circle cx="${cx}" cy="${cy}" r="5" ${st}>${title}</circle>`;
+      });
+    });
+    let lx = left; series.forEach(([, name, col]) => { s += `<circle cx="${lx + 5}" cy="10" r="5" fill="${col}"/><text x="${lx + 14}" y="14" class="ink">${name}</text>`; lx += name.length * 7 + 34; });
+    setHTML(q("#h1-chart"), s + "</svg>");
+  }
+  function method() {
+    const steps = [
+      ["Population", "Official district totals spread over 386 polling-station territories and, inside them, over dwellings found by a LightGBM classifier (ROC-AUC 0.982)."],
+      ["Walking", "Distances from every dwelling to every school and preschool within 4 km along 152,491 network nodes."],
+      ["Access", "Enhanced two-step floating catchment; each child is allocated once among facilities within 3 km for schools and 2 km for preschools."],
+      ["Equity", "Gini, Theil split between and within districts, and local Moran clusters on H3 blocks."],
+      ["Siting", "Capacitated maximal covering model on free land; backtest of the Comfortable School programme on the city of 2023."],
+    ];
+    setHTML(q("#steps"), steps.map(([h, t], i) => `<div class="step"><b>${i + 1}</b><h3>${h}</h3><p class="small muted">${t}</p></div>`).join(""));
+    h1Chart();
+    const S = DATA.summary; const lc = S.load_check || {}; const sens = S.sensitivity || {}; const pre = S.preschool || {};
+    const checks = [
+      ["District population error", "10% vs 26% for WorldPop"],
+      ["Allocated load vs enrolment, 119 schools", `${(lc.combined_almaty_saraishyk?.spearman ?? 0).toFixed(2)} vs ${(lc.original_first_step_spearman ?? 0).toFixed(2)} for the original method`],
+      ["Worst fifth across building surfaces", `Jaccard ${(sens["school/buildings"]?.deficit_jaccard_median ?? 0).toFixed(2)} schools, ${(sens["preschool/buildings"]?.deficit_jaccard_median ?? 0).toFixed(2)} preschools`],
+      ["Same with WorldPop", `Jaccard ${(sens["school/worldpop"]?.deficit_jaccard_median ?? 0).toFixed(2)}`],
+      ["Nura worst for schools", `${sens["school/buildings"]?.worst_district_counts?.Nura ?? "–"} of ${sens["school/buildings"]?.runs ?? "–"} runs`],
+      ["Preschool cards vs register totals", `${fmt(pre.attending)} vs 66,402 children`],
+    ];
+    setHTML(q("#checks"), `<tbody>${checks.map(([a, b]) => `<tr><td>${a}</td><td class="r num">${b}</td></tr>`).join("")}</tbody>`);
+    const sources = [
+      "OpenStreetMap: streets, addresses, schools, land use and history as of 1 January 2023",
+      "Overture Maps: 93,507 building footprints",
+      "Akim’s decision No. 01-7 on polling stations, as amended 18 February 2026",
+      "Bureau of National Statistics: population by district and single year of age",
+      "Education Department of Astana: service territories of 121 schools and the list of 198 schools with capacity, enrolment and shifts (replies to information requests)",
+      "Construction Department of Astana: 25 school projects for 2026–2028 (reply to an information request)",
+      "INDIGO preschool register and organisation cards: 794 preschools with capacity and attendance",
+      "City geoportal: school buildings in detailed planning projects",
+      "SP RK 3.01-101-2013: service radii and plot sizes",
+    ];
+    setHTML(q("#sources"), sources.map((s) => `<li>${s}</li>`).join(""));
+  }
+
+  // ---------- tabs and theme ----------
+  const TABS = ["overview", "map", "screening", "crowding", "method"];
+  const ready = {};
+  const init = { overview, map: initMain, screening: initScreen, crowding, method };
+  function show(tab) {
+    if (!TABS.includes(tab)) tab = "overview";
+    TABS.forEach((t) => { q("#tab-" + t).hidden = t !== tab; });
+    document.querySelectorAll("nav.tabs a").forEach((a) => { if (a.dataset.tab === tab) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current"); });
+    if (!ready[tab]) { ready[tab] = true; init[tab](); }
+    else if (tab === "map" && mainMap) mainMap.resize();
+    else if (tab === "screening" && screenMap) screenMap.resize();
+  }
+  function redrawAll() {
+    if (ready.overview) overview();
+    if (ready.crowding) crowding();
+    if (ready.method) h1Chart();
+    if (mainMap) { legendMain(); mainMap.draw(); }
+    if (screenMap) updateScreen();
+  }
+  new MutationObserver(redrawAll).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+  window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", redrawAll);
+
+  Promise.all(FILES.map((f) => fetch(`data/${f}.json`).then((r) => { if (!r.ok) throw new Error(f + ".json"); return r.json(); }).then((j) => (DATA[f] = j))))
+    .then(() => { prepare(); q("#loading").remove(); window.addEventListener("hashchange", () => show(location.hash.slice(1))); show(location.hash.slice(1)); })
+    .catch((e) => { q("#loading").textContent = "The atlas data did not load (" + e.message + "). Reload the page to try again."; });
+})();
+</script>

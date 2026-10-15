@@ -46,3 +46,12 @@ def test_seats_are_read_from_detailed_plan_purpose() -> None:
     assert seats("Общеобразовательная школа на 1200 уч-ся") == 1200
     assert seats("Образовательная школа на 2300 учащихся") == 2300
     assert np.isnan(seats("Школа"))
+
+
+def test_greedy_ranking_adds_the_largest_gain_first() -> None:
+    from astana_access.viz.dashboard import greedy
+
+    lists = {"a": [0, 1], "b": [1, 2, 3], "c": [3]}
+    order = greedy(lists, [10.0, 5.0, 4.0, 4.0], ["a", "b", "c"])
+    assert [o["id"] for o in order] == ["a", "b"]
+    assert order[-1]["cumulative"] == 23

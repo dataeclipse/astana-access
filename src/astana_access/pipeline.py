@@ -132,6 +132,12 @@ def stage_figures() -> None:
     figures.run()
 
 
+def stage_dashboard() -> None:
+    from astana_access.viz import dashboard
+
+    dashboard.build()
+
+
 STAGES: dict[str, Callable[[], None]] = {
     "boundary": stage_boundary,
     "worldpop": stage_worldpop,
@@ -145,6 +151,7 @@ STAGES: dict[str, Callable[[], None]] = {
     "programme": stage_programme,
     "checks": stage_checks,
     "figures": stage_figures,
+    "dashboard": stage_dashboard,
 }
 
 
