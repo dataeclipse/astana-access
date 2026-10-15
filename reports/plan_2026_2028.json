@@ -43,7 +43,7 @@
    "stages": {
     "2026": {
      "sites": 1,
-     "reached": 165.43030666148374,
+     "reached": 165.4303066614838,
      "reached_with_capacity": 165.43030666148374,
      "remaining_by_district": {
       "Almaty": 10517.0,
@@ -130,7 +130,7 @@
     },
     "2027": {
      "sites": 9,
-     "reached": 3130.8732540201163,
+     "reached": 3130.873254020117,
      "reached_with_capacity": 3130.8732540201167,
      "remaining_by_district": {
       "Almaty": 916.0,
@@ -179,38 +179,130 @@
    }
   }
  },
+ "crowding": {
+  "radius_m": 1500.0,
+  "selection": {
+   "beyond_two_shifts": {
+    "auc": 0.4933130368598457,
+    "low": 0.36375773484742535,
+    "high": 0.6280472622702656
+   },
+   "pupils_per_place": {
+    "auc": 0.5785582255083179,
+    "low": 0.4389026539895371,
+    "high": 0.7152586779352018
+   }
+  },
+  "by_site": {
+   "N01": {
+    "beyond_two_shifts": 0.0,
+    "pupils_per_place": 1.84
+   },
+   "N05": {
+    "beyond_two_shifts": 487.0,
+    "pupils_per_place": 1.93
+   },
+   "N06": {
+    "beyond_two_shifts": 2222.0,
+    "pupils_per_place": 2.18
+   },
+   "N07": {
+    "beyond_two_shifts": 0.0,
+    "pupils_per_place": 1.77
+   },
+   "N08": {
+    "beyond_two_shifts": 724.0,
+    "pupils_per_place": 2.06
+   },
+   "N10": {
+    "beyond_two_shifts": 1353.0,
+    "pupils_per_place": 1.79
+   },
+   "N11": {
+    "beyond_two_shifts": 1326.0,
+    "pupils_per_place": 2.09
+   },
+   "N12": {
+    "beyond_two_shifts": 0.0,
+    "pupils_per_place": 0.0
+   },
+   "N13": {
+    "beyond_two_shifts": 278.0,
+    "pupils_per_place": 1.86
+   },
+   "N17": {
+    "beyond_two_shifts": 912.0,
+    "pupils_per_place": 1.63
+   },
+   "N18": {
+    "beyond_two_shifts": 27.0,
+    "pupils_per_place": 1.39
+   },
+   "N19": {
+    "beyond_two_shifts": 0.0,
+    "pupils_per_place": 0.84
+   },
+   "N20": {
+    "beyond_two_shifts": 1351.0,
+    "pupils_per_place": 2.0
+   },
+   "N21": {
+    "beyond_two_shifts": 0.0,
+    "pupils_per_place": 0.92
+   },
+   "N22": {
+    "beyond_two_shifts": 1907.0,
+    "pupils_per_place": 2.2
+   },
+   "N23": {
+    "beyond_two_shifts": 278.0,
+    "pupils_per_place": 1.84
+   },
+   "N25": {
+    "beyond_two_shifts": 455.0,
+    "pupils_per_place": 2.12
+   }
+  },
+  "pupils_beyond_two_shifts_by_district": {
+   "Almaty": 893.0,
+   "Baikonur": 1184.0,
+   "Esil": 3226.0,
+   "Nura": 2876.0,
+   "Saraishyk": 6445.0,
+   "Saryarka": 3862.0
+  }
+ },
  "access": {
-  "floor_per_seat_m2": 13.35189797998273,
   "district_relative_now": {
-   "Almaty": 0.8141600993770032,
-   "Baikonur": 1.14911676565075,
-   "Esil": 0.9161006834053755,
-   "Nura": 0.8404678921247201,
-   "Saraishyk": 1.2801804351672355,
-   "Saryarka": 1.2405644883305735
+   "Almaty": 0.8694653838052692,
+   "Baikonur": 1.2431945666717557,
+   "Esil": 0.8214446027303466,
+   "Nura": 0.7694062206121005,
+   "Saraishyk": 1.334345537376298,
+   "Saryarka": 1.2661991840156546
   },
   "district_relative_after_plan": {
-   "Almaty": 0.7266327565788536,
-   "Baikonur": 0.8536476940631534,
-   "Esil": 0.9632962248155589,
-   "Nura": 1.0846204238980508,
-   "Saraishyk": 1.6353334542690738,
-   "Saryarka": 1.0907991495011657
+   "Almaty": 0.7791940360641657,
+   "Baikonur": 0.9674083916625851,
+   "Esil": 0.8875087750525387,
+   "Nura": 1.009135805321381,
+   "Saraishyk": 1.664145239957935,
+   "Saryarka": 1.1051670713654573
   },
-  "mean_access_gain": 0.36715008326520393,
-  "gini_now": 0.37806583793159554,
-  "gini_after_plan": 0.39060013179160424,
+  "mean_access_gain": 0.3284247747250393,
+  "gini_now": 0.38024049177893704,
+  "gini_after_plan": 0.3841308048452743,
   "zero_access_now": 0.06307496935564678,
   "zero_access_after_plan": 0.05093976042975408,
-  "low_low_children": 28626.38005597289,
-  "low_low_children_within_1km_of_new_school": 3512.8036167627865,
+  "low_low_children": 31167.62576960896,
+  "low_low_children_within_1km_of_new_school": 2524.9063233938878,
   "low_low_children_by_district": {
-   "Almaty": 3368.0,
-   "Baikonur": 3038.0,
-   "Esil": 10926.0,
-   "Nura": 4140.0,
-   "Saraishyk": 2061.0,
-   "Saryarka": 5093.0
+   "Almaty": 2920.0,
+   "Baikonur": 2789.0,
+   "Esil": 14334.0,
+   "Nura": 4982.0,
+   "Saraishyk": 1860.0,
+   "Saryarka": 4282.0
   }
  }
 }

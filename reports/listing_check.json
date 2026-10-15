@@ -69,26 +69,26 @@
   "dwellings_reweighted": 12969,
   "school": {
    "district_relative_base": {
-    "Almaty": 0.8141600993770032,
-    "Baikonur": 1.14911676565075,
-    "Esil": 0.9161006834053755,
-    "Nura": 0.8404678921247201,
-    "Saraishyk": 1.2801804351672355,
-    "Saryarka": 1.2405644883305735
+    "Almaty": 0.8694653838052692,
+    "Baikonur": 1.2431945666717557,
+    "Esil": 0.8214446027303466,
+    "Nura": 0.7694062206121005,
+    "Saraishyk": 1.334345537376298,
+    "Saryarka": 1.2661991840156546
    },
    "district_relative_listing_floors": {
-    "Almaty": 0.8159447831931828,
-    "Baikonur": 1.1514727814962855,
-    "Esil": 0.9111601689262626,
-    "Nura": 0.842554249902025,
-    "Saraishyk": 1.2844974691748274,
-    "Saryarka": 1.2393930278492375
+    "Almaty": 0.8715315577636243,
+    "Baikonur": 1.2458377419678655,
+    "Esil": 0.8166324470569114,
+    "Nura": 0.7700370497817232,
+    "Saraishyk": 1.3387336366617182,
+    "Saryarka": 1.2656906424694758
    },
    "district_rank_rho": 1.0,
-   "max_district_change": 0.004940514479112923,
-   "gini_base": 0.37806583793159554,
-   "gini_listing_floors": 0.3783075541461953,
-   "deficit_jaccard": 0.9900199600798403
+   "max_district_change": 0.004812155673435181,
+   "gini_base": 0.38024049177893704,
+   "gini_listing_floors": 0.380675059517149,
+   "deficit_jaccard": 0.9900990099009901
   },
   "preschool": {
    "district_relative_base": {

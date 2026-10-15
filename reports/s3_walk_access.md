@@ -518,3 +518,30 @@ Low-low clusters (school E2SFCA, p < 0.05): 28,626 children, of them 3,513 (12%)
 E2SFCA with the plan (added floor = places / 2 x 13.35 sq m, the median floor per place of programme schools; extensions add, rebuilds take the larger of old and new): mean access +37%, zero-access share 6.3% to 5.1%, Gini 0.378 to 0.391. District relative: Nura 0.84 to 1.08, Saraishyk 1.28 to 1.64, Saryarka 1.24 to 1.09, Baikonur 1.15 to 0.85, Esil 0.92 to 0.96, Almaty 0.81 to 0.73.
 
 Reading: for future decisions the first part of H4 does not hold; the plan is not targeted at the deficit. The plan beats the optimum on currently free plots (119% at 1 km) because it uses land the layer counts as built (for example the garage cooperative on Tokpanov street).
+
+## 18. Official list of schools, 15 October 2026
+
+Source: reply of the Education Department of Astana, letter ZhT-2026-04418142/1 of 14 October 2026 (`data/raw/official_reply_3/schools.xlsx`, not in git: the letter holds personal data). 122 state and 76 private schools with district, address, design capacity, enrolment 2025-2026 and 2026-2027, shifts, year of commissioning and the mark "KSh" for Comfortable School buildings. Preschool data were not given; the department refers to the INDIGO system. The second reply of the Bureau (ZhT-2026-04428341 of 14 October 2026) only points to the dynamic tables already used. Code: `ingest/school_register.py`, `validation/register.py`; output `data/interim/school_register.csv`, `reports/school_register_check.json`.
+
+**Linking.** 115 of 122 state rows by number, 5 Binom schools by name. Unlinked state rows: two boarding lyceums Bilim-innovation, specialised lyceum 9, evening school 39, school 47 and school 120 (no service territory), international school 81. Supply entries without a row: Binom Satpayev (sch0061) and two presumed new school grounds; their capacity is estimated from floor area (median capacity per sq m).
+
+**Positions.** Official addresses geocode to a median of 25 m from our positions (105 geocoded, 80% within 100 m). Eight are more than 400 m apart; six of them (15, 16, 21, 43, 69, 105) are confirmed at our position by the 2GIS listing, so the official address differs from the building; schools 25 and 36 share one official address and one 2GIS address. School 118: official address E-899 8 (same as 117, opened 2026, no pupils in 2025-2026), while OSM and 2GIS place it elsewhere; kept at the OSM/2GIS position.
+
+**Capacity and crowding.** 162,344 places, 273,340 pupils in 2025-2026 (294,751 in 2026-2027), 1.68 pupils per place; 109 of 120 schools in two shifts, 11 in one. 45 schools enrol more than twice their capacity; 49% of pupils attend them; 18,486 pupils beyond two shifts.
+
+| District | Places | Pupils 2025 | Pupils per place | Growth to 2026 | Pupils in schools beyond two shifts | Pupils beyond two shifts |
+|---|---|---|---|---|---|---|
+| Almaty | 27,143 | 46,400 | 1.71 | +3.6% | 22% | 893 |
+| Baikonur | 16,454 | 25,434 | 1.55 | -0.6% | 38% | 1,184 |
+| Esil | 30,742 | 50,478 | 1.64 | +10.6% | 58% | 3,226 |
+| Nura | 31,700 | 50,086 | 1.58 | +17.2% | 54% | 2,876 |
+| Saraishyk | 21,432 | 42,621 | 1.99 | +11.2% | 75% | 6,445 |
+| Saryarka | 34,873 | 58,321 | 1.67 | +1.9% | 43% | 3,862 |
+
+**Proxy.** Floor area vs capacity: Spearman 0.64; floor vs enrolment 0.39; capacity vs enrolment 0.54. Design capacity is now the baseline school supply; floor area and equal weight are sensitivity alternatives (72 school runs).
+
+**Load step against enrolment (119 schools).** Allocated load: Spearman 0.55; original first step: 0.38. District error of allocated load vs enrolment under the official age split: Almaty +38%, Saraishyk -32%; with the combined Almaty+Saraishyk school share: +11% and -6%, Spearman 0.60. Enrolment supports the combined share.
+
+**Comfortable School.** The list marks 23 buildings: 33, 45, 99-119; 42,400 places; opened 14 in 2024, 8 in 2025, 1 in 2026. 33 and 45 match in year and district the two announced sites P14 and P19 we could not locate. The programme in H4 is now this list with official capacities (`backtest.official_programme`). The 2023 city drops schools 94-97 (opened 2023 or later, organisations registered from 2022) and uses the old Esil building of school 45 (`data/labels/former_buildings.csv`), which settles the school 45 question of section 16.
+
+**Changed results.** School access relative to the city mean: Nura 0.84 to 0.77, Esil 0.92 to 0.82, Almaty 0.81 to 0.87 (combined share 1.05), Saraishyk 1.28 to 1.33 (0.94), Baikonur 1.15 to 1.24, Saryarka 1.24 to 1.27. Gini 0.378 to 0.380, between-district share 7% to 9%, LL children 9.2% to 10.0% (Esil 4.6%). H4 with 23 schools: deficit AUC 0.59 at both radii (0.45-0.72), density 0.42, difference +0.16 (0.00, +0.31) and +0.17 (-0.03, +0.37); land AUC 0.71; programme 12,496 / 8,375 children, 84% / 60% of the land-feasible optimum, 30% / 42% of the unconstrained one, percentile 66 / 96 among random choices. Plan 2026-2028: places by district follow pupils beyond two shifts (Spearman 0.71 over six districts) rather than children without a school within 1 km (0.09); at cell level crowding does not single out planned sites (AUC 0.49 and 0.58).

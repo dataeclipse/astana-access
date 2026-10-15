@@ -2,53 +2,53 @@
  "school": {
   "base": {
    "variant": "station",
-   "supply": "floor_area",
+   "supply": "capacity",
    "decay": "gaussian",
    "d0": 1500,
    "d0_load": 3000
   },
-  "mean": 7.666011272940511,
+  "mean": 0.6582680475378718,
   "zero_access_share": 0.06307496935564678,
-  "gini": 0.37806583793159554,
-  "theil": 0.25358274308311046,
-  "between": 0.016918028176115894,
-  "within": 0.23666471490699453,
-  "between_share": 0.06671600744760102,
+  "gini": 0.38024049177893704,
+  "theil": 0.2586443962283974,
+  "between": 0.024353585238212003,
+  "within": 0.23429081099018542,
+  "between_share": 0.0941585651703292,
   "district_relative": {
-   "Almaty": 0.8141600993770032,
-   "Baikonur": 1.14911676565075,
-   "Esil": 0.9161006834053755,
-   "Nura": 0.8404678921247201,
-   "Saraishyk": 1.2801804351672355,
-   "Saryarka": 1.2405644883305735
+   "Almaty": 0.8694653838052692,
+   "Baikonur": 1.2431945666717557,
+   "Esil": 0.8214446027303466,
+   "Nura": 0.7694062206121005,
+   "Saraishyk": 1.334345537376298,
+   "Saryarka": 1.2661991840156546
   },
-  "global_moran_i": 0.830998520816929,
-  "cold_spot_cells": 290,
-  "cold_spot_children_share": 0.0918949915842824,
+  "global_moran_i": 0.8156102599560665,
+  "cold_spot_cells": 301,
+  "cold_spot_children_share": 0.10005277307853928,
   "cold_spot_children_by_district": {
-   "Almaty": 0.0108,
-   "Baikonur": 0.0098,
-   "Esil": 0.0351,
-   "Nura": 0.0133,
-   "Saraishyk": 0.0066,
-   "Saryarka": 0.0163
+   "Almaty": 0.0094,
+   "Baikonur": 0.009,
+   "Esil": 0.046,
+   "Nura": 0.016,
+   "Saraishyk": 0.006,
+   "Saryarka": 0.0137
   },
-  "hot_spot_children_share": 0.15843886447999234,
+  "hot_spot_children_share": 0.17247605628973206,
   "without_presumed_new": {
-   "mean": 7.3536032381668015,
+   "mean": 0.6299424437986769,
    "zero_access_share": 0.07603156514921229,
-   "gini": 0.3835737354865608,
-   "theil": 0.2653939108148623,
-   "between": 0.014598002680915392,
-   "within": 0.25079590813394687,
-   "between_share": 0.05500504000296713,
+   "gini": 0.38947412370350254,
+   "theil": 0.27436030062009253,
+   "between": 0.021860700445503478,
+   "within": 0.252499600174589,
+   "between_share": 0.0796788033694935,
    "district_relative": {
-    "Almaty": 0.8470147923336971,
-    "Baikonur": 1.1978746820455555,
-    "Esil": 0.9466108528120529,
-    "Nura": 0.8079941926570409,
-    "Saraishyk": 1.1514554044327379,
-    "Saryarka": 1.2286039529953154
+    "Almaty": 0.9068381362437568,
+    "Baikonur": 1.2990201051489818,
+    "Esil": 0.8512949710338189,
+    "Nura": 0.7392995366076254,
+    "Saraishyk": 1.1932599295629684,
+    "Saryarka": 1.2490305349288489
    }
   }
  },
@@ -112,25 +112,25 @@
    }
   },
   "school/buildings": {
-   "runs": 36,
-   "district_rank_rho_median": 0.9142857142857144,
-   "district_rank_rho_min": 0.6,
-   "deficit_jaccard_median": 0.7939609236234458,
-   "deficit_jaccard_min": 0.6401384083044983,
+   "runs": 54,
+   "district_rank_rho_median": 0.8285714285714287,
+   "district_rank_rho_min": 0.7714285714285715,
+   "deficit_jaccard_median": 0.806846778715137,
+   "deficit_jaccard_min": 0.6631762652705061,
    "worst_district_counts": {
-    "Nura": 20,
-    "Almaty": 16
+    "Nura": 32,
+    "Almaty": 22
    }
   },
   "school/worldpop": {
-   "runs": 12,
-   "district_rank_rho_median": 0.7714285714285715,
-   "district_rank_rho_min": 0.3714285714285715,
-   "deficit_jaccard_median": 0.13586921790124618,
-   "deficit_jaccard_min": 0.1180722891566265,
+   "runs": 18,
+   "district_rank_rho_median": 0.8571428571428572,
+   "district_rank_rho_min": 0.4285714285714286,
+   "deficit_jaccard_median": 0.13483474257026914,
+   "deficit_jaccard_min": 0.11838942307692307,
    "worst_district_counts": {
-    "Nura": 8,
-    "Baikonur": 4
+    "Nura": 11,
+    "Baikonur": 7
    }
   }
  },
@@ -152,15 +152,15 @@
    ]
   },
   "school": {
-   "runs": 48,
-   "district_rank_rho_median": 0.8285714285714286,
-   "district_rank_rho_min": 0.3714285714285715,
-   "deficit_jaccard_median": 0.789103690685413,
-   "deficit_jaccard_min": 0.1180722891566265,
+   "runs": 72,
+   "district_rank_rho_median": 0.8285714285714287,
+   "district_rank_rho_min": 0.4285714285714286,
+   "deficit_jaccard_median": 0.799645390070922,
+   "deficit_jaccard_min": 0.11838942307692307,
    "worst_district_counts": {
-    "Nura": 28,
-    "Almaty": 16,
-    "Baikonur": 4
+    "Nura": 43,
+    "Almaty": 22,
+    "Baikonur": 7
    },
    "gini_range": [
     0.31695227908460066,

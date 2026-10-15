@@ -8,26 +8,56 @@ from scipy.sparse import coo_matrix, vstack
 
 from astana_access.accessibility.coverage import facilities, origin_destination
 from astana_access.accessibility.network import load
-from astana_access.config import CRS_GEO, CRS_METRIC, PROCESSED, REPORTS, SEED
+from astana_access.config import CRS_GEO, CRS_METRIC, DATA, PROCESSED, REPORTS, SEED
 
 PROGRAMME_FIRST_NUMBER = 99
 RADII_M = (1000, 1500)
 MIN_CELL_CHILDREN = 20.0
 RANDOM_DRAWS = 200
 DEMAND_COLUMN = "school_station"
+FORMER = DATA / "labels" / "former_buildings.csv"
+
+
+def official_programme() -> tuple[dict[str, float], set[str]]:
+    from astana_access.ingest import school_register
+
+    if not school_register.SOURCE.exists():
+        return {}, set()
+    register = school_register.linked().dropna(subset=["facility_id"])
+    listed = register[register["comfortable"].astype(bool)]
+    seats = dict(zip(listed["facility_id"], listed["capacity"].astype(float), strict=True))
+    opened_later = register[
+        (register["first_year"] >= 2023) & (register["bin_year"] >= 2022) & ~register["comfortable"]
+    ]
+    return seats, set(opened_later["facility_id"])
+
+
+def former_buildings(year: int) -> gpd.GeoDataFrame:
+    table = pd.read_csv(FORMER)
+    table = table[table["used_until"] > year]
+    every = gpd.read_file(PROCESSED / "facilities.gpkg", layer="schools")
+    every = every[every["facility_id"].astype(str).isin(table["facility_id"])].copy()
+    every["facility_id"] = every["facility_id"].astype(str)
+    every["presumed_new"] = False
+    return every.to_crs(CRS_METRIC)
 
 
 def split_schools(year: int = 2026) -> tuple[gpd.GeoDataFrame, gpd.GeoDataFrame]:
     from astana_access.inventory.programme_list import programme_sites
 
     schools = facilities()["school"]
-    sites = programme_sites()
-    seats = dict(zip(sites["facility_id"], sites["seats"], strict=True))
+    seats, opened_later = official_programme()
+    if not seats:
+        sites = programme_sites()
+        seats = dict(zip(sites["facility_id"], sites["seats"], strict=True))
     programme = schools[schools["facility_id"].isin(seats)].copy()
     programme["seats"] = programme["facility_id"].map(seats)
     existing = schools[~schools["facility_id"].isin(seats)]
     if year < 2024:
-        existing = existing[~existing["presumed_new"].astype(bool)]
+        existing = existing[
+            ~existing["presumed_new"].astype(bool) & ~existing["facility_id"].isin(opened_later)
+        ]
+        existing = pd.concat([existing, former_buildings(year)], ignore_index=True)
     return existing, programme
 
 

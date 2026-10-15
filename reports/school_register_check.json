@@ -1,0 +1,221 @@
+{
+ "rows": {
+  "state": 122,
+  "private": 76
+ },
+ "linked": {
+  "state": 115,
+  "binom": 5,
+  "unlinked_state": [
+   "КГУ «Специализированный лицей  № 9 «Зерде» акимата города Астаны",
+   "КГУ \"Вечерняя (сменная) школа № 39\"",
+   "КГУ \"Школа – гимназия № 47\"",
+   "КГУ \"Международная школа № 81 \"Astana English School\" акимата города Астана",
+   "КГУ «Общеобразовательная школа №120» акимата города Астаны",
+   "КГУ \"Лицей-интернат \"Білім-инновация\" для одаренных юношей\"",
+   "КГУ Лицей-интернат \"Білім-инновация\" для одаренных девочек"
+  ],
+  "supply_without_register_row": [
+   "ground1531635583",
+   "ground1548133821",
+   "sch0061"
+  ]
+ },
+ "comfortable_school": {
+  "listed": 23,
+  "numbers": [
+   33,
+   45,
+   99,
+   100,
+   101,
+   102,
+   103,
+   104,
+   105,
+   106,
+   107,
+   108,
+   109,
+   110,
+   111,
+   112,
+   113,
+   114,
+   115,
+   116,
+   117,
+   118,
+   119
+  ],
+  "capacity": 42400.0,
+  "opened": {
+   "2024": 14,
+   "2025": 8,
+   "2026": 1
+  },
+  "enrolment_2025": 53829.0
+ },
+ "private_schools": {
+  "capacity": 40385.0,
+  "enrolment_2025": 42915.0
+ },
+ "address_check": {
+  "geocoded": 105,
+  "median_distance_m": 25.245106460339574,
+  "within_100m_share": 0.8,
+  "farther_than_400m": [
+   {
+    "number": 19.0,
+    "distance_m": 592.0
+   },
+   {
+    "number": 43.0,
+    "distance_m": 624.0
+   },
+   {
+    "number": 105.0,
+    "distance_m": 808.0
+   },
+   {
+    "number": 25.0,
+    "distance_m": 1086.0
+   },
+   {
+    "number": 15.0,
+    "distance_m": 1393.0
+   },
+   {
+    "number": 16.0,
+    "distance_m": 3715.0
+   },
+   {
+    "number": 21.0,
+    "distance_m": 6949.0
+   },
+   {
+    "number": 69.0,
+    "distance_m": 14511.0
+   }
+  ],
+  "far_but_confirmed_by_listing": [
+   15,
+   16,
+   21,
+   43,
+   69,
+   105
+  ]
+ },
+ "crowding": {
+  "schools": 120,
+  "capacity": 162344.0,
+  "enrolment_2025": 273340.0,
+  "enrolment_2026": 294751.0,
+  "pupils_per_place": 1.6837086680136006,
+  "shifts": {
+   "2.0": 109,
+   "1.0": 11
+  },
+  "schools_beyond_two_shifts": 45,
+  "pupils_in_schools_beyond_two_shifts_share": 0.4885856442525792,
+  "pupils_beyond_two_shifts": 18486.0,
+  "by_district": {
+   "Almaty": {
+    "schools": 18,
+    "capacity": 27143.0,
+    "enrolment_2025": 46400.0,
+    "enrolment_2026": 48089.0,
+    "beyond_two_shifts": 893.0,
+    "pupils_per_place": 1.709,
+    "growth_2026": 0.036,
+    "share_in_schools_beyond_two_shifts": 0.219
+   },
+   "Baikonur": {
+    "schools": 16,
+    "capacity": 16454.0,
+    "enrolment_2025": 25434.0,
+    "enrolment_2026": 25274.0,
+    "beyond_two_shifts": 1184.0,
+    "pupils_per_place": 1.546,
+    "growth_2026": -0.006,
+    "share_in_schools_beyond_two_shifts": 0.383
+   },
+   "Esil": {
+    "schools": 21,
+    "capacity": 30742.0,
+    "enrolment_2025": 50478.0,
+    "enrolment_2026": 55835.0,
+    "beyond_two_shifts": 3226.0,
+    "pupils_per_place": 1.642,
+    "growth_2026": 0.106,
+    "share_in_schools_beyond_two_shifts": 0.579
+   },
+   "Nura": {
+    "schools": 19,
+    "capacity": 31700.0,
+    "enrolment_2025": 50086.0,
+    "enrolment_2026": 58699.0,
+    "beyond_two_shifts": 2876.0,
+    "pupils_per_place": 1.58,
+    "growth_2026": 0.172,
+    "share_in_schools_beyond_two_shifts": 0.541
+   },
+   "Saraishyk": {
+    "schools": 17,
+    "capacity": 21432.0,
+    "enrolment_2025": 42621.0,
+    "enrolment_2026": 47415.0,
+    "beyond_two_shifts": 6445.0,
+    "pupils_per_place": 1.989,
+    "growth_2026": 0.112,
+    "share_in_schools_beyond_two_shifts": 0.752
+   },
+   "Saryarka": {
+    "schools": 29,
+    "capacity": 34873.0,
+    "enrolment_2025": 58321.0,
+    "enrolment_2026": 59439.0,
+    "beyond_two_shifts": 3862.0,
+    "pupils_per_place": 1.672,
+    "growth_2026": 0.019,
+    "share_in_schools_beyond_two_shifts": 0.434
+   }
+  }
+ },
+ "proxy_check": {
+  "schools": 120,
+  "spearman_floor_capacity": 0.6421486598727497,
+  "spearman_floor_enrolment": 0.3865479598854573,
+  "spearman_capacity_enrolment": 0.5438313926083777
+ },
+ "load_check": {
+  "official_split": {
+   "schools": 119,
+   "spearman": 0.5484119071357356,
+   "district_model_over_enrolled": {
+    "Almaty": 0.377,
+    "Baikonur": 0.239,
+    "Esil": 0.197,
+    "Nura": 0.007,
+    "Saraishyk": -0.317,
+    "Saryarka": 0.181
+   },
+   "district_mean_abs_error": 0.21966666666666668
+  },
+  "combined_almaty_saraishyk": {
+   "schools": 119,
+   "spearman": 0.6008403361344539,
+   "district_model_over_enrolled": {
+    "Almaty": 0.113,
+    "Baikonur": 0.21,
+    "Esil": 0.202,
+    "Nura": 0.007,
+    "Saraishyk": -0.062,
+    "Saryarka": 0.181
+   },
+   "district_mean_abs_error": 0.12916666666666668
+  },
+  "original_first_step_spearman": 0.3831861558182596
+ }
+}

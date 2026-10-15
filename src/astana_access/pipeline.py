@@ -80,10 +80,12 @@ def stage_access() -> None:
         official_catchments,
     )
     from astana_access.equity import analysis
-    from astana_access.ingest import catchments
+    from astana_access.ingest import catchments, school_register
     from astana_access.inventory import programme_list
 
     programme_list.build()
+    if school_register.SOURCE.exists():
+        school_register.build()
     coverage.build()
     compliance.run()
     catchment_check.run()
@@ -109,12 +111,14 @@ def stage_programme() -> None:
 
 
 def stage_checks() -> None:
-    from astana_access.validation import listing, official
+    from astana_access.validation import listing, official, register
 
     if listing.run() is None:
         typer.echo("team listing not found, check skipped")
     if official.run() is None:
         typer.echo("official city tables not found, check skipped")
+    if register.run() is None:
+        typer.echo("official list of schools not found, check skipped")
 
 
 def stage_figures() -> None:

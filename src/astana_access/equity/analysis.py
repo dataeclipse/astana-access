@@ -14,7 +14,7 @@ COHORT = {"school": "school", "preschool": "preschool"}
 BASE = {
     "school": {
         "variant": "station",
-        "supply": "floor_area",
+        "supply": "capacity",
         "decay": "gaussian",
         "d0": 1500,
         "d0_load": 3000,

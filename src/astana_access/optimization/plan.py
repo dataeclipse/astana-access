@@ -11,6 +11,7 @@ from astana_access.accessibility.e2sfca import index, load_inputs, supply_measur
 from astana_access.accessibility.network import load
 from astana_access.config import CRS_GEO, CRS_METRIC, DATA, PROCESSED, REPORTS, SEED
 from astana_access.equity.analysis import BASE, summary
+from astana_access.ingest import school_register
 from astana_access.inventory.addresses import load_gazetteer
 from astana_access.optimization import realistic
 from astana_access.optimization.backtest import candidates, covered
@@ -21,6 +22,8 @@ TABLE = DATA / "labels" / "planned_schools_2026_2028.csv"
 RADII_M = (1000, 1500)
 YEARS = (2026, 2027, 2028)
 DEMAND_COLUMN = "school_station"
+CROWD_M = 1500.0
+TWO_SHIFTS = 2.0
 
 
 def metric_point(lon: float, lat: float) -> Point:
@@ -65,11 +68,23 @@ def plan_sites() -> gpd.GeoDataFrame:
     return frame
 
 
-def floor_per_seat(schools: gpd.GeoDataFrame) -> float:
-    sites = gpd.read_file(PROCESSED / "comfortable_schools.gpkg")
-    sites = sites[sites["matched"].astype(bool) & (sites["status"] == "built")]
-    floor = schools.set_index("facility_id")["floor_m2"]
-    return float((sites["facility_id"].map(floor) / sites["seats"]).median())
+def crowding_near(sites: gpd.GeoDataFrame, schools: gpd.GeoDataFrame) -> pd.DataFrame:
+    register = school_register.linked().dropna(subset=["facility_id"])
+    load = register.groupby("facility_id")[["enrolment_2025", "capacity"]].sum()
+    positions = schools.set_index("facility_id").geometry.reindex(load.index).dropna()
+    load = load.loc[positions.index]
+    excess = (load["enrolment_2025"] - TWO_SHIFTS * load["capacity"]).clip(lower=0)
+    rows = []
+    for point in sites.geometry:
+        near = positions.distance(point) <= CROWD_M
+        enrolled, places = load.loc[near, "enrolment_2025"].sum(), load.loc[near, "capacity"].sum()
+        rows.append(
+            {
+                "beyond_two_shifts": float(excess[near].sum()),
+                "pupils_per_place": float(enrolled / places) if places else 0.0,
+            }
+        )
+    return pd.DataFrame(rows, index=sites.index)
 
 
 def by_district(values: pd.Series, district: pd.Series) -> dict:
@@ -171,11 +186,30 @@ def run() -> dict:
             },
         }
 
+    crowd = crowding_near(pool, facilities()["school"])
+    label = pool["planned"].to_numpy()
+    by_site = crowding_near(new, facilities()["school"])
+    by_site.index = new["plan_id"].to_numpy()
+    register = school_register.linked().dropna(subset=["facility_id"])
+    beyond = (register["enrolment_2025"] - TWO_SHIFTS * register["capacity"]).clip(lower=0)
+    report["crowding"] = {
+        "radius_m": CROWD_M,
+        "selection": {
+            "beyond_two_shifts": auc_with_interval(
+                label, crowd["beyond_two_shifts"].to_numpy(), rng
+            ),
+            "pupils_per_place": auc_with_interval(label, crowd["pupils_per_place"].to_numpy(), rng),
+        },
+        "by_site": by_site.round(2).to_dict("index"),
+        "pupils_beyond_two_shifts_by_district": beyond.groupby(register["district"])
+        .sum()
+        .to_dict(),
+    }
+
     base = BASE["school"]
     supply = supply_measures()["school"][base["supply"]].copy()
-    per_seat = floor_per_seat(facilities(programme=False)["school"])
     for row in located.itertuples():
-        added = row.seats / 2 * per_seat
+        added = row.seats / TWO_SHIFTS
         if row.kind == "new":
             supply.loc[row.facility_id] = added
         elif row.kind == "extension":
@@ -194,7 +228,6 @@ def run() -> dict:
     cold_points = dwellings.loc[dwellings["h3"].isin(cold), "point_id"]
     reach_new = od_new[od_new["distance_m"] <= 1000]
     report["access"] = {
-        "floor_per_seat_m2": per_seat,
         "district_relative_now": before_summary["district_relative"],
         "district_relative_after_plan": after_summary["district_relative"],
         "mean_access_gain": after_summary["mean"] / before_summary["mean"] - 1,

@@ -24,6 +24,17 @@ def linear(distance: np.ndarray, d0: float) -> np.ndarray:
 DECAY = {"gaussian": gaussian, "step": step, "linear": linear}
 
 
+def design_capacity(floor: pd.Series) -> pd.Series:
+    from astana_access.ingest import school_register
+
+    if not school_register.SOURCE.exists():
+        return floor
+    register = school_register.linked().dropna(subset=["facility_id", "capacity"])
+    capacity = register.groupby("facility_id")["capacity"].sum().reindex(floor.index)
+    per_floor = (capacity / floor).median()
+    return capacity.fillna(floor * per_floor)
+
+
 def supply_measures() -> dict[str, dict[str, pd.Series]]:
     sites = facilities()
     schools = sites["school"].set_index("facility_id")
@@ -33,6 +44,7 @@ def supply_measures() -> dict[str, dict[str, pd.Series]]:
     class_mean = preschools["ownership"].map(PRESCHOOL_CLASS_MEAN).astype(float)
     return {
         "school": {
+            "capacity": design_capacity(floor),
             "floor_area": floor,
             "equal": pd.Series(1.0, index=schools.index),
         },
