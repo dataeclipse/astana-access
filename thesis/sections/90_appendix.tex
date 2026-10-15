@@ -74,7 +74,7 @@ Figure~\ref{fig:uml-packages} shows the packages of the framework and their depe
 \chapter{Test Results}
 \label{app:tests}
 
-The test suite is run with \texttt{pytest}. All 89 tests pass in a few seconds. Table~\ref{tab:tests} lists what each group verifies.
+The test suite is run with \texttt{pytest}. All 90 tests pass in a few seconds. Table~\ref{tab:tests} lists what each group verifies.
 
 \begin{table}[ht]
 \centering
@@ -92,10 +92,10 @@ Test file & Tests & What is verified \\
 \texttt{test\_optimization.py} & 5 & Plot sizes of the planning standard, statutory radii, detection of free plots, the maximal covering solution, the capacity constraint \\
 \texttt{test\_listing.py} & 6 & School numbers read from listings, projection of listed positions, preservation of station totals when floors are replaced, parsing of the official age table and agreement of its totals with the model, year labels of official tables \\
 \texttt{test\_catchments.py} & 5 & Parsing of official service territories: house lists, initials not taken for street types, ranges, whole streets, settlements, removal of notes on language of instruction; weighted median of walking distance \\
-\texttt{test\_plan.py} & 3 & Agreement of the transcribed construction plan with the official totals by year, placement of planned schools by number and by listed point, refusal to place an unresolved site, sums of reach by site and by district \\
+\texttt{test\_plan.py} & 4 & Agreement of the transcribed construction plan with the official totals by year, placement of planned schools by number and by listed point, refusal to place an unresolved site, sums of reach by site and by district, places read from the detailed plans \\
 \texttt{test\_register.py} & 5 & Reading of the official list of schools: school numbers, districts, years of commissioning and registration, linking of Binom schools by name, count of pupils beyond two shifts; preschool capacity and attendance filled for every organisation \\
 \midrule
-Total & 89 & All passed \\
+Total & 90 & All passed \\
 \bottomrule
 \end{tabularx}
 \end{table}

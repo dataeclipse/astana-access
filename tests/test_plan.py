@@ -1,4 +1,5 @@
 import geopandas as gpd
+import numpy as np
 import pandas as pd
 import pytest
 from shapely.geometry import Point
@@ -36,3 +37,12 @@ def test_reach_sum_and_district_totals() -> None:
     assert summed.to_dict() == pytest.approx({"a": 15.0, "b": 5.0, "c": 0.0})
     district = pd.Series({"p1": "Nura", "p2": "Esil"})
     assert by_district(values, district) == {"Esil": 5.0, "Nura": 10.0}
+
+
+def test_seats_are_read_from_detailed_plan_purpose() -> None:
+    from astana_access.optimization.detailed_plans import seats
+
+    assert seats("Общеобразовательная школа на 2000 обучающихся") == 2000
+    assert seats("Общеобразовательная школа на 1200 уч-ся") == 1200
+    assert seats("Образовательная школа на 2300 учащихся") == 2300
+    assert np.isnan(seats("Школа"))

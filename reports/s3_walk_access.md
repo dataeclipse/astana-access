@@ -567,3 +567,11 @@ Source: the cards of the INDIGO register (field "actual load of the preschool or
 **Supply.** The alternative preschool supply is now attendance per organisation (replacing the mean attendance of the two ownership classes). Sensitivity: Nura worst in 23 of 54 building runs (12 of 18 capacity, 11 of 18 attendance), Baikonur 15, Saryarka 16 (equal weight); WorldPop rank correlation median 0.77.
 
 **Waiting list (city only; no district or year of birth on the public pages).** General list, net need 19,518 (under 2 years 19,308; 2 years 74; 3 years 50; 4 years 33; 5 and over 53); full list 25,621. Special list: net need 288, full 1,018. Sanatorium: 0 and 2.
+
+## 21. Detailed planning projects and land acquisition, 15 October 2026
+
+Source: files compiled by the project team on 15 October 2026 (`data/raw/team/team_2026-10-15/`): education buildings of the layer "Buildings (PDP)" of the city geoportal gis.esaulet.kz (ArcGIS REST service, layer 7; 316 schools, 1,755 preschools or housing with a built-in preschool; point = centre of the contour's bounding box); 15 records of land allocation, acquisition and PDP reservations from gov.kz and media; 20 addresses acquired for a preschool at Dulatov and Divaev streets; 4 polling stations with voter counts from media reports. The land records and URLs were not verified by me; the voter counts (4 of 422 stations, mixed campaigns) are not used.
+
+Code: `optimization/detailed_plans.py`; output `reports/detailed_plans.json`, layer `pdp_schools` in `data/processed/backtest.gpkg`.
+
+**Results (demand 2026).** 78 of 316 PDP school objects lie within 150 m of an existing school; 238 are sites without one (Nura 105, Esil 37, Saraishyk 32, Saryarka 27, Almaty 26, Baikonur 11); places known for 160 of them, 218,519 in all. All 238 together reach 47,514 of the 76,542 children without a school within 1 km (62%) and 13,661 of 19,830 within 1.5 km (69%). The best 17 of them (capacitated MCLP, 3,365 children per site, the mean of the plan's new schools) reach 29,214 and 11,069, 2.6 and 2.9 times the plan's 11,145 and 3,780. 14 of the plan's 17 located new schools lie within 500 m of a PDP site. Selection: deficit AUC 0.50 (0.45-0.55), density 0.39; difference +0.11 (+0.05, +0.17). Low-low cluster children within 1 km of PDP sites: 13,351 of 31,168 (43%).

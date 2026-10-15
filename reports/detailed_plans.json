@@ -1,0 +1,139 @@
+{
+ "school_objects": 316,
+ "at_existing_school": 78,
+ "planned_sites": 238,
+ "planned_seats_known": 160,
+ "planned_seats": 218519.0,
+ "planned_by_district": {
+  "Nura": 105,
+  "Esil": 37,
+  "Saraishyk": 32,
+  "Saryarka": 27,
+  "Almaty": 26,
+  "Baikonur": 11
+ },
+ "radii": {
+  "1000": {
+   "uncovered_children": 76542.26978643637,
+   "best_sites_among_planned": 29214.259465740564,
+   "best_sites_ids": [
+    "pdp11074",
+    "pdp12536",
+    "pdp12735",
+    "pdp12980",
+    "pdp13658",
+    "pdp2063",
+    "pdp20875",
+    "pdp22042",
+    "pdp2222",
+    "pdp23162",
+    "pdp23563",
+    "pdp23717",
+    "pdp27710",
+    "pdp30609",
+    "pdp35046",
+    "pdp42947",
+    "pdp42975"
+   ],
+   "reached_by_planned_sites": 47513.53071936984,
+   "reached_share": 0.6207489123583508,
+   "uncovered_by_district": {
+    "Almaty": 10517.0,
+    "Baikonur": 6733.0,
+    "Esil": 21521.0,
+    "Nura": 19032.0,
+    "Saraishyk": 5870.0,
+    "Saryarka": 12689.0
+   },
+   "remaining_by_district": {
+    "Almaty": 2086.0,
+    "Baikonur": 4514.0,
+    "Esil": 10089.0,
+    "Nura": 7062.0,
+    "Saraishyk": 1868.0,
+    "Saryarka": 3228.0
+   },
+   "selection": {
+    "deficit": {
+     "auc": 0.4993115560238848,
+     "low": 0.44693796774287414,
+     "high": 0.5483819566730426
+    },
+    "density": {
+     "auc": 0.39166139796276783,
+     "low": 0.34041304061007627,
+     "high": 0.44182930261058373
+    },
+    "deficit_minus_density": {
+     "difference": 0.10765015806111694,
+     "low": 0.0492761880337465,
+     "high": 0.16513445682938357,
+     "share_above_zero": 1.0
+    }
+   }
+  },
+  "1500": {
+   "uncovered_children": 19829.618239269184,
+   "best_sites_among_planned": 11069.431330114932,
+   "best_sites_ids": [
+    "pdp11839",
+    "pdp12725",
+    "pdp13224",
+    "pdp14026",
+    "pdp19733",
+    "pdp20875",
+    "pdp2222",
+    "pdp23180",
+    "pdp27544",
+    "pdp29174",
+    "pdp29424",
+    "pdp30322",
+    "pdp31371",
+    "pdp31676",
+    "pdp32372",
+    "pdp41648",
+    "pdp42975"
+   ],
+   "reached_by_planned_sites": 13660.842898334413,
+   "reached_share": 0.6889110387047915,
+   "uncovered_by_district": {
+    "Almaty": 1391.0,
+    "Baikonur": 2652.0,
+    "Esil": 6564.0,
+    "Nura": 4551.0,
+    "Saraishyk": 1768.0,
+    "Saryarka": 2723.0
+   },
+   "remaining_by_district": {
+    "Almaty": 421.0,
+    "Baikonur": 2277.0,
+    "Esil": 2131.0,
+    "Nura": 586.0,
+    "Saraishyk": 51.0,
+    "Saryarka": 522.0
+   },
+   "selection": {
+    "deficit": {
+     "auc": 0.516856340007025,
+     "low": 0.4685212119375885,
+     "high": 0.5663180843949145
+    },
+    "density": {
+     "auc": 0.3870425008781173,
+     "low": 0.3376292687504219,
+     "high": 0.4376789687806427
+    },
+    "deficit_minus_density": {
+     "difference": 0.12981383912890765,
+     "low": 0.050134937932353206,
+     "high": 0.210882683028413,
+     "share_above_zero": 0.9995
+    }
+   }
+  }
+ },
+ "low_low_children": 31167.62576960896,
+ "low_low_children_within_1km": 13351.406404886502,
+ "plan_sites_within_500m_of_a_planned_site": 14,
+ "plan_new_sites": 17
+}
