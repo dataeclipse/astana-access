@@ -61,12 +61,14 @@ Figure~\ref{fig:uml-packages} shows the packages of the framework and their depe
 \node[act, below=of a6] (a7) {Walking distances; compliance; floating catchment};
 \node[act, below=of a7] (a8) {Inequality, clusters, sensitivity};
 \node[act, below=of a8] (a9) {Vacancy model and SHAP};
-\node[act, below=of a9] (a10) {Programme backtest; plan 2026--2028; detailed plans};
-\node[act, below=of a10] (a11) {Checks against 2GIS and official lists};
-\node[act, below=of a11] (a12) {Figures and report tables};
-\node[circle, draw, inner sep=3pt, below=of a12] (stop) {};
+\node[act, below=of a9] (a10) {Programme backtest; plan 2026--2028; siting model};
+\node[act, below=of a10] (a11) {Housing forecast; detailed plans; sites on 2028 demand};
+\node[act, below=of a11] (a12) {Checks; Monte Carlo; projection to 2028};
+\node[act, below=of a12] (a13) {Figures and report tables};
+\node[act, below=of a13] (a14) {Web atlas and ranking of reserved sites};
+\node[circle, draw, inner sep=3pt, below=of a14] (stop) {};
 \node[circle, fill, inner sep=1.8pt] at (stop) {};
-\foreach \a/\b in {start/a1, a1/a2, a2/a3, a3/a4, a4/a5, a5/a6, a6/a7, a7/a8, a8/a9, a9/a10, a10/a11, a11/a12, a12/stop}
+\foreach \a/\b in {start/a1, a1/a2, a2/a3, a3/a4, a4/a5, a5/a6, a6/a7, a7/a8, a8/a9, a9/a10, a10/a11, a11/a12, a12/a13, a13/a14, a14/stop}
   \draw[flow] (\a) -- (\b);
 \end{tikzpicture}
 \caption{UML activity diagram of the pipeline stages}
@@ -144,7 +146,7 @@ Nearest preschool & Distance to the nearest other preschool \\
 \end{tabularx}
 \end{table}
 
-\begin{table}[ht]
+\begin{table}[p]
 \centering
 \caption{Features of the siting model}
 \small
@@ -159,10 +161,8 @@ Nearest school, centre & Distance to the nearest school and to the centre of the
 Construction, residential land & Share of construction and residential land within 500\,m \\
 \bottomrule
 \end{tabularx}
-\end{table}
 
-\begin{table}[ht]
-\centering
+\vspace{1.2cm}
 \caption{Features of the housing forecast}
 \small
 \begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}p{4.5cm}X}

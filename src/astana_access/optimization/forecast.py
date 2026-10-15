@@ -122,6 +122,13 @@ def run() -> dict:
     report["sites_chosen_on_2026_reach_2028"] = reach_of(chosen_now, lists, target)
     report["sites_chosen_on_2028_reach_2028"] = reach_of(chosen_future, lists, target)
     report["sites_in_common"] = len(set(chosen_now) & set(chosen_future))
+    dwelling_cells = points.set_index("point_id")["h3"].reindex(ids).to_numpy()
+    cells = np.concatenate([dwelling_cells, new["point_id"].str[1:].to_numpy()])
+    housing = pd.read_parquet(PROCESSED / "housing_forecast.parquet").set_index("h3")
+    by_cell = pd.DataFrame({"h3": cells, "uncovered_2028": target}).groupby("h3").sum()
+    by_cell["new_children"] = pd.Series(new["children"].to_numpy(), index=new["point_id"].str[1:])
+    by_cell = by_cell.join(housing[["predicted_2026_2029"]], how="outer").fillna(0.0)
+    by_cell.reset_index(names="h3").to_parquet(PROCESSED / "forecast_2028_cells.parquet")
     (REPORTS / "siting_2028.json").write_text(
         json.dumps(report, indent=1, ensure_ascii=False), encoding="utf-8"
     )

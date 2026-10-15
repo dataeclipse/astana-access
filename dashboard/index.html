@@ -252,8 +252,15 @@ ul.sources li::before { content: ""; position: absolute; left: 0; top: 0.65em; w
         <div class="stat-row wide" id="reserved-stats"></div>
         <div class="btn-row"><a class="btn solid" href="#screening">Open the site screening tool →</a></div>
       </article>
-      <article class="chapter" data-state="preschool">
+      <article class="chapter" data-state="future">
         <p class="idx">06</p>
+        <h2>By 2028 the children move to the new estates</h2>
+        <p class="prose">A forecast of new housing, trained on what was built in 2020–2026, places the children that migration adds by 2028 in the estates being built. The plan already follows the cranes: most of its new schools stand next to construction sites. Yet many of these children will still have no school within walking distance.</p>
+        <div class="stat-row wide" id="future-stats"></div>
+        <p class="prose small" id="future-note"></p>
+      </article>
+      <article class="chapter" data-state="preschool">
+        <p class="idx">07</p>
         <h2>Preschools: places exist, but not near every child</h2>
         <p class="prose">There are more preschool places than children attending, and the waiting list is almost entirely children under two. The shortage is one of location.</p>
         <div class="stat-row wide" id="pre-stats"></div>
@@ -270,6 +277,8 @@ ul.sources li::before { content: ""; position: absolute; left: 0; top: 0.65em; w
         <label class="opt"><input type="radio" name="base" value="school_access" checked> School access per child</label>
         <label class="opt"><input type="radio" name="base" value="preschool_access"> Preschool access per child</label>
         <label class="opt"><input type="radio" name="base" value="uncovered_1000"> No school within 1 km</label>
+        <label class="opt"><input type="radio" name="base" value="uncovered_2028"> No school within 1 km, 2028</label>
+        <label class="opt"><input type="radio" name="base" value="new_housing"> New housing, 2026–2029 forecast</label>
         <label class="opt"><input type="radio" name="base" value="school_children"> School-age children</label>
         <label class="opt"><input type="radio" name="base" value="preschool_children"> Preschool-age children</label>
         <label class="opt"><input type="radio" name="base" value="none"> None</label>
@@ -510,6 +519,8 @@ ul.sources li::before { content: ""; position: absolute; left: 0; top: 0.65em; w
     school_access: { title: "School access per child", color: (c) => (c.school_children > 0 ? div(c.school_access) : null), legend: "div", cluster: "school_cluster" },
     preschool_access: { title: "Preschool access per child", color: (c) => (c.preschool_children > 0 ? div(c.preschool_access) : null), legend: "div", cluster: "preschool_cluster" },
     uncovered_1000: { title: "Children with no school within 1 km", color: (c) => (c.uncovered_1000 > 0 ? seq(Math.sqrt(c.uncovered_1000 / 350)) : null), legend: "seq", max: 350 },
+    uncovered_2028: { title: "Children with no school within 1 km, 2028", color: (c) => (c.uncovered_2028 > 0 ? seq(Math.sqrt(c.uncovered_2028 / 350)) : null), legend: "seq", max: 350 },
+    new_housing: { title: "New housing 2026–2029, thousand m²", color: (c) => (c.new_housing_k_m2 >= 1 ? seq(Math.sqrt(c.new_housing_k_m2 / 60)) : null), legend: "seq", max: 60 },
     uncovered_1500: { title: "Children with no school within 1.5 km", color: (c) => (c.uncovered_1500 > 0 ? seq(Math.sqrt(c.uncovered_1500 / 200)) : null), legend: "seq", max: 200 },
     school_children: { title: "School-age children", color: (c) => (c.school_children > 0 ? seq(Math.sqrt(c.school_children / 900)) : null), legend: "seq", max: 900 },
     preschool_children: { title: "Preschool-age children", color: (c) => (c.preschool_children > 0 ? seq(Math.sqrt(c.preschool_children / 600)) : null), legend: "seq", max: 600 },
@@ -540,6 +551,7 @@ ul.sources li::before { content: ""; position: absolute; left: 0; top: 0.65em; w
     plan: [symbol("diamond", css("--violet"), css("--panel")), "Plan 2026–2028"],
     pdp: [symbol("ring", css("--teal")), "Reserved school site"],
     best: [symbol("circle", css("--gold"), css("--ink")), "Best 17 reserved sites"],
+    best2028: [symbol("circle", css("--gold"), css("--ink")), "Best 17 reserved sites for 2028"],
     preschool: [symbol("circle", css("--teal"), css("--panel")), "Preschool, size by places"],
     full: [symbol("circle", css("--serious"), css("--panel")), "Preschool at capacity"],
   });
@@ -570,6 +582,7 @@ ul.sources li::before { content: ""; position: absolute; left: 0; top: 0.65em; w
     }
   }
 
+  function drawBest2028(g, m) { for (const p of DATA.sites.pdp) { if (!DATA.best2028.has(p.id)) continue; const [x, y] = m.project(p.lon, p.lat); marker(g, x, y, "circle", 7, css("--gold"), css("--ink"), 1.4); } }
   function prepare() {
     const c = DATA.cells; const f = c.fields;
     DATA.cellList = c.rows.map((row, i) => { const o = {}; f.forEach((k, j) => (o[k] = row[j])); const ring = c.rings[i]; let x0 = 1e9, y0 = 1e9, x1 = -1e9, y1 = -1e9;
@@ -586,6 +599,7 @@ ul.sources li::before { content: ""; position: absolute; left: 0; top: 0.65em; w
     DATA.pdpById = Object.fromEntries(DATA.sites.pdp.map((p) => [p.id, p]));
     DATA.rankOf = {}; for (const r in DATA.sites.ranking) DATA.rankOf[r] = Object.fromEntries(DATA.sites.ranking[r].map((x, i) => [x.id, i + 1]));
     DATA.best17 = new Set(DATA.sites.ranking["1000"].slice(0, 17).map((x) => x.id));
+    DATA.best2028 = new Set(DATA.sites.best_2028 || []);
   }
   function siteReach(id, r) { const l = DATA.reach.sites[r][id]; let s = 0; if (l) for (const i of l) s += DATA.reach.children[i]; return s; }
   function reachOf(ids, r) { const seen = new Uint8Array(DATA.reach.children.length); let s = 0; for (const id of ids) { const l = DATA.reach.sites[r][id]; if (!l) continue; for (const i of l) if (!seen[i]) { seen[i] = 1; s += DATA.reach.children[i]; } } return s; }
@@ -593,7 +607,7 @@ ul.sources li::before { content: ""; position: absolute; left: 0; top: 0.65em; w
   const screen = { radius: "1000", map: null, sel: new Set() };
 
   function tipFor(hit) {
-    if (hit.type === "cell") { const c = hit.cell; return `<b>${c.district}</b><br>School access ${access(c.school_access)}, preschool ${access(c.preschool_access)}<br>${fmt(c.school_children)} school-age children · ${fmt(c.uncovered_1000)} with no school within 1 km`; }
+    if (hit.type === "cell") { const c = hit.cell; const future = (c.uncovered_2028 > 0 ? `<br>${fmt(c.uncovered_2028)} with no school within 1 km in 2028` : "") + (c.new_housing_k_m2 >= 1 ? `<br>${fmt(c.new_housing_k_m2, 1)} thousand m² of new housing forecast` : ""); return `<b>${c.district || "Outside the districts"}</b><br>School access ${access(c.school_access)}, preschool ${access(c.preschool_access)}<br>${fmt(c.school_children)} school-age children · ${fmt(c.uncovered_1000)} with no school within 1 km${future}`; }
     const it = hit.item;
     if (hit.type === "school") return `<b>${it.number ? "School No. " + it.number : esc(it.name).slice(0, 60)}</b>${it.programme ? " · Comfortable School" : ""}<br>${fmt(it.capacity)} places${it.enrolment_2025 ? " · " + fmt(it.enrolment_2025) + " pupils · " + it.ratio.toFixed(2) + " per place" : ""}`;
     if (hit.type === "preschool") return `<b>${esc(it.name)}</b><br>${esc(it.ownership)} · ${fmt(it.capacity)} places · ${fmt(it.attending)} children`;
@@ -610,6 +624,7 @@ ul.sources li::before { content: ""; position: absolute; left: 0; top: 0.65em; w
     crowding: { base: "muted", focus: () => DATA.bounds, key: () => keyHTML("muted", [SYM().crowded, [symbol("circle", alpha(css("--ink"), 0.7), css("--panel")), "Within two shifts; size by pupils"]]), draw: (g, m) => drawSchools(g, m, true), points: () => DATA.schools.map((s) => ({ type: "school", item: s, lon: s.lon, lat: s.lat, r: 5 })) },
     plan: { base: "uncovered_1000", focus: () => DATA.bounds, key: () => keyHTML("uncovered_1000", [SYM().plan]), draw: (g, m) => drawPlan(g, m, false), points: () => DATA.sites.plan.map((p) => ({ type: "plan", item: p, lon: p.lon, lat: p.lat, r: 5 })) },
     reserved: { base: "uncovered_1000", focus: () => DATA.bounds, key: () => keyHTML("uncovered_1000", [SYM().pdp, SYM().best, SYM().plan]), draw: (g, m) => { drawPlan(g, m, true); drawPdp(g, m, DATA.best17, "1000"); }, points: () => DATA.sites.pdp.map((p) => ({ type: "pdp", item: p, lon: p.lon, lat: p.lat, r: 5 })) },
+    future: { base: "uncovered_2028", focus: () => DATA.boundsOf((c) => (c.district === "Esil" || c.district === "Nura") && c.uncovered_2028 > 0), key: () => keyHTML("uncovered_2028", [SYM().best2028, SYM().plan]), draw: (g, m) => { drawPlan(g, m, true); drawBest2028(g, m); }, points: () => [...DATA.planNew.map((p) => ({ type: "plan", item: p, lon: p.lon, lat: p.lat, r: 5 })), ...DATA.sites.pdp.filter((p) => DATA.best2028.has(p.id)).map((p) => ({ type: "pdp", item: p, lon: p.lon, lat: p.lat, r: 6 }))] },
     preschool: { base: "preschool_access", cluster: "preschool_cluster", focus: () => DATA.bounds, key: () => keyHTML("preschool_access", [SYM().cluster, SYM().preschool, SYM().full]), draw: (g, m) => drawPreschools(g, m), points: () => DATA.preschools.map((p) => ({ type: "preschool", item: p, lon: p.lon, lat: p.lat, r: 3 })) },
   };
   function renderStory(g, m) { const S = STATES[storyState]; layerBase(g, m); layerCells(g, m, BASES[S.base].color); if (S.cluster) layerClusters(g, m, S.cluster); layerDistricts(g, m); S.draw(g, m); layerLabels(g, m); }
@@ -651,6 +666,11 @@ ul.sources li::before { content: ""; position: absolute; left: 0; top: 0.65em; w
     const PR = (S.projection || {}).scenarios || {};
     if (PR.ageing_2028 && PR.cohort_2028) setHTML(q("#plan-2028"), `By 2028, when its schools open, the children without a school within 1 km are projected to grow to <b>${fmt(PR.ageing_2028.uncovered / 1000)}–${fmt(PR.cohort_2028.uncovered / 1000)} thousand</b>, and the plan still reaches ${pct(PR.ageing_2028.plan_share)}–${pct(PR.cohort_2028.plan_share)} of them.`);
     setHTML(q("#reserved-stats"), stat(fmt(best), "children reached by the best 17 reserved sites", "goldc") + stat((best / planReach).toFixed(1) + "<small>×</small>", "what the plan’s 17 new schools reach"));
+    const F = S.future || {}; const FS = (F.scenarios || {})["2028_with_new_housing"]; const SM = S.siting_model || {};
+    if (FS) {
+      setHTML(q("#future-stats"), stat(fmt(FS.uncovered / 1000, 1) + "<small>k</small>", "children with no school within 1 km in 2028, new housing included", "deficit") + stat(fmt(F.children_in_new_housing / 1000) + "<small>k</small>", "children in housing built after 2026") + stat(`${F.sites_in_common}<small> of 17</small>`, "best reserved sites that stay the same", "goldc"));
+      setHTML(q("#future-note"), `The plan reaches ${pct(FS.plan_share)} of these children and the best 17 reserved sites ${FS.best_over_plan.toFixed(1)} times as many.` + (SM.plan_cells_near_construction ? ` ${SM.plan_cells_near_construction} of the plan’s 17 new schools stand within 500 m of a construction site, against ${pct(SM.cells_near_construction_share)} of all blocks.` : ""));
+    }
     const P = S.preschool || {}; const qn = (P.queue_city || {})["Общеобразовательная / Чистая потребность"] || {};
     setHTML(q("#pre-stats"), stat(fmt(P.places), `places for ${fmt(P.attending)} attending children`) + stat(fmt((qn.total || 0) - (qn["До 2 лет"] || 0)), "children aged two or older waiting", "surplus") + stat(pct(comp["preschool/network"]?.city), "live within 300 m of a preschool on foot", "deficit"));
   }
@@ -666,7 +686,7 @@ ul.sources li::before { content: ""; position: absolute; left: 0; top: 0.65em; w
   }
 
   let exploreMap, exBase = "school_access", exHit = null;
-  const OVERLAYS = [["cluster", "Low-access clusters", true], ["schools", "State schools", true], ["preschools", "Preschools", false], ["plan", "Plan 2026–2028", false], ["pdp", "Reserved school sites", false]];
+  const OVERLAYS = [["cluster", "Low-access clusters", true], ["schools", "State schools", true], ["preschools", "Preschools", false], ["plan", "Plan 2026–2028", false], ["pdp", "Reserved school sites", false], ["best2028", "Best sites for 2028", false]];
   const on = {};
   function exPoints() {
     const pts = [];
@@ -674,6 +694,7 @@ ul.sources li::before { content: ""; position: absolute; left: 0; top: 0.65em; w
     if (on.pdp) DATA.sites.pdp.forEach((p) => pts.push({ type: "pdp", item: p, lon: p.lon, lat: p.lat, r: 3.5 }));
     if (on.schools) DATA.schools.forEach((s) => pts.push({ type: "school", item: s, lon: s.lon, lat: s.lat, r: 4.5 }));
     if (on.plan) DATA.sites.plan.forEach((p) => pts.push({ type: "plan", item: p, lon: p.lon, lat: p.lat, r: 5.5 }));
+    if (on.best2028) DATA.sites.pdp.filter((p) => DATA.best2028.has(p.id)).forEach((p) => pts.push({ type: "pdp", item: p, lon: p.lon, lat: p.lat, r: 7 }));
     return pts;
   }
   function renderExplore(g, m) {
@@ -684,16 +705,17 @@ ul.sources li::before { content: ""; position: absolute; left: 0; top: 0.65em; w
     if (on.pdp) drawPdp(g, m, null);
     if (on.schools) drawSchools(g, m, false);
     if (on.plan) drawPlan(g, m, false);
+    if (on.best2028) drawBest2028(g, m);
     if (exHit && exHit.type === "cell") { g.strokeStyle = css("--ink"); g.lineWidth = 2.6; m.hex(g, exHit.cell.ring); g.stroke(); }
     else if (exHit) { const [x, y] = m.project(exHit.lon, exHit.lat); marker(g, x, y, "circle", 11, null, css("--ink"), 2); }
     layerLabels(g, m);
   }
-  function exKey() { const s = SYM(); const rows = []; if (on.cluster && BASES[exBase].cluster) rows.push(s.cluster); if (on.schools) rows.push(s.school, s.crowded, s.programme); if (on.preschools) rows.push(s.preschool, s.full); if (on.plan) rows.push(s.plan); if (on.pdp) rows.push(s.pdp); setHTML(exploreMap.key, keyHTML(exBase, rows)); }
+  function exKey() { const s = SYM(); const rows = []; if (on.cluster && BASES[exBase].cluster) rows.push(s.cluster); if (on.schools) rows.push(s.school, s.crowded, s.programme); if (on.preschools) rows.push(s.preschool, s.full); if (on.plan) rows.push(s.plan); if (on.pdp) rows.push(s.pdp); if (on.best2028) rows.push(s.best2028); setHTML(exploreMap.key, keyHTML(exBase, rows)); }
   function exDetail(hit) {
     const box = q("#explore-detail");
     if (!hit) { setHTML(box, `<p class="small muted">Click a block, school, preschool or site on the map to see its figures.</p>`); return; }
     const dl = (pairs) => `<dl>${pairs.map(([a, b]) => `<dt>${a}</dt><dd>${b}</dd>`).join("")}</dl>`;
-    if (hit.type === "cell") { const c = hit.cell; setHTML(box, `<p class="kicker">${c.district} · H3 block</p>` + dl([["School access", access(c.school_access)], ["Preschool access", access(c.preschool_access)], ["School-age children", fmt(c.school_children)], ["Preschool-age children", fmt(c.preschool_children)], ["No school within 1 km", fmt(c.uncovered_1000)], ["No school within 1.5 km", fmt(c.uncovered_1500)]]) + (c.school_cluster ? `<span class="chip"><i style="background:${css("--deficit")}"></i>Low-access cluster for schools</span>` : "")); return; }
+    if (hit.type === "cell") { const c = hit.cell; setHTML(box, `<p class="kicker">${c.district} · H3 block</p>` + dl([["School access", access(c.school_access)], ["Preschool access", access(c.preschool_access)], ["School-age children", fmt(c.school_children)], ["Preschool-age children", fmt(c.preschool_children)], ["No school within 1 km", fmt(c.uncovered_1000)], ["No school within 1.5 km", fmt(c.uncovered_1500)], ["No school within 1 km, 2028", fmt(c.uncovered_2028)], ["New housing 2026–29, thousand m²", fmt(c.new_housing_k_m2, 1)]]) + (c.school_cluster ? `<span class="chip"><i style="background:${css("--deficit")}"></i>Low-access cluster for schools</span>` : "")); return; }
     const it = hit.item;
     if (hit.type === "school") { setHTML(box, `<p class="kicker">${esc(it.district || "")} · ${it.programme ? "Comfortable School" : "state school"}</p><p class="name">${esc(it.name)}</p>` + dl([["Design capacity", fmt(it.capacity)], ["Pupils 2025–26", fmt(it.enrolment_2025)], ["Pupils 2026–27", fmt(it.enrolment_2026)], ["Pupils per place", it.ratio ? it.ratio.toFixed(2) : "–"], ["Shifts", fmt(it.shifts)]]) + (it.ratio > 2 ? `<span class="chip"><i style="background:${css("--serious")}"></i>Beyond two full shifts</span>` : "")); return; }
     if (hit.type === "preschool") { setHTML(box, `<p class="kicker">${esc(it.district || "")} · ${esc(it.ownership)} preschool</p><p class="name">${esc(it.name)}</p>` + dl([["Design capacity", fmt(it.capacity)], ["Attending", fmt(it.attending)], ["Free places, 30 Sep", fmt(it.free)]])); return; }
@@ -702,7 +724,7 @@ ul.sources li::before { content: ""; position: absolute; left: 0; top: 0.65em; w
   }
   function initExplore() {
     const grp = q("#overlay-group"); const s = SYM();
-    const syms = { cluster: s.cluster[0], schools: s.school[0], preschools: s.preschool[0], plan: s.plan[0], pdp: s.pdp[0] };
+    const syms = { cluster: s.cluster[0], schools: s.school[0], preschools: s.preschool[0], plan: s.plan[0], pdp: s.pdp[0], best2028: s.best2028[0] };
     OVERLAYS.forEach(([k, label, def]) => { on[k] = def; const lab = make("label", { class: "opt" }); const inp = make("input", { type: "checkbox", id: "ov-" + k }); inp.checked = def;
       inp.addEventListener("change", () => { on[k] = inp.checked; exKey(); exploreMap.draw(); }); lab.appendChild(inp); lab.appendChild(document.createTextNode(" " + label)); const sv = document.createElement("span"); setHTML(sv, syms[k]); lab.appendChild(sv.firstChild); grp.appendChild(lab); });
     exploreMap = new MapView(q("#map-explore"), { label: "Map of Astana with selectable layers", bounds: DATA.bounds, render: renderExplore, points: exPoints, cells: () => (exBase === "none" ? null : DATA.cellList), tooltip: tipFor, onClick: (hit) => { exHit = hit; exDetail(hit); exploreMap.draw(); } });
@@ -775,6 +797,10 @@ ul.sources li::before { content: ""; position: absolute; left: 0; top: 0.65em; w
     const checks = [["Mean district population error", "10% vs 26% WorldPop"], ["School load vs official enrolment, 119 schools", `${(lc.combined_almaty_saraishyk?.spearman ?? 0).toFixed(2)} vs ${(lc.original_first_step_spearman ?? 0).toFixed(2)} original`], ["Worst-served fifth, building surfaces", `Jaccard ${(sn["school/buildings"]?.deficit_jaccard_median ?? 0).toFixed(2)}`], ["Same, with WorldPop", `Jaccard ${(sn["school/worldpop"]?.deficit_jaccard_median ?? 0).toFixed(2)}`], ["Nura worst-served for schools", `${sn["school/buildings"]?.worst_district_counts?.Nura ?? "–"} of ${sn["school/buildings"]?.runs ?? "–"} runs`], ["Preschool cards vs register totals", `${fmt(P.attending)} vs 66,402`]];
     const UB = (S.uncertainty || {}).bands || {}; const UW = ((S.uncertainty || {}).worst_district || {}).school || {};
     if (UB.fixed_over_plan) checks.push(["Same 17 reserved sites over the plan, 90% of 200 draws", `${UB.fixed_over_plan.q05.toFixed(1)}–${UB.fixed_over_plan.q95.toFixed(1)}×`], ["Nura or Esil worst for schools", `${(UW.Nura || 0) + (UW.Esil || 0)} of ${S.uncertainty.draws} draws`]);
+    const SM = S.siting_model || {}; const HF = S.housing || {};
+    if (SM.models) checks.push(["City’s siting model, programme of 2023, by district", `ROC-AUC ${SM.models.logistic.programme_spatial_cv.auc.toFixed(2)}`]);
+    if (SM.construction_auc_2026) checks.push(["Plan schools next to construction", `${SM.plan_cells_near_construction} of 17, ROC-AUC ${SM.construction_auc_2026.auc.toFixed(2)}`]);
+    if (HF.temporal_test_2023_2026) checks.push(["Housing forecast, tested on 2023–2026", `ROC-AUC ${HF.temporal_test_2023_2026.lightgbm.roc_auc_any_new.toFixed(2)} vs ${HF.temporal_test_2023_2026.momentum.roc_auc_any_new.toFixed(2)} rule`]);
     setHTML(q("#checks"), `<tbody>${checks.map(([a, b]) => `<tr><td>${a}</td><td>${b}</td></tr>`).join("")}</tbody>`);
     const src = ["OpenStreetMap streets, addresses, schools, land use and history as of 1 January 2023", "Overture Maps, 93,507 building footprints", "Akim’s decision No. 01-7 on polling stations, as amended 18 February 2026", "Bureau of National Statistics, population by district and single year of age", "Education Department of Astana: service territories of 121 schools and the list of 198 schools with capacity, enrolment and shifts", "Construction Department of Astana: 25 school projects for 2026–2028", "INDIGO preschool register and organisation cards, 794 preschools", "City geoportal, school buildings in detailed planning projects", "SP RK 3.01-101-2013, service radii and plot sizes"];
     setHTML(q("#sources"), src.map((t) => `<li>${t}</li>`).join(""));

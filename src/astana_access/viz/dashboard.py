@@ -19,6 +19,7 @@ RADII_M = (1000, 1500)
 ROAD_CLASSES = {"motorway", "trunk", "primary", "secondary"}
 DIGITS = 5
 DEMAND = {"school": "school_station", "preschool": "preschool_station"}
+NEW_HOUSING_M2 = 1000.0
 
 
 def rounded(value):
@@ -42,7 +43,9 @@ def number(value) -> float | None:
 
 def write(name: str, payload) -> int:
     path = OUT / name
-    text = json.dumps(payload, ensure_ascii=False, separators=(",", ":"), default=number)
+    text = json.dumps(
+        payload, ensure_ascii=False, separators=(",", ":"), default=number, allow_nan=False
+    )
     path.write_text(text, encoding="utf-8")
     return len(text)
 
@@ -81,7 +84,19 @@ def cells(points: pd.DataFrame, uncovered: dict[int, pd.Series]) -> dict:
         kind: pd.read_parquet(PROCESSED / f"access_cells_{kind}.parquet")
         for kind in ("school", "preschool")
     }
-    index = sorted(set(tables["school"].index) | set(tables["preschool"].index))
+    future_path = PROCESSED / "forecast_2028_cells.parquet"
+    future = (
+        pd.read_parquet(future_path).set_index("h3")
+        if future_path.exists()
+        else pd.DataFrame(columns=["uncovered_2028", "predicted_2026_2029"])
+    )
+    growing = future[
+        (future["uncovered_2028"] >= 1) | (future["predicted_2026_2029"] >= NEW_HOUSING_M2)
+    ]
+    grid_district = gpd.read_file(PROCESSED / "grid_population.gpkg").set_index("h3")["district"]
+    index = sorted(
+        set(tables["school"].index) | set(tables["preschool"].index) | set(growing.index)
+    )
     cell_of = points.set_index("point_id")["h3"]
     rows, rings = [], []
     lost = {
@@ -104,12 +119,18 @@ def cells(points: pd.DataFrame, uncovered: dict[int, pd.Series]) -> dict:
                 ]
             else:
                 row += [0.0, None, 0]
-        district = (
-            tables["school"].at[cell, "district"]
-            if cell in tables["school"].index
-            else tables["preschool"].at[cell, "district"]
-        )
+        if cell in tables["school"].index:
+            district = tables["school"].at[cell, "district"]
+        elif cell in tables["preschool"].index:
+            district = tables["preschool"].at[cell, "district"]
+        else:
+            district = grid_district.get(cell)
+        district = None if pd.isna(district) else district
         row += [round(float(lost[r].get(cell, 0.0)), 1) for r in RADII_M] + [district]
+        row += [
+            round(float(future["uncovered_2028"].get(cell, 0.0)), 1),
+            round(float(future["predicted_2026_2029"].get(cell, 0.0)) / 1000, 2),
+        ]
         rows.append(row)
         boundary = h3.cell_to_boundary(cell)
         rings.append([rounded(v) for lat, lon in boundary for v in (lon, lat)])
@@ -125,6 +146,8 @@ def cells(points: pd.DataFrame, uncovered: dict[int, pd.Series]) -> dict:
             "uncovered_1000",
             "uncovered_1500",
             "district",
+            "uncovered_2028",
+            "new_housing_k_m2",
         ],
         "rows": rows,
         "rings": rings,
@@ -313,6 +336,30 @@ def summary() -> dict:
                 for name, item in projection.get("scenarios", {}).items()
             },
         },
+        "siting_model": {
+            k: report("siting_model.json").get(k)
+            for k in ("models", "plan_cells_near_construction", "cells_near_construction_share")
+        }
+        | {
+            "construction_auc_2026": report("siting_model.json")
+            .get("univariate_2026", {})
+            .get("construction_share")
+        },
+        "housing": {
+            k: report("housing_forecast.json").get(k)
+            for k in (
+                "temporal_test_2023_2026",
+                "spatial_cv_2023_2026",
+                "forecast_by_district_share",
+            )
+        },
+        "future": {k: v for k, v in report("siting_2028.json").items() if k != "scenarios"}
+        | {
+            "scenarios": {
+                name: {k: v for k, v in item.items() if k != "best_sites"}
+                for name, item in report("siting_2028.json").get("scenarios", {}).items()
+            }
+        },
     }
 
 
@@ -400,6 +447,11 @@ def build() -> dict:
                 for row in pdp.to_crs(CRS_GEO).itertuples()
             ],
             "ranking": ranking,
+            "best_2028": json.loads((REPORTS / "siting_2028.json").read_text(encoding="utf-8"))[
+                "scenarios"
+            ]["2028_with_new_housing"]["best_sites"]
+            if (REPORTS / "siting_2028.json").exists()
+            else [],
         },
     )
     sizes["reach.json"] = write("reach.json", matrix)
