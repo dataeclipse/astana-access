@@ -1,0 +1,68 @@
+{
+ "cells": 6710,
+ "new_floor_m2": {
+  "2017_2020": 11134577.693052717,
+  "2020_2023": 15368050.153495163,
+  "2023_2026": 23293160.571115516
+ },
+ "temporal_test_2023_2026": {
+  "lightgbm": {
+   "spearman": 0.4174122554783161,
+   "roc_auc_any_new": 0.9381133570421372,
+   "top_decile_capture": 0.7551297165901473
+  },
+  "momentum": {
+   "spearman": 0.5223149986812846,
+   "roc_auc_any_new": 0.9153804099241374,
+   "top_decile_capture": 0.8075166379104333
+  },
+  "construction_sites": {
+   "spearman": 0.5164895676262102,
+   "roc_auc_any_new": 0.913751782896642,
+   "top_decile_capture": 0.8139485984626209
+  }
+ },
+ "spatial_cv_2023_2026": {
+  "lightgbm": {
+   "spearman": 0.40868011463056697,
+   "roc_auc_any_new": 0.9307197489465009,
+   "top_decile_capture": 0.8343090608569302
+  },
+  "momentum": {
+   "spearman": 0.5223149986812846,
+   "roc_auc_any_new": 0.9153804099241374,
+   "top_decile_capture": 0.8075166379104333
+  }
+ },
+ "importance": {
+  "centre_m": 844,
+  "road_m": 799,
+  "floor_ring2": 557,
+  "built_share": 555,
+  "new_prev_ring2": 546,
+  "floor_ring1": 483,
+  "new_prev_ring1": 373,
+  "new_prev": 361,
+  "floor": 344,
+  "blocked_share": 292,
+  "district_code": 269,
+  "construction_ring1": 142,
+  "construction": 35
+ },
+ "forecast_by_district_share": {
+  "Almaty": 0.055,
+  "Baikonur": 0.018,
+  "Esil": 0.307,
+  "Nura": 0.372,
+  "Saraishyk": 0.2,
+  "Saryarka": 0.047
+ },
+ "observed_2023_2026_by_district_share": {
+  "Almaty": 0.05,
+  "Baikonur": 0.02,
+  "Esil": 0.293,
+  "Nura": 0.4,
+  "Saraishyk": 0.182,
+  "Saryarka": 0.055
+ }
+}

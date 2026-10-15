@@ -30,11 +30,11 @@ ALPHA = 0.2
 MATCH_SHARE = 0.3
 
 
-def fetch(query_body: str, name: str) -> dict:
-    target = RAW / "osm" / f"{name}_{SNAPSHOT[:10]}.json"
+def fetch(query_body: str, name: str, snapshot: str = SNAPSHOT) -> dict:
+    target = RAW / "osm" / f"{name}_{snapshot[:10]}.json"
     if target.exists():
         return json.loads(target.read_text(encoding="utf-8"))
-    query = f'[out:json][timeout:600][date:"{SNAPSHOT}"];\n{query_body}\nout tags geom;'
+    query = f'[out:json][timeout:600][date:"{snapshot}"];\n{query_body}\nout tags geom;'
     payload = post_json(settings.overpass_url, {"data": query})
     target.write_text(json.dumps(payload), encoding="utf-8")
     return payload
@@ -60,19 +60,19 @@ def polygons(payload: dict, keys: tuple[str, ...]) -> gpd.GeoDataFrame:
     return gpd.GeoDataFrame(rows, crs=CRS_GEO).to_crs(CRS_METRIC)
 
 
-def buildings_2023() -> gpd.GeoDataFrame:
-    payload = fetch(f"way({BBOX})[building];", "buildings")
+def buildings_2023(snapshot: str = SNAPSHOT) -> gpd.GeoDataFrame:
+    payload = fetch(f"way({BBOX})[building];", "buildings", snapshot)
     return polygons(payload, ("building",))
 
 
-def landuse_2023() -> gpd.GeoDataFrame:
+def landuse_2023(snapshot: str = SNAPSHOT) -> gpd.GeoDataFrame:
     body = (
         f'(way({BBOX})[landuse];way({BBOX})[amenity~"^(school|kindergarten|university|college|'
         f'hospital|clinic|marketplace|parking|place_of_worship|prison|fuel)$"];'
         f'way({BBOX})[leisure~"^(park|stadium|sports_centre|pitch|garden)$"];'
         f"way({BBOX})[military];way({BBOX})[aeroway];);"
     )
-    payload = fetch(body, "landuse")
+    payload = fetch(body, "landuse", snapshot)
     frame = polygons(payload, ("landuse", "amenity", "leisure", "military", "aeroway", "building"))
     frame = frame[frame["building"].isna()]
     frame["value"] = (

@@ -76,14 +76,14 @@ Figure~\ref{fig:uml-packages} shows the packages of the framework and their depe
 \chapter{Test Results}
 \label{app:tests}
 
-The test suite is run with \texttt{pytest}. All 97 tests pass in a few seconds. Table~\ref{tab:tests} lists what each group verifies.
+The test suite is run with \texttt{pytest}. All 103 tests pass in a few seconds. Table~\ref{tab:tests} lists what each group verifies.
 
 \begin{table}[ht]
 \centering
 \caption{Unit tests}
 \label{tab:tests}
 \small
-\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}p{4.1cm}r>{\raggedright\arraybackslash}X}
+\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}p{4.4cm}r>{\raggedright\arraybackslash}X}
 \toprule
 Test file & Tests & What is verified \\
 \midrule
@@ -97,8 +97,9 @@ Test file & Tests & What is verified \\
 \texttt{test\_plan.py} & 5 & Agreement of the transcribed construction plan with the official totals by year, placement of planned schools by number and by listed point, refusal to place an unresolved site, sums of reach by site and by district, places read from the detailed plans, greedy ranking of sites for the atlas \\
 \texttt{test\_register.py} & 5 & Reading of the official list of schools: school numbers, districts, years of commissioning and registration, linking of Binom schools by name, count of pupils beyond two shifts; preschool capacity and attendance filled for every organisation \\
 \texttt{test\_uncertainty.py} & 6 & Agreement of the fast index of the Monte Carlo simulation with the reference E2SFCA, allocation without noise equal to the population model, official district totals kept under noise, points without a district ignored, percentile bands, cohort ageing and change ratios of the projection to 2028 \\
+\texttt{test\_siting\_models.py} & 6 & Land shares around candidate cells, labelling of the cell nearest each site, log transform of count features, sums over H3 rings without the cell itself, clipped area shares of cells, metrics of the housing forecast \\
 \midrule
-Total & 97 & All passed \\
+Total & 103 & All passed \\
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -139,6 +140,40 @@ Children within 500\,m and 1\,km & Preschool-age children within walking distanc
 Preschools within 500\,m and 1\,km & Number of other preschools within the radius \\
 Children per preschool & Children within the radius divided by the number of preschools including this one \\
 Nearest preschool & Distance to the nearest other preschool \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\begin{table}[ht]
+\centering
+\caption{Features of the siting model}
+\small
+\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}p{4.5cm}X}
+\toprule
+Feature & Definition \\
+\midrule
+Deficit within 1 and 1.5\,km & School-age children without a school within walking distance whom a school in the cell would reach \\
+Children within 1\,km, in the cell & School-age children within walking distance and in the cell \\
+Distance to a feasible plot & Distance to the nearest free disc of 3.8\,ha, capped at 2\,km \\
+Nearest school, centre & Distance to the nearest school and to the centre of the city \\
+Construction, residential land & Share of construction and residential land within 500\,m \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\begin{table}[ht]
+\centering
+\caption{Features of the housing forecast}
+\small
+\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}p{4.5cm}X}
+\toprule
+Feature & Definition \\
+\midrule
+Residential floor area & In the cell and in the first and second rings of H3 neighbours \\
+Recent construction & Floor area that appeared in the previous three years, in the cell and in both rings \\
+Construction sites & Share of construction land in the cell and in the first ring \\
+Built and blocked land & Share of the cell under buildings, and under parks, forest, industry, cemeteries and farmland \\
+Location & Distance to the centre and to a major road, district \\
 \bottomrule
 \end{tabularx}
 \end{table}

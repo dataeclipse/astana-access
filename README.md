@@ -9,7 +9,8 @@ The framework:
 3. measures accessibility per child with an enhanced two-step floating catchment index in which each child is allocated once, with official design capacity as supply;
 4. describes inequality (Gini, Theil split by district, local Moran clusters) and compliance with the service radii of SP RK 3.01-101-2013;
 5. tests the sites of the Comfortable School programme and the city's 2026-2028 construction plan against a capacitated maximal covering model on free land, and ranks the 238 school sites reserved in the detailed planning projects;
-6. publishes the results as a static web atlas.
+6. models how the city chooses school sites and forecasts where new housing will be built, so that sites can be ranked on the demand of 2028;
+7. publishes the results as a static web atlas.
 
 ## Setup
 
@@ -43,7 +44,7 @@ uv run astana-access run --start access --stop dashboard
 | `population` | Polling stations, residential classifier, population surface, 2023 city | `reports/population_model.json` |
 | `access` | Walking access, E2SFCA, compliance, official territories, inequality | `reports/access_equity.json`, `reports/compliance.json` |
 | `models` | Preschool vacancy model and SHAP | `reports/preschool_vacancy.json`, `reports/shap.json` |
-| `programme` | Programme backtest, plan 2026-2028, detailed plans | `reports/programme_2023.json`, `reports/plan_2026_2028.json`, `reports/detailed_plans.json` |
+| `programme` | Programme backtest, plan 2026-2028, model of siting choices, housing forecast, detailed plans, siting on 2028 demand | `reports/programme_2023.json`, `reports/plan_2026_2028.json`, `reports/siting_model.json`, `reports/housing_forecast.json`, `reports/detailed_plans.json`, `reports/siting_2028.json` |
 | `checks` | Checks against official replies and team-compiled sources | `reports/school_register_check.json`, `reports/preschool_capacity_check.json` |
 | `figures` | Thesis figures in EPS and PDF | `thesis/figures/` |
 | `dashboard` | Data of the web atlas and the ranking of reserved sites | `dashboard/data/`, `reports/pdp_site_ranking.csv` |

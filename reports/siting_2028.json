@@ -1,0 +1,115 @@
+{
+ "new_housing_cells": 1110,
+ "children_in_new_housing": 65475.01747504439,
+ "new_housing_children_without_school_1km": 30004.81834762422,
+ "scenarios": {
+  "2026": {
+   "school_age_children": 310989.16791976755,
+   "uncovered": 77870.44688231585,
+   "plan_reach": 11903.939584028347,
+   "plan_share": 0.1528685150865841,
+   "best_reach": 28920.0,
+   "best_over_plan": 2.4294478139659157,
+   "best_sites": [
+    "pdp42947",
+    "pdp30609",
+    "pdp12980",
+    "pdp13658",
+    "pdp11074",
+    "pdp2063",
+    "pdp35046",
+    "pdp2222",
+    "pdp20875",
+    "pdp27710",
+    "pdp23162",
+    "pdp12536",
+    "pdp23717",
+    "pdp12735",
+    "pdp31814",
+    "pdp30598",
+    "pdp22042"
+   ],
+   "uncovered_by_district": {
+    "Almaty": 8089.0,
+    "Baikonur": 6926.0,
+    "Esil": 21599.0,
+    "Nura": 19046.0,
+    "Saraishyk": 9645.0,
+    "Saryarka": 12565.0
+   }
+  },
+  "2028_present_pattern": {
+   "school_age_children": 392221.1091641468,
+   "uncovered": 103321.09671511778,
+   "plan_reach": 17624.425369426604,
+   "plan_share": 0.1705791549814998,
+   "best_reach": 38300.0,
+   "best_over_plan": 2.173120495970307,
+   "best_sites": [
+    "pdp30609",
+    "pdp42947",
+    "pdp23162",
+    "pdp13658",
+    "pdp11074",
+    "pdp12980",
+    "pdp2063",
+    "pdp2222",
+    "pdp27710",
+    "pdp22042",
+    "pdp23563",
+    "pdp23717",
+    "pdp20875",
+    "pdp12735",
+    "pdp31814",
+    "pdp35046",
+    "pdp31684"
+   ],
+   "uncovered_by_district": {
+    "Almaty": 9537.0,
+    "Baikonur": 5823.0,
+    "Esil": 28600.0,
+    "Nura": 35213.0,
+    "Saraishyk": 11372.0,
+    "Saryarka": 12776.0
+   }
+  },
+  "2028_with_new_housing": {
+   "school_age_children": 392029.89112308284,
+   "uncovered": 112769.50142392465,
+   "plan_reach": 18361.712986933962,
+   "plan_share": 0.16282516775442998,
+   "best_reach": 35311.0,
+   "best_over_plan": 1.9230776575762296,
+   "best_sites": [
+    "pdp42947",
+    "pdp30609",
+    "pdp11074",
+    "pdp13658",
+    "pdp12980",
+    "pdp23563",
+    "pdp31814",
+    "pdp2063",
+    "pdp2222",
+    "pdp27710",
+    "pdp22843",
+    "pdp20875",
+    "pdp23717",
+    "pdp12735",
+    "pdp35046",
+    "pdp23162",
+    "pdp30598"
+   ],
+   "uncovered_by_district": {
+    "Almaty": 9384.0,
+    "Baikonur": 5823.0,
+    "Esil": 29079.0,
+    "Nura": 41454.0,
+    "Saraishyk": 14254.0,
+    "Saryarka": 12776.0
+   }
+  }
+ },
+ "sites_chosen_on_2026_reach_2028": 34373.62398355003,
+ "sites_chosen_on_2028_reach_2028": 35311.33112835021,
+ "sites_in_common": 15
+}

@@ -20,7 +20,7 @@ The 2026 series gives Saraishyk, a district of new housing, 8 per cent preschool
 Official data came as replies to information requests through eGov. The preschool register forbids crawling, so its list was saved by hand. The INDIGO organisation cards, the geoportal layer and 2GIS listings were compiled by the team; they are used to check and to locate, and no personal data are used. [Confirm with the team how they were collected before the defence.]
 
 **6. Can the results be reproduced?**
-Yes: one command runs the thirteen pipeline stages from the raw sources, the last of which publishes the web atlas; 97 unit tests cover parsing, allocation, the index, inequality, optimisation and the uncertainty simulation. Letters with personal data are kept out of the repository.
+Yes: one command runs the thirteen pipeline stages from the raw sources, the last of which publishes the web atlas; 103 unit tests cover parsing, allocation, the index, inequality, optimisation and the uncertainty simulation. Letters with personal data are kept out of the repository.
 
 ## Method
 
@@ -67,6 +67,12 @@ We propagated the error of the population surface by a Monte Carlo simulation of
 
 **18b. The plan opens by 2028, but you measure 2026 demand. Isn't that unfair?**
 We projected 2028 from the official single-age tables with cohort change ratios of 2024-2026 (Hamilton-Perry). The school-age population grows from 311 to 333-392 thousand; children without a school within 1 km grow from 78 to 84-103 thousand. The plan still reaches 15-17 per cent of them, and the best reserved sites 2.2-2.4 times as many. The projection keeps the present pattern within districts, so new housing after 2026 is not placed.
+
+**18c. Can machine learning predict where schools should be built?**
+Not directly: the only examples of chosen sites are the city's own choices, and H4 shows they followed free land, so a model trained on them would learn the same habit. We use ML for two honest tasks instead. A model of the city's choices (logistic regression and LightGBM, leave-one-district-out validation) confirms that free land, not the deficit, explained the programme (ROC-AUC 0.71) and shows that the 2026-2028 plan follows construction sites: 16 of its 17 new schools stand within 500 m of land under construction (ROC-AUC 0.76). A LightGBM forecast of new housing, tested on 2023-2026 after training on 2020-2023, places the children of 2028 in the estates being built; the optimisation then chooses sites on that demand. The ranking of reserved sites barely changes: 15 of the 17 best sites stay the same.
+
+**18d. Does the housing model beat a simple rule?**
+Only partly, and we say so. It finds where housing appears better (ROC-AUC 0.94 against 0.92 for "construction continues where it was"), but the simple rule captures slightly more of the new floor area in its top tenth of cells on the temporal test (81 against 76 per cent). The training period is weakened by OSM: much of what appears in 2017-2020 is old housing mapped late.
 
 ## Limitations and future work
 

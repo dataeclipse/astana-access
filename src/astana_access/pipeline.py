@@ -103,13 +103,19 @@ def stage_models() -> None:
 
 
 def stage_programme() -> None:
-    from astana_access.optimization import backtest, detailed_plans, plan, programme
+    from astana_access.modeling import siting
+    from astana_access.optimization import backtest, detailed_plans, forecast, plan, programme
+    from astana_access.population import housing
 
     backtest.run()
     programme.run()
     plan.run()
+    siting.run()
+    housing.run()
     if detailed_plans.run() is None:
         typer.echo("detailed planning layer not found, skipped")
+        return
+    forecast.run()
 
 
 def stage_checks() -> None:
