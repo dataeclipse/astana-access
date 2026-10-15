@@ -15,6 +15,7 @@ SHEETS = {
 }
 HEADER_ROW = 6
 COHORT_AGES = {"preschool": (1, 6), "school": (7, 17)}
+POOLED = ("Almaty", "Saraishyk")
 
 
 def parse_sheet(rows: list[tuple]) -> list[tuple]:
@@ -64,3 +65,18 @@ def cohort_shares(year: int, table: pd.DataFrame | None = None) -> pd.DataFrame:
         for cohort, (low, high) in COHORT_AGES.items()
     }
     return pd.DataFrame(shares)
+
+
+def pooled_shares(year: int, table: pd.DataFrame | None = None) -> pd.DataFrame:
+    table = load() if table is None else table
+    shares = cohort_shares(year, table)
+    rows = table[(table["year"] == year) & (table["age"] == "Всего")]
+    total = rows.set_index("district")["people"]
+    pair = [d for d in POOLED if d in shares.index and d in total.index]
+    if len(pair) < 2:
+        return shares
+    weights = total[pair] / total[pair].sum()
+    pooled = shares.loc[pair].mul(weights, axis=0).sum()
+    for district in pair:
+        shares.loc[district] = pooled
+    return shares

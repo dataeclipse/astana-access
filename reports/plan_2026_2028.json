@@ -28,153 +28,153 @@
   "low": 6,
   "medium": 4
  },
- "school_age_children": 311692.8803037787,
+ "school_age_children": 310989.1679197675,
  "radii": {
   "1000": {
-   "uncovered_children": 76542.26978643637,
+   "uncovered_children": 77870.44688231585,
    "uncovered_by_district": {
-    "Almaty": 10517.0,
+    "Almaty": 8099.0,
     "Baikonur": 6733.0,
     "Esil": 21521.0,
     "Nura": 19032.0,
-    "Saraishyk": 5870.0,
+    "Saraishyk": 9616.0,
     "Saryarka": 12689.0
    },
    "stages": {
     "2026": {
      "sites": 1,
-     "reached": 165.4303066614838,
+     "reached": 165.43030666148374,
      "reached_with_capacity": 165.43030666148374,
      "remaining_by_district": {
-      "Almaty": 10517.0,
+      "Almaty": 8099.0,
       "Baikonur": 6733.0,
       "Esil": 21355.0,
       "Nura": 19032.0,
-      "Saraishyk": 5870.0,
+      "Saraishyk": 9616.0,
       "Saryarka": 12689.0
      }
     },
     "2027": {
      "sites": 9,
-     "reached": 7828.667826705841,
-     "reached_with_capacity": 7828.667826705842,
+     "reached": 8000.652019223663,
+     "reached_with_capacity": 8000.652019223663,
      "remaining_by_district": {
-      "Almaty": 8657.0,
+      "Almaty": 6667.0,
       "Baikonur": 6733.0,
       "Esil": 21355.0,
       "Nura": 14168.0,
-      "Saraishyk": 4930.0,
+      "Saraishyk": 8077.0,
       "Saryarka": 12689.0
      }
     },
     "2028": {
      "sites": 17,
-     "reached": 11145.261501162564,
-     "reached_with_capacity": 11145.261501162566,
+     "reached": 11903.939584028347,
+     "reached_with_capacity": 11903.939584028347,
      "remaining_by_district": {
-      "Almaty": 8657.0,
+      "Almaty": 6667.0,
       "Baikonur": 6733.0,
       "Esil": 20728.0,
       "Nura": 13563.0,
-      "Saraishyk": 4011.0,
+      "Saraishyk": 6571.0,
       "Saryarka": 11525.0
      }
     }
    },
-   "optimal_any_cell": 38917.238700875816,
-   "optimal_feasible_plot": 9379.451225600402,
-   "plan_over_optimal_any_cell": 0.28638366629315215,
-   "plan_over_optimal_feasible_plot": 1.1882637089409387,
+   "optimal_any_cell": 37949.84064165177,
+   "optimal_feasible_plot": 11005.981248214468,
+   "plan_over_optimal_any_cell": 0.3136756145153137,
+   "plan_over_optimal_feasible_plot": 1.0815882124058278,
    "selection": {
     "deficit": {
-     "auc": 0.5427856909861911,
-     "low": 0.3787832980972516,
-     "high": 0.6937471171927088
+     "auc": 0.559065269943594,
+     "low": 0.3980903919591252,
+     "high": 0.7147757311200474
     },
     "density": {
-     "auc": 0.5467543764270958,
-     "low": 0.42190908812475586,
-     "high": 0.6619026354258666
+     "auc": 0.5645447219983885,
+     "low": 0.44969261167433017,
+     "high": 0.6799270941253213
     },
     "deficit_minus_density": {
-     "difference": -0.0039686854409046735,
-     "low": -0.2044581987588531,
-     "high": 0.1795945072243772,
-     "share_above_zero": 0.503
+     "difference": -0.005479452054794498,
+     "low": -0.2117166506732942,
+     "high": 0.18094483270385914,
+     "share_above_zero": 0.4785
     }
    }
   },
   "1500": {
-   "uncovered_children": 19829.618239269184,
+   "uncovered_children": 20638.432239317808,
    "uncovered_by_district": {
-    "Almaty": 1391.0,
+    "Almaty": 1071.0,
     "Baikonur": 2652.0,
     "Esil": 6564.0,
     "Nura": 4551.0,
-    "Saraishyk": 1768.0,
+    "Saraishyk": 2897.0,
     "Saryarka": 2723.0
    },
    "stages": {
     "2026": {
      "sites": 1,
-     "reached": 17.852163584215628,
+     "reached": 17.852163584215624,
      "reached_with_capacity": 17.852163584215624,
      "remaining_by_district": {
-      "Almaty": 1391.0,
+      "Almaty": 1071.0,
       "Baikonur": 2652.0,
       "Esil": 6546.0,
       "Nura": 4551.0,
-      "Saraishyk": 1768.0,
+      "Saraishyk": 2897.0,
       "Saryarka": 2723.0
      }
     },
     "2027": {
      "sites": 9,
-     "reached": 3130.873254020117,
-     "reached_with_capacity": 3130.8732540201167,
+     "reached": 3202.198334872335,
+     "reached_with_capacity": 3202.1983348723356,
      "remaining_by_district": {
-      "Almaty": 916.0,
+      "Almaty": 705.0,
       "Baikonur": 2652.0,
       "Esil": 6205.0,
       "Nura": 2536.0,
-      "Saraishyk": 1486.0,
+      "Saraishyk": 2434.0,
       "Saryarka": 2723.0
      }
     },
     "2028": {
      "sites": 17,
-     "reached": 3780.261543988822,
-     "reached_with_capacity": 3780.261543988822,
+     "reached": 3851.5866248410407,
+     "reached_with_capacity": 3851.5866248410407,
      "remaining_by_district": {
-      "Almaty": 916.0,
+      "Almaty": 705.0,
       "Baikonur": 2652.0,
       "Esil": 5920.0,
       "Nura": 2536.0,
-      "Saraishyk": 1486.0,
+      "Saraishyk": 2434.0,
       "Saryarka": 2359.0
      }
     }
    },
-   "optimal_any_cell": 14637.207775039546,
-   "optimal_feasible_plot": 8442.651789376723,
-   "plan_over_optimal_any_cell": 0.25826384390301577,
-   "plan_over_optimal_feasible_plot": 0.44775760487308913,
+   "optimal_any_cell": 15313.639147394533,
+   "optimal_feasible_plot": 9257.559329911073,
+   "plan_over_optimal_any_cell": 0.2515134768273778,
+   "plan_over_optimal_feasible_plot": 0.4160477386730438,
    "selection": {
     "deficit": {
-     "auc": 0.4862183320648037,
-     "low": 0.3297386841077896,
-     "high": 0.6493008360894328
+     "auc": 0.4835616438356164,
+     "low": 0.32890868950039026,
+     "high": 0.6487912973408542
     },
     "density": {
-     "auc": 0.4999184516690225,
-     "low": 0.3790993004275165,
-     "high": 0.6037764331902855
+     "auc": 0.5157399946279883,
+     "low": 0.41191931081114924,
+     "high": 0.6150481703930649
     },
     "deficit_minus_density": {
-     "difference": -0.013700119604218797,
-     "low": -0.2212663035705989,
-     "high": 0.20907253815316562,
-     "share_above_zero": 0.4385
+     "difference": -0.03217835079237186,
+     "low": -0.25416047921809864,
+     "high": 0.19171590557498305,
+     "share_above_zero": 0.3665
     }
    }
   }
@@ -183,14 +183,14 @@
   "radius_m": 1500.0,
   "selection": {
    "beyond_two_shifts": {
-    "auc": 0.4933130368598457,
-    "low": 0.36375773484742535,
-    "high": 0.6280472622702656
+    "auc": 0.4947891485361269,
+    "low": 0.366107390601481,
+    "high": 0.6335281864153356
    },
    "pupils_per_place": {
-    "auc": 0.5785582255083179,
-    "low": 0.4389026539895371,
-    "high": 0.7152586779352018
+    "auc": 0.5792103142626913,
+    "low": 0.44232336319787624,
+    "high": 0.7070219784512005
    }
   },
   "by_site": {
@@ -274,34 +274,34 @@
  },
  "access": {
   "district_relative_now": {
-   "Almaty": 0.8694653838052692,
-   "Baikonur": 1.2431945666717557,
-   "Esil": 0.8214446027303466,
-   "Nura": 0.7694062206121005,
-   "Saraishyk": 1.334345537376298,
-   "Saryarka": 1.2661991840156546
+   "Almaty": 1.051407031506834,
+   "Baikonur": 1.2593157456582227,
+   "Esil": 0.8083868902611295,
+   "Nura": 0.7614138023845534,
+   "Saraishyk": 0.9427968467449438,
+   "Saryarka": 1.2533035337556115
   },
   "district_relative_after_plan": {
-   "Almaty": 0.7791940360641657,
-   "Baikonur": 0.9674083916625851,
-   "Esil": 0.8875087750525387,
-   "Nura": 1.009135805321381,
-   "Saraishyk": 1.664145239957935,
-   "Saryarka": 1.1051670713654573
+   "Almaty": 0.9227574867158157,
+   "Baikonur": 0.9784676177252389,
+   "Esil": 0.8721320298723727,
+   "Nura": 0.9969211398434444,
+   "Saraishyk": 1.1740494309522316,
+   "Saryarka": 1.0919705413931746
   },
-  "mean_access_gain": 0.3284247747250393,
-  "gini_now": 0.38024049177893704,
-  "gini_after_plan": 0.3841308048452743,
-  "zero_access_now": 0.06307496935564678,
-  "zero_access_after_plan": 0.05093976042975408,
-  "low_low_children": 31167.62576960896,
-  "low_low_children_within_1km_of_new_school": 2524.9063233938878,
+  "mean_access_gain": 0.3307321064128099,
+  "gini_now": 0.37758454059595026,
+  "gini_after_plan": 0.3678389534754113,
+  "zero_access_now": 0.06582007315875593,
+  "zero_access_after_plan": 0.0534279057926755,
+  "low_low_children": 32197.157179657213,
+  "low_low_children_within_1km_of_new_school": 2184.645998149612,
   "low_low_children_by_district": {
-   "Almaty": 2920.0,
+   "Almaty": 1758.0,
    "Baikonur": 2789.0,
    "Esil": 14334.0,
-   "Nura": 4982.0,
-   "Saraishyk": 1860.0,
+   "Nura": 5603.0,
+   "Saraishyk": 3431.0,
    "Saryarka": 4282.0
   }
  }

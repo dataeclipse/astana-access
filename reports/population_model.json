@@ -118,6 +118,26 @@
    "Saryarka": 0.1843
   }
  },
+ "cohort_share_model": {
+  "preschool": {
+   "Almaty": 0.1473,
+   "Baikonur": 0.0732,
+   "City": 0.1264,
+   "Esil": 0.1449,
+   "Nura": 0.1364,
+   "Saraishyk": 0.1473,
+   "Saryarka": 0.1076
+  },
+  "school": {
+   "Almaty": 0.2117,
+   "Baikonur": 0.1504,
+   "City": 0.1897,
+   "Esil": 0.1936,
+   "Nura": 0.1879,
+   "Saraishyk": 0.2117,
+   "Saryarka": 0.1843
+  }
+ },
  "cohort_share_worldpop": {
   "preschool": {
    "Almaty": 0.1282,

@@ -190,19 +190,6 @@
   "spearman_capacity_enrolment": 0.5438313926083777
  },
  "load_check": {
-  "official_split": {
-   "schools": 119,
-   "spearman": 0.5484119071357356,
-   "district_model_over_enrolled": {
-    "Almaty": 0.377,
-    "Baikonur": 0.239,
-    "Esil": 0.197,
-    "Nura": 0.007,
-    "Saraishyk": -0.317,
-    "Saryarka": 0.181
-   },
-   "district_mean_abs_error": 0.21966666666666668
-  },
   "combined_almaty_saraishyk": {
    "schools": 119,
    "spearman": 0.6008403361344539,
@@ -216,6 +203,37 @@
    },
    "district_mean_abs_error": 0.12916666666666668
   },
-  "original_first_step_spearman": 0.3831861558182596
+  "official_split": {
+   "schools": 119,
+   "spearman": 0.5484119071357356,
+   "district_model_over_enrolled": {
+    "Almaty": 0.377,
+    "Baikonur": 0.239,
+    "Esil": 0.197,
+    "Nura": 0.007,
+    "Saraishyk": -0.317,
+    "Saryarka": 0.181
+   },
+   "district_mean_abs_error": 0.21966666666666668
+  },
+  "original_first_step_spearman": 0.4065873807149979
+ },
+ "territory_check": {
+  "worldpop": {
+   "schools": 0,
+   "spearman": NaN
+  },
+  "floor": {
+   "schools": 113,
+   "spearman": 0.37429303346862736
+  },
+  "station": {
+   "schools": 113,
+   "spearman": 0.35159524918490925
+  },
+  "station_equal": {
+   "schools": 113,
+   "spearman": 0.3419971388648613
+  }
  }
 }

@@ -6,15 +6,15 @@ import pandas as pd
 from scipy.stats import spearmanr
 from shapely.geometry import Point
 
-from astana_access.accessibility.coverage import facilities
+from astana_access.accessibility.coverage import VARIANTS, facilities
 from astana_access.accessibility.e2sfca import DECAY, load_inputs, supply_measures
 from astana_access.accessibility.official_catchments import allocated_load
-from astana_access.config import CRS_GEO, CRS_METRIC, RAW, REPORTS
+from astana_access.config import CRS_GEO, CRS_METRIC, INTERIM, PROCESSED, RAW, REPORTS
 from astana_access.equity.analysis import BASE
 from astana_access.ingest import school_register
-from astana_access.ingest.stat_ages import cohort_shares
+from astana_access.ingest.stat_ages import cohort_shares, pooled_shares
 from astana_access.inventory.addresses import district_hint, load_gazetteer, split_address
-from astana_access.population.model import AGE_YEAR, OFFICIAL_2026
+from astana_access.population.model import AGE_YEAR
 from astana_access.validation.listing import school_number
 
 LISTING = RAW / "team" / "astana_spatial_inequity.xlsx"
@@ -109,13 +109,11 @@ def crowding(register: pd.DataFrame) -> dict:
     }
 
 
-def combined_share_demand(points: pd.DataFrame, demand: pd.Series) -> pd.Series:
-    shares = cohort_shares(AGE_YEAR)["school"]
-    pair = ("Almaty", "Saraishyk")
-    population = pd.Series({d: OFFICIAL_2026[d] for d in pair})
-    combined = float((shares[list(pair)] * population).sum() / population.sum())
+def official_split_demand(points: pd.DataFrame, demand: pd.Series, cohort: str) -> pd.Series:
+    official = cohort_shares(AGE_YEAR)[cohort]
+    model = pooled_shares(AGE_YEAR)[cohort]
     district = points.set_index("point_id")["district"].reindex(demand.index)
-    factor = district.map({d: combined / shares[d] for d in pair}).fillna(1.0)
+    factor = district.map((official / model).to_dict()).fillna(1.0)
     return demand * factor
 
 
@@ -128,8 +126,8 @@ def load_check(register: pd.DataFrame) -> dict:
     district = register.groupby("facility_id")["district"].first()
     result = {}
     for name, values in (
-        ("official_split", demand),
-        ("combined_almaty_saraishyk", combined_share_demand(points, demand)),
+        ("combined_almaty_saraishyk", demand),
+        ("official_split", official_split_demand(points, demand, "school")),
     ):
         load = allocated_load(od["school"], values, base)
         pair = pd.concat([enrolled, load], axis=1, keys=["enrolled", "model"]).dropna()
@@ -171,6 +169,28 @@ def proxy_check(register: pd.DataFrame) -> dict:
     }
 
 
+def territory_check(register: pd.DataFrame) -> dict:
+    path = INTERIM / "catchment_dwellings.csv"
+    if not path.exists():
+        return {}
+    pairs = pd.read_csv(path)
+    points = pd.read_parquet(PROCESSED / "demand_points.parquet").set_index("point_id")
+    enrolled = register.groupby("facility_id")["enrolment_2025"].sum()
+    enrolled = enrolled[enrolled > 0]
+    result = {}
+    for variant in VARIANTS:
+        column = f"school_{variant}"
+        children = pairs["point_id"].map(points[column]).fillna(0.0) * pairs["share"]
+        inside = children.groupby(pairs["facility_id"]).sum()
+        pair = pd.concat([enrolled, inside], axis=1, keys=["enrolled", "model"]).dropna()
+        pair = pair[pair["model"] > 0]
+        result[variant] = {
+            "schools": int(len(pair)),
+            "spearman": float(spearmanr(pair["enrolled"], pair["model"]).correlation),
+        }
+    return result
+
+
 def run() -> dict | None:
     if not school_register.SOURCE.exists():
         return None
@@ -209,6 +229,7 @@ def run() -> dict | None:
         "crowding": crowding(linked),
         "proxy_check": proxy_check(linked),
         "load_check": load_check(linked),
+        "territory_check": territory_check(linked),
     }
     (REPORTS / "school_register_check.json").write_text(
         json.dumps(report, indent=1, ensure_ascii=False, default=float), encoding="utf-8"

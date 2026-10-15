@@ -7,48 +7,48 @@
    "d0": 1500,
    "d0_load": 3000
   },
-  "mean": 0.6582680475378718,
-  "zero_access_share": 0.06307496935564678,
-  "gini": 0.38024049177893704,
-  "theil": 0.2586443962283974,
-  "between": 0.024353585238212003,
-  "within": 0.23429081099018542,
-  "between_share": 0.0941585651703292,
+  "mean": 0.6651783815878143,
+  "zero_access_share": 0.06582007315875593,
+  "gini": 0.37758454059595026,
+  "theil": 0.2551004605249223,
+  "between": 0.019569091826254145,
+  "within": 0.2355313686986682,
+  "between_share": 0.07671131516574554,
   "district_relative": {
-   "Almaty": 0.8694653838052692,
-   "Baikonur": 1.2431945666717557,
-   "Esil": 0.8214446027303466,
-   "Nura": 0.7694062206121005,
-   "Saraishyk": 1.334345537376298,
-   "Saryarka": 1.2661991840156546
+   "Almaty": 1.051407031506834,
+   "Baikonur": 1.2593157456582227,
+   "Esil": 0.8083868902611295,
+   "Nura": 0.7614138023845534,
+   "Saraishyk": 0.9427968467449438,
+   "Saryarka": 1.2533035337556115
   },
-  "global_moran_i": 0.8156102599560665,
-  "cold_spot_cells": 301,
-  "cold_spot_children_share": 0.10005277307853928,
+  "global_moran_i": 0.8042992724833362,
+  "cold_spot_cells": 305,
+  "cold_spot_children_share": 0.10359174006602477,
   "cold_spot_children_by_district": {
-   "Almaty": 0.0094,
+   "Almaty": 0.0057,
    "Baikonur": 0.009,
-   "Esil": 0.046,
-   "Nura": 0.016,
-   "Saraishyk": 0.006,
-   "Saryarka": 0.0137
+   "Esil": 0.0461,
+   "Nura": 0.018,
+   "Saraishyk": 0.011,
+   "Saryarka": 0.0138
   },
-  "hot_spot_children_share": 0.17247605628973206,
+  "hot_spot_children_share": 0.23552419232684582,
   "without_presumed_new": {
-   "mean": 0.6299424437986769,
-   "zero_access_share": 0.07603156514921229,
-   "gini": 0.38947412370350254,
-   "theil": 0.27436030062009253,
-   "between": 0.021860700445503478,
-   "within": 0.252499600174589,
-   "between_share": 0.0796788033694935,
+   "mean": 0.6357564536874933,
+   "zero_access_share": 0.08269051443400707,
+   "gini": 0.39076540198436027,
+   "theil": 0.2776780245007333,
+   "between": 0.02261668230196002,
+   "within": 0.25506134219877324,
+   "between_share": 0.08144930569361743,
    "district_relative": {
-    "Almaty": 0.9068381362437568,
-    "Baikonur": 1.2990201051489818,
-    "Esil": 0.8512949710338189,
-    "Nura": 0.7392995366076254,
-    "Saraishyk": 1.1932599295629684,
-    "Saryarka": 1.2490305349288489
+    "Almaty": 1.097972579500704,
+    "Baikonur": 1.3175206388206768,
+    "Esil": 0.8387834476376352,
+    "Nura": 0.7325393620018537,
+    "Saraishyk": 0.851896148356429,
+    "Saryarka": 1.237878584717959
    }
   }
  },
@@ -60,111 +60,114 @@
    "d0": 1000,
    "d0_load": 2000
   },
-  "mean": 1.3668780570316696,
-  "zero_access_share": 0.06472410790370252,
-  "gini": 0.4542454156055651,
-  "theil": 0.35873153297730026,
-  "between": 0.017431568129863403,
-  "within": 0.34129996484743674,
-  "between_share": 0.04859223828245518,
+  "mean": 1.3572009800909925,
+  "zero_access_share": 0.07229032121757334,
+  "gini": 0.4657849514322261,
+  "theil": 0.37878971073161105,
+  "between": 0.03546773555480898,
+  "within": 0.34332197517680213,
+  "between_share": 0.09363436901785172,
   "district_relative": {
-   "Almaty": 1.2723316336495345,
-   "Baikonur": 0.9124382400631096,
-   "Esil": 0.874658846702406,
-   "Nura": 0.76832879166664,
-   "Saraishyk": 1.1815383434362132,
-   "Saryarka": 1.007472770757794
+   "Almaty": 1.5656263298215263,
+   "Baikonur": 0.9376225371413153,
+   "Esil": 0.8795860520299581,
+   "Nura": 0.7738071110919102,
+   "Saraishyk": 0.7867560312914375,
+   "Saryarka": 1.0146562623780089
   },
-  "global_moran_i": 0.8114379873528064,
-  "cold_spot_cells": 348,
-  "cold_spot_children_share": 0.08925465692677285,
+  "global_moran_i": 0.8244622289599063,
+  "cold_spot_cells": 353,
+  "cold_spot_children_share": 0.10113918382554485,
   "cold_spot_children_by_district": {
-   "Almaty": 0.0006,
-   "Baikonur": 0.0111,
-   "Esil": 0.0265,
+   "Almaty": 0.0003,
+   "Baikonur": 0.011,
+   "Esil": 0.0266,
    "Nura": 0.0231,
-   "Saraishyk": 0.0095,
-   "Saryarka": 0.0183
+   "Saraishyk": 0.0218,
+   "Saryarka": 0.0184
   },
-  "hot_spot_children_share": 0.3041903268911936
+  "hot_spot_children_share": 0.29478278168759137
  },
  "sensitivity_by_population": {
   "preschool/buildings": {
    "runs": 54,
-   "district_rank_rho_median": 0.7714285714285715,
-   "district_rank_rho_min": -0.08571428571428573,
-   "deficit_jaccard_median": 0.7711019344426306,
-   "deficit_jaccard_min": 0.7413793103448276,
+   "district_rank_rho_median": 0.7142857142857143,
+   "district_rank_rho_min": 0.028571428571428574,
+   "deficit_jaccard_median": 0.7803256772157448,
+   "deficit_jaccard_min": 0.7376093294460642,
    "worst_district_counts": {
-    "Nura": 23,
-    "Saryarka": 16,
-    "Baikonur": 15
+    "Saraishyk": 32,
+    "Nura": 12,
+    "Saryarka": 6,
+    "Baikonur": 4
    }
   },
   "preschool/worldpop": {
    "runs": 18,
-   "district_rank_rho_median": 0.7714285714285715,
-   "district_rank_rho_min": 0.14285714285714288,
-   "deficit_jaccard_median": 0.13474549739892971,
-   "deficit_jaccard_min": 0.11581291759465479,
+   "district_rank_rho_median": 0.48571428571428577,
+   "district_rank_rho_min": -0.028571428571428574,
+   "deficit_jaccard_median": 0.14065843196030803,
+   "deficit_jaccard_min": 0.11768050028425242,
    "worst_district_counts": {
-    "Baikonur": 18
+    "Baikonur": 14,
+    "Saraishyk": 4
    }
   },
   "school/buildings": {
    "runs": 54,
-   "district_rank_rho_median": 0.8285714285714287,
-   "district_rank_rho_min": 0.7714285714285715,
-   "deficit_jaccard_median": 0.806846778715137,
-   "deficit_jaccard_min": 0.6631762652705061,
+   "district_rank_rho_median": 0.942857142857143,
+   "district_rank_rho_min": 0.7142857142857143,
+   "deficit_jaccard_median": 0.8007023840357174,
+   "deficit_jaccard_min": 0.672945205479452,
    "worst_district_counts": {
-    "Nura": 32,
-    "Almaty": 22
+    "Nura": 54
    }
   },
   "school/worldpop": {
    "runs": 18,
-   "district_rank_rho_median": 0.8571428571428572,
-   "district_rank_rho_min": 0.4285714285714286,
-   "deficit_jaccard_median": 0.13483474257026914,
-   "deficit_jaccard_min": 0.11838942307692307,
+   "district_rank_rho_median": 0.6285714285714286,
+   "district_rank_rho_min": -0.028571428571428574,
+   "deficit_jaccard_median": 0.1378365737137046,
+   "deficit_jaccard_min": 0.117046818727491,
    "worst_district_counts": {
     "Nura": 11,
-    "Baikonur": 7
+    "Baikonur": 5,
+    "Esil": 2
    }
   }
  },
  "sensitivity": {
   "preschool": {
    "runs": 72,
-   "district_rank_rho_median": 0.7714285714285715,
-   "district_rank_rho_min": -0.08571428571428573,
-   "deficit_jaccard_median": 0.7570290017798627,
-   "deficit_jaccard_min": 0.11581291759465479,
+   "district_rank_rho_median": 0.6,
+   "district_rank_rho_min": -0.028571428571428574,
+   "deficit_jaccard_median": 0.7474383049510385,
+   "deficit_jaccard_min": 0.11768050028425242,
    "worst_district_counts": {
-    "Baikonur": 33,
-    "Nura": 23,
-    "Saryarka": 16
+    "Saraishyk": 36,
+    "Baikonur": 18,
+    "Nura": 12,
+    "Saryarka": 6
    },
    "gini_range": [
-    0.40788458520265736,
-    0.84616012074253
+    0.4127663599742739,
+    0.8527707112062399
    ]
   },
   "school": {
    "runs": 72,
-   "district_rank_rho_median": 0.8285714285714287,
-   "district_rank_rho_min": 0.4285714285714286,
-   "deficit_jaccard_median": 0.799645390070922,
-   "deficit_jaccard_min": 0.11838942307692307,
+   "district_rank_rho_median": 0.8857142857142858,
+   "district_rank_rho_min": -0.028571428571428574,
+   "deficit_jaccard_median": 0.7989464239464239,
+   "deficit_jaccard_min": 0.117046818727491,
    "worst_district_counts": {
-    "Nura": 43,
-    "Almaty": 22,
-    "Baikonur": 7
+    "Nura": 65,
+    "Baikonur": 5,
+    "Esil": 2
    },
    "gini_range": [
-    0.31695227908460066,
-    0.7837039779074305
+    0.31541081389752534,
+    0.7804388517938405
    ]
   }
  }

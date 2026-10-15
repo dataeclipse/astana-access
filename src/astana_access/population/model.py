@@ -6,7 +6,7 @@ import numpy as np
 import pandas as pd
 
 from astana_access.config import CRS_GEO, CRS_METRIC, H3_RESOLUTION, PROCESSED, REPORTS
-from astana_access.ingest.stat_ages import cohort_shares
+from astana_access.ingest.stat_ages import cohort_shares, pooled_shares
 from astana_access.population.surface import assign_stations, impute_floors
 
 OFFICIAL_2026 = {
@@ -121,7 +121,9 @@ def build() -> tuple[gpd.GeoDataFrame, dict]:
     outside = float(cells[models[0]].sum() - grid[models[0]].sum())
     diagnostics["population_outside_grid"] = outside
     official_shares = cohort_shares(AGE_YEAR)
+    model_shares = pooled_shares(AGE_YEAR)
     diagnostics["cohort_share_official"] = official_shares.round(4).to_dict()
+    diagnostics["cohort_share_model"] = model_shares.round(4).to_dict()
     diagnostics["cohort_share_worldpop"] = {
         cohort: (grid.groupby("unit")[cohort].sum() / grid.groupby("unit")["total"].sum())
         .round(4)
@@ -129,7 +131,7 @@ def build() -> tuple[gpd.GeoDataFrame, dict]:
         for cohort in COHORTS
     }
     for cohort in COHORTS:
-        share = grid["unit"].map(official_shares[cohort]).fillna(official_shares.at["City", cohort])
+        share = grid["unit"].map(model_shares[cohort]).fillna(model_shares.at["City", cohort])
         grid[cohort] = grid["total"] * share
         for model in ["pop_worldpop", *models]:
             grid[f"{cohort}_{model.removeprefix('pop_')}"] = grid[model] * share
