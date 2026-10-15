@@ -257,6 +257,8 @@ def summary() -> dict:
     programme = report("programme_2023.json")
     population = report("population_model.json")
     preschool = report("preschool_capacity_check.json")
+    uncertainty = report("uncertainty.json")
+    projection = report("projection_2028.json")
     return {
         "official_population": OFFICIAL_2026,
         "equity": {
@@ -299,6 +301,18 @@ def summary() -> dict:
         },
         "preschool": preschool.get("attendance", {})
         | {"queue_city": preschool.get("queue_city"), "places": preschool.get("places")},
+        "uncertainty": {
+            "draws": uncertainty.get("draws"),
+            "bands": uncertainty.get("bands"),
+            "worst_district": uncertainty.get("worst_district"),
+        },
+        "projection": {
+            "city": projection.get("city"),
+            "scenarios": {
+                name: {k: v for k, v in item.items() if k != "uncovered_by_district"}
+                for name, item in projection.get("scenarios", {}).items()
+            },
+        },
     }
 
 

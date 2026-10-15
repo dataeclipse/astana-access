@@ -243,6 +243,7 @@ ul.sources li::before { content: ""; position: absolute; left: 0; top: 0.65em; w
         <h2>The 2026–2028 plan answers crowding more than distance</h2>
         <p class="prose">The city’s construction department plans 25 school projects. Its 17 new schools go mostly to the districts where schools are fullest, not to the blocks where children have no school nearby.</p>
         <div id="plan-bar"></div>
+        <p class="prose small" id="plan-2028"></p>
       </article>
       <article class="chapter" data-state="reserved">
         <p class="idx">05</p>
@@ -647,6 +648,8 @@ ul.sources li::before { content: ""; position: absolute; left: 0; top: 0.65em; w
     const share = planReach / unc; const bw = 380;
     setHTML(q("#plan-bar"), `<div class="stat-row">${stat(fmt(unc), "children with no state school within 1 km")}${stat(pct(share), "reached by the plan’s 17 new schools", "deficit")}</div>` +
       `<svg viewBox="0 0 ${bw} 46" width="100%" role="img" aria-label="Share of children with no school within 1 km reached by the plan"><rect x="0" y="8" width="${bw}" height="14" rx="3" fill="${css("--wash")}"/><rect x="0" y="8" width="${Math.max(2, bw * share)}" height="14" rx="3" fill="${css("--violet")}"><title>${fmt(planReach)} of ${fmt(unc)}</title></rect><text x="0" y="40" class="mono">${fmt(planReach)} reached</text><text x="${bw}" y="40" text-anchor="end" class="mono">${fmt(unc - planReach)} still without</text></svg>`);
+    const PR = (S.projection || {}).scenarios || {};
+    if (PR.ageing_2028 && PR.cohort_2028) setHTML(q("#plan-2028"), `By 2028, when its schools open, the children without a school within 1 km are projected to grow to <b>${fmt(PR.ageing_2028.uncovered / 1000)}–${fmt(PR.cohort_2028.uncovered / 1000)} thousand</b>, and the plan still reaches ${pct(PR.ageing_2028.plan_share)}–${pct(PR.cohort_2028.plan_share)} of them.`);
     setHTML(q("#reserved-stats"), stat(fmt(best), "children reached by the best 17 reserved sites", "goldc") + stat((best / planReach).toFixed(1) + "<small>×</small>", "what the plan’s 17 new schools reach"));
     const P = S.preschool || {}; const qn = (P.queue_city || {})["Общеобразовательная / Чистая потребность"] || {};
     setHTML(q("#pre-stats"), stat(fmt(P.places), `places for ${fmt(P.attending)} attending children`) + stat(fmt((qn.total || 0) - (qn["До 2 лет"] || 0)), "children aged two or older waiting", "surplus") + stat(pct(comp["preschool/network"]?.city), "live within 300 m of a preschool on foot", "deficit"));
@@ -770,6 +773,8 @@ ul.sources li::before { content: ""; position: absolute; left: 0; top: 0.65em; w
     setHTML(q("#h1-chart"), s + "</svg>");
     const S = DATA.summary; const lc = S.load_check || {}; const sn = S.sensitivity || {}; const P = S.preschool || {};
     const checks = [["Mean district population error", "10% vs 26% WorldPop"], ["School load vs official enrolment, 119 schools", `${(lc.combined_almaty_saraishyk?.spearman ?? 0).toFixed(2)} vs ${(lc.original_first_step_spearman ?? 0).toFixed(2)} original`], ["Worst-served fifth, building surfaces", `Jaccard ${(sn["school/buildings"]?.deficit_jaccard_median ?? 0).toFixed(2)}`], ["Same, with WorldPop", `Jaccard ${(sn["school/worldpop"]?.deficit_jaccard_median ?? 0).toFixed(2)}`], ["Nura worst-served for schools", `${sn["school/buildings"]?.worst_district_counts?.Nura ?? "–"} of ${sn["school/buildings"]?.runs ?? "–"} runs`], ["Preschool cards vs register totals", `${fmt(P.attending)} vs 66,402`]];
+    const UB = (S.uncertainty || {}).bands || {}; const UW = ((S.uncertainty || {}).worst_district || {}).school || {};
+    if (UB.fixed_over_plan) checks.push(["Same 17 reserved sites over the plan, 90% of 200 draws", `${UB.fixed_over_plan.q05.toFixed(1)}–${UB.fixed_over_plan.q95.toFixed(1)}×`], ["Nura or Esil worst for schools", `${(UW.Nura || 0) + (UW.Esil || 0)} of ${S.uncertainty.draws} draws`]);
     setHTML(q("#checks"), `<tbody>${checks.map(([a, b]) => `<tr><td>${a}</td><td>${b}</td></tr>`).join("")}</tbody>`);
     const src = ["OpenStreetMap streets, addresses, schools, land use and history as of 1 January 2023", "Overture Maps, 93,507 building footprints", "Akim’s decision No. 01-7 on polling stations, as amended 18 February 2026", "Bureau of National Statistics, population by district and single year of age", "Education Department of Astana: service territories of 121 schools and the list of 198 schools with capacity, enrolment and shifts", "Construction Department of Astana: 25 school projects for 2026–2028", "INDIGO preschool register and organisation cards, 794 preschools", "City geoportal, school buildings in detailed planning projects", "SP RK 3.01-101-2013, service radii and plot sizes"];
     setHTML(q("#sources"), src.map((t) => `<li>${t}</li>`).join(""));
@@ -802,7 +807,7 @@ ul.sources li::before { content: ""; position: absolute; left: 0; top: 0.65em; w
   document.addEventListener("keydown", (e) => { if ((e.key === "p" || e.key === "P") && !e.ctrlKey && !e.metaKey && !e.altKey && !/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName)) setPresent(!document.documentElement.classList.contains("present")); });
   try { if (localStorage.getItem("atlas-present") === "1") setPresent(true); } catch (e) { /* storage unavailable */ }
 
-  Promise.all(FILES.map((f) => fetch(`data/${f}.json`).then((r) => { if (!r.ok) throw new Error(f + ".json"); return r.json(); }).then((j) => (DATA[f] = j))))
+  Promise.all(FILES.map((f) => (window.ATLAS_DATA ? Promise.resolve(window.ATLAS_DATA[f]) : fetch(`data/${f}.json`).then((r) => { if (!r.ok) throw new Error(f + ".json"); return r.json(); })).then((j) => (DATA[f] = j))))
     .then(() => { prepare(); q("#loading").remove(); window.addEventListener("hashchange", () => show(location.hash.slice(1))); show(location.hash.slice(1)); })
     .catch((e) => { q("#loading").textContent = "The atlas data did not load (" + e.message + "). Reload the page to try again."; });
 })();

@@ -20,7 +20,7 @@ The 2026 series gives Saraishyk, a district of new housing, 8 per cent preschool
 Official data came as replies to information requests through eGov. The preschool register forbids crawling, so its list was saved by hand. The INDIGO organisation cards, the geoportal layer and 2GIS listings were compiled by the team; they are used to check and to locate, and no personal data are used. [Confirm with the team how they were collected before the defence.]
 
 **6. Can the results be reproduced?**
-Yes: one command runs the thirteen pipeline stages from the raw sources, the last of which publishes the web atlas; 91 unit tests cover parsing, allocation, the index, inequality and optimisation. Letters with personal data are kept out of the repository.
+Yes: one command runs the thirteen pipeline stages from the raw sources, the last of which publishes the web atlas; 97 unit tests cover parsing, allocation, the index, inequality, optimisation and the uncertainty simulation. Letters with personal data are kept out of the repository.
 
 ## Method
 
@@ -61,6 +61,12 @@ It reaches 15 per cent of the 77,870 children without a school within 1 km. Plan
 
 **18. What is the practical recommendation?**
 The detailed plans already hold 238 school sites. Choosing the 17 of them that reach the most children without a school would reach 2.4 times as many as the plan. The framework produces that ranking.
+
+**18a. How certain are these numbers?**
+We propagated the error of the population surface by a Monte Carlo simulation of 200 draws: the allocation exponent, the size of every polling station (a spread large enough to explain the whole 10 per cent district error) and the dwellings the classifier decided. 90 per cent intervals: statutory radius met on foot for 20-24 per cent of school children; 68-87 thousand children without a school within 1 km; the plan reaches 8-16 thousand, the same 17 reserved sites 24-37 thousand, 1.9-3.4 times as many and more than the plan in every draw. Nura or Esil is the worst-served district for schools in 199 of 200 draws.
+
+**18b. The plan opens by 2028, but you measure 2026 demand. Isn't that unfair?**
+We projected 2028 from the official single-age tables with cohort change ratios of 2024-2026 (Hamilton-Perry). The school-age population grows from 311 to 333-392 thousand; children without a school within 1 km grow from 78 to 84-103 thousand. The plan still reaches 15-17 per cent of them, and the best reserved sites 2.2-2.4 times as many. The projection keeps the present pattern within districts, so new housing after 2026 is not placed.
 
 ## Limitations and future work
 

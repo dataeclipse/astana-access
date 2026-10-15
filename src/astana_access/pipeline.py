@@ -114,8 +114,11 @@ def stage_programme() -> None:
 
 def stage_checks() -> None:
     from astana_access.ingest import preschool_capacity
-    from astana_access.validation import listing, official, register
+    from astana_access.population import projection
+    from astana_access.validation import listing, official, register, uncertainty
 
+    uncertainty.run()
+    projection.run()
     if listing.run() is None:
         typer.echo("team listing not found, check skipped")
     if official.run() is None:

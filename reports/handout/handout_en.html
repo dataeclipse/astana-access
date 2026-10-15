@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Astana Access: one-page summary</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;600&family=Golos+Text:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+@page { size: A4; margin: 0; }
+:root { --ink: #0e1a2b; --ink-2: #4a5870; --hair: #d6dde5; --wash: #eef2f6; --deficit: #e0452c; --surplus: #2f6fdf; --gold: #b07d00; --violet: #5b45c8; --teal: #0e9a87; }
+* { box-sizing: border-box; }
+html, body { margin: 0; background: #fff; color: var(--ink); font-family: "Golos Text", "Segoe UI", Arial, sans-serif; font-size: 9pt; line-height: 1.34; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+.page { width: 210mm; height: 297mm; padding: 12mm 14mm 10mm; display: flex; flex-direction: column; gap: 4.5mm; overflow: hidden; }
+.kicker { font-family: "Unbounded", Arial, sans-serif; font-size: 6.8pt; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-2); margin: 0; }
+h1 { font-family: "Unbounded", Arial, sans-serif; font-weight: 600; font-size: 17pt; line-height: 1.12; margin: 1.5mm 0 0; letter-spacing: -0.01em; }
+h2 { font-family: "Unbounded", Arial, sans-serif; font-weight: 600; font-size: 9pt; margin: 0 0 1.6mm; letter-spacing: 0.02em; }
+p { margin: 0; }
+.muted { color: var(--ink-2); }
+.num { font-family: "IBM Plex Mono", Consolas, monospace; font-variant-numeric: tabular-nums; }
+header { display: grid; grid-template-columns: 1fr 27mm; gap: 6mm; align-items: start; border-bottom: 1.5pt solid var(--ink); padding-bottom: 4mm; }
+header .lead { margin-top: 2mm; font-size: 8.8pt; color: var(--ink-2); max-width: 135mm; }
+.qr { display: flex; flex-direction: column; align-items: center; gap: 1.2mm; font-size: 6.6pt; color: var(--ink-2); text-align: center; }
+.qr img { width: 25mm; height: 25mm; }
+.stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 4mm; }
+.stat { border-top: 0.8pt solid var(--hair); padding-top: 2mm; }
+.stat .v { font-family: "Unbounded", Arial, sans-serif; font-weight: 600; font-size: 19pt; line-height: 1; letter-spacing: -0.02em; }
+.stat .v small { font-size: 0.5em; font-weight: 500; }
+.stat .l { margin-top: 1.5mm; font-size: 8pt; color: var(--ink-2); }
+.deficit { color: var(--deficit); } .gold { color: var(--gold); } .violet { color: var(--violet); }
+.middle { display: grid; grid-template-columns: 1fr 74mm; gap: 6mm; }
+figure { margin: 0; }
+figure img { width: 100%; display: block; border: 0.6pt solid var(--hair); }
+figcaption { font-size: 7.4pt; color: var(--ink-2); margin-top: 1.4mm; }
+table { border-collapse: collapse; width: 100%; font-size: 8.4pt; }
+td { padding: 1.4mm 0; border-bottom: 0.6pt solid var(--hair); vertical-align: top; }
+td.h { font-weight: 600; width: 9mm; }
+td.v { text-align: right; white-space: nowrap; padding-left: 2mm; font-weight: 600; }
+.yes { color: var(--teal); } .part { color: var(--gold); }
+.bottom { display: grid; grid-template-columns: 1fr 1fr; gap: 6mm; font-size: 8.4pt; }
+ol, ul { margin: 0; padding-left: 4.2mm; font-size: 8.4pt; }
+li { margin-bottom: 0.8mm; }
+.pipeline { display: grid; grid-template-columns: repeat(5, 1fr); gap: 2mm; border-top: 1.5pt solid var(--ink); padding-top: 2mm; font-size: 7.6pt; }
+.pipeline b { display: block; font-size: 8.2pt; }
+footer { margin-top: auto; display: flex; justify-content: space-between; gap: 6mm; border-top: 0.6pt solid var(--hair); padding-top: 2.5mm; font-size: 7.4pt; color: var(--ink-2); }
+</style>
+</head>
+<body>
+<div class="page">
+  <header>
+    <div>
+      <p class="kicker">Diploma work · Astana IT University · 6B06103 Big Data Analysis · 2026</p>
+      <h1>Data-Driven Framework for Spatial Accessibility Assessment and Optimal Siting of Social Infrastructure</h1>
+      <p class="lead">Walking access from every home in Astana to every state school and preschool, built from open data and checked against official replies to information requests; and a test of where the city places its new schools.</p>
+    </div>
+    <div class="qr"><img src="atlas_qr.svg" alt="QR code linking to the interactive atlas"><span>Interactive atlas</span></div>
+  </header>
+
+  <section class="stats" aria-label="Key results">
+    <div class="stat"><div class="v deficit">22%</div><div class="l">of school-age children live within the statutory 500&nbsp;m of a school on foot; 64% as the crow flies</div></div>
+    <div class="stat"><div class="v">76%</div><div class="l">of the city's mean access to schools in Nura, the fastest-growing district; Esil 81%</div></div>
+    <div class="stat"><div class="v violet">15%</div><div class="l">of the 77,870 children without a school within 1&nbsp;km reached by the 17 new schools of the 2026–2028 plan</div></div>
+    <div class="stat"><div class="v gold">2.4<small>×</small></div><div class="l">as many reached by the 17 best of 238 sites already reserved in the detailed plans; 1.9–3.4× in 90% of Monte Carlo draws</div></div>
+  </section>
+
+  <div class="middle">
+    <div>
+    <figure>
+      <img src="atlas_map.jpg" alt="Map of Astana: children without a school within 1 km in blue, reserved school sites as green rings, the 17 best ranked in gold, planned schools as violet diamonds">
+      <figcaption>Site screening in the atlas: blue blocks are children with no state school within 1&nbsp;km on foot; green rings are reserved school sites, gold the 17 that reach the most children with their rank, violet diamonds the new schools of the 2026–2028 plan.</figcaption>
+    </figure>
+    <h2 style="margin-top:3.5mm">Two more findings</h2>
+      <ul>
+        <li>Schools are crowded as well as far: 1.7 pupils per design place, 45 of 120 schools beyond two full shifts, most in Saraishyk.</li>
+        <li>Preschools have places, 73,419 for 66,574 children, but only 34% of children live within 300&nbsp;m on foot.</li>
+        <li>By 2028 the children without a school within 1&nbsp;km grow to 84–103 thousand; the plan reaches 15–17% of them.</li>
+      </ul>
+    </div>
+    <div>
+      <h2>Hypotheses</h2>
+      <table>
+        <tr><td class="h">H1</td><td>Open data estimate population below the district better than WorldPop: district error 10% against 26%</td><td class="v yes">Supported</td></tr>
+        <tr><td class="h">H2</td><td>Deficits concentrate in growth districts: Nura and Esil worst for schools, but 92% of inequality lies within districts</td><td class="v part">In part</td></tr>
+        <tr><td class="h">H3</td><td>The pattern is robust: same worst-served cells under every building-based surface (overlap 0.8); Nura or Esil worst in 199 of 200 draws</td><td class="v yes">Cells</td></tr>
+        <tr><td class="h">H4</td><td>Comfortable School sites follow free land (ROC-AUC 0.71) more than deficit (0.59); 84% of the optimum on free land</td><td class="v part">Direction</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="pipeline" aria-label="Method">
+    <div><b>1 · Population</b>Official district totals over 386 polling-station territories and dwellings found by LightGBM (ROC-AUC 0.982)</div>
+    <div><b>2 · Walking</b>Distances from 39,735 dwellings on a 152,491-node street network</div>
+    <div><b>3 · Access</b>Floating catchment index, each child counted once; design capacity as supply</div>
+    <div><b>4 · Equity</b>Gini, Theil split by district, local Moran clusters, statutory compliance</div>
+    <div><b>5 · Siting</b>Capacitated maximal covering on free land; 2023 backtest; ranking of reserved sites</div>
+  </div>
+
+  <div class="bottom">
+    <div>
+      <h2>Recommendations for the city</h2>
+      <ol>
+        <li>Measure the statutory radius on foot, not as a circle.</li>
+        <li>Plan by blocks: the deficit lies within districts.</li>
+        <li>Reserve land for schools before housing surrounds it.</li>
+        <li>Build first the reserved sites that reach the most children without a school; the atlas ranks all 238.</li>
+      </ol>
+    </div>
+    <div>
+      <h2>Data and reproducibility</h2>
+      <p class="muted">OpenStreetMap, Overture buildings, the akim's decision on polling stations, Bureau of National Statistics age tables; official replies of the education and construction departments; INDIGO preschool register and city geoportal compiled by the project team. One command runs the 13-stage pipeline; 97 unit tests.</p>
+    </div>
+  </div>
+
+  <footer>
+    <span>Dias Bolatov and team · Supervisor: Aidana Zhalgas</span>
+    <span>Real data only · figures as of 1 January 2026</span>
+  </footer>
+</div>
+</body>
+</html>

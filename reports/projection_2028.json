@@ -1,0 +1,109 @@
+{
+ "base_year": 2026,
+ "target_year": 2028,
+ "ages": [
+  7,
+  17
+ ],
+ "method": "Hamilton-Perry cohort change ratios of the official single-age tables",
+ "districts": {
+  "Almaty+Saraishyk": {
+   "school_age_2026": 93840.0,
+   "ageing_2028": 100075.0,
+   "cohort_2028": 110637.4122,
+   "cohort_ratio_median": 1.1081,
+   "ageing_factor": 1.0664,
+   "cohort_factor": 1.179
+  },
+  "Baikonur": {
+   "school_age_2026": 32840.0,
+   "ageing_2028": 31729.0,
+   "cohort_2028": 27608.9081,
+   "cohort_ratio_median": 0.8709,
+   "ageing_factor": 0.9662,
+   "cohort_factor": 0.8407
+  },
+  "Esil": {
+   "school_age_2026": 62073.0,
+   "ageing_2028": 69140.0,
+   "cohort_2028": 82193.4519,
+   "cohort_ratio_median": 1.2067,
+   "ageing_factor": 1.1138,
+   "cohort_factor": 1.3241
+  },
+  "Nura": {
+   "school_age_2026": 57142.0,
+   "ageing_2028": 63589.0,
+   "cohort_2028": 105646.5122,
+   "cohort_ratio_median": 1.6762,
+   "ageing_factor": 1.1128,
+   "cohort_factor": 1.8488
+  },
+  "Saryarka": {
+   "school_age_2026": 64997.0,
+   "ageing_2028": 68629.0,
+   "cohort_2028": 66090.228,
+   "cohort_ratio_median": 0.951,
+   "ageing_factor": 1.0559,
+   "cohort_factor": 1.0168
+  }
+ },
+ "city": {
+  "school_age_2026": 310892.0,
+  "ageing_2028": 333162.0,
+  "cohort_2028": 392176.51237526024
+ },
+ "scenarios": {
+  "2026": {
+   "school_age_children": 310989.1679197675,
+   "uncovered": 77870.44688231584,
+   "plan_reach": 11903.939584028349,
+   "after_plan": 65966.50729828748,
+   "plan_share": 0.15286851508658414,
+   "best_reach": 28920.0,
+   "best_over_plan": 2.4294478139659152,
+   "uncovered_by_district": {
+    "Almaty": 8089.0,
+    "Baikonur": 6926.0,
+    "Esil": 21599.0,
+    "Nura": 19046.0,
+    "Saraishyk": 9645.0,
+    "Saryarka": 12565.0
+   }
+  },
+  "ageing_2028": {
+   "school_age_children": 333241.02464141767,
+   "uncovered": 84124.44739873342,
+   "plan_reach": 12973.826159537482,
+   "after_plan": 71150.62123919594,
+   "plan_share": 0.15422182921504476,
+   "best_reach": 31302.0,
+   "best_over_plan": 2.412703824999912,
+   "uncovered_by_district": {
+    "Almaty": 8626.0,
+    "Baikonur": 6692.0,
+    "Esil": 24058.0,
+    "Nura": 21195.0,
+    "Saraishyk": 10286.0,
+    "Saryarka": 13267.0
+   }
+  },
+  "cohort_2028": {
+   "school_age_children": 392221.10916414676,
+   "uncovered": 103321.09671511778,
+   "plan_reach": 17624.425369426608,
+   "after_plan": 85696.67134569117,
+   "plan_share": 0.17057915498149984,
+   "best_reach": 38300.0,
+   "best_over_plan": 2.1731204959703065,
+   "uncovered_by_district": {
+    "Almaty": 9537.0,
+    "Baikonur": 5823.0,
+    "Esil": 28600.0,
+    "Nura": 35213.0,
+    "Saraishyk": 11372.0,
+    "Saryarka": 12776.0
+   }
+  }
+ }
+}

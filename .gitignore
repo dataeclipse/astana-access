@@ -36,3 +36,5 @@ reports/*.html
 .DS_Store
 .gstack/
 graphify-out/
+
+dashboard/offline/
