@@ -44,7 +44,7 @@ uv run astana-access run --start access --stop dashboard
 | `population` | Polling stations, residential classifier, population surface, 2023 city | `reports/population_model.json` |
 | `access` | Walking access, E2SFCA, compliance, official territories, inequality | `reports/access_equity.json`, `reports/compliance.json` |
 | `models` | Preschool vacancy model and SHAP | `reports/preschool_vacancy.json`, `reports/shap.json` |
-| `programme` | Programme backtest, plan 2026-2028, model of siting choices, housing forecast, detailed plans, siting on 2028 demand | `reports/programme_2023.json`, `reports/plan_2026_2028.json`, `reports/siting_model.json`, `reports/housing_forecast.json`, `reports/detailed_plans.json`, `reports/siting_2028.json` |
+| `programme` | Programme backtest, plan 2026-2028, model of siting choices, housing forecast, detailed plans, siting on 2028 demand, ranking by distance and crowding | `reports/programme_2023.json`, `reports/plan_2026_2028.json`, `reports/siting_model.json`, `reports/housing_forecast.json`, `reports/detailed_plans.json`, `reports/siting_2028.json`, `reports/two_objective.json` |
 | `checks` | Checks against official replies and team-compiled sources | `reports/school_register_check.json`, `reports/preschool_capacity_check.json` |
 | `figures` | Thesis figures in EPS and PDF | `thesis/figures/` |
 | `dashboard` | Data of the web atlas and the ranking of reserved sites | `dashboard/data/`, `reports/pdp_site_ranking.csv` |

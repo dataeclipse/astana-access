@@ -363,6 +363,21 @@ def summary() -> dict:
     }
 
 
+def two_objective_sites() -> dict:
+    path = REPORTS / "two_objective.json"
+    if not path.exists():
+        return {}
+    report = json.loads(path.read_text(encoding="utf-8"))
+    return {
+        "plan": report["plan"],
+        "pools": {"deficit": report["deficit_pool"], "relief": report["relief_pool"]},
+        "frontier": report["frontier"],
+        "rankings": report["rankings"],
+        "both": report["sites_good_for_both"],
+        "alone_relief": {site: round(v["relief"]) for site, v in report["alone"].items()},
+    }
+
+
 def ranking_table(
     pdp: gpd.GeoDataFrame, plan: gpd.GeoDataFrame, matrix: dict, ranking: dict
 ) -> pd.DataFrame:
@@ -452,8 +467,13 @@ def build() -> dict:
             ]["2028_with_new_housing"]["best_sites"]
             if (REPORTS / "siting_2028.json").exists()
             else [],
+            "two": two_objective_sites(),
         },
     )
+    two_path = PROCESSED / "two_objective_atlas.json"
+    if two_path.exists():
+        two = json.loads(two_path.read_text(encoding="utf-8"))
+        matrix |= {"relief": two["relief"], "relief_sites": two["sites"], "caps": two["caps"]}
     sizes["reach.json"] = write("reach.json", matrix)
     table = ranking_table(pdp, plan, matrix, ranking)
     table.to_csv(REPORTS / "pdp_site_ranking.csv", index=False, encoding="utf-8-sig")

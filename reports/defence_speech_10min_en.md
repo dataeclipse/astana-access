@@ -20,7 +20,7 @@ Every estimate is built first from open sources — OpenStreetMap, ninety-three 
 
 ## Slide 5. Method (0:30, 2:30)
 
-Five stages: population, walking distances on the street network, accessibility per child with a floating catchment index in which each child is counted once, inequality, and capacitated covering on free land. One command runs the whole pipeline, and one hundred and three unit tests cover it.
+Five stages: population, walking distances on the street network, accessibility per child with a floating catchment index in which each child is counted once, inequality, and capacitated covering on free land. One command runs the whole pipeline, and one hundred and five unit tests cover it.
 
 ## Slide 6. H1: polling stations beat the satellite grid (0:40, 3:10)
 

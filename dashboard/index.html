@@ -154,6 +154,7 @@ input[type="search"] { width: 100%; padding: 9px 14px; border-radius: 999px; bor
 input[type="range"] { width: 100%; accent-color: var(--gold); }
 .seg { display: inline-flex; background: var(--wash); padding: 3px; border-radius: 999px; }
 .seg button { all: unset; cursor: pointer; padding: 5px 13px; font-size: 13.5px; font-weight: 500; color: var(--ink-2); border-radius: 999px; }
+.seg button:disabled { opacity: 0.4; cursor: not-allowed; }
 .seg button[aria-pressed="true"] { background: var(--panel); color: var(--ink); box-shadow: 0 1px 2px rgba(14, 26, 43, 0.12); }
 .seg button:focus-visible { outline: 2px solid var(--focus); }
 .versus { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
@@ -164,7 +165,8 @@ table.list th { text-align: left; font-weight: 500; color: var(--ink-2); font-si
 table.list td { padding: 7px 6px; border-bottom: 1px solid var(--hair); vertical-align: top; }
 table.list td.r, table.list th.r { text-align: right; }
 .rank { display: inline-grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; background: var(--gold); color: #1b1300; font-family: var(--mono); font-size: 11px; font-weight: 500; }
-.list-wrap { max-height: 300px; overflow-y: auto; }
+.list-wrap { max-height: 300px; overflow-y: auto; overflow-x: hidden; }
+table.list td.r, table.list th.r { white-space: nowrap; padding-left: 4px; }
 .paper { max-width: 1120px; margin: 0 auto; padding: 56px 24px 96px; display: flex; flex-direction: column; gap: 56px; }
 .paper .lead { display: flex; flex-direction: column; gap: 14px; max-width: 760px; }
 .pipeline { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); border-top: 2px solid var(--ink); }
@@ -298,7 +300,7 @@ ul.sources li::before { content: ""; position: absolute; left: 0; top: 0.65em; w
       <div class="group">
         <p class="kicker">Site screening</p>
         <h2>Which reserved sites to build first</h2>
-        <p class="prose small">Sites are added in the order that reaches the most children with no state school within walking distance. Click a site on the map to add or remove it.</p>
+        <p class="prose small" id="screen-intro">Sites are added in the order that reaches the most children with no state school within walking distance. Click a site on the map to add or remove it.</p>
       </div>
       <div class="group">
         <div style="display:flex;justify-content:space-between;align-items:center;gap:10px">
@@ -306,6 +308,14 @@ ul.sources li::before { content: ""; position: absolute; left: 0; top: 0.65em; w
           <div class="seg" role="group" aria-label="Walking distance">
             <button type="button" data-radius="1000" aria-pressed="true">1 km</button>
             <button type="button" data-radius="1500" aria-pressed="false">1.5 km</button>
+          </div>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:10px">
+          <span class="small muted">Rank by</span>
+          <div class="seg" role="group" aria-label="Rank sites by">
+            <button type="button" data-mode="distance" aria-pressed="true">Distance</button>
+            <button type="button" data-mode="crowding" aria-pressed="false">Crowding</button>
+            <button type="button" data-mode="both" aria-pressed="false">Both</button>
           </div>
         </div>
         <label for="best-n" class="small">Best <b class="num" id="best-n-label">17</b> sites</label>
@@ -321,8 +331,17 @@ ul.sources li::before { content: ""; position: absolute; left: 0; top: 0.65em; w
         <div class="stat"><span class="v goldc num" id="sel-total">0</span><span class="l" id="sel-meta">children, your selection</span></div>
         <div class="stat"><span class="v num" id="plan-total">0</span><span class="l">children, plan 2026–2028</span></div>
       </div>
+      <div class="versus">
+        <div class="stat"><span class="v goldc num" id="sel-relief">0</span><span class="l">pupils beyond two shifts nearby, your selection</span></div>
+        <div class="stat"><span class="v num" id="plan-relief">0</span><span class="l">pupils beyond two shifts nearby, plan</span></div>
+      </div>
       <p class="small" id="sel-share"></p>
       <div id="curve"></div>
+      <div class="group">
+        <p class="kicker">Distance against crowding, 17 sites</p>
+        <div id="frontier"></div>
+        <p class="small muted">Each point on the line is a set of 17 reserved sites that weighs the two goals differently. Points up and to the right are better on both.</p>
+      </div>
       <div class="group">
         <p class="kicker">Selected sites</p>
         <div class="list-wrap"><table class="list" id="sel-table"></table></div>
@@ -599,12 +618,26 @@ ul.sources li::before { content: ""; position: absolute; left: 0; top: 0.65em; w
     DATA.pdpById = Object.fromEntries(DATA.sites.pdp.map((p) => [p.id, p]));
     DATA.rankOf = {}; for (const r in DATA.sites.ranking) DATA.rankOf[r] = Object.fromEntries(DATA.sites.ranking[r].map((x, i) => [x.id, i + 1]));
     DATA.best17 = new Set(DATA.sites.ranking["1000"].slice(0, 17).map((x) => x.id));
+    if (DATA.sites.two && DATA.sites.two.rankings) for (const mode in DATA.sites.two.rankings) DATA.rankOf[mode] = Object.fromEntries(DATA.sites.two.rankings[mode].map((x, i) => [x.id, i + 1]));
     DATA.best2028 = new Set(DATA.sites.best_2028 || []);
   }
   function siteReach(id, r) { const l = DATA.reach.sites[r][id]; let s = 0; if (l) for (const i of l) s += DATA.reach.children[i]; return s; }
   function reachOf(ids, r) { const seen = new Uint8Array(DATA.reach.children.length); let s = 0; for (const id of ids) { const l = DATA.reach.sites[r][id]; if (!l) continue; for (const i of l) if (!seen[i]) { seen[i] = 1; s += DATA.reach.children[i]; } } return s; }
   const access = (v) => (v == null ? "–" : v.toFixed(2));
-  const screen = { radius: "1000", map: null, sel: new Set() };
+  const screen = { radius: "1000", mode: "distance", map: null, sel: new Set() };
+  const MODE_TEXT = {
+    distance: "Sites are added in the order that reaches the most children with no state school within walking distance.",
+    crowding: "Sites are added in the order that offers a place to the most pupils of schools beyond two full shifts who live within 1 km.",
+    both: "Sites are added in the order that weighs both goals equally: children with no school within 1 km and pupils of overcrowded schools nearby.",
+  };
+  function rankingFor() { return screen.mode === "distance" ? DATA.sites.ranking[screen.radius] : DATA.sites.two.rankings[screen.mode].map((x) => ({ id: x.id, cumulative: x.deficit })); }
+  function rankKey() { return screen.mode === "distance" ? screen.radius : screen.mode; }
+  function reliefOf(ids) {
+    if (!DATA.reach.relief) return 0;
+    const taken = new Uint8Array(DATA.reach.relief.length); let total = 0;
+    for (const id of ids) { let gain = 0; for (const i of DATA.reach.relief_sites[id] || []) if (!taken[i]) { taken[i] = 1; gain += DATA.reach.relief[i]; } total += Math.min(gain, DATA.reach.caps[id] ?? Infinity); }
+    return total;
+  }
 
   function tipFor(hit) {
     if (hit.type === "cell") { const c = hit.cell; const future = (c.uncovered_2028 > 0 ? `<br>${fmt(c.uncovered_2028)} with no school within 1 km in 2028` : "") + (c.new_housing_k_m2 >= 1 ? `<br>${fmt(c.new_housing_k_m2, 1)} thousand m² of new housing forecast` : ""); return `<b>${c.district || "Outside the districts"}</b><br>School access ${access(c.school_access)}, preschool ${access(c.preschool_access)}<br>${fmt(c.school_children)} school-age children · ${fmt(c.uncovered_1000)} with no school within 1 km${future}`; }
@@ -612,7 +645,7 @@ ul.sources li::before { content: ""; position: absolute; left: 0; top: 0.65em; w
     if (hit.type === "school") return `<b>${it.number ? "School No. " + it.number : esc(it.name).slice(0, 60)}</b>${it.programme ? " · Comfortable School" : ""}<br>${fmt(it.capacity)} places${it.enrolment_2025 ? " · " + fmt(it.enrolment_2025) + " pupils · " + it.ratio.toFixed(2) + " per place" : ""}`;
     if (hit.type === "preschool") return `<b>${esc(it.name)}</b><br>${esc(it.ownership)} · ${fmt(it.capacity)} places · ${fmt(it.attending)} children`;
     if (hit.type === "plan") return `<b>${esc(it.code)} · ${it.year}</b>, ${esc(it.kind)}<br>${esc(it.name)}<br>${fmt(it.seats)} places in two shifts`;
-    if (hit.type === "pdp") { const r = screen.radius; const rk = DATA.rankOf[r][it.id]; return `<b>Reserved school site</b>${rk ? " · rank " + rk : ""}<br>${esc(it.purpose)}<br>${fmt(siteReach(it.id, r))} children with no school within ${r === "1000" ? "1 km" : "1.5 km"}`; }
+    if (hit.type === "pdp") { const r = screen.radius; const rk = (DATA.rankOf[rankKey()] || {})[it.id]; const rel = DATA.sites.two && DATA.sites.two.alone_relief ? DATA.sites.two.alone_relief[it.id] : null; return `<b>Reserved school site</b>${rk ? " · rank " + rk : ""}<br>${esc(it.purpose)}<br>${fmt(siteReach(it.id, r))} children with no school within ${r === "1000" ? "1 km" : "1.5 km"}${rel != null ? `<br>${fmt(rel)} pupils of overcrowded schools within 1 km` : ""}`; }
     return "";
   }
 
@@ -734,13 +767,13 @@ ul.sources li::before { content: ""; position: absolute; left: 0; top: 0.65em; w
     exKey(); exDetail(null);
   }
 
-  function renderScreen(g, m) { layerBase(g, m); layerCells(g, m, BASES[screen.radius === "1000" ? "uncovered_1000" : "uncovered_1500"].color); layerDistricts(g, m); drawPlan(g, m, true); drawPdp(g, m, screen.sel, screen.radius); layerLabels(g, m); }
-  function setBest(n) { screen.sel.clear(); DATA.sites.ranking[screen.radius].slice(0, n).forEach((x) => screen.sel.add(x.id)); }
+  function renderScreen(g, m) { layerBase(g, m); layerCells(g, m, BASES[screen.radius === "1000" ? "uncovered_1000" : "uncovered_1500"].color); layerDistricts(g, m); drawPlan(g, m, true); drawPdp(g, m, screen.sel, rankKey()); layerLabels(g, m); }
+  function setBest(n) { screen.sel.clear(); rankingFor().slice(0, n).forEach((x) => screen.sel.add(x.id)); }
   function syncSlider(n) { q("#best-n").value = n; q("#best-n-label").textContent = String(n); }
   function niceTicks(max, n) { const s0 = max / n; const mag = Math.pow(10, Math.floor(Math.log10(s0))); const st = [1, 2, 5, 10].map((v) => v * mag).find((v) => v >= s0); const out = []; for (let v = 0; v <= max; v += st) out.push(v); return out; }
   function screenKey() { const s = SYM(); setHTML(screen.map.key, keyHTML(screen.radius === "1000" ? "uncovered_1000" : "uncovered_1500", [s.pdp, [symbol("circle", css("--gold"), css("--ink")), "Selected site, with rank"], s.plan])); }
   function curve(total, n, plan) {
-    const R = DATA.sites.ranking[screen.radius]; const W = 300, H = 170, l = 40, r = 10, t = 10, b = 26; const maxN = R.length; const maxY = Math.max(R[R.length - 1].cumulative, total, plan) * 1.06;
+    const R = rankingFor(); const W = 300, H = 170, l = 40, r = 10, t = 10, b = 26; const maxN = R.length; const maxY = Math.max(R[R.length - 1].cumulative, total, plan) * 1.06;
     const x = (v) => l + (v / maxN) * (W - l - r), y = (v) => H - b - (v / maxY) * (H - t - b);
     let d = `M${x(0)},${y(0)}`; R.forEach((p, i) => (d += ` L${x(i + 1)},${y(p.cumulative)}`));
     let s = `<svg viewBox="0 0 ${W} ${H}" width="100%" role="img" aria-label="Children reached as reserved sites are added in order, with the plan for comparison">`;
@@ -751,15 +784,35 @@ ul.sources li::before { content: ""; position: absolute; left: 0; top: 0.65em; w
     s += `<text x="${l}" y="${H - 6}">0</text><text x="${W - r}" y="${H - 6}" text-anchor="end">${maxN} sites</text></svg>`;
     setHTML(q("#curve"), s);
   }
+  function frontier(total, relief, n) {
+    const T = DATA.sites.two; if (!T || !T.frontier) { setHTML(q("#frontier"), ""); return; }
+    const pts = T.frontier.map((f) => ({ d: f.deficit, r: f.relief, w: f.weight_distance })).sort((a, b) => a.d - b.d);
+    const W = 300, H = 190, l = 44, rr = 12, t = 12, b = 30;
+    const maxD = Math.max(...pts.map((p) => p.d), T.plan.deficit, total || 0) * 1.08, maxR = Math.max(...pts.map((p) => p.r), T.plan.relief, relief || 0) * 1.12;
+    const x = (v) => l + (v / maxD) * (W - l - rr), y = (v) => H - b - (v / maxR) * (H - t - b);
+    let s = `<svg viewBox="0 0 ${W} ${H}" width="100%" role="img" aria-label="Children without a school reached against pupils of overcrowded schools offered a place, for sets of 17 reserved sites and for the plan">`;
+    niceTicks(maxR, 3).forEach((v) => (s += `<line x1="${l}" x2="${W - rr}" y1="${y(v)}" y2="${y(v)}" stroke="${css("--hair")}"/><text x="${l - 6}" y="${y(v) + 4}" text-anchor="end">${v >= 1000 ? fmt(v / 1000, 1) + "k" : fmt(v)}</text>`));
+    niceTicks(maxD, 3).forEach((v) => (s += `<text x="${x(v)}" y="${H - 14}" text-anchor="middle">${v >= 1000 ? fmt(v / 1000) + "k" : fmt(v)}</text>`));
+    s += `<path d="${pts.map((p, i) => `${i ? "L" : "M"}${x(p.d)},${y(p.r)}`).join(" ")}" fill="none" stroke="${css("--gold")}" stroke-width="2"/>`;
+    pts.forEach((p) => (s += `<circle cx="${x(p.d)}" cy="${y(p.r)}" r="3.5" fill="${css("--gold")}"><title>${Math.round(p.w * 100)}% weight on distance: ${fmt(p.d)} children, ${fmt(p.r)} pupils</title></circle>`));
+    s += `<circle cx="${x(T.plan.deficit)}" cy="${y(T.plan.relief)}" r="5.5" fill="${css("--violet")}" stroke="${css("--panel")}" stroke-width="2"><title>Plan: ${fmt(T.plan.deficit)} children, ${fmt(T.plan.relief)} pupils</title></circle><text x="${x(T.plan.deficit) + 8}" y="${y(T.plan.relief) + 4}" class="ink">plan</text>`;
+    if (n && total != null) s += `<circle cx="${x(total)}" cy="${y(relief)}" r="5" fill="${css("--ink")}" stroke="${css("--panel")}" stroke-width="2"><title>Your selection: ${fmt(total)} children, ${fmt(relief)} pupils</title></circle>`;
+    s += `<text x="${(l + W - rr) / 2}" y="${H - 1}" text-anchor="middle">children with no school within 1 km reached</text><text transform="translate(10 ${(t + H - b) / 2}) rotate(-90)" text-anchor="middle">pupils relieved</text></svg>`;
+    setHTML(q("#frontier"), s);
+  }
   function updateScreen() {
     const r = screen.radius; const ids = [...screen.sel]; const total = reachOf(ids, r); const plan = reachOf(DATA.planNew.map((p) => p.id), r); const all = DATA.reach.total_uncovered[r];
     q("#sel-total").textContent = fmt(total); q("#plan-total").textContent = fmt(plan);
     q("#sel-meta").textContent = `children, ${ids.length} selected site${ids.length === 1 ? "" : "s"}`;
     setHTML(q("#sel-share"), `Of <b class="num">${fmt(all)}</b> children with no state school within ${r === "1000" ? "1 km" : "1.5 km"}, your selection reaches <b>${pct(total / all, 1)}</b> and the plan <b>${pct(plan / all, 1)}</b>.` + (plan > 0 && ids.length ? ` <span class="ratio goldc">${(total / plan).toFixed(1)}× the plan</span>` : ""));
-    const ordered = ids.map((id) => ({ id, rk: DATA.rankOf[r][id] || 999 })).sort((a, b) => a.rk - b.rk);
-    const seen = new Uint8Array(DATA.reach.children.length); ordered.forEach((o) => { let gn = 0; (DATA.reach.sites[r][o.id] || []).forEach((i) => { if (!seen[i]) { seen[i] = 1; gn += DATA.reach.children[i]; } }); o.gain = gn; });
-    setHTML(q("#sel-table"), ids.length ? `<thead><tr><th></th><th>Site</th><th class="r">Adds</th></tr></thead><tbody>${ordered.map((o) => `<tr><td>${o.rk === 999 ? "–" : `<span class="rank">${o.rk}</span>`}</td><td>${esc(DATA.pdpById[o.id].purpose).slice(0, 56)}</td><td class="r num">${fmt(o.gain)}</td></tr>`).join("")}</tbody>` : `<tbody><tr><td class="muted">No sites selected yet.</td></tr></tbody>`);
-    curve(total, ids.length, plan); screen.map.draw();
+    const ordered = ids.map((id) => ({ id, rk: DATA.rankOf[rankKey()][id] || 999 })).sort((a, b) => a.rk - b.rk);
+    const seen = new Uint8Array(DATA.reach.children.length); const seenR = new Uint8Array((DATA.reach.relief || []).length);
+    ordered.forEach((o) => { let gn = 0; (DATA.reach.sites[r][o.id] || []).forEach((i) => { if (!seen[i]) { seen[i] = 1; gn += DATA.reach.children[i]; } }); o.gain = gn;
+      let gr = 0; (DATA.reach.relief_sites ? DATA.reach.relief_sites[o.id] || [] : []).forEach((i) => { if (!seenR[i]) { seenR[i] = 1; gr += DATA.reach.relief[i]; } }); o.relief = Math.min(gr, DATA.reach.caps ? DATA.reach.caps[o.id] ?? Infinity : Infinity); });
+    setHTML(q("#sel-table"), ids.length ? `<thead><tr><th></th><th>Site</th><th class="r">Adds</th><th class="r">Relief</th></tr></thead><tbody>${ordered.map((o) => `<tr><td>${o.rk === 999 ? "–" : `<span class="rank">${o.rk}</span>`}</td><td title="${esc(DATA.pdpById[o.id].purpose)}">${esc(DATA.pdpById[o.id].purpose.slice(0, 30))}…</td><td class="r num">${fmt(o.gain)}</td><td class="r num">${fmt(o.relief)}</td></tr>`).join("")}</tbody>` : `<tbody><tr><td class="muted">No sites selected yet.</td></tr></tbody>`);
+    const relief = reliefOf(ordered.map((o) => o.id)); const planRelief = reliefOf(DATA.planNew.map((p) => p.id));
+    q("#sel-relief").textContent = fmt(relief); q("#plan-relief").textContent = fmt(planRelief);
+    curve(total, ids.length, plan); frontier(r === "1000" ? total : null, relief, ids.length); screen.map.draw();
   }
   function initScreen() {
     screen.map = new MapView(q("#map-screen"), { label: "Map of children with no school within walking distance and reserved school sites", bounds: DATA.bounds, render: renderScreen, tooltip: tipFor,
@@ -768,9 +821,16 @@ ul.sources li::before { content: ""; position: absolute; left: 0; top: 0.65em; w
     screenKey();
     const slider = q("#best-n"); slider.max = String(DATA.sites.ranking["1000"].length);
     slider.addEventListener("input", () => { syncSlider(+slider.value); setBest(+slider.value); updateScreen(); });
+    const radius1500 = document.querySelector('.seg button[data-radius="1500"]');
+    document.querySelectorAll(".seg button[data-mode]").forEach((b) => b.addEventListener("click", () => {
+      screen.mode = b.dataset.mode; document.querySelectorAll(".seg button[data-mode]").forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
+      if (screen.mode !== "distance" && screen.radius !== "1000") document.querySelector('.seg button[data-radius="1000"]').click();
+      radius1500.disabled = screen.mode !== "distance"; radius1500.title = radius1500.disabled ? "Crowding is measured within 1 km" : "";
+      q("#screen-intro").textContent = MODE_TEXT[screen.mode] + " Click a site on the map to add or remove it.";
+      slider.max = String(rankingFor().length); const n = Math.min(+slider.value, +slider.max); syncSlider(n); setBest(n); updateScreen(); }));
     document.querySelectorAll(".seg button[data-radius]").forEach((b) => b.addEventListener("click", () => {
       screen.radius = b.dataset.radius; document.querySelectorAll(".seg button[data-radius]").forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
-      slider.max = String(DATA.sites.ranking[screen.radius].length); const n = Math.min(+slider.value, +slider.max); syncSlider(n); setBest(n); screenKey(); updateScreen(); }));
+      slider.max = String(rankingFor().length); const n = Math.min(+slider.value, +slider.max); syncSlider(n); setBest(n); screenKey(); updateScreen(); }));
     q("#sel-17").addEventListener("click", () => { syncSlider(17); setBest(17); updateScreen(); });
     q("#sel-clear").addEventListener("click", () => { screen.sel.clear(); syncSlider(0); updateScreen(); });
     q("#sel-copy").addEventListener("click", () => {

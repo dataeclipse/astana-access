@@ -20,7 +20,7 @@ The 2026 series gives Saraishyk, a district of new housing, 8 per cent preschool
 Official data came as replies to information requests through eGov. The preschool register forbids crawling, so its list was saved by hand. The INDIGO organisation cards, the geoportal layer and 2GIS listings were compiled by the team; they are used to check and to locate, and no personal data are used. [Confirm with the team how they were collected before the defence.]
 
 **6. Can the results be reproduced?**
-Yes: one command runs the thirteen pipeline stages from the raw sources, the last of which publishes the web atlas; 103 unit tests cover parsing, allocation, the index, inequality, optimisation and the uncertainty simulation. Letters with personal data are kept out of the repository.
+Yes: one command runs the thirteen pipeline stages from the raw sources, the last of which publishes the web atlas; 105 unit tests cover parsing, allocation, the index, inequality, optimisation and the uncertainty simulation. Letters with personal data are kept out of the repository.
 
 ## Method
 
@@ -73,6 +73,9 @@ Not directly: the only examples of chosen sites are the city's own choices, and 
 
 **18d. Does the housing model beat a simple rule?**
 Only partly, and we say so. It finds where housing appears better (ROC-AUC 0.94 against 0.92 for "construction continues where it was"), but the simple rule captures slightly more of the new floor area in its top tenth of cells on the temporal test (81 against 76 per cent). The training period is weakened by OSM: much of what appears in 2017-2020 is old housing mapped late.
+
+**18e. The plan answers crowding. Doesn't your ranking ignore it?**
+No. We scored every reserved site on both goals: children with no school within 1 km, and pupils of schools beyond two full shifts who live within 1 km of the site. Every set of 17 sites on the trade-off line beats the plan on both goals at once. Even the set chosen only for crowding offers a nearby place to 7,400 pupils of overcrowded schools against 2,800 for the plan, and still reaches 14,200 children without a school against 11,900. A balanced choice reaches 25,200 and 6,000. Fifteen reserved sites are in the top quarter on both goals. The atlas lets the user switch between distance, crowding and both.
 
 ## Limitations and future work
 

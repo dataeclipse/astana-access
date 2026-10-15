@@ -65,3 +65,28 @@ def test_evaluate_rewards_perfect_ranking() -> None:
     perfect = evaluate(actual, actual)
     assert perfect["roc_auc_any_new"] == pytest.approx(1.0)
     assert perfect["top_decile_capture"] == pytest.approx(1.0)
+
+
+def test_two_objective_greedy_follows_the_weight() -> None:
+    from astana_access.optimization.two_objective import greedy
+
+    deficit = np.array([100.0, 0.0, 0.0])
+    relief = np.array([0.0, 50.0, 0.0])
+    lists = {
+        "a": (np.array([0]), np.array([], dtype=int)),
+        "b": (np.array([], dtype=int), np.array([1])),
+    }
+    caps = {"a": 1e9, "b": 1e9}
+    assert greedy(lists, deficit, relief, caps, 1.0, (1.0, 1.0), 1)[0]["id"] == "a"
+    assert greedy(lists, deficit, relief, caps, 0.0, (1.0, 1.0), 1)[0]["id"] == "b"
+
+
+def test_two_objective_totals_cap_relief_and_count_children_once() -> None:
+    from astana_access.optimization.two_objective import totals
+
+    deficit = np.array([10.0, 20.0])
+    relief = np.array([300.0, 300.0])
+    lists = {"a": (np.array([0, 1]), np.array([0, 1])), "b": (np.array([1]), np.array([1]))}
+    covered, relieved = totals(["a", "b"], lists, deficit, relief, {"a": 400.0, "b": 400.0})
+    assert covered == pytest.approx(30.0)
+    assert relieved == pytest.approx(400.0)
