@@ -132,6 +132,25 @@ svg text.ink { fill: var(--ink); }
 .step b { font-family: var(--font-mono); color: var(--accent); font-size: 13px; }
 ul.plain { margin: 0; padding-left: 18px; display: flex; flex-direction: column; gap: 4px; }
 .loading { padding: 40px; color: var(--muted); }
+.top-actions { display: flex; align-items: center; gap: 8px; }
+button.btn[aria-pressed="true"] { background: var(--ink); color: var(--surface); border-color: var(--ink); }
+:root.present body { font-size: 18px; }
+:root.present .brand h1 { font-size: 24px; }
+:root.present .brand span { font-size: 15px; }
+:root.present nav.tabs a { font-size: 17px; padding: 9px 15px; }
+:root.present h2 { font-size: 36px; }
+:root.present h3 { font-size: 21px; }
+:root.present .lede { font-size: 19px; }
+:root.present .kpi .value { font-size: 46px; }
+:root.present .kpi .label { font-size: 17px; }
+:root.present .kpi .note, :root.present .small { font-size: 15px; }
+:root.present table.data { font-size: 17px; }
+:root.present table.data th { font-size: 15px; }
+:root.present .map-wrap { height: min(82vh, 980px); }
+:root.present .map-wrap.short { height: min(70vh, 820px); }
+:root.present label.opt { font-size: 16px; }
+:root.present .big { font-size: 44px; }
+:root.present main { max-width: 1840px; }
 </style>
 
 <header class="top">
@@ -145,8 +164,12 @@ ul.plain { margin: 0; padding-left: 18px; display: flex; flex-direction: column;
       <a href="#map" data-tab="map">Map</a>
       <a href="#screening" data-tab="screening">Site screening</a>
       <a href="#crowding" data-tab="crowding">Crowding</a>
+      <a href="#preschools" data-tab="preschools">Preschools</a>
       <a href="#method" data-tab="method">Method &amp; data</a>
     </nav>
+    <div class="top-actions">
+      <button type="button" class="btn" id="present" aria-pressed="false" title="Larger type and maps for a projector (key P)">Large screen</button>
+    </div>
   </div>
 </header>
 
@@ -274,6 +297,50 @@ ul.plain { margin: 0; padding-left: 18px; display: flex; flex-direction: column;
     </div>
   </section>
 
+  <section class="tab" id="tab-preschools" hidden>
+    <div class="head">
+      <p class="eyebrow">Preschools</p>
+      <h2>Places exist, but not near every child</h2>
+      <p class="lede">Capacity and attendance from the cards of the INDIGO register, waiting list from its statistics page, 15 October 2026. Preschools are chosen through a city-wide queue, so access here is potential access, not use.</p>
+    </div>
+    <div class="kpis" id="pre-kpis"></div>
+    <div class="map-layout">
+      <div class="rail">
+        <div class="panel">
+          <fieldset>
+            <legend class="fs">Colour blocks by</legend>
+            <label class="opt"><input type="radio" name="prebase" value="preschool_access" id="prebase-access" checked> Preschool access per child</label>
+            <label class="opt"><input type="radio" name="prebase" value="preschool_children" id="prebase-kids"> Preschool-age children</label>
+            <label class="opt"><input type="radio" name="prebase" value="none" id="prebase-none"> No blocks</label>
+          </fieldset>
+          <div class="legend" id="pre-legend"></div>
+        </div>
+        <div class="panel">
+          <fieldset>
+            <legend class="fs">Show</legend>
+            <label class="opt"><input type="checkbox" id="pre-cluster" checked> Low-access clusters</label>
+            <label class="opt"><input type="checkbox" id="pre-state" checked> State preschools</label>
+            <label class="opt"><input type="checkbox" id="pre-private" checked> Private preschools</label>
+          </fieldset>
+          <div class="legend" id="pre-symbols"></div>
+        </div>
+        <div class="panel"><div class="detail" id="pre-detail"></div></div>
+      </div>
+      <div class="map-wrap" id="map-pre"></div>
+    </div>
+    <div class="grid-2">
+      <div class="panel">
+        <h3>Districts</h3>
+        <div class="scroll-x"><table class="data" id="pre-table"></table></div>
+      </div>
+      <div class="panel">
+        <h3>Waiting list by age</h3>
+        <div id="queue-chart"></div>
+        <p class="small muted" id="queue-note"></p>
+      </div>
+    </div>
+  </section>
+
   <section class="tab" id="tab-method" hidden>
     <div class="head">
       <p class="eyebrow">Method &amp; data</p>
@@ -301,6 +368,7 @@ ul.plain { margin: 0; padding-left: 18px; display: flex; flex-direction: column;
           <li>Site screening counts children without a state school within walking distance and ignores capacity; for the plan’s schools capacity never binds.</li>
           <li>Detailed-plan sites are building contours on the geoportal; their reservation status is not published.</li>
           <li>Preschool capacity and attendance come from register cards compiled on one day; the waiting list is published for the city only.</li>
+          <li>The full ranking of the 238 detailed-plan sites, with district, coordinates and children reached at 1 and 1.5 km, is kept in the project repository as <span class="num">reports/pdp_site_ranking.csv</span>.</li>
         </ul>
       </div>
     </div>
@@ -784,6 +852,98 @@ ul.plain { margin: 0; padding-left: 18px; display: flex; flex-direction: column;
     setHTML(q("#crowd-table"), `<thead><tr><th>School</th><th>District</th><th class="r">Places</th><th class="r">Pupils 2025–26</th><th class="r">Per place</th><th class="r">Change to 2026–27</th></tr></thead><tbody>${list.map((s) => `<tr><td>${s.number ? "No. " + s.number : esc(s.name).slice(0, 40)}${s.programme ? ' <span class="pill">Comfortable</span>' : ""}</td><td>${esc(s.district || "–")}</td><td class="r num">${fmt(s.capacity)}</td><td class="r num">${fmt(s.enrolment_2025)}</td><td class="r num">${s.ratio.toFixed(2)}</td><td class="r num">${s.enrolment_2026 ? (s.enrolment_2026 >= s.enrolment_2025 ? "+" : "") + pct(s.enrolment_2026 / s.enrolment_2025 - 1) : "–"}</td></tr>`).join("")}</tbody>`);
   }
 
+  // ---------- preschools ----------
+  let preMap, preBase = "preschool_access", preHit = null;
+  const preOv = () => ({ cluster: q("#pre-cluster").checked, state: q("#pre-state").checked, priv: q("#pre-private").checked });
+  function prePoints() {
+    const o = preOv();
+    return DATA.preschools.filter((p) => (p.ownership === "state" ? o.state : o.priv)).map((p) => ({ type: "preschool", item: p, lon: p.lon, lat: p.lat, r: preRadius(p) }));
+  }
+  function preRadius(p) { return 2 + Math.sqrt((p.capacity || 30) / 30) * 1.6; }
+  function preFull(p) { return p.attending != null && p.capacity ? p.attending / p.capacity : null; }
+  function renderPre(g, m) {
+    const o = preOv();
+    drawBase(g, m, () => {
+      for (const c of DATA.cellList) {
+        let col = null;
+        if (preBase === "preschool_access") col = c.preschool_children > 0 ? diverging(c.preschool_access) : null;
+        else if (preBase === "preschool_children") col = c.preschool_children > 0 ? ramp(Math.sqrt(c.preschool_children / 600)) : null;
+        if (!col) continue; m.hex(g, c.ring); g.fillStyle = col; g.globalAlpha = 0.9; g.fill(); g.globalAlpha = 1;
+      }
+      if (o.cluster) { g.strokeStyle = css("--ink"); g.lineWidth = 1.3; for (const c of DATA.cellList) { if (!c.preschool_cluster) continue; m.hex(g, c.ring); g.stroke(); } }
+    });
+    const surf = css("--surface");
+    for (const p of prePoints()) {
+      const [x, y] = m.project(p.lon, p.lat); const full = preFull(p.item);
+      const fill = full != null && full >= 1 ? css("--serious") : css("--series-3");
+      marker(g, x, y, p.item.ownership === "state" ? "square" : "circle", p.r, fill, surf, 1.1);
+      if (preHit && preHit.item === p.item) marker(g, x, y, "circle", p.r + 6, null, css("--ink"), 2);
+    }
+    drawLabels(g, m);
+  }
+  function preDetail(hit) {
+    const box = q("#pre-detail");
+    if (!hit) { setHTML(box, `<p class="muted small">Click a preschool or a block to see its figures.</p>`); return; }
+    const dl = (pairs) => `<dl>${pairs.map(([a, b]) => `<dt>${a}</dt><dd>${b}</dd>`).join("")}</dl>`;
+    if (hit.type === "cell") { const c = hit.cell; setHTML(box, `<p class="name">${c.district} · block ${esc(c.h3)}</p>` + dl([["Preschool access", access(c.preschool_access)], ["Preschool-age children", fmt(c.preschool_children)], ["Low-access cluster", c.preschool_cluster ? "yes" : "no"]])); return; }
+    const it = hit.item; const full = preFull(it);
+    setHTML(box, `<p class="name">${esc(it.name)}</p>` + dl([["Ownership", esc(it.ownership)], ["District", esc(it.district || "–")], ["Design capacity", fmt(it.capacity)], ["Attending", fmt(it.attending)], ["Children per place", full == null ? "–" : full.toFixed(2)], ["Free places, 30 Sep", fmt(it.free)]]) + (full != null && full >= 1 ? `<span class="pill"><span class="dot" style="background:${css("--serious")}"></span>Full or above capacity</span>` : ""));
+  }
+  function preLegend() {
+    const L = q("#pre-legend");
+    if (preBase === "preschool_access") { const stops = [0.25, 0.5, 1, 2, 4].map((v) => diverging(v)); setHTML(L, `<div class="ramp" style="background:linear-gradient(90deg,${stops.join(",")})"></div><div class="ticks"><span>¼ or less</span><span>½</span><span>city mean</span><span>2×</span><span>4×</span></div>`); }
+    else if (preBase === "none") setHTML(L, "");
+    else { const st = [0, 0.25, 0.5, 0.75, 1].map((t) => ramp(t)); setHTML(L, `<div class="ramp" style="background:linear-gradient(90deg,${st.join(",")})"></div><div class="ticks"><span>0</span><span>150</span><span>600+ children per block</span></div>`); }
+    const surf = css("--surface");
+    setHTML(q("#pre-symbols"), [
+      [symbol("hex", css("--ink")), "Low-access cluster (local Moran, p < 0.05)"],
+      [symbol("square", css("--series-3"), surf), "State preschool, size by capacity"],
+      [symbol("circle", css("--series-3"), surf), "Private preschool, size by capacity"],
+      [symbol("circle", css("--serious"), surf), "Full or above capacity"],
+    ].map(([sv, l]) => `<div class="row">${sv}<span>${l}</span></div>`).join(""));
+  }
+  function preschools() {
+    const P = DATA.summary.preschool || {}; const comp = DATA.summary.compliance || {}; const eq = DATA.summary.equity.preschool;
+    const qn = (P.queue_city || {})["Общеобразовательная / Чистая потребность"] || {};
+    const qf = (P.queue_city || {})["Общеобразовательная / Полная очередь"] || {};
+    const older = (qn.total || 0) - (qn["До 2 лет"] || 0);
+    setHTML(q("#pre-kpis"), [
+      [fmt(P.places), "design places in 794 preschools", `${fmt(P.attending)} children attend, ${fmt(P.median_children_per_place, 2)} per place in the median`],
+      [fmt((P.at_capacity || 0) + (P.above_capacity || 0)), "preschools are full or above capacity", `${fmt(P.above_capacity)} above capacity`],
+      [fmt(older), "children aged two or older in the net waiting list", `${fmt(qn.total)} in all, ${fmt(qn["До 2 лет"])} under two`],
+      [pct(comp["preschool/network"]?.city), "of preschool-age children live within 300 m on foot", `${pct(comp["preschool/straight_line"]?.city)} by straight line`],
+      [pct(eq.cold_spot_children_share, 1), "of preschool-age children live in low-access clusters", "significant at the 5% level"],
+    ].map(([v, l, n]) => `<div class="kpi"><span class="value">${v}</span><span class="label">${l}</span><span class="note">${n}</span></div>`).join(""));
+    const by = P.by_district || {};
+    const rows = DISTRICTS.map((d) => ({ d, a: eq.district_relative[d], w: comp["preschool/network"]?.[d], c: by[d]?.capacity, n: by[d]?.attending, r: by[d]?.children_per_place })).sort((x, y) => x.a - y.a);
+    setHTML(q("#pre-table"), `<thead><tr><th>District</th><th class="r">Access</th><th class="r">Within 300 m</th><th class="r">Places</th><th class="r">Attending</th><th class="r">Per place</th></tr></thead><tbody>${rows.map((r) => `<tr><td><b>${r.d}</b></td><td class="r num">${relBar(r.a)}</td><td class="r num">${pct(r.w)}</td><td class="r num">${fmt(r.c)}</td><td class="r num">${fmt(r.n)}</td><td class="r num">${fmt(r.r, 2)}</td></tr>`).join("")}</tbody>`);
+    const ages = [["2 года", "2"], ["3 года", "3"], ["4 года", "4"], ["От 5 лет", "5 and over"]];
+    const W = 520, top = 30, left = 92, right = 60, rowH = 40, H = top + ages.length * rowH + 28;
+    const max = Math.max(...ages.map(([k]) => qf[k] || 0)) * 1.05; const x = (v) => left + (v / max) * (W - left - right);
+    let sv = `<svg viewBox="0 0 ${W} ${H}" width="100%" role="img" aria-label="Children in the waiting list aged two and older by age, net need and full list">`;
+    niceTicks(max, 4).forEach((v) => (sv += `<line x1="${x(v)}" x2="${x(v)}" y1="${top - 6}" y2="${H - 24}" stroke="${css("--line")}"/><text x="${x(v)}" y="${H - 8}" text-anchor="middle">${fmt(v)}</text>`));
+    ages.forEach(([k, label], i) => {
+      const y = top + i * rowH; const n = qn[k] || 0, f = qf[k] || 0;
+      sv += `<text x="${left - 10}" y="${y + 20}" text-anchor="end" class="ink">${label}</text>`;
+      sv += `<rect x="${x(0)}" y="${y + 3}" width="${Math.max(1, x(f) - x(0))}" height="14" rx="3" fill="${css("--series-1")}"><title>Age ${label}, full list: ${fmt(f)}</title></rect><text x="${x(f) + 5}" y="${y + 14}">${fmt(f)}</text>`;
+      sv += `<rect x="${x(0)}" y="${y + 19}" width="${Math.max(1, x(n) - x(0))}" height="14" rx="3" fill="${css("--series-2")}"><title>Age ${label}, net need: ${fmt(n)}</title></rect><text x="${x(n) + 5}" y="${y + 30}">${fmt(n)}</text>`;
+    });
+    sv += `<rect x="${left}" y="4" width="10" height="10" rx="2" fill="${css("--series-1")}"/><text x="${left + 15}" y="13" class="ink">Full list</text><rect x="${left + 85}" y="4" width="10" height="10" rx="2" fill="${css("--series-2")}"/><text x="${left + 100}" y="13" class="ink">Net need</text></svg>`;
+    setHTML(q("#queue-chart"), sv);
+    q("#queue-note").textContent = `Ages two and older only. Children under two, ${fmt(qn["До 2 лет"])} in both lists, wait for the age at which most preschools enrol. The full list also counts children waiting for a transfer.`;
+    if (!preMap) {
+      preMap = new MapView(q("#map-pre"), {
+        label: "Map of preschool access per block and preschools sized by capacity",
+        bounds: DATA.bounds, render: renderPre, points: prePoints, cells: () => (preBase === "none" ? null : DATA.cellList), tooltip: tipFor,
+        onClick: (hit) => { preHit = hit; preDetail(hit); preMap.draw(); },
+      });
+      document.querySelectorAll('input[name="prebase"]').forEach((r) => r.addEventListener("change", () => { preBase = r.value; preLegend(); preMap.draw(); }));
+      ["#pre-cluster", "#pre-state", "#pre-private"].forEach((sel) => q(sel).addEventListener("change", () => preMap.draw()));
+      preDetail(null);
+    }
+    preLegend(); preMap.draw();
+  }
+
   // ---------- method ----------
   function h1Chart() {
     const fit = DATA.summary.population_fit || {};
@@ -841,9 +1001,9 @@ ul.plain { margin: 0; padding-left: 18px; display: flex; flex-direction: column;
   }
 
   // ---------- tabs and theme ----------
-  const TABS = ["overview", "map", "screening", "crowding", "method"];
+  const TABS = ["overview", "map", "screening", "crowding", "preschools", "method"];
   const ready = {};
-  const init = { overview, map: initMain, screening: initScreen, crowding, method };
+  const init = { overview, map: initMain, screening: initScreen, crowding, preschools, method };
   function show(tab) {
     if (!TABS.includes(tab)) tab = "overview";
     TABS.forEach((t) => { q("#tab-" + t).hidden = t !== tab; });
@@ -851,6 +1011,7 @@ ul.plain { margin: 0; padding-left: 18px; display: flex; flex-direction: column;
     if (!ready[tab]) { ready[tab] = true; init[tab](); }
     else if (tab === "map" && mainMap) mainMap.resize();
     else if (tab === "screening" && screenMap) screenMap.resize();
+    else if (tab === "preschools" && preMap) preMap.resize();
   }
   function redrawAll() {
     if (ready.overview) overview();
@@ -858,7 +1019,19 @@ ul.plain { margin: 0; padding-left: 18px; display: flex; flex-direction: column;
     if (ready.method) h1Chart();
     if (mainMap) { legendMain(); mainMap.draw(); }
     if (screenMap) updateScreen();
+    if (preMap) preschools();
   }
+  function setPresent(on) {
+    document.documentElement.classList.toggle("present", on);
+    q("#present").setAttribute("aria-pressed", String(on));
+    try { localStorage.setItem("atlas-present", on ? "1" : "0"); } catch (e) { /* storage unavailable */ }
+    requestAnimationFrame(() => { [mainMap, screenMap, preMap].forEach((m) => m && m.resize()); });
+  }
+  q("#present").addEventListener("click", () => setPresent(!document.documentElement.classList.contains("present")));
+  document.addEventListener("keydown", (e) => {
+    if ((e.key === "p" || e.key === "P") && !e.ctrlKey && !e.metaKey && !e.altKey && !/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName)) setPresent(!document.documentElement.classList.contains("present"));
+  });
+  try { if (localStorage.getItem("atlas-present") === "1") setPresent(true); } catch (e) { /* storage unavailable */ }
   new MutationObserver(redrawAll).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
   window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", redrawAll);
 

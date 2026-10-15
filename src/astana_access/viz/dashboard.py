@@ -297,8 +297,49 @@ def summary() -> dict:
             k: population.get("district_fit", {}).get(k)
             for k in ("worldpop", "floor_area", "stations_alpha_0.2")
         },
-        "preschool": preschool.get("attendance", {}) | {"queue_city": preschool.get("queue_city")},
+        "preschool": preschool.get("attendance", {})
+        | {"queue_city": preschool.get("queue_city"), "places": preschool.get("places")},
     }
+
+
+def ranking_table(
+    pdp: gpd.GeoDataFrame, plan: gpd.GeoDataFrame, matrix: dict, ranking: dict
+) -> pd.DataFrame:
+    districts = gpd.read_file(PROCESSED / "districts.gpkg", layer="districts").to_crs(CRS_METRIC)
+    located = gpd.sjoin(pdp, districts[["name_en", "geometry"]], how="left").drop_duplicates(
+        "facility_id"
+    )
+    new = plan[plan["kind"] == "new"]
+    children = np.array(matrix["children"])
+    rows = []
+    for row in located.itertuples():
+        point = gpd.GeoSeries([row.geometry], crs=CRS_METRIC).to_crs(CRS_GEO).iloc[0]
+        nearest = new.distance(row.geometry)
+        record = {
+            "site": row.facility_id,
+            "geoportal_object": row.object_id,
+            "district": row.name_en,
+            "purpose": row.purpose,
+            "places": row.seats,
+            "lat": round(point.y, DIGITS),
+            "lon": round(point.x, DIGITS),
+            "nearest_plan_school": new.loc[nearest.idxmin(), "plan_id"] if len(new) else None,
+            "nearest_plan_school_m": round(float(nearest.min())) if len(new) else None,
+        }
+        for radius in RADII_M:
+            key = str(radius)
+            order = {item["id"]: (i + 1, item) for i, item in enumerate(ranking[key])}
+            rank, item = order.get(row.facility_id, (None, None))
+            alone = matrix["sites"][key].get(row.facility_id, [])
+            record[f"rank_{radius}m"] = rank
+            record[f"adds_{radius}m"] = item["gain"] if item else 0
+            record[f"cumulative_{radius}m"] = item["cumulative"] if item else None
+            record[f"alone_{radius}m"] = round(float(children[alone].sum())) if alone else 0
+        rows.append(record)
+    table = pd.DataFrame(rows)
+    return table.sort_values(
+        ["rank_1000m", "alone_1000m"], ascending=[True, False], na_position="last"
+    )
 
 
 def build() -> dict:
@@ -348,6 +389,9 @@ def build() -> dict:
         },
     )
     sizes["reach.json"] = write("reach.json", matrix)
+    table = ranking_table(pdp, plan, matrix, ranking)
+    table.to_csv(REPORTS / "pdp_site_ranking.csv", index=False, encoding="utf-8-sig")
+    sizes["pdp_site_ranking.csv"] = int((REPORTS / "pdp_site_ranking.csv").stat().st_size)
     sizes["summary.json"] = write("summary.json", summary())
     return sizes
 
