@@ -15,6 +15,7 @@ def main() -> None:
     files = [THESIS / "main.tex", THESIS / "bib" / "references.bib"]
     files += sorted((THESIS / "sections").glob("*.tex"))
     files += sorted((THESIS / "figures").glob("*.pdf"))
+    files += sorted((THESIS / "figures").glob("*.png"))
     with zipfile.ZipFile(OUT, "w", zipfile.ZIP_DEFLATED) as archive:
         for path in files:
             archive.write(path, path.relative_to(THESIS).as_posix())
