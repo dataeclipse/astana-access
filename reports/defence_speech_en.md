@@ -4,7 +4,7 @@ Speaker notes of the slides, in order. About 1,950 words, 13-14 minutes at a cal
 
 ## Slide 1. Data-Driven Framework for Spatial Accessibility Assessment and Optimal Siting of Social Infrastructure
 
-Good morning, members of the committee. My name is Dias Bolatov, and together with my team I present our diploma work: a data-driven framework for assessing spatial accessibility and siting of social infrastructure, applied to the schools and preschools of Astana. Our supervisor is Aidana Zhalgas.
+Good morning, members of the committee. My name is Dias Bolatov, and together with my teammates Daulet Dandykulov and Arsen Baktygaliyev I present our diploma work: a data-driven framework for assessing spatial accessibility and siting of social infrastructure, applied to the schools and preschools of Astana. Our supervisor is Aidana Zhalgas.
 
 ## Slide 2. A city growing faster than its schools
 

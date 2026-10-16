@@ -4,7 +4,7 @@ The same 18 slides as the full version, about 900 words: eight minutes of speech
 
 ## Slide 1. Title (0:15, 0:15)
 
-Good morning, members of the committee. I am Dias Bolatov, and with my team I present a data-driven framework for assessing walking access to schools and preschools and for siting new ones, applied to Astana. Our supervisor is Aidana Zhalgas.
+Good morning, members of the committee. I am Dias Bolatov, and with my teammates Daulet Dandykulov and Arsen Baktygaliyev I present a data-driven framework for assessing walking access to schools and preschools and for siting new ones, applied to Astana. Our supervisor is Aidana Zhalgas.
 
 ## Slide 2. A city growing faster than its schools (0:40, 0:55)
 
