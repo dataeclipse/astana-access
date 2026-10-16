@@ -106,3 +106,24 @@ def test_demography_districts_add_up_to_the_city() -> None:
     for name, value in cohorts(city[2028]).items():
         assert joint["a"][2028][name] + joint["b"][2028][name] == pytest.approx(value)
     assert joint["b"][2028]["total"] == pytest.approx(2 * joint["a"][2028]["total"])
+
+
+def test_yearly_factors_split_growth_into_ageing_and_migration() -> None:
+    from astana_access.population.yearly import factors
+
+    report = {
+        "groups": ["Nura", "Baikonur"],
+        "observed": {"Nura": {"2026": {"school": 100.0}}, "Baikonur": {"2026": {"school": 100.0}}},
+        "projection": {
+            "ageing": {
+                "Nura": {"2028": {"school": 110.0}},
+                "Baikonur": {"2028": {"school": 105.0}},
+            },
+            "trend": {"Nura": {"2028": {"school": 150.0}}, "Baikonur": {"2028": {"school": 90.0}}},
+        },
+    }
+    table = factors(report, 2028, "school")
+    assert table.loc["Nura", "factor"] == pytest.approx(1.1)
+    assert table.loc["Nura", "increment"] == pytest.approx(40.0)
+    assert table.loc["Baikonur", "factor"] == pytest.approx(0.9)
+    assert table.loc["Baikonur", "increment"] == pytest.approx(0.0)

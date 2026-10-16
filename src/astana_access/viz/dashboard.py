@@ -20,6 +20,14 @@ ROAD_CLASSES = {"motorway", "trunk", "primary", "secondary"}
 DIGITS = 5
 DEMAND = {"school": "school_station", "preschool": "preschool_station"}
 NEW_HOUSING_M2 = 1000.0
+YEARLY = (2027, 2028, 2029)
+YEARLY_FIELDS = (
+    "school_children",
+    "preschool_children",
+    "uncovered_1000",
+    "school_access",
+    "preschool_access",
+)
 
 
 def rounded(value):
@@ -93,9 +101,24 @@ def cells(points: pd.DataFrame, uncovered: dict[int, pd.Series]) -> dict:
     growing = future[
         (future["uncovered_2028"] >= 1) | (future["predicted_2026_2029"] >= NEW_HOUSING_M2)
     ]
+    yearly_path = PROCESSED / "yearly_cells.parquet"
+    yearly = (
+        pd.read_parquet(yearly_path)
+        if yearly_path.exists()
+        else pd.DataFrame(columns=["h3", "year"])
+    )
+    later = {
+        year: frame.set_index("h3") for year, frame in yearly.groupby("year") if year in YEARLY
+    }
+    appearing = {
+        cell for frame in later.values() for cell in frame.index[frame["school_children"] >= 1]
+    }
     grid_district = gpd.read_file(PROCESSED / "grid_population.gpkg").set_index("h3")["district"]
     index = sorted(
-        set(tables["school"].index) | set(tables["preschool"].index) | set(growing.index)
+        set(tables["school"].index)
+        | set(tables["preschool"].index)
+        | set(growing.index)
+        | appearing
     )
     cell_of = points.set_index("point_id")["h3"]
     rows, rings = [], []
@@ -131,6 +154,12 @@ def cells(points: pd.DataFrame, uncovered: dict[int, pd.Series]) -> dict:
             round(float(future["uncovered_2028"].get(cell, 0.0)), 1),
             round(float(future["predicted_2026_2029"].get(cell, 0.0)) / 1000, 2),
         ]
+        for year in YEARLY:
+            frame = later.get(year)
+            for name in YEARLY_FIELDS:
+                value = frame[name].get(cell) if frame is not None and cell in frame.index else None
+                digits = 3 if name.endswith("access") else 1
+                row.append(None if value is None or pd.isna(value) else round(float(value), digits))
         rows.append(row)
         boundary = h3.cell_to_boundary(cell)
         rings.append([rounded(v) for lat, lon in boundary for v in (lon, lat)])
@@ -148,7 +177,8 @@ def cells(points: pd.DataFrame, uncovered: dict[int, pd.Series]) -> dict:
             "district",
             "uncovered_2028",
             "new_housing_k_m2",
-        ],
+        ]
+        + [f"{name}_{year}" for year in YEARLY for name in YEARLY_FIELDS],
         "rows": rows,
         "rings": rings,
     }

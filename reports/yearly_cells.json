@@ -1,0 +1,31 @@
+{
+ "years": [
+  2026,
+  2027,
+  2028,
+  2029
+ ],
+ "totals": {
+  "2026": {
+   "school_children": 310989.16791976755,
+   "preschool_children": 207266.9657204093,
+   "uncovered_1000": 77870.44688231584
+  },
+  "2027": {
+   "school_children": 341138.49677351315,
+   "preschool_children": 211688.5281510709,
+   "uncovered_1000": 91070.41963433809
+  },
+  "2028": {
+   "school_children": 374275.9464475454,
+   "preschool_children": 216888.9897140324,
+   "uncovered_1000": 106002.34167594311
+  },
+  "2029": {
+   "school_children": 408907.63092550886,
+   "preschool_children": 219134.24487126758,
+   "uncovered_1000": 122174.65550393282
+  }
+ },
+ "new_housing_points": 6710
+}

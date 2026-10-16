@@ -283,11 +283,20 @@ ul.sources li::before { content: ""; position: absolute; left: 0; top: 0.65em; w
         <label class="opt"><input type="radio" name="base" value="school_access" checked> School access per child</label>
         <label class="opt"><input type="radio" name="base" value="preschool_access"> Preschool access per child</label>
         <label class="opt"><input type="radio" name="base" value="uncovered_1000"> No school within 1 km</label>
-        <label class="opt"><input type="radio" name="base" value="uncovered_2028"> No school within 1 km, 2028</label>
         <label class="opt"><input type="radio" name="base" value="new_housing"> New housing, 2026–2029 forecast</label>
         <label class="opt"><input type="radio" name="base" value="school_children"> School-age children</label>
         <label class="opt"><input type="radio" name="base" value="preschool_children"> Preschool-age children</label>
         <label class="opt"><input type="radio" name="base" value="none"> None</label>
+      </div>
+      <div class="group">
+        <p class="kicker">Year</p>
+        <div class="seg" role="group" aria-label="Year" id="year-seg">
+          <button type="button" data-year="2026" aria-pressed="true">2026</button>
+          <button type="button" data-year="2027" aria-pressed="false">2027</button>
+          <button type="button" data-year="2028" aria-pressed="false">2028</button>
+          <button type="button" data-year="2029" aria-pressed="false">2029</button>
+        </div>
+        <p class="small muted" id="year-note"></p>
       </div>
       <div class="group" id="overlay-group"><p class="kicker">Places</p></div>
       <div class="group">
@@ -413,6 +422,8 @@ ul.sources li::before { content: ""; position: absolute; left: 0; top: 0.65em; w
   function div(rel) { if (rel == null) return null; const v = Math.max(-2, Math.min(2, Math.log2(Math.max(rel, 0.25)))); return v < 0 ? mix(css("--cell-mid"), css("--deficit"), -v / 2) : mix(css("--cell-mid"), css("--surplus"), v / 2); }
 
   let DOT = 1;
+  let CELL_YEAR = 2026;
+  function cv(c, key) { return CELL_YEAR === 2026 ? c[key] : c[`${key}_${CELL_YEAR}`]; }
   class MapView {
     constructor(host, opts) {
       this.host = host; this.opts = opts;
@@ -539,14 +550,14 @@ ul.sources li::before { content: ""; position: absolute; left: 0; top: 0.65em; w
     if (fill) { g.fillStyle = fill; g.fill(); } if (stroke) { g.strokeStyle = stroke; g.lineWidth = lw; g.stroke(); }
   }
   const BASES = {
-    school_access: { title: "School access per child", color: (c) => (c.school_children > 0 ? div(c.school_access) : null), legend: "div", cluster: "school_cluster" },
-    preschool_access: { title: "Preschool access per child", color: (c) => (c.preschool_children > 0 ? div(c.preschool_access) : null), legend: "div", cluster: "preschool_cluster" },
-    uncovered_1000: { title: "Children with no school within 1 km", color: (c) => (c.uncovered_1000 > 0 ? seq(Math.sqrt(c.uncovered_1000 / 350)) : null), legend: "seq", max: 350 },
+    school_access: { title: "School access per child", color: (c) => (cv(c, "school_children") > 0 ? div(cv(c, "school_access")) : null), legend: "div", cluster: "school_cluster" },
+    preschool_access: { title: "Preschool access per child", color: (c) => (cv(c, "preschool_children") > 0 ? div(cv(c, "preschool_access")) : null), legend: "div", cluster: "preschool_cluster" },
+    uncovered_1000: { title: "Children with no school within 1 km", color: (c) => (cv(c, "uncovered_1000") > 0 ? seq(Math.sqrt(cv(c, "uncovered_1000") / 350)) : null), legend: "seq", max: 350 },
     uncovered_2028: { title: "Children with no school within 1 km, 2028", color: (c) => (c.uncovered_2028 > 0 ? seq(Math.sqrt(c.uncovered_2028 / 350)) : null), legend: "seq", max: 350 },
     new_housing: { title: "New housing 2026–2029, thousand m²", color: (c) => (c.new_housing_k_m2 >= 1 ? seq(Math.sqrt(c.new_housing_k_m2 / 60)) : null), legend: "seq", max: 60 },
     uncovered_1500: { title: "Children with no school within 1.5 km", color: (c) => (c.uncovered_1500 > 0 ? seq(Math.sqrt(c.uncovered_1500 / 200)) : null), legend: "seq", max: 200 },
-    school_children: { title: "School-age children", color: (c) => (c.school_children > 0 ? seq(Math.sqrt(c.school_children / 900)) : null), legend: "seq", max: 900 },
-    preschool_children: { title: "Preschool-age children", color: (c) => (c.preschool_children > 0 ? seq(Math.sqrt(c.preschool_children / 600)) : null), legend: "seq", max: 600 },
+    school_children: { title: "School-age children", color: (c) => (cv(c, "school_children") > 0 ? seq(Math.sqrt(cv(c, "school_children") / 900)) : null), legend: "seq", max: 900 },
+    preschool_children: { title: "Preschool-age children", color: (c) => (cv(c, "preschool_children") > 0 ? seq(Math.sqrt(cv(c, "preschool_children") / 600)) : null), legend: "seq", max: 600 },
     muted: { title: "", color: (c) => (c.school_children > 0 ? css("--wash") : null) },
     none: { title: "", color: () => null },
   };
@@ -559,10 +570,10 @@ ul.sources li::before { content: ""; position: absolute; left: 0; top: 0.65em; w
     else d = `<circle cx="7" cy="7" r="4.6" fill="${fill}" stroke="${stroke}"/>`;
     return `<svg class="sym" viewBox="0 0 14 14" aria-hidden="true">${d}</svg>`;
   }
-  function keyHTML(baseKey, rows) {
+  function keyHTML(baseKey, rows, suffix = "") {
     const B = BASES[baseKey]; let s = "";
-    if (B && B.legend === "div") s += `<span class="ttl">${B.title}</span><div class="ramp" style="background:linear-gradient(90deg,${[0.25, 0.5, 1, 2, 4].map(div).join(",")})"></div><div class="ticks"><span>¼</span><span>½</span><span>city mean</span><span>2×</span><span>4×</span></div>`;
-    else if (B && B.legend === "seq") s += `<span class="ttl">${B.title}</span><div class="ramp" style="background:linear-gradient(90deg,${[0, 0.25, 0.5, 0.75, 1].map(seq).join(",")})"></div><div class="ticks"><span>0</span><span>${fmt(B.max / 4)}</span><span>${fmt(B.max)}+ per block</span></div>`;
+    if (B && B.legend === "div") s += `<span class="ttl">${B.title}${suffix}</span><div class="ramp" style="background:linear-gradient(90deg,${[0.25, 0.5, 1, 2, 4].map(div).join(",")})"></div><div class="ticks"><span>¼</span><span>½</span><span>city mean</span><span>2×</span><span>4×</span></div>`;
+    else if (B && B.legend === "seq") s += `<span class="ttl">${B.title}${suffix}</span><div class="ramp" style="background:linear-gradient(90deg,${[0, 0.25, 0.5, 0.75, 1].map(seq).join(",")})"></div><div class="ticks"><span>0</span><span>${fmt(B.max / 4)}</span><span>${fmt(B.max)}+ per block</span></div>`;
     if (rows && rows.length) s += rows.map(([sym, label]) => `<div class="row">${sym}<span>${label}</span></div>`).join("");
     return s;
   }
@@ -644,7 +655,7 @@ ul.sources li::before { content: ""; position: absolute; left: 0; top: 0.65em; w
   }
 
   function tipFor(hit) {
-    if (hit.type === "cell") { const c = hit.cell; const future = (c.uncovered_2028 > 0 ? `<br>${fmt(c.uncovered_2028)} with no school within 1 km in 2028` : "") + (c.new_housing_k_m2 >= 1 ? `<br>${fmt(c.new_housing_k_m2, 1)} thousand m² of new housing forecast` : ""); return `<b>${c.district || "Outside the districts"}</b><br>School access ${access(c.school_access)}, preschool ${access(c.preschool_access)}<br>${fmt(c.school_children)} school-age children · ${fmt(c.uncovered_1000)} with no school within 1 km${future}`; }
+    if (hit.type === "cell") { const c = hit.cell; const future = (CELL_YEAR === 2026 && c.uncovered_2028 > 0 ? `<br>${fmt(c.uncovered_2028)} with no school within 1 km in 2028` : "") + (c.new_housing_k_m2 >= 1 ? `<br>${fmt(c.new_housing_k_m2, 1)} thousand m² of new housing forecast` : ""); return `<b>${c.district || "Outside the districts"}</b>${CELL_YEAR === 2026 ? "" : " · " + CELL_YEAR}<br>School access ${access(cv(c, "school_access"))}, preschool ${access(cv(c, "preschool_access"))}<br>${fmt(cv(c, "school_children"))} school-age children · ${fmt(cv(c, "uncovered_1000"))} with no school within 1 km${future}`; }
     const it = hit.item;
     if (hit.type === "school") return `<b>${it.number ? "School No. " + it.number : esc(it.name).slice(0, 60)}</b>${it.programme ? " · Comfortable School" : ""}<br>${fmt(it.capacity)} places${it.enrolment_2025 ? " · " + fmt(it.enrolment_2025) + " pupils · " + it.ratio.toFixed(2) + " per place" : ""}`;
     if (hit.type === "preschool") return `<b>${esc(it.name)}</b><br>${esc(it.ownership)} · ${fmt(it.capacity)} places · ${fmt(it.attending)} children`;
@@ -769,7 +780,13 @@ ul.sources li::before { content: ""; position: absolute; left: 0; top: 0.65em; w
     document.querySelectorAll(".chapter").forEach((ch) => io.observe(ch));
   }
 
-  let exploreMap, exBase = "school_access", exHit = null;
+  let exploreMap, exBase = "school_access", exHit = null, exYear = 2026;
+  const YEAR_NOTE = {
+    2026: "Population model of 2026, built from official totals.",
+    2027: "Projected at the pace of 2024–2026, with growth placed in the housing the model expects; schools as of 2026, without the plan's new ones.",
+    2028: "Projected at the pace of 2024–2026, with growth placed in the housing the model expects; schools as of 2026, without the plan's new ones.",
+    2029: "Projected at the pace of 2024–2026, with growth placed in the housing the model expects; schools as of 2026, without the plan's new ones.",
+  };
   const OVERLAYS = [["cluster", "Low-access clusters", true], ["schools", "State schools", true], ["preschools", "Preschools", false], ["plan", "Plan 2026–2028", false], ["pdp", "Reserved school sites", false], ["best2028", "Best sites for 2028", false]];
   const on = {};
   function exPoints() {
@@ -782,8 +799,10 @@ ul.sources li::before { content: ""; position: absolute; left: 0; top: 0.65em; w
     return pts;
   }
   function renderExplore(g, m) {
+    CELL_YEAR = exYear;
     const B = BASES[exBase]; layerBase(g, m); layerCells(g, m, B.color);
-    if (on.cluster && B.cluster) layerClusters(g, m, B.cluster);
+    CELL_YEAR = 2026;
+    if (on.cluster && B.cluster && exYear === 2026) layerClusters(g, m, B.cluster);
     layerDistricts(g, m);
     if (on.preschools) drawPreschools(g, m);
     if (on.pdp) drawPdp(g, m, null);
@@ -794,12 +813,12 @@ ul.sources li::before { content: ""; position: absolute; left: 0; top: 0.65em; w
     else if (exHit) { const [x, y] = m.project(exHit.lon, exHit.lat); marker(g, x, y, "circle", 11, null, css("--ink"), 2); }
     layerLabels(g, m);
   }
-  function exKey() { const s = SYM(); const rows = []; if (on.cluster && BASES[exBase].cluster) rows.push(s.cluster); if (on.schools) rows.push(s.school, s.crowded, s.programme); if (on.preschools) rows.push(s.preschool, s.full); if (on.plan) rows.push(s.plan); if (on.pdp) rows.push(s.pdp); if (on.best2028) rows.push(s.best2028); setHTML(exploreMap.key, keyHTML(exBase, rows)); }
+  function exKey() { const s = SYM(); const rows = []; if (on.cluster && BASES[exBase].cluster) rows.push(s.cluster); if (on.schools) rows.push(s.school, s.crowded, s.programme); if (on.preschools) rows.push(s.preschool, s.full); if (on.plan) rows.push(s.plan); if (on.pdp) rows.push(s.pdp); if (on.best2028) rows.push(s.best2028); const yearly = ["school_access", "preschool_access", "uncovered_1000", "school_children", "preschool_children"].includes(exBase); if (exYear !== 2026 && yearly) { const i = rows.indexOf(s.cluster); if (i >= 0) rows.splice(i, 1); } setHTML(exploreMap.key, keyHTML(exBase, rows, yearly ? `, ${exYear}` : "")); }
   function exDetail(hit) {
     const box = q("#explore-detail");
     if (!hit) { setHTML(box, `<p class="small muted">Click a block, school, preschool or site on the map to see its figures.</p>`); return; }
     const dl = (pairs) => `<dl>${pairs.map(([a, b]) => `<dt>${a}</dt><dd>${b}</dd>`).join("")}</dl>`;
-    if (hit.type === "cell") { const c = hit.cell; setHTML(box, `<p class="kicker">${c.district} · H3 block</p>` + dl([["School access", access(c.school_access)], ["Preschool access", access(c.preschool_access)], ["School-age children", fmt(c.school_children)], ["Preschool-age children", fmt(c.preschool_children)], ["No school within 1 km", fmt(c.uncovered_1000)], ["No school within 1.5 km", fmt(c.uncovered_1500)], ["No school within 1 km, 2028", fmt(c.uncovered_2028)], ["New housing 2026–29, thousand m²", fmt(c.new_housing_k_m2, 1)]]) + (c.school_cluster ? `<span class="chip"><i style="background:${css("--deficit")}"></i>Low-access cluster for schools</span>` : "")); return; }
+    if (hit.type === "cell") { const c = hit.cell; CELL_YEAR = exYear; const rowsYear = [["School access", access(cv(c, "school_access"))], ["Preschool access", access(cv(c, "preschool_access"))], ["School-age children", fmt(cv(c, "school_children"))], ["Preschool-age children", fmt(cv(c, "preschool_children"))], ["No school within 1 km", fmt(cv(c, "uncovered_1000"))]]; CELL_YEAR = 2026; setHTML(box, `<p class="kicker">${c.district || "Outside the districts"} · H3 block · ${exYear}</p>` + dl([...rowsYear, ...(exYear === 2026 ? [["No school within 1.5 km", fmt(c.uncovered_1500)]] : []), ["New housing 2026–29, thousand m²", fmt(c.new_housing_k_m2, 1)]]) + (exYear === 2026 && c.school_cluster ? `<span class="chip"><i style="background:${css("--deficit")}"></i>Low-access cluster for schools</span>` : "")); return; }
     const it = hit.item;
     if (hit.type === "school") { setHTML(box, `<p class="kicker">${esc(it.district || "")} · ${it.programme ? "Comfortable School" : "state school"}</p><p class="name">${esc(it.name)}</p>` + dl([["Design capacity", fmt(it.capacity)], ["Pupils 2025–26", fmt(it.enrolment_2025)], ["Pupils 2026–27", fmt(it.enrolment_2026)], ["Pupils per place", it.ratio ? it.ratio.toFixed(2) : "–"], ["Shifts", fmt(it.shifts)]]) + (it.ratio > 2 ? `<span class="chip"><i style="background:${css("--serious")}"></i>Beyond two full shifts</span>` : "")); return; }
     if (hit.type === "preschool") { setHTML(box, `<p class="kicker">${esc(it.district || "")} · ${esc(it.ownership)} preschool</p><p class="name">${esc(it.name)}</p>` + dl([["Design capacity", fmt(it.capacity)], ["Attending", fmt(it.attending)], ["Free places, 30 Sep", fmt(it.free)]])); return; }
@@ -811,10 +830,14 @@ ul.sources li::before { content: ""; position: absolute; left: 0; top: 0.65em; w
     const syms = { cluster: s.cluster[0], schools: s.school[0], preschools: s.preschool[0], plan: s.plan[0], pdp: s.pdp[0], best2028: s.best2028[0] };
     OVERLAYS.forEach(([k, label, def]) => { on[k] = def; const lab = make("label", { class: "opt" }); const inp = make("input", { type: "checkbox", id: "ov-" + k }); inp.checked = def;
       inp.addEventListener("change", () => { on[k] = inp.checked; exKey(); exploreMap.draw(); }); lab.appendChild(inp); lab.appendChild(document.createTextNode(" " + label)); const sv = document.createElement("span"); setHTML(sv, syms[k]); lab.appendChild(sv.firstChild); grp.appendChild(lab); });
-    exploreMap = new MapView(q("#map-explore"), { label: "Map of Astana with selectable layers", bounds: DATA.bounds, render: renderExplore, points: exPoints, cells: () => (exBase === "none" ? null : DATA.cellList), tooltip: tipFor, onClick: (hit) => { exHit = hit; exDetail(hit); exploreMap.draw(); } });
+    exploreMap = new MapView(q("#map-explore"), { label: "Map of Astana with selectable layers", bounds: DATA.bounds, render: renderExplore, points: exPoints, cells: () => (exBase === "none" ? null : DATA.cellList), tooltip: (hit) => { CELL_YEAR = exYear; const html = tipFor(hit); CELL_YEAR = 2026; return html; }, onClick: (hit) => { exHit = hit; exDetail(hit); exploreMap.draw(); } });
     document.querySelectorAll('input[name="base"]').forEach((r) => r.addEventListener("change", () => { exBase = r.value; exKey(); exploreMap.draw(); }));
     q("#school-search").addEventListener("input", (e) => { const n = parseInt(e.target.value, 10); if (!n) return; const sc = DATA.schools.find((x) => x.number === n); if (!sc) return;
       on.schools = true; q("#ov-schools").checked = true; exHit = { type: "school", item: sc, lon: sc.lon, lat: sc.lat }; exDetail(exHit); exKey(); exploreMap.centerOn(sc.lon, sc.lat, Math.max(exploreMap.k, 30000)); });
+    document.querySelectorAll("#year-seg button").forEach((b) => b.addEventListener("click", () => {
+      exYear = +b.dataset.year; document.querySelectorAll("#year-seg button").forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
+      q("#year-note").textContent = YEAR_NOTE[exYear]; exKey(); if (exHit) exDetail(exHit); exploreMap.draw(); }));
+    q("#year-note").textContent = YEAR_NOTE[exYear];
     exKey(); exDetail(null);
   }
 

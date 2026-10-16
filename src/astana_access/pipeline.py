@@ -120,7 +120,7 @@ def stage_programme() -> None:
         programme,
         two_objective,
     )
-    from astana_access.population import housing
+    from astana_access.population import housing, yearly
 
     backtest.run()
     programme.run()
@@ -131,6 +131,7 @@ def stage_programme() -> None:
         typer.echo("detailed planning layer not found, skipped")
         return
     forecast.run()
+    yearly.run()
     two_objective.run()
 
 
