@@ -352,6 +352,19 @@ def summary() -> dict:
                 for scenario, values in report("demography_2030.json").get("projection", {}).items()
             },
             "backtest_city": report("demography_2030.json").get("backtest_city"),
+            "groups": {
+                group: {
+                    "observed": report("demography_2030.json")["observed"][group],
+                    "projection": {
+                        scenario: values[group]
+                        for scenario, values in report("demography_2030.json")["projection"].items()
+                    },
+                    "constant": report("demography_2030.json")["projection_constant_share"][
+                        "average"
+                    ][group],
+                }
+                for group in report("demography_2030.json").get("groups", [])
+            },
         },
         "housing": {
             k: report("housing_forecast.json").get(k)
