@@ -141,10 +141,15 @@ def run() -> dict:
                 "Estimates, not a census: no official population exists below the district.",
                 "population_now: residents of the building today; zero while under construction.",
                 "population_when_occupied: the same building once finished and fully occupied.",
-                "pop_model: people the population model of the project places in the dwellings inside the footprint (district totals of 1 January 2026, polling stations, floor area).",
-                "pop_gfa: gross floor area times the mean people per gross square metre of blocks in the model; used only where no dwelling matches the footprint.",
-                f"range: from {LOW} to {HIGH} times the estimate; the median error against school enrolment per territory is about 40 per cent.",
-                "Rows sharing one building_id are the same building listed under several names; only the first counts in complex totals.",
+                "pop_model: people the population model of the project places in the dwellings "
+                "inside the footprint (district totals of 1 January 2026, polling stations, "
+                "floor area).",
+                "pop_gfa: gross floor area times the mean people per gross square metre of blocks "
+                "in the model; used only where no dwelling matches the footprint.",
+                f"range: from {LOW} to {HIGH} times the estimate; the median error against "
+                "school enrolment per territory is about 40 per cent.",
+                "Rows sharing one building_id are the same building listed under several names; "
+                "only the first counts in complex totals.",
                 "New buildings may be only partly occupied; the model assumes full occupancy.",
             ]
         }
