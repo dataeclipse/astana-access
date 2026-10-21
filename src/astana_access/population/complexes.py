@@ -104,6 +104,8 @@ def run() -> dict:
         buildings[name] = buildings[name].round(0)
 
     counted = buildings[buildings["counted_in_totals"]]
+    city_total = float(dwellings["pop_station"].sum())
+    listed_now = float(counted["population_now"].sum())
     complexes = (
         counted.groupby(["name", "district"], dropna=False)
         .agg(
@@ -120,6 +122,7 @@ def run() -> dict:
         .reset_index()
         .sort_values("population_now", ascending=False)
     )
+    complexes["share_of_city_pct"] = (complexes["population_now"] / city_total * 100).round(2)
     summary = {
         "rows": int(len(table)),
         "rows_counted": int(first.sum()),
@@ -129,7 +132,9 @@ def run() -> dict:
         "no_estimate": int((table["method"] == "no estimate: no footprint or area").sum()),
         "under_construction_rows": int((table["under_construction"] == 1).sum()),
         "people_per_gross_m2_blocks": per_m2,
-        "population_now_total": float(counted["population_now"].sum()),
+        "city_population_model": city_total,
+        "listed_share_of_city": listed_now / city_total,
+        "population_now_total": listed_now,
         "population_when_occupied_total": float(counted["population_when_occupied"].sum()),
         "model_vs_formula_median_ratio": float(
             (table.loc[matched, "pop_model"] / table.loc[matched, "pop_gfa"]).median()
@@ -139,6 +144,12 @@ def run() -> dict:
         {
             "note": [
                 "Estimates, not a census: no official population exists below the district.",
+                f"Totals cover only the buildings of the listing: {listed_now:,.0f} people, "
+                f"{listed_now / city_total:.0%} of the {city_total:,.0f} that the model places in "
+                "the whole city (official total of 1 January 2026: 1,638,233).",
+                "The rest of the city is not in the listing: private houses, older blocks that "
+                "2GIS does not file as a residential complex, dormitories and other housing.",
+                "share_of_city_pct: population_now of the complex as a share of the whole city.",
                 "population_now: residents of the building today; zero while under construction.",
                 "population_when_occupied: the same building once finished and fully occupied.",
                 "pop_model: people the population model of the project places in the dwellings "
