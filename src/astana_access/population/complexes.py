@@ -10,7 +10,7 @@ from astana_access.config import CRS_GEO, CRS_METRIC, PROCESSED, RAW, REPORTS
 SOURCE = RAW / "team" / "astana_spatial_inequity.xlsx"
 OUT = REPORTS / "population_by_complex.xlsx"
 OVERLAP = 0.5
-LOW, HIGH = 0.6, 1.4
+LOW, HIGH = 0.5, 2.0
 
 
 def listing() -> gpd.GeoDataFrame:
@@ -157,8 +157,13 @@ def run() -> dict:
                 "floor area).",
                 "pop_gfa: gross floor area times the mean people per gross square metre of blocks "
                 "in the model; used only where no dwelling matches the footprint.",
-                f"range: from {LOW} to {HIGH} times the estimate; the median error against "
-                "school enrolment per territory is about 40 per cent.",
+                f"range_low, range_high: {LOW} and {HIGH} times the estimate. It is the spread "
+                "between the population model and the area formula, which agree within this "
+                "factor for about 80 per cent of buildings; it is not a measured error, because "
+                "no population exists below the district to measure against. Against school "
+                "enrolment the median error is about 40 per cent for a school territory of "
+                "thousands of people. For a complex of several buildings the range is "
+                "conservative: errors of single buildings partly cancel.",
                 "Rows sharing one building_id are the same building listed under several names; "
                 "only the first counts in complex totals.",
                 "New buildings may be only partly occupied; the model assumes full occupancy.",
