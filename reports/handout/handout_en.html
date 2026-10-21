@@ -26,7 +26,7 @@ header .lead { margin-top: 2mm; font-size: 8.8pt; color: var(--ink-2); max-width
 .stat .v small { font-size: 0.5em; font-weight: 500; }
 .stat .l { margin-top: 1.5mm; font-size: 8pt; color: var(--ink-2); }
 .deficit { color: var(--deficit); } .gold { color: var(--gold); } .violet { color: var(--violet); }
-.middle { display: grid; grid-template-columns: 1fr 74mm; gap: 6mm; }
+.middle { display: grid; grid-template-columns: 1fr 90mm; gap: 6mm; }
 figure { margin: 0; }
 figure img { width: 100%; display: block; border: 0.6pt solid var(--hair); }
 figcaption { font-size: 7.4pt; color: var(--ink-2); margin-top: 1.4mm; }
@@ -65,13 +65,13 @@ footer { margin-top: auto; display: flex; justify-content: space-between; gap: 6
     <div>
     <figure>
       <img src="atlas_map.jpg" alt="Map of Astana: children without a school within 1 km in blue, reserved school sites as green rings, the 17 best ranked in gold, planned schools as violet diamonds">
-      <figcaption>Site screening in the atlas: blue blocks are children with no state school within 1&nbsp;km on foot; green rings are reserved school sites, gold the 17 that reach the most children with their rank, violet diamonds the new schools of the 2026–2028 plan.</figcaption>
+      <figcaption>Atlas site screening: blue blocks are children with no state school within 1&nbsp;km on foot; green rings reserved sites, gold the 17 best, violet diamonds the 2026–2028 plan.</figcaption>
     </figure>
-    <h2 style="margin-top:3.5mm">Two more findings</h2>
+    <h2 style="margin-top:3.5mm">More findings</h2>
       <ul>
         <li>Schools are crowded as well as far: 1.7 pupils per design place, 45 of 120 schools beyond two full shifts, most in Saraishyk.</li>
         <li>Preschools have places, 73,419 for 66,574 children, but only 34% of children live within 300&nbsp;m on foot.</li>
-        <li>By 2028 the children without a school within 1&nbsp;km grow to 84–106 thousand; the plan reaches 15–17% of them.</li>
+        <li>Distance is not the only goal: 17 sites chosen for distance reach 28,920 children and relieve 3,947 crowded pupils; chosen for crowding, 14,187 and 7,409; balanced, 25,161 and 6,015. The plan: 11,904 and 2,838. Fifteen sites are good on both.</li>
       </ul>
     </div>
     <div>
@@ -82,6 +82,14 @@ footer { margin-top: auto; display: flex; justify-content: space-between; gap: 6
         <tr><td class="h">H3</td><td>The pattern is robust: same worst-served cells under every building-based surface (overlap 0.8); Nura or Esil worst in 199 of 200 draws</td><td class="v yes">Cells</td></tr>
         <tr><td class="h">H4</td><td>Comfortable School sites follow free land (ROC-AUC 0.71) more than deficit (0.59); 84% of the optimum on free land</td><td class="v part">Direction</td></tr>
       </table>
+      <h2 style="margin-top:4mm">Looking ahead</h2>
+      <table>
+        <tr><td class="h">2026</td><td>Children with no school within 1&nbsp;km</td><td class="v num deficit">77,870</td></tr>
+        <tr><td class="h">2027</td><td>No new school opens</td><td class="v num deficit">91,070</td></tr>
+        <tr><td class="h">2028</td><td>Growth placed in new housing</td><td class="v num deficit">106,002</td></tr>
+        <tr><td class="h">2029</td><td>The pace of 2024–2026 continues</td><td class="v num deficit">122,175</td></tr>
+      </table>
+      <p class="muted" style="margin-top:1.6mm">By 2030: 1.75–2.15 million people, 355–447 thousand of school age. The atlas shows every year.</p>
     </div>
   </div>
 
@@ -90,7 +98,7 @@ footer { margin-top: auto; display: flex; justify-content: space-between; gap: 6
     <div><b>2 · Walking</b>Distances from 39,735 dwellings on a 152,491-node street network</div>
     <div><b>3 · Access</b>Floating catchment index, each child counted once; design capacity as supply</div>
     <div><b>4 · Equity</b>Gini, Theil split by district, local Moran clusters, statutory compliance</div>
-    <div><b>5 · Siting</b>Capacitated maximal covering on free land; 2023 backtest; ranking of reserved sites</div>
+    <div><b>5 · Siting</b>Capacitated maximal covering on free land; 2023 backtest; ranking of reserved sites by distance and crowding; projection to 2030</div>
   </div>
 
   <div class="bottom">
