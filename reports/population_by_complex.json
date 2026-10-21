@@ -1,0 +1,13 @@
+{
+ "rows": 2249,
+ "rows_counted": 2121,
+ "complexes": 1612,
+ "matched_to_model": 1798,
+ "formula_fallback": 333,
+ "no_estimate": 118,
+ "under_construction_rows": 351,
+ "people_per_gross_m2_blocks": 0.019226740827299235,
+ "population_now_total": 773040.0,
+ "population_when_occupied_total": 926190.0,
+ "model_vs_formula_median_ratio": 0.825305703348574
+}
