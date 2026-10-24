@@ -85,6 +85,7 @@ def stage_access() -> None:
         catchment_check,
         compliance,
         coverage,
+        flows,
         official_catchments,
     )
     from astana_access.equity import analysis
@@ -100,6 +101,8 @@ def stage_access() -> None:
     if catchments.SOURCE.exists():
         catchments.geocode()
         official_catchments.run()
+        if school_register.SOURCE.exists():
+            flows.run()
     analysis.run()
 
 

@@ -20,7 +20,7 @@ The 2026 series gives Saraishyk, a district of new housing, 8 per cent preschool
 Official data came as replies to information requests through eGov. The preschool register forbids crawling, so its list was saved by hand. The INDIGO organisation cards, the geoportal layer and 2GIS listings were compiled by the team; they are used to check and to locate, and no personal data are used. [Confirm with the team how they were collected before the defence.]
 
 **6. Can the results be reproduced?**
-Yes: one command runs the thirteen pipeline stages from the raw sources, the last of which publishes the web atlas; 109 unit tests cover parsing, allocation, the index, inequality, optimisation and the uncertainty simulation. Letters with personal data are kept out of the repository.
+Yes: one command runs the thirteen pipeline stages from the raw sources, the last of which publishes the web atlas; 116 unit tests cover parsing, allocation, the index, inequality, optimisation and the uncertainty simulation. Letters with personal data are kept out of the repository.
 
 ## Method
 
@@ -79,6 +79,9 @@ No. We scored every reserved site on both goals: children with no school within 
 
 **18f. How many people and children will Astana have by 2030?**
 We projected the official single-age tables with the Hamilton-Perry method, for the city as a whole and with districts taking their share. By 2030 the city has 1.75 million people if nobody moves in, 2.06 million if the average change of 2022-2026 continues, and 2.15 million at the pace of 2024-2026. School-age children grow from 311 to 355-447 thousand, preschool-age children stay at 174-222 thousand against 207 now, because births have fallen since 2022. Tested on the past, the central scenario missed the city of 2026 by 2-4 per cent four years ahead. For districts the error is larger, and Nura grew faster than any trend predicted, so district figures are given as a range.
+
+**18g. Which school does a child from a given block or residential complex attend?**
+We cannot observe it. A gravity model lets each state school draw its official enrolment of 2025-2026 from the children within walking reach, in proportion to their number and to a decay of walking distance fitted to the official school territories (scale 0.25 km). The assigned school is its first choice for 67 per cent of children and among the first three for 94 per cent, a little better than a decay fitted without enrolment (66 and 94). In the flows 74 per cent of children attend the nearest school and 14 per cent walk more than 1 km. The flows do not reproduce the children of each dwelling: a median dwelling sends 32 per cent of its children to the schools that draw from it, which shows how far population by dwelling and enrolment by school still disagree. We present the flows as what enrolment implies, not as observed choices; the workbook of residential complexes lists, for every complex, the three schools that receive most of its children.
 
 ## Limitations and future work
 

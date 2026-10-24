@@ -1,0 +1,95 @@
+{
+ "beta_km": 0.247,
+ "beta_without_enrolment_km": 0.274,
+ "enrolment_filled_schools": 4,
+ "schools": 123,
+ "official_dwellings_evaluated": 13712,
+ "agreement_with_official_territories": {
+  "nearest_school": {
+   "dwellings": 13712,
+   "mass_on_official": 0.662,
+   "top1": 0.662,
+   "top3": 0.773
+  },
+  "e2sfca_gaussian_share": {
+   "dwellings": 13712,
+   "mass_on_official": 0.235,
+   "top1": 0.662,
+   "top3": 0.938
+  },
+  "decay_fitted_without_enrolment": {
+   "dwellings": 13712,
+   "mass_on_official": 0.543,
+   "top1": 0.662,
+   "top3": 0.937
+  },
+  "gravity_with_enrolment": {
+   "dwellings": 13712,
+   "mass_on_official": 0.565,
+   "top1": 0.674,
+   "top3": 0.938
+  }
+ },
+ "leave_one_district_out": {
+  "Almaty": {
+   "beta_km": 0.251,
+   "dwellings": 3070,
+   "mass_on_official": 0.629,
+   "top1": 0.744,
+   "top3": 0.929
+  },
+  "Baikonur": {
+   "beta_km": 0.237,
+   "dwellings": 2509,
+   "mass_on_official": 0.544,
+   "top1": 0.635,
+   "top3": 0.953
+  },
+  "Esil": {
+   "beta_km": 0.248,
+   "dwellings": 589,
+   "mass_on_official": 0.607,
+   "top1": 0.74,
+   "top3": 0.975
+  },
+  "Nura": {
+   "beta_km": 0.242,
+   "dwellings": 763,
+   "mass_on_official": 0.568,
+   "top1": 0.617,
+   "top3": 0.934
+  },
+  "Saraishyk": {
+   "beta_km": 0.252,
+   "dwellings": 1125,
+   "mass_on_official": 0.385,
+   "top1": 0.407,
+   "top3": 0.788
+  },
+  "Saryarka": {
+   "beta_km": 0.257,
+   "dwellings": 5656,
+   "mass_on_official": 0.564,
+   "top1": 0.708,
+   "top3": 0.96
+  }
+ },
+ "balance_of_origins": {
+  "state_share": 0.9155399734929518,
+  "children_reachable": 310451.94520220556,
+  "drawn_over_available_median": 0.3220069208540587,
+  "drawn_over_available_p10": 0.015592297686448622,
+  "drawn_over_available_p90": 1.9994584362340613,
+  "dwellings_drawn_beyond_double": 0.09997973554891332
+ },
+ "flows": {
+  "mean_distance_m": 642.8245843835028,
+  "median_distance_m": 570.6139526367188,
+  "p90_distance_m": 1104.2655029296875,
+  "share_to_nearest_school": 0.737968318969015,
+  "share_beyond_1000m": 0.14098479621754906,
+  "share_beyond_1500m": 0.026559026381962482
+ },
+ "children_in_dwellings": 310989.1679197675,
+ "children_unreached": 537.2227175619337
+}

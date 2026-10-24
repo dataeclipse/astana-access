@@ -50,6 +50,25 @@ Saryarka & 72.4 & 25.3 & 73.8 & 29.6 \\
 
 The same lists and the official enrolment test the load step of the index. The number of children assigned to each school correlates with the load the index allocates to it at 0.53 to 0.57 (Spearman, 115 schools) for allocation radii between 1.5 and 4\,km, and at 0.53 when every child is counted at every school within reach, as in the original method; this test is weakened by the 44 per cent of children whose dwellings could not be matched to a territory. The enrolment of 119 schools in 2025--2026 \cite{schoolregister2026} is the more direct test: 0.60 for the allocated load and 0.41 for the original method. Allocating each child once is the better description of how schools are loaded; the choice of allocation radius matters little.
 
+\textbf{Where do the children go?} The model of flows (Section~\ref{sec:method-flows}) lets each school draw its official enrolment of 2025--2026 from the children around it. The decay scale that agrees best with the official territories is 0.25\,km. Table~\ref{tab:flows} compares the schools it favours with the territories of 13,712 dwellings: for 67 per cent of the children the assigned school is the most likely one and for 94 per cent one of the three most likely. Enrolment improves the agreement slightly over a decay fitted to the territories alone (56.5 against 54.3 per cent of the probability on the assigned school), and a decay of distance places the assigned school among the first three far more often than the nearest school does (94 against 77 per cent). With one district held out, the assigned school is the first choice for between 41 per cent (Saraishyk) and 74 per cent (Almaty) of the children, and the scale chosen without the district stays between 0.24 and 0.26\,km. In the flows 74 per cent of the children attend the nearest school and 14 per cent walk more than 1\,km; the mean walk is 643\,m. The flows do not reproduce the children of each dwelling: a median dwelling sends 32 per cent of its children to the schools that draw from it, and one dwelling in ten is drawn beyond twice its children. This is the same disagreement between the population model and enrolment that the moderate correlation of the allocated load with enrolment shows; the flows describe where pupils can come from and are not observed choices.
+
+\begin{table}[ht]
+\centering
+\caption{Agreement of modelled school choice with the official service territories, 13,712 dwellings, per cent: probability placed on the assigned school, share of dwellings whose first choice is the assigned school, and whose first three include it. Models that depend only on distance rank the schools by distance, so their first choice is the nearest school}
+\label{tab:flows}
+\small
+\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}Xrrr}
+\toprule
+Model & On the assigned school & First choice & First three \\
+\midrule
+Nearest school & 66.2 & 66.2 & 77.3 \\
+Gaussian share of the index, 3\,km & 23.5 & 66.2 & 93.8 \\
+Decay fitted to the territories, 0.27\,km & 54.3 & 66.2 & 93.7 \\
+Gravity model with enrolment, 0.25\,km & 56.5 & 67.4 & 93.8 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
 \textbf{How full are the schools?} The official list counts 1.7 pupils per design place. Forty-five of the 120 schools enrol more than twice their capacity, more than two full shifts can hold, and 49 per cent of pupils attend them; 18,486 pupils are beyond that limit. Saraishyk is the most crowded district, with 2.0 pupils per place, 75 per cent of its pupils in such schools and 6,445 pupils beyond two shifts, followed by Esil and Nura with 58 and 54 per cent of pupils in such schools; Almaty is the least crowded, with 22 per cent. Enrolment grows fastest in Nura, by 17 per cent from 2025--2026 to 2026--2027, and by 11 per cent in Saraishyk and Esil. A shortage of places and a shortage of walking access are different deficits: the first concerns how many places there are, the second where they stand.
 
 \textbf{How full are the preschools?} The cards of the register count 66,574 attending children for 73,419 places, a median of 0.94 children per place; 148 organisations are exactly full and 58 above capacity, and Saraishyk is the fullest district with 0.96 children per place \cite{indigocards2026}. Attendance follows capacity (Spearman 0.95), not the children who live around a preschool: the load the index allocates to each organisation does not correlate with its attendance (0.00, 723 organisations). Preschools are chosen, through the city-wide queue and vouchers, rather than assigned by territory, so for preschools the index measures potential access, not use.

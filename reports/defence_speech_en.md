@@ -20,7 +20,7 @@ We set ourselves one rule: real data only, and no result should wait for an offi
 
 ## Slide 5. Five stages, one reproducible command
 
-The framework has five stages. First, population: official district totals are spread over the territories of polling stations and then over dwellings, which a LightGBM classifier separates from non-residential buildings. Second, walking distances along a network of a hundred and fifty thousand nodes. Third, accessibility per child by an enhanced floating catchment index; our change is that each child is allocated to schools only once. Fourth, inequality: Gini and Theil indices and spatial clusters. Fifth, siting: a capacitated maximal covering model, restricted to land that is actually free. The whole pipeline runs with one command and is covered by one hundred and nine unit tests, and every model is checked against data it did not use.
+The framework has five stages. First, population: official district totals are spread over the territories of polling stations and then over dwellings, which a LightGBM classifier separates from non-residential buildings. Second, walking distances along a network of a hundred and fifty thousand nodes. Third, accessibility per child by an enhanced floating catchment index; our change is that each child is allocated to schools only once. Fourth, inequality: Gini and Theil indices and spatial clusters. Fifth, siting: a capacitated maximal covering model, restricted to land that is actually free. The whole pipeline runs with one command and is covered by one hundred and sixteen unit tests, and every model is checked against data it did not use.
 
 ## Slide 6. Polling stations beat the satellite grid
 

@@ -78,7 +78,7 @@ Figure~\ref{fig:uml-packages} shows the packages of the framework and their depe
 \chapter{Test Results}
 \label{app:tests}
 
-The test suite is run with \texttt{pytest}. All 109 tests pass in a few seconds. Table~\ref{tab:tests} lists what each group verifies.
+The test suite is run with \texttt{pytest}. All 116 tests pass in a few seconds. Table~\ref{tab:tests} lists what each group verifies.
 
 \begin{table}[ht]
 \centering
@@ -100,8 +100,9 @@ Test file & Tests & What is verified \\
 \texttt{test\_register.py} & 5 & Reading of the official list of schools: school numbers, districts, years of commissioning and registration, linking of Binom schools by name, count of pupils beyond two shifts; preschool capacity and attendance filled for every organisation \\
 \texttt{test\_uncertainty.py} & 10 & Agreement of the fast index of the Monte Carlo simulation with the reference E2SFCA, allocation without noise equal to the population model, official district totals kept under noise, points without a district ignored, percentile bands, cohort ageing and change ratios of the projection to 2028, the two-year step of the population projection, bounded change ratios, districts adding up to the city, yearly split of growth into ageing and migration \\
 \texttt{test\_siting\_models.py} & 8 & Land shares around candidate cells, labelling of the cell nearest each site, log transform of count features, sums over H3 rings without the cell itself, clipped area shares of cells, metrics of the housing forecast, weighting and capacity caps of the two-objective ranking \\
+\texttt{test\_flows.py} & 7 & Every school receives its enrolment, dwellings with no school in reach are left out, a school draws in proportion to the children and the decay, the decay is recovered from simulated choices, assigned schools out of reach are dropped, the first choice and the first three are scored against the assigned school, the probability on it \\
 \midrule
-Total & 109 & All passed \\
+Total & 116 & All passed \\
 \bottomrule
 \end{tabularx}
 \end{table}
