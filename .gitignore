@@ -40,3 +40,11 @@ graphify-out/
 dashboard/offline/
 thesis/build/
 thesis_overleaf.zip
+
+# Not part of the public repository
+.claude/
+thesis.zip
+*.docx
+**/build/
+literature_review/research_article_sections/
+*.log

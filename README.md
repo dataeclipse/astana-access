@@ -111,3 +111,7 @@ python scripts/check_thesis.py
 - Figures are written as EPS and PDF only, into `thesis/figures`.
 - Random seed is fixed in `astana_access.config`.
 - Real data only: no synthetic values; every estimate is labelled as such.
+
+## Licence and data
+
+The code is released under the MIT licence (see `LICENSE`); to cite it, use `CITATION.cff`. The data come from OpenStreetMap contributors and the buildings theme of Overture Maps (both ODbL 1.0), the WorldPop age and sex structure (CC BY 4.0, used only as a comparison surface) and official statistics and registers of Kazakhstan. Raw downloads are not stored in the repository (`data/raw/` is ignored); the pipeline fetches them, and the derived values behind the atlas and every reported result are in `dashboard/data/` and `reports/`. Replies of state bodies to information requests and the manually compiled cards of the preschool register are not redistributed.

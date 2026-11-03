@@ -1,0 +1,24 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+type: software
+title: "astana-access: a data-driven framework for spatial accessibility assessment and optimal siting of social infrastructure"
+abstract: >-
+  Open pipeline that reconstructs population below the district level, measures walking
+  accessibility to state schools and preschools in Astana, diagnoses its inequity, tests the
+  siting of new schools against capacitated optima and publishes the results as a web atlas.
+authors:
+  - family-names: Bolatov
+    given-names: Dias
+  - family-names: Dandykulov
+    given-names: Daulet
+  - family-names: Baktygaliyev
+    given-names: Arsen
+license: MIT
+version: 1.0.0
+date-released: 2026-11-04
+repository-code: "https://github.com/dataeclipse/astana-access"
+keywords:
+  - spatial accessibility
+  - two-step floating catchment area
+  - school siting
+  - Astana
