@@ -14,6 +14,7 @@ authors:
   - family-names: Baktygaliyev
     given-names: Arsen
 license: MIT
+doi: 10.5281/zenodo.23931191
 version: 1.0.0
 date-released: 2026-11-04
 repository-code: "https://github.com/dataeclipse/astana-access"
